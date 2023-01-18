@@ -7,21 +7,22 @@
         <version>0.0.7</version>
         <relativePath />
     </parent>
-    <artifactId>cui-java-module-template</artifactId>
-    <name>cui java module template</name>
+    <groupId>io.github.cuioss.test</groupId>
+    <artifactId>cui-test-generator</artifactId>
+    <name>cui test generator</name>
     <version>1.0.0-SNAPSHOT</version>
-    <description>Template module for cuioss open source projects.
+    <description>Provides Generatot for arbitrary Java-Types 
     </description>
     <packaging>jar</packaging>
-    <url>https://github.com/cuioss/cui-java-module-template/</url>
+    <url>https://github.com/cuioss/cui-test-generator/</url>
     <scm>
-        <url>https://github.com/cuioss/cui-java-module-template/</url>
-        <connection>scm:git:https://github.com/cuioss/cui-java-module-template.git</connection>
-        <developerConnection>scm:git:https://github.com/cuioss/cui-java-module-template/</developerConnection>
+        <url>https://github.com/cuioss/cui-test-generator/</url>
+        <connection>scm:git:https://github.com/cuioss/cui-test-generator.git</connection>
+        <developerConnection>scm:git:https://github.com/cuioss/cui-test-generator/</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
-        <url>https://github.com/cuioss/cui-java-module-template/issues</url>
+        <url>https://github.com/cuioss/cui-test-generator/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
     <dependencies>
