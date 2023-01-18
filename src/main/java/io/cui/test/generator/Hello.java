@@ -1,4 +1,4 @@
-package io.cui.template;
+package io.cui.test.generator;
 
 import lombok.ToString;
 

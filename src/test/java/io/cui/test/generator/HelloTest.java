@@ -1,8 +1,10 @@
-package io.cui.template;
+package io.cui.test.generator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import io.cui.test.generator.Hello;
 
 
 class HelloTest {
