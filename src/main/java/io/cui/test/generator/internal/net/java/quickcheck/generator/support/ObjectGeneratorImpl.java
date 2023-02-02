@@ -16,8 +16,9 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import java.util.Objects;
+
 import io.cui.test.generator.internal.net.java.quickcheck.ObjectGenerator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class ObjectGeneratorImpl<T> implements ObjectGenerator<T> {
 
@@ -25,7 +26,7 @@ public class ObjectGeneratorImpl<T> implements ObjectGenerator<T> {
     private final ObjectFactory<T> factory;
 
     public ObjectGeneratorImpl(Class<T> objectType) {
-        Assert.notNull(objectType, "objectType");
+        Objects.requireNonNull(objectType, "objectType");
         this.definition = new ObjectDefinition<>(objectType);
         this.factory = new ObjectFactory<>(definition);
     }

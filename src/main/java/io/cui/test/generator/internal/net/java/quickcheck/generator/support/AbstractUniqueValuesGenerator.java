@@ -16,11 +16,11 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import java.util.Objects;
 import java.util.Set;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.StatefulGenerator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 abstract class AbstractUniqueValuesGenerator<T> extends VetoableGenerator<T> implements StatefulGenerator<T>{
 
@@ -28,7 +28,7 @@ abstract class AbstractUniqueValuesGenerator<T> extends VetoableGenerator<T> imp
 
     public AbstractUniqueValuesGenerator(Set<T> values, Generator<? extends T> generator, int maxTries) {
         super(generator, maxTries);
-        Assert.notNull(values, "values");
+        Objects.requireNonNull(values, "values");
         this.values = values;
         reset();
     }

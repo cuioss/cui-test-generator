@@ -1,24 +1,23 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static io.cui.test.generator.internal.net.java.quickcheck.util.Assert.greaterOrEqual;
-import static io.cui.test.generator.internal.net.java.quickcheck.util.Assert.lessOrEqual;
-import static io.cui.test.generator.internal.net.java.quickcheck.util.Assert.notNull;
+import static io.cui.tools.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,8 +34,8 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
     private final Generator<Integer> sizes;
 
     public SubsetGenerator(Iterable<T> superset, Generator<Integer> size) {
-        notNull(superset, "superset");
-        notNull(size, "size");
+        requireNonNull(superset, "superset");
+        requireNonNull(size, "size");
         this.superset = Lists.toList(superset);
         this.sizes = size;
     }
@@ -45,14 +44,20 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
         this(superset, new IntegerGenerator(0, Lists.toList(superset).size()));
     }
 
-    @Override public Set<T> next() {
+    @Override
+    public Set<T> next() {
         Collections.shuffle(superset);
         int size = sizes.next();
-        greaterOrEqual(minSize(superset), size, "subset size");
-        lessOrEqual(maxSize(superset), size, "subset size");
+        checkArgument(minSize(superset) <= size);
+        checkArgument(maxSize(superset) >= size);
         return new HashSet<>(superset.subList(0, size));
     }
 
-    private static <T> int maxSize(Collection<T> superset) { return superset.size(); }
-    private static <T> int minSize(Collection<T> superset) { return 0; }
+    private static <T> int maxSize(Collection<T> superset) {
+        return superset.size();
+    }
+
+    private static <T> int minSize(Collection<T> superset) {
+        return 0;
+    }
 }

@@ -16,10 +16,11 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.collect.MoreCollections.requireNotEmpty;
+
 import java.util.List;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class RoundRobinGenerator<T> implements Generator<T> {
 
@@ -27,7 +28,7 @@ public class RoundRobinGenerator<T> implements Generator<T> {
     private int index;
 
     public RoundRobinGenerator(List<Generator<T>> generators) {
-        Assert.notEmpty(generators, "generators");
+        requireNotEmpty(generators, "generators");
         this.generators = generators;
         index = 0;
     }

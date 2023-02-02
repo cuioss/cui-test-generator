@@ -19,11 +19,12 @@ package io.cui.test.generator.internal.net.java.quickcheck.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class Lists {
 
     public static <T> List<T> toList(Iterable<T> values) {
-        Assert.notNull(values, "values");
+        Objects.requireNonNull(values, "values");
         if(values instanceof Collection<?>){
             return new ArrayList<>((Collection<T>) values);
         }

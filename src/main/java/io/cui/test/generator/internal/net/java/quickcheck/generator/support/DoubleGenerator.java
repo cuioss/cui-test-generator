@@ -16,11 +16,13 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.base.Preconditions.checkArgument;
 import static java.lang.String.format;
+
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class DoubleGenerator implements Generator<Double> {
 
@@ -37,8 +39,8 @@ public class DoubleGenerator implements Generator<Double> {
     }
 
     public DoubleGenerator(double min, double max, Distribution dist) {
-        Assert.lessOrEqual(max, min, "min");
-        Assert.notNull(dist, "dist");
+        checkArgument(max >= min, "min");
+        Objects.requireNonNull(dist, "dist");
 
         this.min = min;
         this.max = max;

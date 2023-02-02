@@ -16,10 +16,11 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import java.util.Objects;
+
 import io.cui.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class StringGenerator implements ExtendibleGenerator<Character, String> {
 
@@ -44,7 +45,7 @@ public class StringGenerator implements ExtendibleGenerator<Character, String> {
 
     public StringGenerator(Generator<Integer> length,
             Generator<Character> characters) {
-        Assert.notNull(length, "length");
+        Objects.requireNonNull(length, "length");
 
         this.length = length;
         this.characters = new DefaultFrequencyGenerator<>(characters);

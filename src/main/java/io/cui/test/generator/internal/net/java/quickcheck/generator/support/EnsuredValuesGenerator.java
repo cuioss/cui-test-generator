@@ -17,12 +17,13 @@
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.sizeOf;
+import static io.cui.tools.base.Preconditions.checkArgument;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.StatefulGenerator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
 
@@ -44,9 +45,9 @@ public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
 
     public EnsuredValuesGenerator(Iterable<T> ensured, int window, Generator<T> random) {
         this.size = sizeOf(ensured);
-        Assert.greaterOrEqual(this.size, window, "window");
+        checkArgument(this.size <= window, "window");
         this.window = window;
-        Assert.notNull(random, "random");
+        Objects.requireNonNull(random, "random");
         this.ensured = ensured;
         this.otherValues = random;
 

@@ -16,7 +16,9 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.collection;
 
-import static java.lang.String.format;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * A tuple of three values.
@@ -29,38 +31,16 @@ import static java.lang.String.format;
  *            type of third entry
  *
  */
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Triple<A, B, C> extends Pair<A, B> {
 
+    @Getter
     private final C third;
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        return prime * super.hashCode() + ((third == null) ? 0 : third.hashCode());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(!super.equals(obj) || getClass() != obj.getClass()) return false;
-        Triple<?,?,?> other = (Triple<?, ?, ?>) obj;
-        if(!super.equals(obj)) return false;
-        if(third == null) {
-            return other.third == null;
-        } else return third.equals(other.third);
-    }
 
     public Triple(A first, B second, C third) {
         super(first, second);
         this.third = third;
     }
 
-    public C getThird() {
-        return third;
-    }
-
-    @Override
-    public String toString() {
-        return format("[%s,%s,%s]", getFirst(), getSecond(), getThird());
-    }
 }

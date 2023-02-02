@@ -20,7 +20,9 @@ import static io.cui.test.generator.internal.net.java.quickcheck.generator.Combi
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.CombinedGeneratorsIterables.somePairs;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.strings;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 

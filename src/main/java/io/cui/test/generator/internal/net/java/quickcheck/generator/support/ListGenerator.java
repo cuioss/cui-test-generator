@@ -20,9 +20,9 @@ import static java.lang.Math.max;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class ListGenerator<T> implements Generator<List<T>> {
 
@@ -46,8 +46,8 @@ public class ListGenerator<T> implements Generator<List<T>> {
     }
 
     public ListGenerator(Generator<? extends T> content, Generator<Integer> size) {
-        Assert.notNull(content, "content");
-        Assert.notNull(size, "size");
+        Objects.requireNonNull(content, "content");
+        Objects.requireNonNull(size, "size");
 
         this.content = content;
         this.size = size;

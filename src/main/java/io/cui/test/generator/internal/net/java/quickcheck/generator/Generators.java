@@ -19,6 +19,7 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.BASIC_LATIN;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.LATIN_1_SUPPLEMENT;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
+import static io.cui.tools.base.Preconditions.checkArgument;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -31,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -76,7 +78,6 @@ import io.cui.test.generator.internal.net.java.quickcheck.generator.support.Tupl
 import io.cui.test.generator.internal.net.java.quickcheck.generator.support.UniqueComparableValuesGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.support.UniqueValuesGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.support.VetoableGenerator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 @SuppressWarnings({ "WeakerAccess", "unused" })
 public  class Generators {
@@ -117,8 +118,8 @@ public  class Generators {
      * @param numberOfRuns to execute the runner
      */
     public static <T> Iterable<T> toIterable(final Generator<T> generator, final int numberOfRuns) {
-        Assert.notNull(generator, "generator");
-        Assert.greaterOrEqual(0.0, numberOfRuns, "number of runs");
+        Objects.requireNonNull(generator, "generator");
+        checkArgument(0.0<= numberOfRuns, "number of runs");
         return () -> new Iterator<>() {
 
             private int runs;

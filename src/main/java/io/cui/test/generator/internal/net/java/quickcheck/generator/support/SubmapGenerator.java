@@ -19,23 +19,23 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class SubmapGenerator<K,V> implements Generator<Map<K, V>> {
 
     private final SubsetGenerator<Entry<K, V>> subsets;
 
     public SubmapGenerator(Map<K, V> supermap) {
-        Assert.notNull(supermap, "supermap");
+        Objects.requireNonNull(supermap, "supermap");
         this.subsets = new SubsetGenerator<>(supermap.entrySet());
     }
 
     public SubmapGenerator(Map<K, V> supermap, Generator<Integer> sizes) {
-        Assert.notNull(supermap, "supermap");
-        Assert.notNull(sizes, "sizes");
+        Objects.requireNonNull(supermap, "supermap");
+        Objects.requireNonNull(sizes, "sizes");
         this.subsets = new SubsetGenerator<>(supermap.entrySet(), sizes);
     }
 

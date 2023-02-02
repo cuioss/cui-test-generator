@@ -17,7 +17,6 @@
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableSet;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

@@ -130,7 +130,7 @@ class ObjectGeneratorImplTest {
 
     @Test
     void objectsClassNull() {
-        assertThrows(IllegalArgumentException.class, () -> PrimitiveGenerators.objects(null));
+        assertThrows(NullPointerException.class, () -> PrimitiveGenerators.objects(null));
     }
 
     @Test

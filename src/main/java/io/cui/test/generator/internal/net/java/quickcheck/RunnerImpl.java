@@ -16,11 +16,12 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck;
 
+import static io.cui.tools.base.Preconditions.checkArgument;
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 import java.io.PrintWriter;
-
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
+import java.util.Objects;
 
 class RunnerImpl<T> implements Runner<T> {
 
@@ -40,8 +41,8 @@ class RunnerImpl<T> implements Runner<T> {
 
     @Override
     public void forAll() {
-        Assert.notNull(characteristic, "characteristic");
-        Assert.notNull(generator, "generator");
+        Objects.requireNonNull(characteristic, "characteristic");
+        Objects.requireNonNull(generator, "generator");
         for (int count = 0; count < runs; count++) {
             try {
                 doSetup();
@@ -53,7 +54,7 @@ class RunnerImpl<T> implements Runner<T> {
     }
 
     private void check(Generator<T> generator) {
-        Assert.notNull(generator, "generator");
+        requireNonNull(generator, "generator");
 
         while (currentRuns < maxRuns) {
             currentRuns++;
@@ -110,7 +111,7 @@ class RunnerImpl<T> implements Runner<T> {
     }
 
     private void setRuns(int runs) {
-        Assert.greaterOrEqual(QuickCheck.MIN_NUMBER_OF_RUNS, runs, "runs");
+        checkArgument(QuickCheck.MIN_NUMBER_OF_RUNS <= runs, "runs");
         maxRuns = 10 * runs;
         this.runs = runs;
     }

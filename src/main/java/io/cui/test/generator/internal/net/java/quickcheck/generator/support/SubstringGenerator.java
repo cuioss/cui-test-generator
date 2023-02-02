@@ -16,8 +16,10 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import java.util.Objects;
+
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
+import io.cui.tools.base.Preconditions;
 
 public class SubstringGenerator implements Generator<String> {
 
@@ -25,14 +27,15 @@ public class SubstringGenerator implements Generator<String> {
     private final Generator<Integer> sizes;
 
     public SubstringGenerator(String superstring, int minSize, int maxSize) {
-        Assert.notNull(superstring, "superstring");
-        Assert.greaterOrEqual(0, minSize, "minSize");
-        Assert.lessOrEqual(superstring.length(), maxSize, "maxSize");
+        Objects.requireNonNull(superstring, "superstring");
+        Preconditions.checkArgument(minSize >= 0);
+        Preconditions.checkArgument(superstring.length() >= maxSize);
         this.superstring = superstring;
         this.sizes = new IntegerGenerator(minSize, maxSize);
     }
 
-    @Override public String next() {
+    @Override 
+    public String next() {
         int size = sizes.next();
         int space = superstring.length() - size;
         assert space >= 0;

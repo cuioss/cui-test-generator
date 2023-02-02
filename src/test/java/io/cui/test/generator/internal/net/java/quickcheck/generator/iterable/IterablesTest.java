@@ -110,7 +110,7 @@ class IterablesTest {
 
     @Test
     void generatorMayNotBeNull() {
-        assertThrows(IllegalArgumentException.class, () -> Iterables.toIterable(null));
+        assertThrows(NullPointerException.class, () -> Iterables.toIterable(null));
     }
 
     @Test

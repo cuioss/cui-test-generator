@@ -19,9 +19,9 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 import io.cui.test.generator.internal.net.java.quickcheck.util.Lists;
 
 public class DuplicateGenerator<T> implements Generator<List<T>> {
@@ -30,7 +30,7 @@ public class DuplicateGenerator<T> implements Generator<List<T>> {
     private final SubsetGenerator<T> subsets;
 
     public DuplicateGenerator(Iterable<T> values) {
-        Assert.notNull(values, "values");
+        Objects.requireNonNull(values, "values");
         this.values = Lists.toList(values);
         this.subsets = new SubsetGenerator<>(values, new IntegerGenerator(1, this.values.size()));
     }

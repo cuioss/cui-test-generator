@@ -18,9 +18,9 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class ArrayGenerator<T> extends
         AbstractTransformerGenerator<List<T>, T[]> {
@@ -42,7 +42,7 @@ public class ArrayGenerator<T> extends
     }
 
     private void setEmptyArrayOfT(Class<T> type) {
-        Assert.notNull(type, "content type");
+        Objects.requireNonNull(type, "content type");
         this.emptyArrayOfT = emptyArrayOfT(type);
     }
 

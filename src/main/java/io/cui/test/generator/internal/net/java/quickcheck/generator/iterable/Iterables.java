@@ -16,13 +16,14 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.iterable;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.QuickCheck;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.Generators;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public final class Iterables {
 
@@ -57,7 +58,7 @@ public final class Iterables {
      *         to calculate the size of
      */
     public static <T> int sizeOf(Iterable<T> iterable) {
-        Assert.notNull(iterable, "iterable");
+        requireNonNull(iterable, "iterable");
         int size = 0;
         //noinspection StatementWithEmptyBody
         for (Iterator<T> iter = iterable.iterator(); iter.hasNext(); iter.next(), size++);

@@ -17,7 +17,7 @@
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.support.SetGenerator.MAX_SIZE;
-import static io.cui.test.generator.internal.net.java.quickcheck.util.Assert.notNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +31,16 @@ public class MapGenerator<K,V> implements Generator<Map<K,V>> {
     private final Generator<V> values;
 
     public MapGenerator(Generator<K> keys, Generator<V> values) {
-        notNull(keys, "keys");
-        notNull(values, "values");
+        requireNonNull(keys, "keys");
+        requireNonNull(values, "values");
         this.keys = new SetGenerator<>(keys);
         this.values = values;
     }
 
     public MapGenerator(Generator<K> keys, Generator<V> values, Generator<Integer> size) {
-        notNull(keys, "keys");
-        notNull(values, "values");
-        notNull(size, "size");
+        requireNonNull(keys, "keys");
+        requireNonNull(values, "values");
+        requireNonNull(size, "size");
         this.keys = new SetGenerator<>(keys, size, MAX_SIZE);
         this.values = values;
     }

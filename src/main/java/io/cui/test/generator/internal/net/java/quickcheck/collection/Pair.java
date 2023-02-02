@@ -16,7 +16,10 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.collection;
 
-import static java.lang.String.format;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * A tuple of two values.
@@ -27,48 +30,15 @@ import static java.lang.String.format;
  *            type of second entry
  *
  */
+@EqualsAndHashCode
+@ToString
+@RequiredArgsConstructor
 public class Pair<A, B> {
 
+    @Getter
     private final A first;
+    
+    @Getter
     private final B second;
 
-    public Pair(A first, B second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    public A getFirst() {
-        return first;
-    }
-
-    public B getSecond() {
-        return second;
-    }
-
-    @Override
-    public String toString() {
-        return format("[%s,%s]", first, second);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((first == null) ? 0 : first.hashCode());
-        result = prime * result + ((second == null) ? 0 : second.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
-        Pair<?,?> other = (Pair<?,?>) obj;
-        if(first == null) {
-            if(other.first != null) return false;
-        } else if(!first.equals(other.first)) return false;
-        if(second == null) {
-            return other.second == null;
-        } else return second.equals(other.second);
-    }
 }

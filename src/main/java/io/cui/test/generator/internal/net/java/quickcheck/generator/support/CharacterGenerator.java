@@ -16,9 +16,10 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.base.Preconditions.checkState;
+
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.collection.Pair;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class CharacterGenerator implements Generator<Character> {
 
@@ -35,7 +36,7 @@ public class CharacterGenerator implements Generator<Character> {
     }
 
     public CharacterGenerator(char first, char last) {
-        Assert.lessOrEqual(last, first, "first <= last");
+        checkState(last >= first, "first <= last");
         this.generator = new IntegerGenerator(first, last);
     }
 

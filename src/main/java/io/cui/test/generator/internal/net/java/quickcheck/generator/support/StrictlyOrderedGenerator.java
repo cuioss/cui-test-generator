@@ -19,10 +19,10 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class StrictlyOrderedGenerator<T> implements Generator<List<T>> {
 
@@ -30,9 +30,9 @@ public class StrictlyOrderedGenerator<T> implements Generator<List<T>> {
     private final Comparator<T> comparator;
 
     public StrictlyOrderedGenerator(Generator<T> input, Comparator<T> comparator, Generator<Integer> sizes) {
-        Assert.notNull(input, "input");
-        Assert.notNull(comparator, "comparator");
-        Assert.notNull(sizes, "sizes");
+        Objects.requireNonNull(input, "input");
+        Objects.requireNonNull(comparator, "comparator");
+        Objects.requireNonNull(sizes, "sizes");
         values = new SetGenerator<>(input, sizes, SetGenerator.MAX_TRIES);
         this.comparator = comparator;
     }

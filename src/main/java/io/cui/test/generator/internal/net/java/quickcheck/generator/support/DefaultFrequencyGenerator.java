@@ -16,12 +16,14 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.base.Preconditions.checkArgument;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 
@@ -49,8 +51,8 @@ public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 
     @Override
     public FrequencyGenerator<T> add(Generator<T> generator, int weight) {
-        Assert.notNull(generator, "generator");
-        Assert.greaterOrEqual(EQUAL_WEIGHT_OF_GENERATORS, weight, "weight");
+        Objects.requireNonNull(generator, "generator");
+        checkArgument(EQUAL_WEIGHT_OF_GENERATORS <= weight, "weight");
 
         this.frequencies.add(new Frequency<>(generator, weight));
         this.sum += weight;
@@ -60,7 +62,7 @@ public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 
     @Override
     public T next() {
-        Assert.greaterOrEqual(1, this.sum, "number of generators");
+        checkArgument(1<= this.sum, "number of generators");
 
         int next = choose().nextInt();
         for (Frequency<T> pair : this.frequencies) {

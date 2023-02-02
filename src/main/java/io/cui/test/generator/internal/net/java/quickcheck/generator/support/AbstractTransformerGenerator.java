@@ -16,8 +16,9 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import java.util.Objects;
+
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Assert;
 
 /**
  * {@link Generator} implementation that transforms input generator test cases
@@ -34,7 +35,7 @@ public abstract class AbstractTransformerGenerator<I, T> implements
 
     private Generator<I> inputGenerator;
 
-    public AbstractTransformerGenerator(Generator<I> inputGenerator) {
+    protected AbstractTransformerGenerator(Generator<I> inputGenerator) {
         setInputGenerator(inputGenerator);
     }
 
@@ -50,7 +51,7 @@ public abstract class AbstractTransformerGenerator<I, T> implements
     }
 
     void setInputGenerator(Generator<I> inputGenerator) {
-        Assert.notNull(inputGenerator, "inputGenerator");
+        Objects.requireNonNull(inputGenerator, "inputGenerator");
         this.inputGenerator = inputGenerator;
     }
 }
