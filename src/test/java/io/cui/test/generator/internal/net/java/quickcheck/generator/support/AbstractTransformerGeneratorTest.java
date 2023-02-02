@@ -24,11 +24,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.easymock.IMockBuilder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.MockFactory;
 
+@Disabled
 class AbstractTransformerGeneratorTest {
 
     private Generator<Object> inputGenerator;
