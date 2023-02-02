@@ -67,7 +67,7 @@ public class IteratorGenerator<T> implements Generator<Iterator<T>> {
             }
 
             @Override
-            @SuppressWarnings("java:S2272") // owolff: FOr generator by design
+            @SuppressWarnings("java:S2272") // owolff: For generator by design
             public T next() {
                 i++;
                 return content.next();
