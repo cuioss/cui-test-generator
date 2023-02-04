@@ -16,11 +16,12 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.collect.CollectionLiterals.mutableList;
+
 import java.util.Collection;
 import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Lists;
 
 public class ExcludingGenerator<T> extends VetoableGenerator<T>{
 
@@ -29,7 +30,7 @@ public class ExcludingGenerator<T> extends VetoableGenerator<T>{
     public ExcludingGenerator(Generator<T> generator, Iterable<T> excluded, int tries) {
         super(generator, tries);
         Objects.requireNonNull(excluded, "excluded");
-        this.excluded = Lists.toList(excluded);
+        this.excluded = mutableList(excluded);
     }
 
     @Override

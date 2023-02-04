@@ -17,6 +17,7 @@
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static io.cui.tools.base.Preconditions.checkArgument;
+import static io.cui.tools.collect.CollectionLiterals.mutableList;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Lists;
 
 public class SubsetGenerator<T> implements Generator<Set<T>> {
 
@@ -36,12 +36,12 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
     public SubsetGenerator(Iterable<T> superset, Generator<Integer> size) {
         requireNonNull(superset, "superset");
         requireNonNull(size, "size");
-        this.superset = Lists.toList(superset);
+        this.superset = mutableList(superset);
         this.sizes = size;
     }
 
     public SubsetGenerator(Iterable<T> superset) {
-        this(superset, new IntegerGenerator(0, Lists.toList(superset).size()));
+        this(superset, new IntegerGenerator(0, mutableList(superset).size()));
     }
 
     @Override

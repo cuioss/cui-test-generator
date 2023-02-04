@@ -16,14 +16,13 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 
+import static io.cui.tools.collect.CollectionLiterals.mutableList;
 import static io.cui.tools.collect.MoreCollections.requireNotEmpty;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
-import io.cui.test.generator.internal.net.java.quickcheck.util.Lists;
 
 public class FixedValuesGenerator<T> implements Generator<T> {
 
@@ -41,7 +40,7 @@ public class FixedValuesGenerator<T> implements Generator<T> {
     public FixedValuesGenerator(Iterable<T> values) {
         requireNotEmpty(values, "values");
 
-        this.values = Lists.toList(values);
+        this.values = mutableList(values);
         this.index = new IntegerGenerator(0, this.values.size() - 1);
     }
 
