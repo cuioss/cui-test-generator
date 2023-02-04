@@ -18,7 +18,7 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 
 /**
  * GeneratorException is thrown if the creation of a new instance failed.
- * 
+ *
  */
 public class GeneratorException extends RuntimeException {
 

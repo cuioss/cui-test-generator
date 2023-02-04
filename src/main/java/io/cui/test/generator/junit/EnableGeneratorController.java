@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 /**
  * Shorthand for enabling {@link GeneratorControllerExtension} for a certain test-class. This type
  * is equivalent to {@link ExtendWith} {@link GeneratorControllerExtension}
- * 
+ *
  * @author Oliver Wolff
  *
  */

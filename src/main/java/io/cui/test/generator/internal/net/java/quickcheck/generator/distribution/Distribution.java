@@ -24,7 +24,7 @@ import static java.lang.Math.abs;
  * distribution</a> and <a
  * href="http://en.wikipedia.org/wiki/Image:Uniform_distribution_PDF.png">uniform
  * distribution</a> distribution functions.
- * 
+ *
  * @author $Id$
  */
 public interface Distribution {
@@ -79,11 +79,11 @@ public interface Distribution {
 
     /**
      * Generate the next random number for this distribution function.
-     * 
+     *
      * @return double 0 &lt;= x &lt;= 1.0
      */
     double nextRandomNumber();
-    
+
     abstract class AbstractDistribution implements Distribution {
         static final int N_SIGMA = 3;
         double nextGausian() {

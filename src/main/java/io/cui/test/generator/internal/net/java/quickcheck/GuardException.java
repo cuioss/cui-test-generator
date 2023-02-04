@@ -18,7 +18,7 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 
 /**
  * Internal exception thrown by {@link QuickCheck#guard(boolean)}
- * 
+ *
  */
 class GuardException extends RuntimeException {
     private static final long serialVersionUID = 1L;

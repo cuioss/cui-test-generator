@@ -2,8 +2,8 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
 @SuppressWarnings("unused")
 public class PrimitiveGeneratorsIterables{
-        
-    /**    
+
+    /**
     See documentation of {@link PrimitiveGenerators#objects}.
     */
     public static  Iterable<Object> someObjects(){
@@ -416,5 +416,5 @@ public class PrimitiveGeneratorsIterables{
     public static  Iterable<Byte> someBytes(byte lo, byte hi, io.cui.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution){
         return io.cui.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable(
                 PrimitiveGenerators.bytes(lo, hi, distribution));
-    }    
+    }
 }

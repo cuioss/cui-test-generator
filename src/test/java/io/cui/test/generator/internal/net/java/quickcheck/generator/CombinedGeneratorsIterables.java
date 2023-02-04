@@ -2,8 +2,8 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
 @SuppressWarnings("unused")
 public class CombinedGeneratorsIterables{
-        
-    /**    
+
+    /**
     See documentation of {@link CombinedGenerators#uniqueValues}.
     */
     public static <T>  Iterable<T> someUniqueValues(io.cui.test.generator.internal.net.java.quickcheck.Generator<T> generator, int tries){
@@ -454,5 +454,5 @@ public class CombinedGeneratorsIterables{
     public static <T>  Iterable<java.util.List<T>> someStrictlyOrdered(io.cui.test.generator.internal.net.java.quickcheck.Generator<T> input, java.util.Comparator<T> comparator, io.cui.test.generator.internal.net.java.quickcheck.Generator<Integer> size){
         return io.cui.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable(
                 CombinedGenerators.strictlyOrdered(input, comparator, size));
-    }    
+    }
 }

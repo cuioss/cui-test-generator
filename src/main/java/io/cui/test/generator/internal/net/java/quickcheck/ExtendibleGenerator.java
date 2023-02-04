@@ -19,18 +19,18 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 /**
  * Generator which depends upon other generator instances. After creation new
  * input generators could be added.
- * 
+ *
  * @param <I>
  *            type of input generator
  * @param <T>
  *            type of generated values
- * 
+ *
  */
 public interface ExtendibleGenerator<I, T> extends Generator<T> {
 
     /**
      * Add a new generator.
-     * 
+     *
      * @return this generator instance
      */
     ExtendibleGenerator<I, T> add(Generator<I> newGenerator);

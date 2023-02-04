@@ -24,7 +24,7 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 ObjectGenerator<T> g;
 Generator<R> methodGenerator;
 g.on(g.getRecorder().method()).returns(methodGenerator);}</pre>
- * 
+ *
  * @param <T> type of object generated
  */
 public interface ObjectGenerator<T> extends Generator<T> {
@@ -32,14 +32,14 @@ public interface ObjectGenerator<T> extends Generator<T> {
     /**
      * Implementation of T that is used to define the method a generator should
      * be defined for.
-     * 
+     *
      * @return an implementation of T used only to record method calls
      */
     T getRecorder();
 
     /**
      * Define a method a generator should be defined for.
-     * 
+     *
      * @param <R>
      *            type of the return type
      * @param value

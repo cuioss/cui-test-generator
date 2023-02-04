@@ -21,13 +21,13 @@ package io.cui.test.generator.internal.net.java.quickcheck;
  * Create a frequency generator. The frequency of {@link Generator} usage
  * depends on the generator weight.
  * </p>
- * 
+ *
  */
 public interface FrequencyGenerator<T> extends ExtendibleGenerator<T, T> {
 
     /**
      * Add a new input generator.
-     * 
+     *
      * @param gen
      *            input generator
      * @param weight

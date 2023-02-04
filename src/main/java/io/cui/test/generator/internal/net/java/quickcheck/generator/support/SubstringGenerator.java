@@ -34,7 +34,7 @@ public class SubstringGenerator implements Generator<String> {
         this.sizes = new IntegerGenerator(minSize, maxSize);
     }
 
-    @Override 
+    @Override
     public String next() {
         int size = sizes.next();
         int space = superstring.length() - size;

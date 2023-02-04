@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * Explicitly sets the seed for the generators
- * 
+ *
  * @author Oliver Wolff
  *
  */

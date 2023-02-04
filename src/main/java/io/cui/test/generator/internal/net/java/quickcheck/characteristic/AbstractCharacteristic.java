@@ -24,7 +24,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.Characteristic;
  * {@link AbstractCharacteristic#classify(Object)} and
  * {@link AbstractCharacteristic#classify(boolean, Object)} can be used to
  * classify test data.
- * 
+ *
  * @param <T> Type of generated random test instances.
  */
 @SuppressWarnings("ProhibitedExceptionDeclared")
@@ -43,7 +43,7 @@ public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * This method will call {@link AbstractCharacteristic#doSpecify(Object)}.
      */
     @Override
@@ -64,7 +64,7 @@ public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
 
     /**
      * Add a classification with the given key.
-     * 
+     *
      * @param classification
      *            classification key.
      */

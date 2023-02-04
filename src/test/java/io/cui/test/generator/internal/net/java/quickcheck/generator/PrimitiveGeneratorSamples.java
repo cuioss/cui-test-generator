@@ -2,8 +2,8 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
 @SuppressWarnings("unused")
 public class PrimitiveGeneratorSamples{
-        
-    /**    
+
+    /**
     See documentation of {@link PrimitiveGenerators#objects}.
     */
     public static  Object anyObject(){
@@ -395,5 +395,5 @@ public class PrimitiveGeneratorSamples{
     */
     public static  Byte anyByte(byte lo, byte hi, io.cui.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution){
         return PrimitiveGenerators.bytes(lo, hi, distribution).next();
-    }    
+    }
 }

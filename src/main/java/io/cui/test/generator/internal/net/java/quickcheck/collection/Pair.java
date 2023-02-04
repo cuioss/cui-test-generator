@@ -37,7 +37,7 @@ public class Pair<A, B> {
 
     @Getter
     private final A first;
-    
+
     @Getter
     private final B second;
 

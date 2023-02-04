@@ -19,7 +19,7 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 /**
  * A generator creates instances of type T supposed to be checked against a
  * {@link Characteristic} specification.
- * 
+ *
  * @param <T>
  *            type of generated instances
  */
@@ -27,7 +27,7 @@ public interface Generator<T> {
 
     /**
      * Generates the next instance.
-     * 
+     *
      * @return a newly created instance
      */
     T next();

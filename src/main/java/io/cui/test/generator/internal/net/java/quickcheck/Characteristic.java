@@ -26,17 +26,17 @@ package io.cui.test.generator.internal.net.java.quickcheck;
  * {@link Characteristic#specify(Object)} method have to be valid. Invalid runs
  * have to throw an exception.
  * </p>
- * 
+ *
  * @param <T>
  *            type of generated random test instances
- * 
+ *
  */
 @SuppressWarnings("ProhibitedExceptionDeclared")
 public interface Characteristic<T> {
 
     /**
      * Checks the characteristic's specification for a test case instance.
-     * 
+     *
      * @param instance
      *            for which to check the characteristic
      * @throws Throwable
@@ -59,7 +59,7 @@ public interface Characteristic<T> {
 
     /**
      * Unique name for this characteristic instance.
-     * 
+     *
      * @return name of the characteristic.
      */
     String name();

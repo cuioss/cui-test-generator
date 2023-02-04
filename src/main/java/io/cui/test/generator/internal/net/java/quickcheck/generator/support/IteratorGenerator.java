@@ -19,7 +19,6 @@ package io.cui.test.generator.internal.net.java.quickcheck.generator.support;
 import static java.lang.Math.max;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;

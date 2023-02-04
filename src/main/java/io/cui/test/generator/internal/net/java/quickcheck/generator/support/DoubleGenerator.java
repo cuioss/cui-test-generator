@@ -55,7 +55,7 @@ public class DoubleGenerator implements Generator<Double> {
     public double nextDouble() {
         return this.distribution.nextRandomNumber() * (this.max - this.min) + this.min;
     }
-    
+
     @Override
     public String toString() {
         return format("%s[min=%s, max=%s, distribution=%s", getClass().getSimpleName(), min, max, distribution);

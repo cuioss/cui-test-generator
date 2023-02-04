@@ -60,7 +60,7 @@ public class CharacteristicException extends RuntimeException {
 
     /**
      * Instance causing the characteristic violation.
-     * 
+     *
      * @return the violating instance
      */
     public Object getInstance() {
