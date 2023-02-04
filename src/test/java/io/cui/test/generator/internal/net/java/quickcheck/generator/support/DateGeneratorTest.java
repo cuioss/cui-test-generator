@@ -142,25 +142,6 @@ class DateGeneratorTest {
             assertBounds(low, high, date);
     }
 
-    @Test
-    @Disabled
-    void testGeneratorRunsNicelyOutOfValues() {
-        DateGenerator dateGenerator = new DateGenerator(TimeUnit.DAYS, 0, 0, DEFAULT_MAX_TRIES);
-        assertThrows(GeneratorException.class, dateGenerator::next);
-    }
-
-    @Test
-    @Disabled
-    void dayLighSavingsTimeOffsetChanges() {
-        // the Sep 24 02:00:00 CEST 1945 has another dayligh savings time offset
-        // than the 00:00 this resulted in a incorrect offset calculation
-        Generator<Date> dates = dates(-765946800000L, -765936000000L, DAYS);
-        Date next = dates.next();
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(next);
-        assertEquals(0, instance.get(Calendar.HOUR));
-    }
-
     private void assertBounds(Long lo, Long hi, Date date) {
         long next = date.getTime();
         assertTrue(lo <= next, format("lo <= next, %s, %s", lo, next));
