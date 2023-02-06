@@ -11,7 +11,7 @@ import io.cui.tools.string.Joiner;
 
 /**
  * Provides Subjects for messages
- * 
+ *
  * @author Oliver Wolff
  *
  */

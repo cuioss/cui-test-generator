@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
-
 import de.icw.cui.test.generator.impl.CollectionGenerator;
 import de.icw.cui.test.generator.impl.DecoratorGenerator;
 import de.icw.cui.test.generator.impl.FloatObjectGenerator;
@@ -506,7 +505,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Temporal}s
      */
     public static final TypedGenerator<Temporal> temporals() {
-        return new TypedGenerator<Temporal>() {
+        return new TypedGenerator<>() {
 
             @Override
             public Class<Temporal> getType() {
@@ -606,7 +605,7 @@ public class Generators {
     public static final <T> Generator<T> unwrap(final TypedGenerator<T> generator) {
         return generator::next;
     }
-    
+
     /**
      * Helper method that determines the actual type of a given {@link Iterable} by peeking into it.
      * <em>For testing only, should never be used in productive code</em>

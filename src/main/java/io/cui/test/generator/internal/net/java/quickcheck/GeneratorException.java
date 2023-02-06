@@ -25,7 +25,7 @@ import lombok.Getter;
 public class GeneratorException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Getter
     private transient Generator<?> generator;
 

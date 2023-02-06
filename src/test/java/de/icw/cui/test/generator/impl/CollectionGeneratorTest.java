@@ -49,7 +49,7 @@ class CollectionGeneratorTest {
     }
 
     @Test
-    void shouldIntersectSorteSet() {
+    void shouldIntersectSortedSet() {
         final Class<Iterable<?>> expectedType = (Class<Iterable<?>>) PropertyUtil
                 .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_SORTED_SET).get();
         final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();

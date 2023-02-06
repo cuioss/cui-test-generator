@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class DomainGeneratorTest {
 
     @Test
-    void shouldProvideBlindtexts() {
+    void shouldProvideBlindtTexts() {
         assertNotNull(new BlindTextGenerator().next());
     }
 
@@ -21,7 +21,7 @@ class DomainGeneratorTest {
     }
 
     @Test
-    void shouldProvideFullnames() {
+    void shouldProvideFullNames() {
         assertNotNull(new FullNameGenerator(Locale.ENGLISH).next());
     }
 

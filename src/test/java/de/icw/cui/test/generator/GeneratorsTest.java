@@ -112,17 +112,13 @@ class GeneratorsTest {
 
     @Test
     void shouldFailOnZeroSizeArray() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            fixedValues(String.class, new String[0]);
-        });
+        assertThrows(IllegalArgumentException.class, () -> fixedValues(String.class, new String[0]));
     }
 
     @Test
     void shouldFailOnEmptyIterable() {
         ArrayList<String> values = new ArrayList<>();
-        assertThrows(IllegalArgumentException.class, () -> {
-            fixedValues(String.class, values);
-        });
+        assertThrows(IllegalArgumentException.class, () -> fixedValues(String.class, values));
     }
 
     @Test
@@ -304,7 +300,7 @@ class GeneratorsTest {
         assertNotNull(generator.next());
         assertNotNull(generator.next());
         // Next should fail
-        assertThrows(GeneratorException.class, () -> generator.next());
+        assertThrows(GeneratorException.class, generator::next);
     }
 
     @Test

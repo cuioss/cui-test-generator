@@ -7,7 +7,7 @@ import de.icw.cui.test.generator.TypedGenerator;
 /**
  * Provides a number of dummy Texts. Taken from
  * <a href="http://www.blindtextgenerator.de">blindtextgenerator.de</a>
- * 
+ *
  * @author Oliver Wolff
  *
  */
