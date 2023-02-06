@@ -16,6 +16,8 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck;
 
+import lombok.Getter;
+
 /**
  * GeneratorException is thrown if the creation of a new instance failed.
  *
@@ -23,18 +25,17 @@ package io.cui.test.generator.internal.net.java.quickcheck;
 public class GeneratorException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
-    private final Generator<?> generator;
+    
+    @Getter
+    private transient Generator<?> generator;
 
     /**
      * @param message
      *            error message
+     * @param generator offending generator
      */
     public GeneratorException(String message, Generator<?> generator) {
         super(message);
         this.generator = generator;
-    }
-
-    public Generator<?> getGenerator() {
-        return generator;
     }
 }
