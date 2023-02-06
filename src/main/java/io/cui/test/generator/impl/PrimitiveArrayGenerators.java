@@ -185,7 +185,7 @@ public enum PrimitiveArrayGenerators {
      * @return the found {@link PrimitiveArrayGenerators} or throws an {@link IllegalStateException}
      *         if none could be found
      */
-    public static final PrimitiveArrayGenerators resolveForType(final Class<?> primitiveType) {
+    public static PrimitiveArrayGenerators resolveForType(final Class<?> primitiveType) {
         requireNonNull(primitiveType);
         checkArgument(primitiveType.isPrimitive(), "You must provide a primitive type, given: " + primitiveType);
         for (final PrimitiveArrayGenerators generator : PrimitiveArrayGenerators.values()) {

@@ -31,9 +31,9 @@ public class EmailGenerator implements TypedGenerator<String> {
      *         firstname.lastname@|email|mail|icw.de|org|com|net
      */
     public static String createEmail(final String firstname, final String lastname) {
-        return new StringBuilder().append(firstname.toLowerCase()).append('.').append(lastname.toLowerCase())
-                .append('@').append(DOMAINS.next())
-                .append('.').append(TLDS.next()).toString();
+        return firstname.toLowerCase() + '.' + lastname.toLowerCase() +
+                '@' + DOMAINS.next() +
+                '.' + TLDS.next();
     }
 
 }

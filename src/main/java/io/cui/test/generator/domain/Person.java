@@ -14,9 +14,9 @@ import lombok.Value;
 @Builder
 public class Person {
 
-    private String title;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String organisation;
+    String title;
+    String firstname;
+    String lastname;
+    String email;
+    String organisation;
 }

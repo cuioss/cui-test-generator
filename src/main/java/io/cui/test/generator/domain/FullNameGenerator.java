@@ -34,7 +34,7 @@ public class FullNameGenerator implements TypedGenerator<String> {
 
     @Override
     public String next() {
-        return new StringBuilder(firstNames.next()).append(' ').append(familyNames.next()).toString();
+        return firstNames.next() + ' ' + familyNames.next();
     }
 
 }

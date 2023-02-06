@@ -12,8 +12,8 @@ import io.cui.test.generator.TypedGenerator;
  */
 public class PhoneNumberGenerator implements TypedGenerator<String> {
 
-    private TypedGenerator<Integer> prepend = integers(100, 999);
-    private TypedGenerator<Integer> number = integers(1000, 9999);
+    private final TypedGenerator<Integer> prepend = integers(100, 999);
+    private final TypedGenerator<Integer> number = integers(1000, 9999);
 
     @Override
     public String next() {

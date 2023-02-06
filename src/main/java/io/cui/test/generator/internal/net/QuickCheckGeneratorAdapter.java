@@ -1,4 +1,4 @@
-package io.cui.test.generator.qc;
+package io.cui.test.generator.internal.net;
 
 import io.cui.test.generator.TypedGenerator;
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
