@@ -2,12 +2,15 @@
 
 == Status
 
-https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator[image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=alert_status[Quality
-Gate Status]]
 image:https://github.com/cuioss/cui-test-generator/actions/workflows/maven.yml/badge.svg[Java CI with Maven,link=https://github.com/cuioss/cui-test-generator/actions/workflows/maven.yml]
 image:http://img.shields.io/:license-apache-blue.svg[License,link=http://www.apache.org/licenses/LICENSE-2.0.html]
 image:https://maven-badges.herokuapp.com/maven-central/io.github.cuioss/cui-test-generator/badge.svg[Maven Central,link=https://maven-badges.herokuapp.com/maven-central/io.github.cuioss.test/cui-test-generator]
+
+https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator[image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=alert_status[Quality
+Gate Status]]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=ncloc[Lines of Code,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
+image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=coverage[Coverage,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
+
 https://cuioss.github.io/cui-test-generator/index.html[Generated Documentation on github-pages]s
 
 == What is it?
