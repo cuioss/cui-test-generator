@@ -28,6 +28,7 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -188,7 +189,7 @@ class QuickCheckTest {
 
     @Test
     void testGuard() {
-        guard(true);
+        assertDoesNotThrow(() -> guard(true));
     }
 
     @Test

@@ -52,6 +52,7 @@ class ObjectDefinition<T> implements InvocationHandler {
     }
 
     @Override
+    @SuppressWarnings("java:S4274") // owolff: Ok for test code
     public Object invoke(Object proxy, Method method, Object[] args) {
         assert args == null;
         calledTargetMethod = method;

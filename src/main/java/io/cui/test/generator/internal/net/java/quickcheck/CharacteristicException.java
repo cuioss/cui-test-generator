@@ -16,16 +16,20 @@
  */
 package io.cui.test.generator.internal.net.java.quickcheck;
 
+import lombok.Getter;
+
 /**
  * Indicates that a characteristic specification was not true for a given
  * instance.
  */
+@SuppressWarnings("java:S1948") // owolff: not a problem for test-code 
 public class CharacteristicException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
     private final Object instance;
 
+    @Getter
     private final Characteristic<?> charateristic;
 
     /**
@@ -65,9 +69,5 @@ public class CharacteristicException extends RuntimeException {
      */
     public Object getInstance() {
         return this.instance;
-    }
-
-    public Characteristic<?> getCharateristic() {
-        return this.charateristic;
     }
 }
