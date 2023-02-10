@@ -45,7 +45,7 @@ class UniqueComparableValuesGeneratorTest extends UniqueValuesGeneratorTest {
         for (List<String> gs : toIterable(lists(uniqueValues))) {
             for (String g : gs) {
                 for (String o : removed(gs, g)) {
-                    assertNotEquals(CASE_INSENSITIVE_ORDER.compare(g, o), 0);
+                    assertNotEquals(0, CASE_INSENSITIVE_ORDER.compare(g, o));
                 }
             }
             uniqueValues.reset();

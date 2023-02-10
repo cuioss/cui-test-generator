@@ -40,7 +40,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.GeneratorException;
  */
 public abstract class AbstractTreeGenerator<T> implements Generator<T> {
 
-    public final static int MAX_TREE_DEPTH = 50;
+    public static final int MAX_TREE_DEPTH = 50;
 
     /**
      * Create a node of type T.

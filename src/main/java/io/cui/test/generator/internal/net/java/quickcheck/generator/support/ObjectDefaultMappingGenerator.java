@@ -29,7 +29,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.ObjectGenerator;
  */
 public class ObjectDefaultMappingGenerator<T> extends ObjectGeneratorImpl<T> {
 
-    private final static Map<Class<?>, Generator<?>> RETURN_TYPE_TO_GENERATOR = new HashMap<>();
+    private static final Map<Class<?>, Generator<?>> RETURN_TYPE_TO_GENERATOR = new HashMap<>();
 
     static {
         map(new IntegerGenerator(), Integer.class, int.class);

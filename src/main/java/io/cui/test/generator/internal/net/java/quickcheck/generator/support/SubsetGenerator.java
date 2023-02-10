@@ -48,7 +48,7 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
     public Set<T> next() {
         Collections.shuffle(superset);
         int size = sizes.next();
-        checkArgument(minSize(superset) <= size);
+        checkArgument(0 <= size);
         checkArgument(maxSize(superset) >= size);
         return new HashSet<>(superset.subList(0, size));
     }
@@ -57,7 +57,4 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
         return superset.size();
     }
 
-    private static <T> int minSize(Collection<T> superset) {
-        return 0;
-    }
 }
