@@ -1,29 +1,34 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck;
 
 import java.io.PrintWriter;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * QuickCheck is an implementation of the Haskell QuickCheck generator based
  * test tool (<a href="http://www.cs.chalmers.se/~rjmh/QuickCheck/">...</a>).
  */
+@UtilityClass
+@SuppressWarnings("java:S106") // owolff ok for testcode
 public class QuickCheck {
 
+    
     public static final int MAX_NUMBER_OF_RUNS = 200;
     public static final int MIN_NUMBER_OF_RUNS = 1;
 
@@ -43,8 +48,9 @@ public class QuickCheck {
      *             if generation of the next value failed.
      */
     public static <T> void forAll(Generator<T> generator,
-            Characteristic<T> characteristic) throws GeneratorException,
-            CharacteristicException {
+            Characteristic<T> characteristic)
+        throws GeneratorException,
+        CharacteristicException {
         runner(characteristic, MAX_NUMBER_OF_RUNS, generator, new PrintWriter(new NullWriter()))
                 .forAll();
     }
@@ -75,8 +81,9 @@ public class QuickCheck {
      *             if generation of the next value failed.
      */
     public static <T> void forAll(int runs, Generator<T> generator,
-            Characteristic<T> characteristic) throws GeneratorException,
-            CharacteristicException {
+            Characteristic<T> characteristic)
+        throws GeneratorException,
+        CharacteristicException {
         runner(characteristic, runs, generator, new PrintWriter(new NullWriter())).forAll();
     }
 
@@ -94,8 +101,9 @@ public class QuickCheck {
      *             if generation of the next value failed.
      */
     public static <T> void forAllVerbose(Generator<T> generator,
-            Characteristic<T> characteristic) throws GeneratorException,
-            CharacteristicException {
+            Characteristic<T> characteristic)
+        throws GeneratorException,
+        CharacteristicException {
         runner(characteristic, MAX_NUMBER_OF_RUNS, generator, new PrintWriter(new PrintWriter(System.out))).forAll();
     }
 
@@ -115,14 +123,15 @@ public class QuickCheck {
      *             if generation of the next value failed.
      */
     public static <T> void forAllVerbose(int runs, Generator<T> generator,
-            Characteristic<T> characteristic) throws GeneratorException,
-            CharacteristicException {
+            Characteristic<T> characteristic)
+        throws GeneratorException,
+        CharacteristicException {
         runner(characteristic, runs, generator, new PrintWriter(new PrintWriter(System.out))).forAll();
     }
 
     /**
      * All executions of {@link Characteristic#specify(Object)} which execute
-     *this method will be skipped and a new test case
+     * this method will be skipped and a new test case
      * will be generated. Execution will be stopped if it is not possible to
      * create a new test cases after a reasonable amount of tries.
      *

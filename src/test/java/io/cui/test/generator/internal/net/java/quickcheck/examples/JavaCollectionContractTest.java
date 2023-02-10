@@ -21,6 +21,7 @@ import static io.cui.test.generator.internal.net.java.quickcheck.generator.Combi
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.pairs;
 import static io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
@@ -51,7 +52,7 @@ class JavaCollectionContractTest {
                             assertException(e);
                             exceptionThrown = true;
                         }
-                        assertTrue(collection.contains(element) != exceptionThrown);
+                        assertNotEquals(collection.contains(element), exceptionThrown);
                         assertEquals(changedCollection, containsInstance(
                                 collection, element));
                     }

@@ -92,6 +92,7 @@ class ObjectDefinition<T> implements InvocationHandler {
         methodsGeneratorMapping.put(method, generator);
     }
 
+    @SuppressWarnings("java:S1452") // owolff: Ok for test code
     public Generator<?> retrieveMapping(Method method) {
         return methodsGeneratorMapping.get(method);
     }
