@@ -1,4 +1,5 @@
 = cui-test-generator
+:toc:
 
 == Status
 
@@ -26,9 +27,6 @@ Using the generators help creating variations of test-data. On the one hand it p
         <name>cui-test-generator</name>
     </dependency>
 ----
-
-=== Generators
-Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `io.cui.test.generator.junit.EnableGeneratorController` and `io.cui.test.generator.junit.GeneratorSeed` for details.
 
 === Provided Features
 The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part.
