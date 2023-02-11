@@ -15,10 +15,7 @@ https://cuioss.github.io/cui-test-generator/index.html[Generated Documentation o
 
 == What is it?
 
-This is a template repository for creating java-modules for cui-open-source-projects. This incorporates all necessary java-structures, including `pom.xml`, sensible project-documentation, 
-an predefined github pipelines. 
-
-It is meant to be used as copy-paste-template.
+Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `io.cui.test.generator.junit.EnableGeneratorController` and `io.cui.test.generator.junit.GeneratorSeed` for details.
 
 === Maven Coordinates
 
@@ -30,6 +27,73 @@ It is meant to be used as copy-paste-template.
     </dependency>
 ----
 
-=== Further Steps
+=== Provided Features
+The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part. These code is isolated `io.cui.test.generator.internal.net.java.quickcheck` and will be replaced in the future. Therefore: Do not use any of that code at all! Central elements are:
 
-* `src/site/asciidoc/about.adoc`: Adjust content
+* `io.cui.test.generator.TypedGenerator`: Is the core type. Instances of it are used for generating arbitrary instances of any value-object. Compared to `io.cui.test.generator.internal.net.java.quickcheck.Generator` it provides an additional method providing runtime information on the type being generated: `io.cui.test.generator.TypedGenerator.getType()`.
+* `io.cui.test.generator.Generators`: Factory methods for accessing io.cui.test.generator.TypedGenerator for many java-lang types.
+* `io.cui.test.generator.domain`: Provides some domain specific io.cui.test.generator.TypedGenerator
+
+=== io.cui.test.generator.junit.EnableGeneratorController
+
+This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `io.cui.test.generator.junit.GeneratorSeed` for details.
+This fixed seed results in the generators reproducing the exact same test-data.
+
+Sample output:
+[source,text]
+----
+GeneratorController seed was 4711L.
+Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
+or by using the system property '-Dio.cui.test.generator.seed=4711'
+----
+
+=== io.cui.test.generator.junit.GeneratorSeed
+
+This annotation is to be used in the context of EnableGeneratorController. It explicitly sets the seed for the generators.
+
+Usage:
+
+[source,java]
+----
+@Test
+@EnableGeneratorController
+@GeneratorSeed(5L)
+class GeneratorControllerExtensionTest {
+
+    @Test
+    @GeneratorSeed(11L)
+    void shouldReadFromMethod() {
+        assertEquals(11L, RandomConfiguration.getLastSeed());
+    }
+
+    @Test
+    void shouldReadFromType() {
+        assertEquals(5L, RandomConfiguration.getLastSeed());
+    }
+----
+
+=== io.cui.test.generator.Generators
+
+Usage Sample
+
+[source,java]
+----
+    @Test
+    void shouldHandleNonBlankStrings() {
+        assertFalse(isEmpty(Generators.nonBlankStrings().next()));
+        assertEquals(String.class, nonBlankStrings().getType());
+    }
+
+    @Test
+    void shouldHandleUniqueValues() {
+        final TypedGenerator<String> generator = Generators.uniqueValues(Generators.nonEmptyStrings());
+        assertNotNull(generator.next());
+        assertNotEquals(generator.next(), generator.next());
+    }
+
+    @Test
+    void shouldHandleEnumsValues() {
+        assertNotNull(Generators.enumValues(PropertyMemberInfo.class).next());
+        assertEquals(PropertyMemberInfo.class, Generators.enumValues(PropertyMemberInfo.class).getType());
+    }
+----

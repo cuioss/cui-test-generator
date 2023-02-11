@@ -8,7 +8,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Explicitly sets the seed for the generators
+ * This annotation is to be used in the context of {@link EnableGeneratorController}.
+ * It explicitly sets the seed for the generators.
  *
  * @author Oliver Wolff
  *

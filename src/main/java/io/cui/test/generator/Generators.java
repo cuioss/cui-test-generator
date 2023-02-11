@@ -44,7 +44,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.generator.support.Fixe
 import lombok.experimental.UtilityClass;
 
 /**
- * Replacement for QuickCheck based {@link PrimitiveGenerators}
+ * Provides a number of {@link TypedGenerator} for arbitrary java-types
  *
  * @author Oliver Wolff
  */
