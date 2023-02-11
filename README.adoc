@@ -44,7 +44,9 @@ Therefore: Do not use any of that code at all! Central elements are:
 
 The usage is straight forward `TypedGenerator#next()` always returns a random object that can be used for testing. See section 'Generators' on samples for concrete generators.
 
-=== io.cui.test.generator.TypedGenerator
+=== TypedGenerator
+
+`io.cui.test.generator.TypedGenerator`
 
 Central interface for a concrete generator instance. `TypedGenerator#next()` provides a random instance, `TypedGenerator#getType()` provides the types.
 Sample implementation: 
@@ -69,7 +71,9 @@ public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 }
 ----
 
-=== io.cui.test.generator.Generators
+=== Generators
+
+`io.cui.test.generator.Generators`
 
 Central factory for `TypedGenerator` for most java-built-in types and wrappers for `fixedValue` and `enumValue` variants
 
@@ -102,7 +106,9 @@ Wraps a given `TypedGenerator` and provides  additional methods for creating `Li
  assertNotNull(generator.set());
 ----
 
-=== io.cui.test.generator.junit.EnableGeneratorController
+=== EnableGeneratorController
+
+`io.cui.test.generator.junit.EnableGeneratorController`
 
 This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `io.cui.test.generator.junit.GeneratorSeed` for details.
 This fixed seed results in the generators reproducing the exact same test-data.
@@ -115,7 +121,9 @@ Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
 or by using the system property '-Dio.cui.test.generator.seed=4711'
 ----
 
-=== io.cui.test.generator.junit.GeneratorSeed
+=== GeneratorSeed
+
+`io.cui.test.generator.junit.GeneratorSeed`
 
 This annotation is to be used in the context of EnableGeneratorController. It explicitly sets the seed for the generators.
 
