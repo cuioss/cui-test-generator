@@ -34,7 +34,6 @@ Usage:
 
 [source,java]
 ----
-@Test
 @EnableGeneratorController
 @GeneratorSeed(5L)
 class GeneratorControllerExtensionTest {
