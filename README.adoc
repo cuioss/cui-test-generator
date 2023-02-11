@@ -1,5 +1,4 @@
 = cui-test-generator
-:toc:
 
 == Status
 
