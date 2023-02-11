@@ -4,7 +4,10 @@
 Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `io.cui.test.generator.junit.EnableGeneratorController` and `io.cui.test.generator.junit.GeneratorSeed` for details.
 
 === Provided Features
-The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part. These code is isolated `io.cui.test.generator.internal.net.java.quickcheck` and will be replaced in the future. Therefore: Do not use any of that code at all! Central elements are:
+The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part.
+This code is isolated in `io.cui.test.generator.internal.net.java.quickcheck` and will be replaced in the future.
+
+Therefore: Do not use any of that code at all! Central elements are:
 
 * `io.cui.test.generator.TypedGenerator`: Is the core type. Instances of it are used for generating arbitrary instances of any value-object. Compared to `io.cui.test.generator.internal.net.java.quickcheck.Generator` it provides an additional method providing runtime information on the type being generated: `io.cui.test.generator.TypedGenerator.getType()`.
 * `io.cui.test.generator.Generators`: Factory methods for accessing io.cui.test.generator.TypedGenerator for many java-lang types.
