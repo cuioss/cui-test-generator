@@ -13,6 +13,68 @@ Therefore: Do not use any of that code at all! Central elements are:
 * `io.cui.test.generator.Generators`: Factory methods for accessing io.cui.test.generator.TypedGenerator for many java-lang types.
 * `io.cui.test.generator.domain`: Provides some domain specific io.cui.test.generator.TypedGenerator
 
+=== Usage
+
+The usage is straight forward `TypedGenerator#next()` always returns a random object that can be used for testing. See section 'Generators' on samples for concrete generators.
+
+=== io.cui.test.generator.TypedGenerator
+
+Central interface for a concrete generator instance. `TypedGenerator#next()` provides a random instance, `TypedGenerator#getType()` provides the types.
+Sample implementation: 
+
+[source,java]
+----
+public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
+
+    private static final TypedGenerator<ZoneId> ZONE_IDS_GEN =
+        Generators.fixedValues(ZoneId.class, getAvailableZoneIds().stream().map(ZoneId::of).collect(toList()));
+
+    @Override
+    public java.time.ZoneOffset next() {
+        return LocalDateTime.now().atZone(ZONE_IDS_GEN.next()).getOffset();
+    }
+
+    @Override
+    public Class<ZoneOffset> getType() {
+        return ZoneOffset.class;
+    }
+
+}
+----
+
+=== io.cui.test.generator.Generators
+
+Central factory for `TypedGenerator` for most java-built-in types and wrappers for `fixedValue` and `enumValue` variants
+
+[source,java]
+----
+ assertNotNull(Generators.strings().next());
+ assertNotNull(Generators.letterStrings().next());
+ assertFalse(isEmpty(Generators.nonEmptyStrings().next())); 
+ assertFalse(isEmpty(Generators.letterStrings(1, 2).next()));
+ 
+ assertNotNull(Generators.booleans().next());
+ assertNotNull(Generators.localTimes().next());
+ assertNotNull(Generators.fixedValues(String.class, "http://de.icw-global.com", "https://www.heise.de", "http://getbootstrap.com").next());
+ 
+ assertEquals(Temporal.class, Generators.temporals().getType());
+ assertNotNull(Generators.enumValues(PropertyMemberInfo.class).next());
+ assertEquals(PropertyMemberInfo.class, Generators.enumValues(PropertyMemberInfo.class).getType());
+----
+
+=== CollectionGenerator
+
+`io.cui.test.generator.impl.CollectionGenerator<T>`
+
+Wraps a given `TypedGenerator` and provides  additional methods for creating `Lists` and `Sets`
+
+[source,java]
+----
+ CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.nonEmptyStrings());
+ assertNotNull(generator.list());
+ assertNotNull(generator.set());
+----
+
 === io.cui.test.generator.junit.EnableGeneratorController
 
 This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `io.cui.test.generator.junit.GeneratorSeed` for details.
@@ -50,28 +112,3 @@ class GeneratorControllerExtensionTest {
     }
 ----
 
-=== io.cui.test.generator.Generators
-
-Usage Sample
-
-[source,java]
-----
-    @Test
-    void shouldHandleNonBlankStrings() {
-        assertFalse(isEmpty(Generators.nonBlankStrings().next()));
-        assertEquals(String.class, nonBlankStrings().getType());
-    }
-
-    @Test
-    void shouldHandleUniqueValues() {
-        final TypedGenerator<String> generator = Generators.uniqueValues(Generators.nonEmptyStrings());
-        assertNotNull(generator.next());
-        assertNotEquals(generator.next(), generator.next());
-    }
-
-    @Test
-    void shouldHandleEnumsValues() {
-        assertNotNull(Generators.enumValues(PropertyMemberInfo.class).next());
-        assertEquals(PropertyMemberInfo.class, Generators.enumValues(PropertyMemberInfo.class).getType());
-    }
-----
