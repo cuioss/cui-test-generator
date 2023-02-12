@@ -47,7 +47,7 @@ jobs:
         mvn -B -Prelease javadoc:javadoc site:site site:stage
         git checkout ${{github.base_ref}}
         git rebase release
-        mvn -B -Prelease release:perform -DskipTests
+       # mvn -B -Prelease release:perform -DskipTests
       env:
         MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
         MAVEN_CENTRAL_TOKEN: ${{ secrets.OSS_SONATYPE_PASSWORD }}
