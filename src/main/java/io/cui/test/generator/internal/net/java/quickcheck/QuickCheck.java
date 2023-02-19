@@ -28,7 +28,6 @@ import lombok.experimental.UtilityClass;
 @SuppressWarnings("java:S106") // owolff ok for testcode
 public class QuickCheck {
 
-    
     public static final int MAX_NUMBER_OF_RUNS = 200;
     public static final int MIN_NUMBER_OF_RUNS = 1;
 
@@ -56,7 +55,7 @@ public class QuickCheck {
     }
 
     public static int getDefaultNumberOfRuns() {
-        Integer runs = Integer.getInteger(SYSTEM_PROPERTY_RUNS,
+        var runs = Integer.getInteger(SYSTEM_PROPERTY_RUNS,
                 MAX_NUMBER_OF_RUNS);
         return Math.max(MIN_NUMBER_OF_RUNS, runs);
     }
@@ -139,8 +138,9 @@ public class QuickCheck {
      *            Skip the current test case if the predicate is true.
      */
     public static void guard(boolean predicate) {
-        if (!predicate)
+        if (!predicate) {
             throw new GuardException();
+        }
     }
 
     private static <T> Runner<T> runner(Characteristic<T> characteristic, int runs, Generator<T> generator,

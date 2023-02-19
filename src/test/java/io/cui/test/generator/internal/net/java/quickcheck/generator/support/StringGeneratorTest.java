@@ -51,7 +51,8 @@ class StringGeneratorTest {
 
     @Test
     void testGeneratePrintableLetters() {
-        for (String any : toIterable(io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.printableStrings())) {
+        for (String any : toIterable(
+                io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.printableStrings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
             for (var i = 0; i < any.length(); i++) {
                 var actualLetter = any.charAt(i);

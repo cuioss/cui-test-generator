@@ -28,7 +28,7 @@ public class NonBlankStringGenerator implements TypedGenerator<String> {
             }
         }
         throw new IllegalStateException(
-            format("Could not generate non blank string after %d tries", tries));
+                format("Could not generate non blank string after %d tries", tries));
     }
 
 }

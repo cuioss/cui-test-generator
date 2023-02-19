@@ -125,7 +125,7 @@ class ObjectGeneratorImplTest {
 
     @Test
     void objectsClassNotSupported() {
-        assertThrows(IllegalArgumentException.class, () ->  PrimitiveGenerators.objects(Object.class));
+        assertThrows(IllegalArgumentException.class, () -> PrimitiveGenerators.objects(Object.class));
     }
 
     @Test
@@ -144,8 +144,7 @@ class ObjectGeneratorImplTest {
             }
 
             @Override
-            public
-            void setValue(Integer v) {
+            public void setValue(Integer v) {
             }
         };
         ObjectGenerator<Simple> generator = PrimitiveGenerators

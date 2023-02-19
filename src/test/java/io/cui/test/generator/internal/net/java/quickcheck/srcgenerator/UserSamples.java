@@ -33,7 +33,8 @@ class UserSamples {
     /**
      * See documentation of {@link Users#multipleTypeVariable}.
      */
-    public static <A, B> io.cui.test.generator.internal.net.java.quickcheck.collection.Pair<A, B> anyMultipleTypeVariable(A a, B b) {
+    public static <A, B> io.cui.test.generator.internal.net.java.quickcheck.collection.Pair<A, B> anyMultipleTypeVariable(
+            A a, B b) {
         return Users.multipleTypeVariable(a, b).next();
     }
 

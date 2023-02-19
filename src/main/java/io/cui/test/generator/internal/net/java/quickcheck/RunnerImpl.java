@@ -43,7 +43,7 @@ class RunnerImpl<T> implements Runner<T> {
     public void forAll() {
         Objects.requireNonNull(characteristic, "characteristic");
         Objects.requireNonNull(generator, "generator");
-        for (int count = 0; count < runs; count++) {
+        for (var count = 0; count < runs; count++) {
             try {
                 doSetup();
                 check(generator);
@@ -58,7 +58,7 @@ class RunnerImpl<T> implements Runner<T> {
 
         while (currentRuns < maxRuns) {
             currentRuns++;
-            T value = generator.next();
+            var value = generator.next();
             printCurrentValue(currentRuns, value);
             try {
                 characteristic.specify(value);
@@ -69,7 +69,7 @@ class RunnerImpl<T> implements Runner<T> {
                 throwFailedException(value, e, characteristic, currentRuns);
             }
         }
-        String message = format("Generator max tries (%s) reached. Check your guard expressions.", maxRuns);
+        var message = format("Generator max tries (%s) reached. Check your guard expressions.", maxRuns);
         throw new GeneratorException(message, generator);
     }
 
@@ -103,9 +103,9 @@ class RunnerImpl<T> implements Runner<T> {
     }
 
     private void throwFailedException(T value, Throwable e, Characteristic<?> characteristic, int currentRuns) {
-        String characteristicName = characteristic.name() == null ? "" : characteristic.name();
-        String message = "Characteristic %s is not true for value(# %s):[%s] message: >%s<";
-        String msg = format(message, characteristicName, currentRuns, value, e.getMessage());
+        var characteristicName = characteristic.name() == null ? "" : characteristic.name();
+        var message = "Characteristic %s is not true for value(# %s):[%s] message: >%s<";
+        var msg = format(message, characteristicName, currentRuns, value, e.getMessage());
         print(msg);
         throw new CharacteristicException(msg, e, characteristic, value);
     }

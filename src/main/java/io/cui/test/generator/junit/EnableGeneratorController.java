@@ -15,11 +15,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * tests with a fixed seed for the generators, see {@link GeneratorSeed} for details. This fixed
  * seed results in the generators reproducing the exact same test-data.
  * Sample output:
+ * 
  * <pre>
 GeneratorController seed was 4711L.
 Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
 or by using the system property '-Dio.cui.test.generator.seed=4711'
  * </pre>
+ * 
  * <h2>Implementation</h2>
  * Shorthand for enabling {@link GeneratorControllerExtension} for a certain test-class. This type
  * is equivalent to {@link ExtendWith} {@link GeneratorControllerExtension}

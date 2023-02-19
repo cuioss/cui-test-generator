@@ -75,7 +75,7 @@ abstract class AbstractCollectionTestCase {
         AbstractCharacteristic<Collection<Integer>> characteristic = new AbstractCharacteristic<>() {
 
             @Override
-           public void doSpecify(Collection<Integer> any) {
+            public void doSpecify(Collection<Integer> any) {
                 var msg = format("size was %s", any.size());
                 assertTrue(any.size() <= hi, msg);
                 assertTrue(any.size() >= lo, msg);

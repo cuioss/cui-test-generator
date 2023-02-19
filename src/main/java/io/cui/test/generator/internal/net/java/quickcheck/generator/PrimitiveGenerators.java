@@ -1,18 +1,18 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
@@ -196,16 +196,14 @@ public class PrimitiveGenerators {
         return Generators.characters(lo, hi);
     }
 
-
     /**
      * Create a new character generator.<br>
      *
      * The characters are from the Basic Latin and Latin-1 Supplement unicode blocks.
      */
-    public static Generator<Character> characters(){
+    public static Generator<Character> characters() {
         return Generators.characters();
     }
-
 
     /**
      * Create a new character generator which generates characters from the
@@ -520,7 +518,7 @@ public class PrimitiveGenerators {
      * Note: every invocation of {@link Generator#next()} creates a new instance.
      * </p>
      */
-    public static Generator<Object> objects(){
+    public static Generator<Object> objects() {
         return Generators.objects();
     }
 
@@ -534,7 +532,7 @@ public class PrimitiveGenerators {
     /**
      * Create a generator from a {@link ObjectGenerator declarative object generator definition}.
      * <p>
-     *  Default values will be used for all {@link ObjectGenerator#on(Object) undefined methods}.
+     * Default values will be used for all {@link ObjectGenerator#on(Object) undefined methods}.
      * </p>
      */
     public static <T> ObjectGenerator<T> defaultObjects(Class<T> objectType) {

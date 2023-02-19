@@ -147,7 +147,7 @@ class DateGeneratorTest {
     private void assertBounds(Long lo, Long hi, Date date) {
         var next = date.getTime();
         assertTrue(lo <= next, format("lo <= next, %s, %s", lo, next));
-        assertTrue( hi >= next, format("hi >= next, %s, %s", hi, next));
+        assertTrue(hi >= next, format("hi >= next, %s, %s", hi, next));
     }
 
     private void classify(Classification classification, Date date) {
@@ -171,7 +171,7 @@ class DateGeneratorTest {
     }
 
     private void assertZero(Classification classification, int value) {
-        assertEquals(0.0, classification.getFrequency(value) );
+        assertEquals(0.0, classification.getFrequency(value));
     }
 
     @Test

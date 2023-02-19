@@ -1,6 +1,5 @@
 package io.cui.test.generator;
 
-
 import static io.cui.tools.collect.CollectionLiterals.mutableList;
 import static java.util.Objects.requireNonNull;
 

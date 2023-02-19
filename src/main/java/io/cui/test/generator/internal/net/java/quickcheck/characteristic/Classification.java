@@ -1,18 +1,18 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck.characteristic;
 
@@ -89,9 +89,10 @@ public class Classification {
         return builder.toString();
     }
 
-    public void doClassify(Object classification){
+    public void doClassify(Object classification) {
         doClassify(true, classification);
     }
+
     /**
      * Increment the classification counter for the given classification.
      *
@@ -102,7 +103,8 @@ public class Classification {
      */
     public void doClassify(boolean predicate, Object classification) {
         checkReportState();
-        if (!predicate) return;
+        if (!predicate)
+            return;
         boolean categoryFound = classifications.containsKey(classification);
         int current = categoryFound ? classifications.get(classification) : 0;
         classifications.put(classification, ++current);
@@ -158,7 +160,8 @@ public class Classification {
     // this is the easiest implementation report calculation can be resource
     // demanding
     private void checkReportState() {
-        if(reportState) throw new IllegalStateException("do not call after report was started.");
+        if (reportState)
+            throw new IllegalStateException("do not call after report was started.");
     }
 
     public void classifyCall(boolean predicate, Object classification) {

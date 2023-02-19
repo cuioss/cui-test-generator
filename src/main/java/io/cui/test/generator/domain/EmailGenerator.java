@@ -17,7 +17,7 @@ public class EmailGenerator implements TypedGenerator<String> {
 
     private static final TypedGenerator<String> TLDS = fixedValues("de", "org", "com", "net");
     private static final TypedGenerator<String> DOMAINS =
-            fixedValues("email", "mail", "icw", "message", "example", "hospital");
+        fixedValues("email", "mail", "icw", "message", "example", "hospital");
 
     @Override
     public String next() {

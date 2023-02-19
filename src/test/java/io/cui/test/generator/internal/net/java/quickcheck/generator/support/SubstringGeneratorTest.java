@@ -61,7 +61,8 @@ class SubstringGeneratorTest {
         var base = new StringGenerator().next();
         var invalidMin = new IntegerGenerator(Integer.MIN_VALUE, -1).nextInt();
         val baseLength = base.length();
-        assertThrows(IllegalArgumentException.class, () -> PrimitiveGenerators.substrings(base, invalidMin, baseLength));
+        assertThrows(IllegalArgumentException.class,
+                () -> PrimitiveGenerators.substrings(base, invalidMin, baseLength));
     }
 
     @Test

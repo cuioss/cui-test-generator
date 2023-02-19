@@ -39,7 +39,8 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             throw failure;
         } else {
             var failure =
-                new AssertionFailedError(throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+                new AssertionFailedError(
+                        throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
         }
@@ -69,7 +70,6 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             RandomConfiguration.initSeed();
         }
     }
-
 
     private String createErrorMessage(Throwable e, Long seed) {
         var causeMsg = e.getMessage() == null ? "" : e.getMessage();

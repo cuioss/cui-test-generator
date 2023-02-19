@@ -163,6 +163,7 @@ class EnsuredValuesTest {
     @SuppressWarnings("java:S5778")
     void invalidWindowSize() {
         int invalidWindow = PrimitiveGenerators.integers(0, VALUES.size() - 1).next();
-        assertThrows(IllegalArgumentException.class, () -> CombinedGenerators.ensureValues(VALUES, invalidWindow, PrimitiveGenerators.nulls()));
+        assertThrows(IllegalArgumentException.class,
+                () -> CombinedGenerators.ensureValues(VALUES, invalidWindow, PrimitiveGenerators.nulls()));
     }
 }

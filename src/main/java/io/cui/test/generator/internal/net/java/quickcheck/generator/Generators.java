@@ -1,18 +1,18 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
@@ -80,7 +80,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.generator.support.Uniq
 import io.cui.test.generator.internal.net.java.quickcheck.generator.support.VetoableGenerator;
 
 @SuppressWarnings({ "WeakerAccess", "unused" })
-public  class Generators {
+public class Generators {
 
     public static final int DEFAULT_STRING_MAX_LENGTH = StringGenerator.MAX_LENGTH;
     public static final int DEFAULT_COLLECTION_MAX_SIZE = ListGenerator.MAX_SIZE;
@@ -88,7 +88,8 @@ public  class Generators {
     // for runs = 200 this means 20000 tries for the worst case
     public static final int DEFAULT_MAX_TRIES = VetoableGenerator.DEFAULT_MAX_TRIES;
 
-    private Generators(){}
+    private Generators() {
+    }
 
     /**
      * Cast a generator to a super type generator.
@@ -99,7 +100,7 @@ public  class Generators {
      * </p>
      */
     @SuppressWarnings("unchecked")
-    public static <T> Generator<T> cast(Generator<? extends T> generator){
+    public static <T> Generator<T> cast(Generator<? extends T> generator) {
         return (Generator<T>) generator;
     }
 
@@ -119,7 +120,7 @@ public  class Generators {
      */
     public static <T> Iterable<T> toIterable(final Generator<T> generator, final int numberOfRuns) {
         Objects.requireNonNull(generator, "generator");
-        checkArgument(0.0<= numberOfRuns, "number of runs");
+        checkArgument(0.0 <= numberOfRuns, "number of runs");
         return () -> new Iterator<>() {
 
             private int runs;
@@ -131,8 +132,9 @@ public  class Generators {
 
             @Override
             public T next() {
-                if (!hasNext())
+                if (!hasNext()) {
                     throw new NoSuchElementException();
+                }
                 runs++;
                 return generator.next();
             }
@@ -143,8 +145,6 @@ public  class Generators {
             }
         };
     }
-
-
 
     /**
      * Create a new string generator.<br>
@@ -241,7 +241,7 @@ public  class Generators {
      * from loLengh to hiLength of characters from a-z and A-Z.
      */
     public static ExtendibleGenerator<Character, String> letterStrings(int min, int max) {
-        StringGenerator generator = new StringGenerator(new IntegerGenerator(min, max), characters('a', 'z'));
+        var generator = new StringGenerator(new IntegerGenerator(min, max), characters('a', 'z'));
         return generator.add(characters('A', 'Z'));
     }
 
@@ -307,13 +307,12 @@ public  class Generators {
         return new CharacterGenerator(lo, hi);
     }
 
-
     /**
      * Create a new character generator.<br>
      *
      * The characters are from the Basic Latin and Latin-1 Supplement unicode blocks.
      */
-    public static Generator<Character> characters(){
+    public static Generator<Character> characters() {
         return new CharacterGenerator();
     }
 
@@ -330,8 +329,10 @@ public  class Generators {
      * given string.
      */
     public static Generator<Character> characters(String string) {
-        Character[] chars = new Character[string.length()];
-        for(int i = 0; i < chars.length; i++) chars[i] = string.charAt(i);
+        var chars = new Character[string.length()];
+        for (var i = 0; i < chars.length; i++) {
+            chars[i] = string.charAt(i);
+        }
         return characters(chars);
     }
 
@@ -624,7 +625,9 @@ public  class Generators {
     public static <T extends Enum<T>> Generator<T> enumValues(
             Class<T> enumClass, Iterable<T> excludedValues) {
         EnumSet<T> excluded = EnumSet.noneOf(enumClass);
-        for(T e : excludedValues) excluded.add(e);
+        for (T e : excludedValues) {
+            excluded.add(e);
+        }
         return new FixedValuesGenerator<>(EnumSet.complementOf(excluded));
     }
 
@@ -634,7 +637,7 @@ public  class Generators {
      * Note: every invocation of {@link Generator#next()} creates a new instance.
      * </p>
      */
-    public static Generator<Object> objects(){
+    public static Generator<Object> objects() {
         return new io.cui.test.generator.internal.net.java.quickcheck.generator.support.ObjectGenerator();
     }
 
@@ -648,7 +651,7 @@ public  class Generators {
     /**
      * Create a generator from a {@link ObjectGenerator declarative object generator definition}.
      * <p>
-     *  Default values will be used for all {@link ObjectGenerator#on(Object) undefined methods}.
+     * Default values will be used for all {@link ObjectGenerator#on(Object) undefined methods}.
      * </p>
      */
     public static <T> ObjectGenerator<T> defaultObjects(Class<T> objectType) {
@@ -708,9 +711,9 @@ public  class Generators {
      */
     @SuppressWarnings("unchecked")
     public static <A, B> Generator<Pair<A, B>> pairs(Generator<A> first, Generator<B> second) {
-        final TupleGenerator generator = new TupleGenerator(first, second);
+        final var generator = new TupleGenerator(first, second);
         return () -> {
-            Object[] next = generator.next();
+            var next = generator.next();
             return new Pair<>((A) next[0], (B) next[1]);
         };
     }
@@ -723,9 +726,10 @@ public  class Generators {
      */
     public static <T extends Comparable<T>> Generator<Pair<T, T>> sortedPairs(Generator<T> content) {
         return new AbstractTransformerGenerator<>(sortedLists(content, 2, 2)) {
+
             @Override
             protected Pair<T, T> transform(Generator<List<T>> inputGenerator) {
-                List<T> next = inputGenerator.next();
+                var next = inputGenerator.next();
                 return new Pair<>(next.get(0), next.get(1));
             }
         };
@@ -751,9 +755,9 @@ public  class Generators {
     @SuppressWarnings("unchecked")
     public static <A, B, C> Generator<Triple<A, B, C>> triples(Generator<A> first, Generator<B> second,
             Generator<C> third) {
-        final TupleGenerator generator = new TupleGenerator(first, second, third);
+        final var generator = new TupleGenerator(first, second, third);
         return () -> {
-            Object[] next = generator.next();
+            var next = generator.next();
             return new Triple<>((A) next[0], (B) next[1], (C) next[2]);
         };
     }
@@ -778,14 +782,14 @@ public  class Generators {
      */
     public static <T extends Comparable<T>> Generator<Triple<T, T, T>> sortedTriple(Generator<T> content) {
         return new AbstractTransformerGenerator<>(sortedLists(content, 3, 3)) {
+
             @Override
             protected Triple<T, T, T> transform(Generator<List<T>> inputGenerator) {
-                List<T> next = inputGenerator.next();
+                var next = inputGenerator.next();
                 return new Triple<>(next.get(0), next.get(1), next.get(2));
             }
         };
     }
-
 
     /**
      * Create a generator as a combination of a null value generator and
@@ -808,7 +812,7 @@ public  class Generators {
      *            weight of the provided generator
      */
     public static <T> Generator<T> nullsAnd(Generator<T> generator, int weight) {
-        return new DefaultFrequencyGenerator<>(Generators.<T>nulls(), 1).add(generator, weight);
+        return new DefaultFrequencyGenerator<>(Generators.<T> nulls(), 1).add(generator, weight);
     }
 
     /**
@@ -872,6 +876,7 @@ public  class Generators {
     public static <T> Generator<Set<T>> sets(T... superset) {
         return sets(asList(superset));
     }
+
     /**
      * Create a generator of subsets from a given set.
      *
@@ -905,7 +910,7 @@ public  class Generators {
      *         more than once in the resulting list.
      */
     @SafeVarargs
-    public static <T> Generator<List<T>> duplicates(T... input){
+    public static <T> Generator<List<T>> duplicates(T... input) {
         return new DuplicateGenerator<>(asList(input));
     }
 
@@ -915,7 +920,7 @@ public  class Generators {
      * @return a list derived from the input values. At least one input value is
      *         more than once in the resulting list.
      */
-    public static <T> Generator<List<T>> duplicates(Iterable<T> input){
+    public static <T> Generator<List<T>> duplicates(Iterable<T> input) {
         return new DuplicateGenerator<>(input);
     }
 
@@ -1049,7 +1054,7 @@ public  class Generators {
      *            is the upper size bound as well.
      */
     public static <T> Generator<List<T>> lists(Generator<? extends T> content, int low) {
-        return lists(content, low, Math.max(low, ListGenerator.MAX_SIZE) );
+        return lists(content, low, Math.max(low, ListGenerator.MAX_SIZE));
     }
 
     /**
@@ -1126,7 +1131,7 @@ public  class Generators {
      *            type of arrays generated
      */
     public static <T> Generator<T[]> nonEmptyArrays(Generator<? extends T> content,
-             Class<T> type) {
+            Class<T> type) {
         return arrays(content, positiveIntegers(MAX_SIZE), type);
     }
 
@@ -1219,21 +1224,25 @@ public  class Generators {
     /**
      * Create a generator of {@link Map maps}.
      *
-     * <p>This is a generator for simple maps where the values are not related to the keys.</p>
+     * <p>
+     * This is a generator for simple maps where the values are not related to the keys.
+     * </p>
      *
      * @param keys
      *            {@link Generator} for the keys of the map
      * @param values
      *            {@link Generator} for the values of the map
      */
-    public static <K,V> Generator<Map<K,V>> maps(Generator<K> keys, Generator<V> values) {
+    public static <K, V> Generator<Map<K, V>> maps(Generator<K> keys, Generator<V> values) {
         return new MapGenerator<>(keys, values);
     }
 
     /**
      * Create a generator of {@link Map maps}.
      *
-     * <p>This is a generator for simple maps where the values are not related to the keys.</p>
+     * <p>
+     * This is a generator for simple maps where the values are not related to the keys.
+     * </p>
      *
      * @param keys
      *            {@link Generator} for the keys of the map
@@ -1242,30 +1251,34 @@ public  class Generators {
      * @param size
      *            integer used to determine the size of the generated map
      */
-    public static <K,V> Generator<Map<K,V>> maps(Generator<K> keys, Generator<V> values, Generator<Integer> size) {
+    public static <K, V> Generator<Map<K, V>> maps(Generator<K> keys, Generator<V> values, Generator<Integer> size) {
         return new MapGenerator<>(keys, values, size);
     }
-
 
     /**
      * Create a generator of maps from a given map.
      *
-     * <p>The entry set of the generated maps are subsets of the given map's entry set.</p>
+     * <p>
+     * The entry set of the generated maps are subsets of the given map's entry set.
+     * </p>
+     * 
      * @param supermap
      *            of the generated maps
      */
-    public static <K,V> Generator<Map<K, V>> maps(Map<K, V> supermap) {
+    public static <K, V> Generator<Map<K, V>> maps(Map<K, V> supermap) {
         return new SubmapGenerator<>(supermap);
     }
 
     /**
      * Create a generator of maps from a given map.
-     * <p>The entry set of the generated maps are subsets of the given map's entry set.</p>
+     * <p>
+     * The entry set of the generated maps are subsets of the given map's entry set.
+     * </p>
      *
      * @param supermap of the generated maps
      * @param sizes of the generated maps
      */
-    public static <K,V> Generator<Map<K, V>> maps(Map<K, V> supermap, Generator<Integer> sizes) {
+    public static <K, V> Generator<Map<K, V>> maps(Map<K, V> supermap, Generator<Integer> sizes) {
         return new SubmapGenerator<>(supermap, sizes);
     }
 
@@ -1430,7 +1443,7 @@ public  class Generators {
      * Create a generator that ensures unique values
      * </p>
      * <p>
-     *  The actual values are created with an arbitrary generator.
+     * The actual values are created with an arbitrary generator.
      * </p>
      * <p>
      * Note: unique generator depends on valid implementation of equals and

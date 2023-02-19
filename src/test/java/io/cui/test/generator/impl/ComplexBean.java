@@ -76,6 +76,4 @@ class ComplexBean implements Serializable {
     @Setter
     private ZoneId zoneId;
 
-
-
 }

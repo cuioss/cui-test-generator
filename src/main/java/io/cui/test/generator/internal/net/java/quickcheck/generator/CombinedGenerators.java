@@ -1,18 +1,18 @@
 /*
- *  Licensed to the author under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
+ * Licensed to the author under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package io.cui.test.generator.internal.net.java.quickcheck.generator;
 
@@ -155,7 +155,6 @@ public class CombinedGenerators {
         return Generators.sortedTriple(content);
     }
 
-
     /**
      * Create a generator as a combination of a null value generator and
      * generator of type T.
@@ -241,6 +240,7 @@ public class CombinedGenerators {
     public static <T> Generator<Set<T>> sets(T... superset) {
         return Generators.sets(superset);
     }
+
     /**
      * Create a generator of subsets from a given set.
      *
@@ -274,7 +274,7 @@ public class CombinedGenerators {
      *         more than once in the resulting list.
      */
     @SafeVarargs
-    public static <T> Generator<List<T>> duplicates(T... input){
+    public static <T> Generator<List<T>> duplicates(T... input) {
         return Generators.duplicates(input);
     }
 
@@ -284,7 +284,7 @@ public class CombinedGenerators {
      * @return a list derived from the input values. At least one input value is
      *         more than once in the resulting list.
      */
-    public static <T> Generator<List<T>> duplicates(Iterable<T> input){
+    public static <T> Generator<List<T>> duplicates(Iterable<T> input) {
         return Generators.duplicates(input);
     }
 
@@ -498,7 +498,7 @@ public class CombinedGenerators {
      *            type of arrays generated
      */
     public static <T> Generator<T[]> nonEmptyArrays(Generator<? extends T> content,
-             Class<T> type) {
+            Class<T> type) {
         return Generators.nonEmptyArrays(content, type);
     }
 
@@ -591,21 +591,25 @@ public class CombinedGenerators {
     /**
      * Create a generator of {@link Map maps}.
      *
-     * <p>This is a generator for simple maps where the values are not related to the keys.</p>
+     * <p>
+     * This is a generator for simple maps where the values are not related to the keys.
+     * </p>
      *
      * @param keys
      *            {@link Generator} for the keys of the map
      * @param values
      *            {@link Generator} for the values of the map
      */
-    public static <K,V> Generator<Map<K,V>> maps(Generator<K> keys, Generator<V> values) {
+    public static <K, V> Generator<Map<K, V>> maps(Generator<K> keys, Generator<V> values) {
         return Generators.maps(keys, values);
     }
 
     /**
      * Create a generator of {@link Map maps}.
      *
-     * <p>This is a generator for simple maps where the values are not related to the keys.</p>
+     * <p>
+     * This is a generator for simple maps where the values are not related to the keys.
+     * </p>
      *
      * @param keys
      *            {@link Generator} for the keys of the map
@@ -614,30 +618,34 @@ public class CombinedGenerators {
      * @param size
      *            integer used to determine the size of the generated map
      */
-    public static <K,V> Generator<Map<K,V>> maps(Generator<K> keys, Generator<V> values, Generator<Integer> size) {
+    public static <K, V> Generator<Map<K, V>> maps(Generator<K> keys, Generator<V> values, Generator<Integer> size) {
         return Generators.maps(keys, values, size);
     }
-
 
     /**
      * Create a generator of maps from a given map.
      *
-     * <p>The entry set of the generated maps are subsets of the given map's entry set.</p>
+     * <p>
+     * The entry set of the generated maps are subsets of the given map's entry set.
+     * </p>
+     * 
      * @param supermap of the generated maps
      */
-    public static <K,V> Generator<Map<K, V>> maps(Map<K, V> supermap) {
+    public static <K, V> Generator<Map<K, V>> maps(Map<K, V> supermap) {
         return Generators.maps(supermap);
     }
 
     /**
      * Create a generator of maps from a given map.
      *
-     * <p>The entry set of the generated maps are subsets of the given map's entry set.</p>
+     * <p>
+     * The entry set of the generated maps are subsets of the given map's entry set.
+     * </p>
      *
      * @param supermap of the generated maps
      * @param sizes of the generated maps
      */
-    public static <K,V> Generator<Map<K, V>> maps(Map<K, V> supermap, Generator<Integer> sizes) {
+    public static <K, V> Generator<Map<K, V>> maps(Map<K, V> supermap, Generator<Integer> sizes) {
         return Generators.maps(supermap, sizes);
     }
 
@@ -669,13 +677,14 @@ public class CombinedGenerators {
 
     /**
      * <p>
-     *  Create a deterministic generator which guarantees that all values from
-     *  the ensuredValues collection will be return
-     *  {@link Generator#next()} are issued (i.e. ensuredValues.size() &lt;= # of
-     *  runs). The order of values is undefined.
-     * </p><p>
-     *  If all values of ensuredValues are generated calls to
-     *  {@link Generator#next()} will return generator.
+     * Create a deterministic generator which guarantees that all values from
+     * the ensuredValues collection will be return
+     * {@link Generator#next()} are issued (i.e. ensuredValues.size() &lt;= # of
+     * runs). The order of values is undefined.
+     * </p>
+     * <p>
+     * If all values of ensuredValues are generated calls to
+     * {@link Generator#next()} will return generator.
      * </p>
      *
      * @param <T>
@@ -800,7 +809,7 @@ public class CombinedGenerators {
      * Create a generator that ensures unique values
      * </p>
      * <p>
-     *  The actual values are created with an arbitrary generator.
+     * The actual values are created with an arbitrary generator.
      * </p>
      * <p>
      * Note: unique generator depends on valid implementation of equals and
@@ -892,7 +901,8 @@ public class CombinedGenerators {
      * A generator for a lists. The values in the lists are strictly increasing.
      * <p>
      * For every element x in the list: x(n) &lt; x(n+1).
-     * </p><p>
+     * </p>
+     * <p>
      * This {@link Generator} can be used to generate a list of strictly decreasing values:
      * {@code CombinedGenerators.strictlyOrdered(ts, Collections.&lt;T&gt; reverseOrder());}
      * </p>
