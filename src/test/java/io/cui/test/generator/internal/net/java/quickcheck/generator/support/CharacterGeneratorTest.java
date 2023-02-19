@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.characteristic.Classification;
 import io.cui.test.generator.internal.net.java.quickcheck.collection.Pair;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
@@ -46,15 +45,17 @@ class CharacterGeneratorTest {
 
     @Test
     void charactersForLowerAndUpperBounds() {
-        char lower = 'a';
-        char upper = 'f';
+        var lower = 'a';
+        var upper = 'f';
 
         List<Character> expected = new ArrayList<>();
-        for (char c = lower; c <= upper; c++)
+        for (var c = lower; c <= upper; c++) {
             expected.add(c);
+        }
 
-        for (Character actual : toIterable(characters(lower, upper)))
+        for (Character actual : toIterable(characters(lower, upper))) {
             assertTrue(expected.contains(actual));
+        }
     }
 
     @Test
@@ -65,23 +66,25 @@ class CharacterGeneratorTest {
 
     @Test
     void generatorFixedCharacters() {
-        final char character = 'a';
-        for (char any : toIterable(characters(character)))
+        final var character = 'a';
+        for (char any : toIterable(characters(character))) {
             assertEquals(any, character);
+        }
     }
 
     @Test
     void generatorMultipleFixedCharacters() {
         Character[] chars = { 'a', 'x', 'q' };
-        StringBuilder input = new StringBuilder();
+        var input = new StringBuilder();
         for (char c : chars) {
             input.append(c);
         }
 
-        Classification classification = new Classification();
-        Generator<Character> generator = characters(input.toString());
-        for (Character any : toIterable(generator))
+        var classification = new Classification();
+        var generator = characters(input.toString());
+        for (Character any : toIterable(generator)) {
             classification.classifyCall(any);
+        }
 
         assertEquals(chars.length, classification.getCategories().size());
         assertFrequencyGreater(classification, 20.0, chars);

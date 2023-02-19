@@ -19,10 +19,10 @@ public class NonBlankStringGenerator implements TypedGenerator<String> {
 
     @Override
     public String next() {
-        int tries = 0;
+        var tries = 0;
         while (tries < 100) {
             tries++;
-            String candidate = SOME_NONEMPTY_STRING.next();
+            var candidate = SOME_NONEMPTY_STRING.next();
             if (!candidate.trim().isEmpty()) {
                 return candidate;
             }

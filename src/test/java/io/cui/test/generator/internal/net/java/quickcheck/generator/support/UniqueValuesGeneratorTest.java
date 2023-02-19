@@ -37,12 +37,12 @@ class UniqueValuesGeneratorTest {
 
     @Test
     void testStopGenerationOfValuesAfterMaxTries() {
-        int tries = 100;
-        Generator<Boolean> generator = MockFactory.createBooleanMock();
+        var tries = 100;
+        var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);
         expectLastCall().times(tries + 1);
         replay(generator);
-        StatefulGenerator<Boolean> unique = uniqueValuesGenerator(tries, generator);
+        var unique = uniqueValuesGenerator(tries, generator);
         assertTrue(unique.next());
         assertThrows(GeneratorException.class, unique::next);
         verify(generator);
@@ -50,13 +50,13 @@ class UniqueValuesGeneratorTest {
 
     @Test
     void testGenerationOfUniqueValuesOnly() {
-        int tries = 3;
-        Generator<Boolean> generator = MockFactory.createBooleanMock();
+        var tries = 3;
+        var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true).times(tries - 1);
         expect(generator.next()).andReturn(false);
         replay(generator);
 
-        StatefulGenerator<Boolean> unique = uniqueValuesGenerator(tries, generator);
+        var unique = uniqueValuesGenerator(tries, generator);
         assertTrue(unique.next());
         assertFalse(unique.next());
         verify(generator);
@@ -64,12 +64,12 @@ class UniqueValuesGeneratorTest {
 
     @Test
     void testDefaultValueForMaxTries() {
-        Generator<Boolean> generator = MockFactory.createBooleanMock();
+        var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);
         expectLastCall().times(CombinedGenerators.DEFAULT_MAX_TRIES + 1);
         replay(generator);
 
-        StatefulGenerator<Boolean> unique = uniqueValuesGenerator(generator);
+        var unique = uniqueValuesGenerator(generator);
         assertEquals(true, unique.next());
         assertThrows(GeneratorException.class, unique::next);
         verify(generator);
@@ -77,13 +77,13 @@ class UniqueValuesGeneratorTest {
 
     @Test
     void testResetOfGenerator() {
-        int tries = 1;
-        Generator<Boolean> generator = MockFactory.createBooleanMock();
+        var tries = 1;
+        var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);
         expectLastCall().times(1 + tries + 1);
         replay(generator);
 
-        StatefulGenerator<Boolean> unique = uniqueValuesGenerator(tries, generator);
+        var unique = uniqueValuesGenerator(tries, generator);
         unique.next();
         assertThrows(GeneratorException.class, unique::next);
         unique.reset();

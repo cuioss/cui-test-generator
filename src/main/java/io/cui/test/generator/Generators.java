@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -616,11 +615,10 @@ public class Generators {
     @SuppressWarnings("unchecked")
     private static <T> Class<T> determineSupertypeFromIterable(final Iterable<T> iterable) {
         requireNonNull(iterable, "iterable must not be null");
-        final Iterator<T> iterator = iterable.iterator();
+        final var iterator = iterable.iterator();
         if (iterator.hasNext()) {
             return (Class<T>) iterator.next().getClass();
-        } else {
-            throw new IllegalArgumentException("Must contain at least a single element");
         }
+        throw new IllegalArgumentException("Must contain at least a single element");
     }
 }

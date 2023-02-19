@@ -51,7 +51,7 @@ class AbstractCharacteristicTest {
 
     @Test
     void testClassify() throws Throwable {
-        String classification = "string";
+        var classification = "string";
         characteristic.classify(classification);
         expectOneClassificationEntry(classification);
     }

@@ -36,7 +36,7 @@ class MapGeneratorTest {
     @Test
     void maps() {
         Generator<Map<String, Long>> maps = CombinedGenerators.maps(new StringGenerator(), new LongGenerator());
-        Map<String, Long> next = maps.next();
+        var next = maps.next();
         assertTrue(next.size() <= DEFAULT_COLLECTION_MAX_SIZE);
         for (Entry<String, Long> e : next.entrySet()) {
             assertInstanceOf(String.class, e.getKey());

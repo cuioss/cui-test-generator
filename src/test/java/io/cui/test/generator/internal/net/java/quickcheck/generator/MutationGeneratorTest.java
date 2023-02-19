@@ -26,8 +26,8 @@ class MutationGeneratorTest {
     @Test
     void testMutationGenerator() {
 
-        String value = PrimitiveGenerators.strings().next();
-        Integer mutationValue = PrimitiveGenerators.integers().next();
+        var value = PrimitiveGenerators.strings().next();
+        var mutationValue = PrimitiveGenerators.integers().next();
         MutationGenerator<String, Integer> mutationGenerator = new MutationGenerator<>(
                 fixedValues(value), fixedValues(mutationValue)) {
 

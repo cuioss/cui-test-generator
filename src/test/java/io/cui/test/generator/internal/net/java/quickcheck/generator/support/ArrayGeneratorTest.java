@@ -61,7 +61,7 @@ class ArrayGeneratorTest extends AbstractCollectionTestCase {
             protected Collection<Integer> transform(
                     Generator<Integer[]> inputGenerator) {
 
-                Integer[] next = inputGenerator.next();
+                var next = inputGenerator.next();
                 return Arrays.asList(next);
             }
         };

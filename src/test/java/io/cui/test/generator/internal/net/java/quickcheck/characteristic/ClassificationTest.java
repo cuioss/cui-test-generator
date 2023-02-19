@@ -50,7 +50,7 @@ class ClassificationTest {
 
     @Test
     void testToStringClassification() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         classification.doClassify(true, category);
         classification.call();
         assertEquals(format("Classifications :\n%s = %1.2f%%", category, 100d), classification.toString());
@@ -58,7 +58,7 @@ class ClassificationTest {
 
     @Test
     void testClassifyWithPredicateFalse() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         classification.doClassify(false, "cat");
         classification.call();
         assertEquals(EMPTY_LIST, classification.getCategories());
@@ -67,9 +67,10 @@ class ClassificationTest {
     @Test
     void testClassifyMultipleValues() {
         String[] categories = { category, category, category, otherCategory };
-        Classification classification = new Classification();
-        for (String cat : categories)
+        var classification = new Classification();
+        for (String cat : categories) {
             classification.classifyCall(cat);
+        }
         assertEquals(75.0, classification.getFrequency(category), 0);
         assertEquals(25.0, classification.getFrequency(otherCategory), 0);
     }
@@ -82,11 +83,12 @@ class ClassificationTest {
             reverse(frequencies);
             Generator<String> names = uniqueValues(strings());
             List<Object> expected = new ArrayList<>();
-            Classification classification = new Classification();
+            var classification = new Classification();
             for (Integer frequency : frequencies) {
-                String name = names.next();
-                for (int i = 0; i < frequency; i++)
+                var name = names.next();
+                for (var i = 0; i < frequency; i++) {
                     classification.classifyCall(name);
+                }
                 expected.add(name);
             }
             assertEquals(expected, classification.getCategories());
@@ -95,21 +97,21 @@ class ClassificationTest {
 
     @Test
     void testDoNotClassifyAfterGetCategories() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         classification.getCategories();
         assertClassifyFails(classification);
     }
 
     @Test
     void testDoNotClassifyAfterGetFrequency() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         classification.getFrequency(new Object());
         assertClassifyFails(classification);
     }
 
     @Test
     void testDoNotClassifyAfterToString() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         // noinspection ResultOfMethodCallIgnored
         classification.toString();
         assertClassifyFails(classification);

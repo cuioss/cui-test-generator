@@ -48,9 +48,10 @@ class DateGeneratorTest {
 
     @Test
     void testGenerateDateWithSecsPrecission() {
-        Classification classification = new Classification();
-        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.SECONDS)))
+        var classification = new Classification();
+        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.SECONDS))) {
             classify(classification, date);
+        }
         assertZero(classification, Calendar.MILLISECOND);
         assertNotZero(classification, Calendar.SECOND);
         assertNotZero(classification, Calendar.MINUTE);
@@ -62,9 +63,10 @@ class DateGeneratorTest {
 
     @Test
     void testGenerateDateWithMillisPrecission() {
-        Classification classification = new Classification();
-        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.MILLISECONDS)))
+        var classification = new Classification();
+        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.MILLISECONDS))) {
             classify(classification, date);
+        }
         assertNotZero(classification, Calendar.MILLISECOND);
         assertNotZero(classification, Calendar.SECOND);
         assertNotZero(classification, Calendar.MINUTE);
@@ -76,9 +78,10 @@ class DateGeneratorTest {
 
     @Test
     void testGenerateDateWithDaysPrecission() {
-        Classification classification = new Classification();
-        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.DAYS)))
+        var classification = new Classification();
+        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.DAYS))) {
             classify(classification, date);
+        }
         assertZero(classification, Calendar.MILLISECOND);
         assertZero(classification, Calendar.SECOND);
         assertZero(classification, Calendar.MINUTE);
@@ -90,9 +93,10 @@ class DateGeneratorTest {
 
     @Test
     void testGenerateDateWithHoursPrecission() {
-        Classification classification = new Classification();
-        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.HOURS)))
+        var classification = new Classification();
+        for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.HOURS))) {
             classify(classification, date);
+        }
         assertZero(classification, Calendar.MILLISECOND);
         assertZero(classification, Calendar.SECOND);
         assertZero(classification, Calendar.MINUTE);
@@ -103,11 +107,11 @@ class DateGeneratorTest {
     }
 
     Generator<List<Long>> boundGenerator() {
-        long edgeTreshold = TimeUnit.DAYS.toMillis(10);
+        var edgeTreshold = TimeUnit.DAYS.toMillis(10);
 
-        Generator<Long> nearMin = longs(MIN_VALUE, MIN_VALUE + edgeTreshold, POSITIV_NORMAL);
-        Generator<Long> nearZero = longs(-1 * edgeTreshold, edgeTreshold, POSITIV_NORMAL);
-        Generator<Long> nearMax = longs(MAX_VALUE - edgeTreshold, MAX_VALUE, POSITIV_NORMAL);
+        var nearMin = longs(MIN_VALUE, MIN_VALUE + edgeTreshold, POSITIV_NORMAL);
+        var nearZero = longs(-1 * edgeTreshold, edgeTreshold, POSITIV_NORMAL);
+        var nearMax = longs(MAX_VALUE - edgeTreshold, MAX_VALUE, POSITIV_NORMAL);
         Generator<Long> longs = oneOf(nearMin).add(nearZero).add(nearMax).add(longs());
         return new VetoableGenerator<>(sortedLists(longs, 2, 2), DEFAULT_MAX_TRIES) {
 
@@ -121,8 +125,8 @@ class DateGeneratorTest {
     @Test
     void testBoundedGenerator() {
         for (List<Long> bounds : toIterable(boundGenerator())) {
-            Long lo = bounds.get(0);
-            Long hi = bounds.get(1);
+            var lo = bounds.get(0);
+            var hi = bounds.get(1);
 
             assertBounds(lo, hi, dates(lo, hi).next());
             assertBounds(lo, hi, dates(new Date(lo), new Date(hi)).next());
@@ -131,22 +135,23 @@ class DateGeneratorTest {
 
     @Test
     void testBoundedDayPrecisionGenerator() {
-        List<Long> next = boundGenerator().next();
+        var next = boundGenerator().next();
         long low = next.get(0);
         long high = next.get(1);
 
-        for (Date date : toIterable(dates(low, high, DAYS)))
+        for (Date date : toIterable(dates(low, high, DAYS))) {
             assertBounds(low, high, date);
+        }
     }
 
     private void assertBounds(Long lo, Long hi, Date date) {
-        long next = date.getTime();
+        var next = date.getTime();
         assertTrue(lo <= next, format("lo <= next, %s, %s", lo, next));
         assertTrue( hi >= next, format("hi >= next, %s, %s", hi, next));
     }
 
     private void classify(Classification classification, Date date) {
-        Calendar instance = Calendar.getInstance();
+        var instance = Calendar.getInstance();
         instance.setTime(date);
         classify(classification, instance, Calendar.MILLISECOND);
         classify(classification, instance, Calendar.SECOND);
@@ -171,7 +176,8 @@ class DateGeneratorTest {
 
     @Test
     void testDateGenerator() {
-        for (Date any : someDates())
+        for (Date any : someDates()) {
             assertNotNull(any);
+        }
     }
 }

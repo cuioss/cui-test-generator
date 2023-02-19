@@ -25,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
@@ -40,15 +38,15 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
     void testGeneratesNotNull() {
-        for (int i = 0; i < 100; i++) {
+        for (var i = 0; i < 100; i++) {
             assertNotNull(PrimitiveGenerators.integers().next());
         }
     }
 
     @Test
     void testGeneratorDistribution() {
-        final String gt0 = ">0";
-        final String lt0 = "<0";
+        final var gt0 = ">0";
+        final var lt0 = "<0";
 
         AbstractCharacteristic<Integer> characteristic = new AbstractCharacteristic<>() {
 
@@ -66,7 +64,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
     void testZero() {
-        Generator<Integer> integerGenerator = PrimitiveGenerators.integers(0, 0);
+        var integerGenerator = PrimitiveGenerators.integers(0, 0);
         forAll(integerGenerator, new AbstractCharacteristic<>() {
 
             @Override
@@ -80,11 +78,12 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
     void testOneAndZero() {
-        Generator<Integer> integerGenerator = PrimitiveGenerators
+        var integerGenerator = PrimitiveGenerators
                 .integers(0, 1);
-        Classification classification = new Classification();
-        for (Integer i : Iterables.toIterable(integerGenerator))
+        var classification = new Classification();
+        for (Integer i : Iterables.toIterable(integerGenerator)) {
             classification.classifyCall(i);
+        }
         assertTrue(classification.getFrequency(0) > 0);
         assertTrue(classification.getFrequency(1) > 0);
     }
@@ -92,27 +91,27 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     @Override
     @Test
     void testBounds() {
-        List<Integer> loHi = sortedLists(integers(), fixedValues(2)).next();
+        var loHi = sortedLists(integers(), fixedValues(2)).next();
         int lo = loHi.get(0);
         int hi = loHi.get(1);
-        Generator<Integer> integerGenerator = integers(lo, hi);
+        var integerGenerator = integers(lo, hi);
         testBounds(integerGenerator, lo, hi);
     }
 
     @Test
     void testLowerBound() {
-        Integer low = integers().next();
-        Generator<Integer> integerGenerator = PrimitiveGenerators.integers(low);
+        var low = integers().next();
+        var integerGenerator = PrimitiveGenerators.integers(low);
         testBounds(integerGenerator, low, Integer.MAX_VALUE);
     }
 
     @Override
     @Test
     void testBoundsGausian() {
-        List<Integer> loHi = sortedLists(integers(), fixedValues(2)).next();
+        var loHi = sortedLists(integers(), fixedValues(2)).next();
         int lo = loHi.get(0);
         int hi = loHi.get(1);
-        Generator<Integer> integerGenerator = PrimitiveGenerators.integers(lo,
+        var integerGenerator = PrimitiveGenerators.integers(lo,
                 hi, Distribution.POSITIV_NORMAL);
         testBounds(integerGenerator, lo, hi);
     }
@@ -130,7 +129,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
     void testPositiveIntegersWithUpperBound() {
-        final Integer upper = positiveIntegers().next();
+        final var upper = positiveIntegers().next();
         forAll(positiveIntegers(upper), new AbstractCharacteristic<>() {
 
             @Override

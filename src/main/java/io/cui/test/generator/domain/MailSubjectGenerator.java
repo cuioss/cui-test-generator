@@ -26,10 +26,10 @@ public class MailSubjectGenerator implements TypedGenerator<String> {
     @Override
     public String next() {
         final List<String> elements = new ArrayList<>();
-        for (int i = 0; i < PrimitiveGenerators.integers(0, 3).next(); i++) {
+        for (var i = 0; i < PrimitiveGenerators.integers(0, 3).next(); i++) {
             elements.add(prefixes.next());
         }
-        for (int i = 0; i < PrimitiveGenerators.integers(0, 7).next(); i++) {
+        for (var i = 0; i < PrimitiveGenerators.integers(0, 7).next(); i++) {
             elements.add(contents.next());
         }
         return Joiner.on(' ').join(elements);

@@ -41,11 +41,11 @@ class JavaCollectionContractTest {
 
                     @Override
                     protected void doSpecify(Pair<Integer, List<Integer>> any) {
-                        Integer element = any.getFirst();
+                        var element = any.getFirst();
                         Collection<Integer> collection = any.getSecond();
 
-                        boolean changedCollection = false;
-                        boolean exceptionThrown = false;
+                        var changedCollection = false;
+                        var exceptionThrown = false;
                         try {
                             changedCollection = collection.add(element);
                         } catch (Exception e) {

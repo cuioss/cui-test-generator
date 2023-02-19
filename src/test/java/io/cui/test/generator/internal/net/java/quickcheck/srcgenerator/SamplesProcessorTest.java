@@ -26,7 +26,6 @@ import javax.tools.Diagnostic.Kind;
 
 import org.junit.jupiter.api.Test;
 
-import io.cui.test.generator.internal.net.java.quickcheck.collection.Triple;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
 class SamplesProcessorTest {
@@ -46,25 +45,25 @@ class SamplesProcessorTest {
 
     @Test
     void complexSubtype() {
-        String anyComplexSubtype = UserSamples.anyComplexSubtype();
+        var anyComplexSubtype = UserSamples.anyComplexSubtype();
         assertEquals(String.class, anyComplexSubtype.getClass());
     }
 
     @Test
     void parameters() {
-        Integer parameter = UserSamples.anyParameter(1, 2);
+        var parameter = UserSamples.anyParameter(1, 2);
         assertEquals(Integer.class, parameter.getClass());
     }
 
     @Test
     void bounds() {
-        Kind bounded = UserSamples.anyBound(Kind.class);
+        var bounded = UserSamples.anyBound(Kind.class);
         assertEquals(Kind.class, bounded.getClass());
     }
 
     @Test
     void multipleTypeParameter() {
-        Triple<Integer, Double, String> actual = UserSamples.anyMultipleTypeParameter();
+        var actual = UserSamples.anyMultipleTypeParameter();
         assertEquals(Integer.class, actual.getFirst().getClass());
         assertEquals(Double.class, actual.getSecond().getClass());
         assertEquals(String.class, actual.getThird().getClass());
@@ -73,19 +72,19 @@ class SamplesProcessorTest {
     @Test
     void generics() {
         List<Integer> in = Collections.singletonList(1);
-        List<Integer> is = UserSamples.anyGeneric(in);
+        var is = UserSamples.anyGeneric(in);
         assertEquals(in, is);
     }
 
     @Test
     void varArgsArray() {
-        String s = PrimitiveGenerators.strings().next();
+        var s = PrimitiveGenerators.strings().next();
         assertEquals(s, UserSamples.anyVarArgsArray(s));
     }
 
     @Test
     void noVarArgsArray() {
-        String s = PrimitiveGenerators.strings().next();
+        var s = PrimitiveGenerators.strings().next();
         assertEquals(s, UserSamples.anyNoVarArgsArray(new String[] { s }, "x"));
     }
 

@@ -36,7 +36,7 @@ class FileGeneratorTest {
 
         @Override
         public File next() {
-            File f = roots.next();
+            var f = roots.next();
             for (String p : paths.next()) {
                 f = new File(f, p);
             }

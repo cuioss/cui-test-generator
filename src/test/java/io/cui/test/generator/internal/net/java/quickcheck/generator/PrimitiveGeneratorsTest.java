@@ -38,8 +38,8 @@ class PrimitiveGeneratorsTest {
 
     @Test
     void testFixedValuesGenerator() {
-        final Integer[] values = new Integer[] { integers().next(), integers().next(), integers().next() };
-        Classification classification = new Classification();
+        final var values = new Integer[] { integers().next(), integers().next(), integers().next() };
+        var classification = new Classification();
         for (Integer i : toIterable(fixedValues(values))) {
             classification.classifyCall(i);
             assertTrue(Arrays.asList(values).contains(i));
@@ -54,31 +54,34 @@ class PrimitiveGeneratorsTest {
     @Test
     void testEnums() {
         Generator<TestEnum> generator = enumValues(TestEnum.class);
-        Classification classification = new Classification();
-        for (TestEnum e : toIterable(generator))
+        var classification = new Classification();
+        for (TestEnum e : toIterable(generator)) {
             classification.classifyCall(e);
+        }
 
         assertFrequencyGreater(classification, expectedFrequency(TestEnum.values().length), TestEnum.values());
     }
 
     private double expectedFrequency(int elements) {
-        double tolerance = 0.7;
+        var tolerance = 0.7;
         return 100 / elements * tolerance;
     }
 
     @Test
     void testEnumsExcept() {
-        TestEnum excluded = enumValues(TestEnum.class).next();
+        var excluded = enumValues(TestEnum.class).next();
         Generator<TestEnum> generator = enumValues(TestEnum.class, excluded);
-        Classification classification = new Classification();
-        for (TestEnum e : toIterable(generator))
+        var classification = new Classification();
+        for (TestEnum e : toIterable(generator)) {
             classification.classifyCall(e);
+        }
 
         for (TestEnum e : TestEnum.values()) {
-            if (e == excluded)
+            if (e == excluded) {
                 assertFrequencySmaller(classification, 0.0, e);
-            else
+            } else {
                 assertFrequencyGreater(classification, expectedFrequency(TestEnum.values().length - 1), e);
+            }
         }
     }
 
@@ -91,9 +94,10 @@ class PrimitiveGeneratorsTest {
 
     @Test
     void testBooleansGeneration() {
-        Classification classification = new Classification();
-        for (Boolean b : toIterable(PrimitiveGenerators.booleans()))
+        var classification = new Classification();
+        for (Boolean b : toIterable(PrimitiveGenerators.booleans())) {
             classification.classifyCall(b);
+        }
         assertTrue(classification.getFrequency(TRUE) > 35);
         assertTrue(classification.getFrequency(FALSE) > 35);
     }

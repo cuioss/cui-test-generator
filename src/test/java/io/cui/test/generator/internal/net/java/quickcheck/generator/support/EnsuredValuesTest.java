@@ -64,7 +64,7 @@ class EnsuredValuesTest {
 
     private void assertGenerateEachValueOnce(Generator<String> generator) {
         Set<String> rest = new HashSet<>(VALUES);
-        for (int idx = 0; idx < VALUES.size(); idx++) {
+        for (var idx = 0; idx < VALUES.size(); idx++) {
             assertTrue(rest.remove(generator.next()));
         }
         assertTrue(rest.isEmpty());
@@ -73,24 +73,26 @@ class EnsuredValuesTest {
     @Test
     void generateRandomCollectionValuesAfterFirstSequence() {
         Generator<String> generator = CombinedGenerators.ensureValues(new HashSet<>(VALUES));
-        for (int idx = 0; idx < VALUES.size(); idx++)
+        for (var idx = 0; idx < VALUES.size(); idx++) {
             generator.next();
-        for (int idx = 0; idx < VALUES.size() * 4; idx++)
+        }
+        for (var idx = 0; idx < VALUES.size() * 4; idx++) {
             assertTrue(VALUES.contains(generator.next()));
+        }
     }
 
     @Test
     void returnGeneratorValuesAfterFirstSequence() {
-        int len = 2;
+        var len = 2;
         Generator<String> strings = new StringGenerator(
                 new FixedValuesGenerator<>(len),
                 new CharacterGenerator());
         Generator<String> generator = CombinedGenerators.ensureValues(
                 new HashSet<>(VALUES), strings);
-        for (int idx = 0; idx < VALUES.size(); idx++) {
+        for (var idx = 0; idx < VALUES.size(); idx++) {
             assertNotEquals(generator.next().length(), len);
         }
-        for (int idx = 0; idx < VALUES.size() * 4; idx++) {
+        for (var idx = 0; idx < VALUES.size() * 4; idx++) {
             assertEquals(generator.next().length(), len);
         }
     }
@@ -110,21 +112,22 @@ class EnsuredValuesTest {
     void generateEnsuredValuesInWindow() {
         Generator<String> generator = CombinedGenerators.ensureValues(VALUES, VALUES.size(),
                 new FixedValuesGenerator<>(DISJUNCT_STRING));
-        HashSet<String> rest = new HashSet<>(VALUES);
-        for (int i = 0; i < VALUES.size(); i++)
+        var rest = new HashSet<String>(VALUES);
+        for (var i = 0; i < VALUES.size(); i++) {
             assertTrue(rest.remove(generator.next()));
+        }
         assertTrue(rest.isEmpty());
         assertEquals(DISJUNCT_STRING, generator.next());
     }
 
     @Test
     void generateEnsuredValuesInBiggerWindow() {
-        int window = VALUES.size() * 2;
+        var window = VALUES.size() * 2;
         Generator<String> generator = CombinedGenerators.ensureValues(VALUES, window,
                 new FixedValuesGenerator<>(DISJUNCT_STRING));
-        HashSet<String> rest = new HashSet<>(VALUES);
-        for (int i = 0; i < window; i++) {
-            String n = generator.next();
+        var rest = new HashSet<String>(VALUES);
+        for (var i = 0; i < window; i++) {
+            var n = generator.next();
             assertTrue(rest.remove(n) || n.equals(DISJUNCT_STRING));
         }
         assertTrue(rest.isEmpty());
@@ -134,12 +137,13 @@ class EnsuredValuesTest {
     @Test
     void generateEnsuredValuesSpreadInWindow() {
         List<String> values = asList(STRING_VALUES);
-        int window = values.size() * 20;
+        var window = values.size() * 20;
         Generator<String> generator = CombinedGenerators.ensureValues(values,
                 window, new FixedValuesGenerator<>(DISJUNCT_STRING));
-        String[] c = new String[STRING_VALUES.length];
-        for (int i = 0; i < c.length; i++)
+        var c = new String[STRING_VALUES.length];
+        for (var i = 0; i < c.length; i++) {
             c[i] = generator.next();
+        }
         // Although it is not part of contract we know that the values are taken
         // in order from the ensured values iterable. If the values are nicely spread over the
         // window they should not be the first values to generate.
@@ -149,8 +153,9 @@ class EnsuredValuesTest {
 
         generator = CombinedGenerators.ensureValues(values, c.length,
                 new FixedValuesGenerator<>(DISJUNCT_STRING));
-        for (int i = 0; i < c.length; i++)
+        for (var i = 0; i < c.length; i++) {
             c[i] = generator.next();
+        }
         assertArrayEquals(STRING_VALUES, c, "the generation order expectation is not correct");
     }
 

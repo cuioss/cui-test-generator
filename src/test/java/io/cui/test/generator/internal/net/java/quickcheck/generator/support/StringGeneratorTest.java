@@ -42,8 +42,8 @@ class StringGeneratorTest {
     void testGenerateLetters() {
         for (String any : toIterable(PrimitiveGenerators.strings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
-            for (int i = 0; i < any.length(); i++) {
-                char actualLetter = any.charAt(i);
+            for (var i = 0; i < any.length(); i++) {
+                var actualLetter = any.charAt(i);
                 assertTrue(between(actualLetter, CharacterGenerator.BASIC_LATIN));
             }
         }
@@ -53,8 +53,8 @@ class StringGeneratorTest {
     void testGeneratePrintableLetters() {
         for (String any : toIterable(io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.printableStrings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
-            for (int i = 0; i < any.length(); i++) {
-                char actualLetter = any.charAt(i);
+            for (var i = 0; i < any.length(); i++) {
+                var actualLetter = any.charAt(i);
                 assertTrue(between(actualLetter, BASIC_LATIN) || between(actualLetter, LATIN_1_SUPPLEMENT));
             }
         }
@@ -62,23 +62,23 @@ class StringGeneratorTest {
 
     @Test
     void testGenerateOnlyA() {
-        final String allowedCharacters = "a";
+        final var allowedCharacters = "a";
         Generator<String> generator = strings('a', 'a');
         testOnlyAllowedCharacters(allowedCharacters, generator);
     }
 
     @Test
     void testGenerateOnlyAllowedStrings() {
-        final String allowedCharacters = "abc";
+        final var allowedCharacters = "abc";
         Generator<String> generator = strings(allowedCharacters);
         testOnlyAllowedCharacters(allowedCharacters, generator);
     }
 
     @Test
     void testGenerateOnlyAllowedStringsWithSize() {
-        final String allowedCharacters = "abc";
-        int max = 10;
-        int min = 3;
+        final var allowedCharacters = "abc";
+        var max = 10;
+        var min = 3;
         Generator<String> generator = strings(allowedCharacters, min, max);
         testOnlyAllowedCharacters(allowedCharacters, generator, min, max);
     }
@@ -97,7 +97,7 @@ class StringGeneratorTest {
             protected void doSpecify(String any) {
                 assertTrue(any.length() <= max, Integer.toString(any.length()));
                 assertTrue(any.length() >= min, Integer.toString(any.length()));
-                for (int i = 0; i < any.length(); i++) {
+                for (var i = 0; i < any.length(); i++) {
 
                     assertTrue(allowedCharacters.contains(Character
                             .toString(any.charAt(i))));
@@ -113,9 +113,9 @@ class StringGeneratorTest {
     void testLettersStrings() {
         Generator<String> largeStrings = PrimitiveGenerators.letterStrings(1000, 1000);
         for (String any : toIterable(largeStrings)) {
-            Classification classification = new Classification();
-            for (int i = 0; i < any.length(); i++) {
-                char c = any.charAt(i);
+            var classification = new Classification();
+            for (var i = 0; i < any.length(); i++) {
+                var c = any.charAt(i);
                 classification.doClassify(between(c, 'a', 'z'), SMALL_LETTER);
                 classification.doClassify(between(c, 'A', 'Z'), CAPITAL_LETTER);
                 // have to call callDone() here because there are any.length
@@ -129,7 +129,7 @@ class StringGeneratorTest {
 
     private void assertAbout50Percent(Classification classification, String... categories) {
         for (String category : categories) {
-            double frequency = classification.getFrequency(category);
+            var frequency = classification.getFrequency(category);
             assertTrue(frequency > 40 && frequency < 60);
         }
     }
@@ -139,36 +139,36 @@ class StringGeneratorTest {
     }
 
     private boolean between(char c, char lo, char hi) {
-        return c <= (hi) && c >= (lo);
+        return c <= hi && c >= lo;
     }
 
     @Test
     void testLetterStringsSize() {
-        final int lo = 1;
-        final int hi = 100;
+        final var lo = 1;
+        final var hi = 100;
         testStringLengthCharacteristic(lo, hi, PrimitiveGenerators
                 .letterStrings(lo, hi));
     }
 
     @Test
     void testStringsGenerateWithMaxSize() {
-        int max = 10;
-        int min = 0;
+        var max = 10;
+        var min = 0;
         Generator<String> generator = strings(max);
         testStringLengthCharacteristic(min, max, generator);
     }
 
     private void testStringLengthCharacteristic(final int lo, final int hi,
             Generator<String> extendibleGenerator) {
-        final String ltMiddle = "<1/2";
-        final String gtMiddle = ">1/2";
+        final var ltMiddle = "<1/2";
+        final var gtMiddle = ">1/2";
         AbstractCharacteristic<String> characteristic = new AbstractCharacteristic<>() {
 
             @Override
             protected void doSpecify(String any) {
 
                 assertTrue(any.length() >= lo && any.length() <= hi);
-                int middle = (hi - lo) / 2 + lo;
+                var middle = (hi - lo) / 2 + lo;
                 classify(middle > any.length(), ltMiddle);
                 classify(middle < any.length(), gtMiddle);
             }
@@ -179,16 +179,16 @@ class StringGeneratorTest {
 
     @Test
     void testStringsSize() {
-        final int lo = 1;
-        final int hi = 100;
+        final var lo = 1;
+        final var hi = 100;
         testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.strings(lo,
                 hi));
     }
 
     @Test
     void testStringGeneratorWithLengthAndCharacterGenerators() {
-        Generator<Character> characterGenerator = MockFactory.createCharacterGenerator();
-        Generator<Integer> lengthGenerator = MockFactory.createIntegerGenerator();
+        var characterGenerator = MockFactory.createCharacterGenerator();
+        var lengthGenerator = MockFactory.createIntegerGenerator();
         expect(lengthGenerator.next()).andReturn(2);
         expect(characterGenerator.next()).andReturn('a').times(2);
 
@@ -201,7 +201,8 @@ class StringGeneratorTest {
 
     @Test
     void testGenerateNonEmptyStrings() {
-        for (String any : toIterable(PrimitiveGenerators.nonEmptyStrings()))
+        for (String any : toIterable(PrimitiveGenerators.nonEmptyStrings())) {
             assertTrue(any.length() > 0 && any.length() <= StringGenerator.MAX_LENGTH);
+        }
     }
 }

@@ -87,7 +87,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      */
     public List<T> list(final int count) {
         final List<T> result = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
+        for (var i = 0; i < count; i++) {
             result.add(next());
         }
         return result;
@@ -103,7 +103,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      */
     public Set<T> set(final int count) {
         final Set<T> result = mutableSet();
-        for (int i = 0; i < count; i++) {
+        for (var i = 0; i < count; i++) {
             result.add(next());
         }
         return result;

@@ -45,10 +45,10 @@ class RoundRobinGeneratorTest {
         List<Generator<Integer>> generators = new ArrayList<>();
         generators.add(ensureValues(asList(1, 2)));
         generators.add(ensureValues(asList(11, 12)));
-        RoundRobinGenerator<Integer> roundRobinGenerator = new RoundRobinGenerator<>(
+        var roundRobinGenerator = new RoundRobinGenerator<Integer>(
                 generators);
         List<Integer> actual = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (var i = 0; i < 4; i++) {
             actual.add(roundRobinGenerator.next());
         }
         assertEquals(Arrays.asList(1, 11, 2, 12), actual);

@@ -43,12 +43,12 @@ class IterablesTest {
 
     @Test
     void iterableDefaultNumberOfRuns() {
-        int expectedNumberOfRuns = MAX_NUMBER_OF_RUNS;
+        var expectedNumberOfRuns = MAX_NUMBER_OF_RUNS;
 
-        List<Integer> potentialValues = potentialValues(expectedNumberOfRuns);
+        var potentialValues = potentialValues(expectedNumberOfRuns);
 
         Iterable<Integer> iterable = Iterables.toIterable(ensureValues(potentialValues));
-        List<Integer> actual = run(iterable);
+        var actual = run(iterable);
 
         assertRun(potentialValues, expectedNumberOfRuns, actual);
     }
@@ -57,10 +57,10 @@ class IterablesTest {
     void iterableNumberOfRuns() {
         int expectedNumberOfRuns = anyInteger(0, MAX_NUMBER_OF_RUNS);
 
-        List<Integer> potentialValues = potentialValues(expectedNumberOfRuns);
+        var potentialValues = potentialValues(expectedNumberOfRuns);
 
         Iterable<Integer> iterable = Iterables.toIterable(ensureValues(potentialValues), expectedNumberOfRuns);
-        List<Integer> actual = run(iterable);
+        var actual = run(iterable);
 
         assertRun(potentialValues, expectedNumberOfRuns, actual);
     }
@@ -74,19 +74,20 @@ class IterablesTest {
     }
 
     private void assertRun(List<Integer> potentialValues, int expectedNumberOfRuns, List<Integer> actual) {
-        List<Integer> expected = potentialValues.subList(0, expectedNumberOfRuns);
+        var expected = potentialValues.subList(0, expectedNumberOfRuns);
         assertEquals(expected, actual);
     }
 
     private List<Integer> run(Iterable<Integer> iterable) {
         List<Integer> actual = new ArrayList<>();
-        for (Integer t : iterable)
+        for (Integer t : iterable) {
             actual.add(t);
+        }
         return actual;
     }
 
     private List<Integer> potentialValues(int expectedNumberOfRuns) {
-        int enoughValues = expectedNumberOfRuns + 1;
+        var enoughValues = expectedNumberOfRuns + 1;
         return lists(integers(), enoughValues, enoughValues).next();
     }
 
@@ -126,8 +127,9 @@ class IterablesTest {
 
     private Iterator<?> consumedIterator() {
         Iterator<?> iterator = anyIterator();
-        while (iterator.hasNext())
+        while (iterator.hasNext()) {
             iterator.next();
+        }
         return iterator;
     }
 

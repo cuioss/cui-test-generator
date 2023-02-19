@@ -26,7 +26,6 @@ import javax.tools.Diagnostic.Kind;
 import org.junit.jupiter.api.Test;
 
 import io.cui.test.generator.internal.net.java.quickcheck.collection.Pair;
-import io.cui.test.generator.internal.net.java.quickcheck.collection.Triple;
 
 class IterablesProcessorTest {
 
@@ -57,7 +56,7 @@ class IterablesProcessorTest {
 
     @Test
     void multipleTypeParameter() {
-        Triple<Integer, Double, String> actual = UsersIterables.someMultipleTypeParameters().iterator().next();
+        var actual = UsersIterables.someMultipleTypeParameters().iterator().next();
         assertEquals(Integer.class, actual.getFirst().getClass());
         assertEquals(Double.class, actual.getSecond().getClass());
         assertEquals(String.class, actual.getThird().getClass());
@@ -66,13 +65,13 @@ class IterablesProcessorTest {
     @Test
     void generics() {
         List<Integer> in = Collections.singletonList(1);
-        List<Integer> is = UsersIterables.someGenerics(in).iterator().next();
+        var is = UsersIterables.someGenerics(in).iterator().next();
         assertEquals(in, is);
     }
 
     @Test
     void multipleTypeVariables() {
-        Pair<Integer, String> next = Users.multipleTypeVariable(1, "two").next();
+        var next = Users.multipleTypeVariable(1, "two").next();
         assertEquals(new Pair<>(1, "two"), next);
     }
 

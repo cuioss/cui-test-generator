@@ -39,16 +39,16 @@ class SubmapGeneratorTest {
     @Test
     void submap() {
         for (Map<Long, Integer> supermap : toIterable(maps(longs(), integers()))) {
-            Map<Long, Integer> submap = CombinedGenerators.maps(supermap).next();
+            var submap = CombinedGenerators.maps(supermap).next();
             assertTrue(supermap.entrySet().containsAll(submap.entrySet()));
         }
     }
 
     @Test
     void sizedSubmap() {
-        Map<Long, Integer> supermap = maps(longs(), integers()).next();
+        var supermap = maps(longs(), integers()).next();
         for (int size : toIterable(PrimitiveGenerators.integers(0, supermap.size()))) {
-            Map<Long, Integer> submap = CombinedGenerators.maps(supermap, PrimitiveGenerators.fixedValues(size)).next();
+            var submap = CombinedGenerators.maps(supermap, PrimitiveGenerators.fixedValues(size)).next();
             assertTrue(supermap.entrySet().containsAll(submap.entrySet()));
             assertEquals(size, submap.size());
         }
@@ -56,7 +56,7 @@ class SubmapGeneratorTest {
 
     @Test
     void invalidSize() {
-        Map<Long, Integer> supermap = maps(longs(), integers()).next();
+        var supermap = maps(longs(), integers()).next();
         Generator<Integer> invalidSizes = oneOf(integers(Integer.MIN_VALUE, -1)).add(integers(supermap.size() + 1));
         for (Integer size : toIterable(invalidSizes)) {
             val generator = CombinedGenerators.maps(supermap, PrimitiveGenerators.fixedValues(size));

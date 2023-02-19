@@ -30,9 +30,9 @@ class PairTest {
 
     @Test
     void testPair() {
-        String anyString = strings().next();
-        Integer anyInt = integers().next();
-        Pair<Integer, String> pair = new Pair<>(anyInt,
+        var anyString = strings().next();
+        var anyInt = integers().next();
+        var pair = new Pair<Integer, String>(anyInt,
                 anyString);
         assertSame(anyInt, pair.getFirst());
         assertSame(anyString, pair.getSecond());

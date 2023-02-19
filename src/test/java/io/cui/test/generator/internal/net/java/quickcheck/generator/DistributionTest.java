@@ -50,9 +50,10 @@ class DistributionTest {
 
     @Test
     void testPositiveGausian() {
-        Classification classification = new Classification();
-        for (Double any : toIterable(new TestGenerator(Distribution.POSITIV_NORMAL), RUNS))
+        var classification = new Classification();
+        for (Double any : toIterable(new TestGenerator(Distribution.POSITIV_NORMAL), RUNS)) {
             doClassification(classification, any);
+        }
 
         assertEquals(0, classification.getFrequency(LT_0));
         assertTrue(classification.getFrequency(LT_0_15) > 25.0);
@@ -61,7 +62,7 @@ class DistributionTest {
 
     @Test
     void testNegativGausian() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Double any : toIterable(new TestGenerator(Distribution.NEGATIV_NORMAL), RUNS)) {
             doClassification(classification, any);
         }
@@ -73,7 +74,7 @@ class DistributionTest {
 
     @Test
     void testInvertedGausian() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Double any : toIterable(new TestGenerator(Distribution.INVERTED_NORMAL), RUNS)) {
             doClassification(classification, any);
         }

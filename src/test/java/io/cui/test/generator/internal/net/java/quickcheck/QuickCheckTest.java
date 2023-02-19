@@ -71,8 +71,8 @@ class QuickCheckTest {
 
     @Test
     void testForAllFailsException() throws Throwable {
-        Exception exception = new Exception();
-        Object last = expectExceptionThrownAfterFirstGenerator(exception);
+        var exception = new Exception();
+        var last = expectExceptionThrownAfterFirstGenerator(exception);
         replayMocks();
         try {
             forAll(generator, characteristic);
@@ -85,7 +85,7 @@ class QuickCheckTest {
     }
 
     private Object expectExceptionThrownAfterFirstGenerator(Exception thrown) throws Throwable {
-        Object last = new Object();
+        var last = new Object();
         expect(generator.next()).andReturn(last);
         characteristic.setUp();
         characteristic.specify(last);
@@ -99,7 +99,7 @@ class QuickCheckTest {
 
     @Test
     void testForNumberOfRuns() throws Throwable {
-        int runs = 2;
+        var runs = 2;
         expectRuns(runs);
         replayMocks();
         QuickCheck.forAll(runs, PrimitiveGenerators.fixedValues(new Object()),
@@ -108,7 +108,7 @@ class QuickCheckTest {
     }
 
     private void expectRuns(int runs) throws Throwable {
-        for (int i = 0; i < runs; i++) {
+        for (var i = 0; i < runs; i++) {
             characteristic.setUp();
             characteristic.specify(anyObject());
             characteristic.tearDown();
@@ -117,8 +117,8 @@ class QuickCheckTest {
 
     @Test
     void testChoose() {
-        final int lo = 10;
-        final int hi = 100;
+        final var lo = 10;
+        final var hi = 100;
         forAll(integers(lo, hi), new AbstractCharacteristic<>() {
 
             @Override
@@ -131,18 +131,18 @@ class QuickCheckTest {
 
     @Test
     void testForAllVerbose() throws Throwable {
-        String genReturned = "returned";
+        var genReturned = "returned";
         expect(generator.next()).andReturn(genReturned);
         setUpCallTearDown(genReturned);
         replayMocks();
 
-        StringWriter writer = new StringWriter();
+        var writer = new StringWriter();
 
-        RunnerImpl<Object> runner =
-            new RunnerImpl<>(characteristic, 1, generator, new PrintWriter(writer));
+        var runner =
+            new RunnerImpl<Object>(characteristic, 1, generator, new PrintWriter(writer));
         runner.forAll();
-        String actual = writer.toString();
-        String expected = "1:[returned]";
+        var actual = writer.toString();
+        var expected = "1:[returned]";
         assertEquals(expected, actual.trim());
         verifyMocks();
     }
@@ -155,8 +155,8 @@ class QuickCheckTest {
 
     @Test
     void testForAllWithGuard() throws Throwable {
-        Object first = new Object();
-        Object second = new Object();
+        var first = new Object();
+        var second = new Object();
         expect(generator.next()).andReturn(first);
         expect(generator.next()).andReturn(second);
         characteristic.setUp();
@@ -171,12 +171,12 @@ class QuickCheckTest {
 
     @Test
     void testForWithGuardAbortsAfterMaxTry() throws Throwable {
-        int runs = 3;
-        int maxGeneratorTries = RunnerImpl.getMaxGeneratorTries(runs);
+        var runs = 3;
+        var maxGeneratorTries = RunnerImpl.getMaxGeneratorTries(runs);
         expect(generator.next()).andReturn(new Object()).times(
                 maxGeneratorTries);
         characteristic.setUp();
-        for (int i = 0; i < maxGeneratorTries; i++) {
+        for (var i = 0; i < maxGeneratorTries; i++) {
             characteristic.specify(anyObject());
             expectLastCall().andThrow(new GuardException());
         }
@@ -204,7 +204,7 @@ class QuickCheckTest {
 
     @Test
     void testGetDefaultNumberOfRunsOverwriteProperty() {
-        Integer runs = integers(1, Integer.MAX_VALUE).next();
+        var runs = integers(1, Integer.MAX_VALUE).next();
         System.setProperty(QuickCheck.SYSTEM_PROPERTY_RUNS, runs.toString());
         assertEquals(runs.intValue(), QuickCheck.getDefaultNumberOfRuns());
     }

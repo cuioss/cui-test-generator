@@ -117,7 +117,7 @@ class GeneratorsTest {
 
     @Test
     void shouldFailOnEmptyIterable() {
-        ArrayList<String> values = new ArrayList<>();
+        var values = new ArrayList<String>();
         assertThrows(IllegalArgumentException.class, () -> fixedValues(String.class, values));
     }
 
@@ -318,7 +318,7 @@ class GeneratorsTest {
 
     @Test
     void specificStringsWithSize() {
-        final String result = strings("X", 2, 2).next();
+        final var result = strings("X", 2, 2).next();
         assertNotNull(result);
         assertEquals("XX", result);
     }

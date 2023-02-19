@@ -36,10 +36,10 @@ class StrictlyOrderedGeneratorTest {
 
     @Test
     void orderedSized() {
-        List<Integer> lowHigh = SizeGenerator.anyMinMax();
+        var lowHigh = SizeGenerator.anyMinMax();
         int low = lowHigh.get(0);
         int high = lowHigh.get(1);
-        List<Integer> actual = CombinedGenerators.strictlyOrdered(integers(), low, high).next();
+        var actual = CombinedGenerators.strictlyOrdered(integers(), low, high).next();
         assertIsStrictlyOrder(actual);
         assertTrue(low <= actual.size());
         assertTrue(high >= actual.size());
@@ -47,14 +47,14 @@ class StrictlyOrderedGeneratorTest {
 
     @Test
     void orderedComparator() {
-        List<Byte> actual = CombinedGenerators.strictlyOrdered(bytes(),
+        var actual = CombinedGenerators.strictlyOrdered(bytes(),
                 Collections.reverseOrder()).next();
         Collections.reverse(actual);
         assertIsStrictlyOrder(actual);
     }
 
     private <T extends Comparable<T>> void assertIsStrictlyOrder(List<T> l) {
-        for (int i = 1; i < l.size(); i++) {
+        for (var i = 1; i < l.size(); i++) {
             assertTrue(l.get(i - 1).compareTo(l.get(i)) < 0, l.toString());
         }
     }

@@ -41,7 +41,7 @@ class SortedListTest {
     @Test
     void testSortedList() {
         for (List<Integer> any : toIterable(sortedLists(PrimitiveGenerators.integers()))) {
-            ArrayList<Integer> sorted = new ArrayList<>(any);
+            var sorted = new ArrayList<Integer>(any);
             Collections.sort(sorted);
             assertEquals(any, sorted);
         }
@@ -50,8 +50,8 @@ class SortedListTest {
     @Test
     void testSortedWithBounds() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
-            Pair<Integer, Integer> bounds = bounds(sizes);
-            List<Integer> sortedList = CombinedGenerators
+            var bounds = bounds(sizes);
+            var sortedList = CombinedGenerators
                     .sortedLists(integers(), bounds.getFirst(), bounds.getSecond()).next();
             assertBounds(bounds, sortedList);
         }
@@ -60,8 +60,8 @@ class SortedListTest {
     @Test
     void testSortedWithBoundsGenerator() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
-            Pair<Integer, Integer> bounds = bounds(sizes);
-            List<Integer> sortedList = CombinedGenerators.sortedLists(integers(),
+            var bounds = bounds(sizes);
+            var sortedList = CombinedGenerators.sortedLists(integers(),
                     integers(bounds.getFirst(), bounds.getSecond())).next();
             assertBounds(bounds, sortedList);
         }
@@ -75,12 +75,12 @@ class SortedListTest {
 
     private Pair<Integer, Integer> bounds(Pair<Integer, Integer> sizes) {
         int lo = sizes.getFirst();
-        int hi = sizes.getSecond() + lo + 1;
+        var hi = sizes.getSecond() + lo + 1;
         return new Pair<>(lo, hi);
     }
 
     public Generator<Pair<Integer, Integer>> sizes() {
-        Generator<Integer> sizes = integers(MIN_SIZE, MAX_SIZE / 2);
+        var sizes = integers(MIN_SIZE, MAX_SIZE / 2);
         return pairs(sizes, sizes);
     }
 }

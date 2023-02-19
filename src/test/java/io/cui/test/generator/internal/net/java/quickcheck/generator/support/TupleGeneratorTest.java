@@ -24,23 +24,22 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
-import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.MockFactory;
 
 class TupleGeneratorTest {
 
     @Test
     void testIt() {
-        Generator<Object> generator1 = MockFactory.createObjectGenerator();
-        Generator<Object> generator2 = MockFactory.createObjectGenerator();
-        Object return1 = new Object();
-        Object return2 = new Object();
+        var generator1 = MockFactory.createObjectGenerator();
+        var generator2 = MockFactory.createObjectGenerator();
+        var return1 = new Object();
+        var return2 = new Object();
         expect(generator1.next()).andReturn(return1);
         expect(generator2.next()).andReturn(return2);
         replay(generator1, generator2);
-        TupleGenerator inhomogeneousGenerator = new TupleGenerator(generator1,
+        var inhomogeneousGenerator = new TupleGenerator(generator1,
                 generator2);
-        Object[] next = inhomogeneousGenerator.next();
+        var next = inhomogeneousGenerator.next();
         verify(generator1, generator2);
         assertEquals(2, next.length);
         assertSame(return1, next[0]);

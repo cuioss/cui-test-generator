@@ -33,14 +33,14 @@ class DuplicateGeneratorTest {
 
     @Test
     void duplicate() {
-        Set<Integer> input = inputs.next();
+        var input = inputs.next();
         Generator<List<Integer>> ds = CombinedGenerators.duplicates(input);
         assertIsDuplicate(input, ds.next());
     }
 
     @Test
     void duplicateFromVargs() {
-        Set<Integer> input = inputs.next();
+        var input = inputs.next();
         Generator<List<Integer>> ds = CombinedGenerators.duplicates(input.toArray(new Integer[0]));
         assertIsDuplicate(input, ds.next());
     }

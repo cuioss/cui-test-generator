@@ -18,7 +18,7 @@ class NonBlankStringGeneratorTest {
 
     @Test
     void nextReturnsNonBlankString() {
-        String result = underTest.next();
+        var result = underTest.next();
         assertFalse(result.trim().isEmpty());
     }
 

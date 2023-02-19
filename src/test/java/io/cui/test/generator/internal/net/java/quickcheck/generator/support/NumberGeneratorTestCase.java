@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.QuickCheck;
 import io.cui.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
-import io.cui.test.generator.internal.net.java.quickcheck.characteristic.Classification;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
 abstract class NumberGeneratorTestCase<T extends Number> {
@@ -53,9 +52,9 @@ abstract class NumberGeneratorTestCase<T extends Number> {
     @Test
     void testBounds() {
 
-        double expectedLt = 0.2;
-        double expectedGt = 0.2;
-        Generator<T> generator = generator(LOW_VALUE, HIGH_VALUE, Distribution.UNIFORM);
+        var expectedLt = 0.2;
+        var expectedGt = 0.2;
+        var generator = generator(LOW_VALUE, HIGH_VALUE, Distribution.UNIFORM);
         assertValue(generator, expectedLt, expectedGt);
     }
 
@@ -69,9 +68,9 @@ abstract class NumberGeneratorTestCase<T extends Number> {
 
     @Test
     void testBoundsGausian() {
-        double expectedLt = 0.5;
-        double expectedGt = 0.2;
-        Generator<T> generator = generator(LOW_VALUE, HIGH_VALUE,
+        var expectedLt = 0.5;
+        var expectedGt = 0.2;
+        var generator = generator(LOW_VALUE, HIGH_VALUE,
                 Distribution.POSITIV_NORMAL);
         assertValue(generator, expectedLt, expectedGt);
     }
@@ -82,7 +81,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
 
             @Override
             protected void doSpecify(T any) {
-                double anyDoubleValue = any.doubleValue();
+                var anyDoubleValue = any.doubleValue();
                 assertTrue(LOW_VALUE <= anyDoubleValue
                         && HIGH_VALUE >= anyDoubleValue);
                 classify(anyDoubleValue < 0, LT_0);
@@ -90,7 +89,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
             }
         };
         QuickCheck.forAll(doubleGenerator, characteristic);
-        Classification classification = characteristic.getClassification();
+        var classification = characteristic.getClassification();
 
         assertTrue(classification.getFrequency(LT_0) > expectedLt);
         assertTrue(classification.getFrequency(GT_0) > expectedGt);

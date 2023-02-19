@@ -37,13 +37,13 @@ class ObjectGeneratorImplTest {
     void objects() {
         ObjectGenerator<Simple> generator = PrimitiveGenerators
                 .objects(Simple.class);
-        Integer expected = defineGeneratorValueForGetValue(generator);
+        var expected = defineGeneratorValueForGetValue(generator);
         assertEquals(expected, generator.next().getValue());
     }
 
     private Integer defineGeneratorValueForGetValue(
             ObjectGenerator<? extends Simple> generator) {
-        Integer expected = integers().next();
+        var expected = integers().next();
         Simple recorder = generator.getRecorder();
         generator.on(recorder.getValue()).returns(integerGenerator(expected));
         return expected;
@@ -60,8 +60,8 @@ class ObjectGeneratorImplTest {
         compoundGenerator.on(compoundGenerator.getRecorder().simple()).returns(
                 simpleGenerator);
 
-        Simple simple = compoundGenerator.next().simple();
-        Integer value = simple.getValue();
+        var simple = compoundGenerator.next().simple();
+        var value = simple.getValue();
         assertNotNull(value);
     }
 
@@ -69,7 +69,7 @@ class ObjectGeneratorImplTest {
     void defaultObjects() {
         Generator<AllSupportedPrimitives> objects = PrimitiveGenerators
                 .defaultObjects(AllSupportedPrimitives.class);
-        AllSupportedPrimitives next = objects.next();
+        var next = objects.next();
         assertInstanceOf(Byte.class, next.aByte());
         assertInstanceOf(Double.class, next.aDouble());
         assertInstanceOf(Integer.class, next.anInt());
@@ -93,8 +93,8 @@ class ObjectGeneratorImplTest {
     void defaultObjectsMixedMode() {
         ObjectGenerator<Mixed> defaultObjects = PrimitiveGenerators
                 .defaultObjects(Mixed.class);
-        Integer expectedValue = defineGeneratorValueForGetValue(defaultObjects);
-        Mixed next = defaultObjects.next();
+        var expectedValue = defineGeneratorValueForGetValue(defaultObjects);
+        var next = defaultObjects.next();
         assertNotNull(next.simple().getValue());
         assertEquals(expectedValue, next.getValue());
     }
@@ -110,8 +110,8 @@ class ObjectGeneratorImplTest {
     void objectsReturnTypesAreCovariant() {
         ObjectGenerator<Covariant> generator = PrimitiveGenerators
                 .objects(Covariant.class);
-        Integer expected = integers().next();
-        Covariant recorder = generator.getRecorder();
+        var expected = integers().next();
+        var recorder = generator.getRecorder();
         generator.on(recorder.aNumber()).returns(integerGenerator(expected));
         assertEquals(expected, generator.next().aNumber());
     }
@@ -154,7 +154,7 @@ class ObjectGeneratorImplTest {
     }
 
     private Generator<Integer> integerGenerator(Integer expected) {
-        Generator<Integer> generator = MockFactory.createIntegerGenerator();
+        var generator = MockFactory.createIntegerGenerator();
         expect(generator.next()).andReturn(expected);
         replay(generator);
         return generator;

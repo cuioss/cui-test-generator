@@ -38,21 +38,21 @@ class ExcludingGeneratorTest {
 
     @Test
     void excludeNothing() {
-        Integer value = integers().next();
+        var value = integers().next();
         Generator<Integer> generator = CombinedGenerators.excludeValues(PrimitiveGenerators.fixedValues(value));
         assertEquals(value, generator.next());
     }
 
     @Test
     void excludeEverything() {
-        Integer value = integers().next();
+        var value = integers().next();
         Generator<Integer> excludeValues = CombinedGenerators.excludeValues(fixedValues(value), value);
         assertThrows(GeneratorException.class, excludeValues::next);
     }
 
     @Test
     void excludeEverythingVargs() {
-        Integer value = integers().next();
+        var value = integers().next();
         Generator<Integer> excludeValues = CombinedGenerators.excludeValues(fixedValues(value), value);
        assertThrows(GeneratorException.class, excludeValues::next);
     }
@@ -60,7 +60,7 @@ class ExcludingGeneratorTest {
     @Test
     void excludeCollection() {
         for (List<Integer> excluded : toIterable(lists(integers()))) {
-            Integer value = CombinedGenerators.excludeValues(integers(), excluded).next();
+            var value = CombinedGenerators.excludeValues(integers(), excluded).next();
             assertFalse(excluded.contains(value));
         }
     }
@@ -68,8 +68,8 @@ class ExcludingGeneratorTest {
     @Test
     void excludeFixedValueGenerator() {
         for (List<Integer> fixedValues : toIterable(lists(integers(), 2))) {
-            Integer excluded = fixedValues(fixedValues).next();
-            Integer value = CombinedGenerators.excludeValues(fixedValues, excluded).next();
+            var excluded = fixedValues(fixedValues).next();
+            var value = CombinedGenerators.excludeValues(fixedValues, excluded).next();
             assertNotEquals(excluded, value);
         }
     }

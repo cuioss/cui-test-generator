@@ -37,9 +37,10 @@ class IteratorGeneratorTest extends AbstractCollectionTestCase {
     @Test
     void typeVariance() {
         Generator<Iterator<Object>> objs = CombinedGenerators.iterators(integers());
-        Iterator<Object> values = objs.next();
-        while (values.hasNext())
+        var values = objs.next();
+        while (values.hasNext()) {
             assertTrue(values.next() instanceof Integer);
+        }
     }
 
     @Override
@@ -53,7 +54,7 @@ class IteratorGeneratorTest extends AbstractCollectionTestCase {
 
     private Generator<Collection<Integer>> toCollectionGenerator(final Generator<Iterator<Integer>> iterators) {
         return () -> {
-            Iterator<Integer> iterator = iterators.next();
+            var iterator = iterators.next();
             Collection<Integer> collection = new ArrayList<>();
             while (iterator.hasNext()) {
                 collection.add(iterator.next());
@@ -75,7 +76,7 @@ class IteratorGeneratorTest extends AbstractCollectionTestCase {
 
     @Test
     void removeNotSupported() {
-        Iterator<Integer> iterator = iterators().next();
+        var iterator = iterators().next();
         assertThrows(UnsupportedOperationException.class, iterator::remove);
     }
 

@@ -43,7 +43,7 @@ class AbstractTreeGeneratorTest {
 
     @Test
     void testFlatGenerationBaseOnSiblings() {
-        Node root = new TreeGenerator() {
+        var root = new TreeGenerator() {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
@@ -57,7 +57,7 @@ class AbstractTreeGeneratorTest {
     @Test
     void testTreeGenerationBaseOnLevel() {
 
-        Node next = new TreeGenerator() {
+        var next = new TreeGenerator() {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
@@ -95,7 +95,7 @@ class AbstractTreeGeneratorTest {
     @Test
     void testTreeGenerationBaseSiblings() {
 
-        Node next = new TreeGenerator() {
+        var next = new TreeGenerator() {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
@@ -112,12 +112,12 @@ class AbstractTreeGeneratorTest {
     private void assert1210Node(Node next) {
         List<Node> childrenOfRoot = new ArrayList<>();
         id = 1;
-        Node expected = create1210Node(childrenOfRoot);
+        var expected = create1210Node(childrenOfRoot);
         assertEquals(expected, next);
     }
 
     private Node create1210Node(List<Node> childrenOfRoot) {
-        Node expected = new Node(id++);
+        var expected = new Node(id++);
         create10Node(childrenOfRoot);
         create10Node(childrenOfRoot);
         expected.setChildren(childrenOfRoot);
@@ -129,7 +129,7 @@ class AbstractTreeGeneratorTest {
     }
 
     private void testFlatGenerationBaseOnLevel(final int numberOfChildren) {
-        Node root = new TreeGenerator() {
+        var root = new TreeGenerator() {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
@@ -185,7 +185,7 @@ class AbstractTreeGeneratorTest {
             if (!(obj instanceof Node)) {
                 return false;
             }
-            Node node = (Node) obj;
+            var node = (Node) obj;
             return node.children.equals(children) && node.content == content;
         }
 

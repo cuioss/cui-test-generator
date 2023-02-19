@@ -34,20 +34,20 @@ class RandomConfigurationTest {
 
     @Test
     void initSeed() {
-        long seed = RandomConfiguration.initSeed();
+        var seed = RandomConfiguration.initSeed();
         assertSeed(seed);
     }
 
     @Test
     void setSeed() {
-        long seed = 42L;
+        var seed = 42L;
         RandomConfiguration.setSeed(seed);
         assertSeed(seed);
     }
 
     @Test
     void readSystemProperty() {
-        long seed = 1L;
+        var seed = 1L;
         System.setProperty(RandomConfiguration.SEED_SYSTEM_PROPERTY, Long.toString(seed));
         RandomConfiguration.readSystemProperty();
         assertSeed(seed);
@@ -60,8 +60,8 @@ class RandomConfigurationTest {
     }
 
     private void assertSeed(long seed) {
-        Random benchmark = new Random(seed);
-        for (int i = 0; i < 100; i++) {
+        var benchmark = new Random(seed);
+        for (var i = 0; i < 100; i++) {
             assertEquals(benchmark.nextDouble(), RandomConfiguration.random.nextDouble(), 0.0);
         }
     }

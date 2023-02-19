@@ -59,7 +59,7 @@ class ListGeneratorTest extends AbstractCollectionTestCase {
 
     @Test
     void testListGeneratorWithHiAndLowValue() {
-        List<Integer> hiLow = SizeGenerator.anyMinMax();
+        var hiLow = SizeGenerator.anyMinMax();
         int lo = hiLow.get(0);
         int hi = hiLow.get(1);
         testListGenerator(lo, hi, lists(integers(), lo, hi));

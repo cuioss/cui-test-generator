@@ -42,7 +42,7 @@ class CloningGeneratorTest {
     @Test
     void testCloningGeneratorPrototypeNotSameObjectAsGeneratedValue() {
 
-        Prototype next = cloningGenerator.next();
+        var next = cloningGenerator.next();
         assertNotNull(next);
         assertNotSame(prototype, next);
     }
@@ -50,8 +50,8 @@ class CloningGeneratorTest {
     @Test
     void testCloningGeneratorGeneratedValuesAreNotTheSame() {
         Prototype last = null;
-        for (int i = 0; i < 10; i++) {
-            Prototype next = cloningGenerator.next();
+        for (var i = 0; i < 10; i++) {
+            var next = cloningGenerator.next();
             assertNotSame(next, last);
             last = next;
         }

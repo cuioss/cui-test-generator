@@ -32,20 +32,20 @@ abstract class PrimitiveArrayGeneratorTestCase {
 
     @Test
     void testGeneratePrimitiveArrayWithValueRangeAndSizeParameters() {
-        int size = 10;
-        long min = 2;
-        long max = 4;
-        Object arrayValue = createGeneratorValue(min, max, size);
+        var size = 10;
+        var min = 2L;
+        var max = 4L;
+        var arrayValue = createGeneratorValue(min, max, size);
         assertArrayValues(arrayValue, size, min, max);
     }
 
     void assertArrayValues(int size, long min, long max) {
-        Object arrayValue = createGeneratorValue(size);
+        var arrayValue = createGeneratorValue(size);
         assertArrayValues(arrayValue, size, min, max);
     }
 
     protected void assertArrayValuesMinMaxSet(int size, long min, long max) {
-        Object arrayValue = createGeneratorValue(min, max, size);
+        var arrayValue = createGeneratorValue(min, max, size);
         assertArrayValues(arrayValue, size, min, max);
     }
 
@@ -55,9 +55,9 @@ abstract class PrimitiveArrayGeneratorTestCase {
         assertTrue(componentType.isPrimitive());
         assertEquals(getType(), arrayValue.getClass().getComponentType());
         assertLength(arrayValue, size, size);
-        for (int i = 0; i < size; i++) {
-            Object value = Array.get(arrayValue, i);
-            long longValue = ((Number) value).longValue();
+        for (var i = 0; i < size; i++) {
+            var value = Array.get(arrayValue, i);
+            var longValue = ((Number) value).longValue();
             assertRange(longValue, min, max);
         }
     }

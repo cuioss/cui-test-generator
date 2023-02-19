@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 
 import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
-import io.cui.test.generator.internal.net.java.quickcheck.characteristic.Classification;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.Generators;
 
 abstract class AbstractCollectionTestCase {
@@ -41,9 +40,9 @@ abstract class AbstractCollectionTestCase {
 
     @Test
     void testGeneratorPositiveNormalLength() {
-        Generator<Collection<Integer>> listsGenerator = normalDistributionGenerator();
-        double expectedLowerHalfFrequency = 60.0;
-        double expectedUpperHalfFrequency = 10.0;
+        var listsGenerator = normalDistributionGenerator();
+        var expectedLowerHalfFrequency = 60.0;
+        var expectedUpperHalfFrequency = 10.0;
         testCollectionGenerator(listsGenerator, expectedLowerHalfFrequency,
                 expectedUpperHalfFrequency);
     }
@@ -52,9 +51,9 @@ abstract class AbstractCollectionTestCase {
 
     @Test
     void testGenerator() {
-        double expectedLowerHalfFrequency = 40.0;
-        double expectedUpperHalfFrequency = 40.0;
-        Generator<Collection<Integer>> collectionGenerator = defaultGenerator();
+        var expectedLowerHalfFrequency = 40.0;
+        var expectedUpperHalfFrequency = 40.0;
+        var collectionGenerator = defaultGenerator();
         testCollectionGenerator(collectionGenerator,
                 expectedLowerHalfFrequency, expectedUpperHalfFrequency);
     }
@@ -72,12 +71,12 @@ abstract class AbstractCollectionTestCase {
             Generator<Collection<Integer>> listGenerator,
             double expectedLowerHalfFrequency,
             double expectedUpperHalfFrequency, final int lo, final int hi) {
-        final int half = (hi - lo) / 2 + lo;
+        final var half = (hi - lo) / 2 + lo;
         AbstractCharacteristic<Collection<Integer>> characteristic = new AbstractCharacteristic<>() {
 
             @Override
            public void doSpecify(Collection<Integer> any) {
-                String msg = format("size was %s", any.size());
+                var msg = format("size was %s", any.size());
                 assertTrue(any.size() <= hi, msg);
                 assertTrue(any.size() >= lo, msg);
                 for (Integer e : any) {
@@ -88,7 +87,7 @@ abstract class AbstractCollectionTestCase {
             }
         };
         forAll(500, listGenerator, characteristic);
-        Classification classification = characteristic.getClassification();
+        var classification = characteristic.getClassification();
         assertFrequencyGreater(classification, expectedLowerHalfFrequency, LOWER_HALF);
         assertFrequencyGreater(classification, expectedUpperHalfFrequency, UPPER_HALF);
     }

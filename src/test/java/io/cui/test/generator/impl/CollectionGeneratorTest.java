@@ -23,7 +23,7 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldIntersectList() {
-        final Class<Iterable<?>> expectedType = (Class<Iterable<?>>) PropertyUtil
+        final var expectedType = (Class<Iterable<?>>) PropertyUtil
                 .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_LIST).get();
         final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
         assertTrue(List.class.isAssignableFrom(collectionClass));
@@ -32,7 +32,7 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldIntersectCollection() {
-        final Class<Iterable<?>> expectedType = (Class<Iterable<?>>) PropertyUtil
+        final var expectedType = (Class<Iterable<?>>) PropertyUtil
                 .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_COLLECTION).get();
         final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
         assertTrue(Collection.class.isAssignableFrom(collectionClass));
@@ -41,7 +41,7 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldIntersectSet() {
-        final Class<Iterable<?>> expectedType = (Class<Iterable<?>>) PropertyUtil
+        final var expectedType = (Class<Iterable<?>>) PropertyUtil
                 .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_SET).get();
         final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
         assertFalse(List.class.isAssignableFrom(collectionClass));
@@ -50,7 +50,7 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldIntersectSortedSet() {
-        final Class<Iterable<?>> expectedType = (Class<Iterable<?>>) PropertyUtil
+        final var expectedType = (Class<Iterable<?>>) PropertyUtil
                 .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_SORTED_SET).get();
         final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
         assertFalse(List.class.isAssignableFrom(collectionClass));
@@ -59,7 +59,7 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldWrapStrings() {
-        CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.nonEmptyStrings());
+        var generator = new CollectionGenerator<String>(Generators.nonEmptyStrings());
         assertNotNull(generator.list());
         assertNotNull(generator.set());
     }

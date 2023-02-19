@@ -1,6 +1,5 @@
 package io.cui.test.generator.junit;
 
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -33,12 +32,13 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
 
         if (throwable instanceof TestAbortedException) {
             throw throwable;
-        } else if (throwable instanceof AssertionFailedError) {
-            AssertionFailedError failure = new AssertionFailedError(createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+        }
+        if (throwable instanceof AssertionFailedError) {
+            var failure = new AssertionFailedError(createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
         } else {
-            AssertionFailedError failure =
+            var failure =
                 new AssertionFailedError(throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
@@ -49,12 +49,12 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
     @Override
     @SuppressWarnings("java:S3655") // owolff: false positive: isPresent is checked
     public void beforeEach(ExtensionContext context) throws Exception {
-        boolean seedSetByAnnotation = false;
+        var seedSetByAnnotation = false;
         long initialSeed = -1;
         if (context.getElement().isPresent()) {
-            AnnotatedElement annotatedElement = context.getElement().get();
-            GeneratorSeed seedAnnotation = annotatedElement.getAnnotation(GeneratorSeed.class);
-            if (null == seedAnnotation && (annotatedElement instanceof Method)) {
+            var annotatedElement = context.getElement().get();
+            var seedAnnotation = annotatedElement.getAnnotation(GeneratorSeed.class);
+            if (null == seedAnnotation && annotatedElement instanceof Method) {
                 seedAnnotation = ((Method) annotatedElement).getDeclaringClass()
                         .getAnnotation(GeneratorSeed.class);
             }
@@ -72,7 +72,7 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
 
 
     private String createErrorMessage(Throwable e, Long seed) {
-        String causeMsg = e.getMessage() == null ? "" : e.getMessage();
+        var causeMsg = e.getMessage() == null ? "" : e.getMessage();
         return String.format(MSG_TEMPLATE, causeMsg, seed, seed, seed);
     }
 

@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import io.cui.test.generator.internal.net.java.quickcheck.Generator;
 import io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
 class ObjectGeneratorTest {
@@ -33,7 +32,7 @@ class ObjectGeneratorTest {
 
     @Test
     void generateNewInstances() {
-        Generator<Object> objects = PrimitiveGenerators.objects();
+        var objects = PrimitiveGenerators.objects();
         assertNotEquals(objects.next(), objects.next());
     }
 }

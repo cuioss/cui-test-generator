@@ -33,10 +33,10 @@ class TripleTest {
 
     @Test
     void testTriple() {
-        Integer anyInt = integers().next();
-        String anyString = strings().next();
-        Date anyDate = dates().next();
-        Triple<Integer, String, Date> triple = new Triple<>(
+        var anyInt = integers().next();
+        var anyString = strings().next();
+        var anyDate = dates().next();
+        var triple = new Triple<Integer, String, Date>(
                 anyInt, anyString, anyDate);
         assertSame(anyInt, triple.getFirst());
         assertSame(anyString, triple.getSecond());

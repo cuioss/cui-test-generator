@@ -25,7 +25,7 @@ public class DistinguishedNamesGenerator implements TypedGenerator<String> {
     public String next() {
         List<String> elements = new ArrayList<>();
         int count = integers(2, 12).next();
-        for (int i = 0; i < count; i++) {
+        for (var i = 0; i < count; i++) {
             elements.add(prefixes.next() + "=" + values.next());
         }
         return Joiner.on(',').join(elements);

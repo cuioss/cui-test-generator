@@ -52,7 +52,7 @@ class CombinedGeneratorsTest {
 
     @Test
     void frequencyTrivial() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Integer i : toIterable(frequency(PrimitiveGenerators.<Integer> nulls(), 1))) {
             classification.classifyCall(i == null, NULL);
         }
@@ -62,7 +62,7 @@ class CombinedGeneratorsTest {
     @Test
     void frequencyNullAndIntegerEqualDistribution() {
         Generator<Integer> nulls = nulls();
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Integer i : toIterable(frequency(nulls, 1).add(integers(), 1))) {
             classification.classifyCall(i == null, NULL);
         }
@@ -72,11 +72,11 @@ class CombinedGeneratorsTest {
     @Test
     void frequency3NullAnd1Integer() {
         Generator<Integer> nulls = nulls();
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Integer i : toIterable(frequency(nulls, 3).add(integers(), 1))) {
             classification.classifyCall(i == null, NULL);
         }
-        double nullFrequency = classification.getFrequency(NULL);
+        var nullFrequency = classification.getFrequency(NULL);
         assertTrue(nullFrequency > 50 && nullFrequency < 90, () -> "" + nullFrequency);
     }
 
@@ -84,7 +84,7 @@ class CombinedGeneratorsTest {
     void oneOf() {
         Generator<Integer> nulls = nulls();
         Generator<Integer> gen = CombinedGenerators.oneOf(nulls).add(integers());
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Integer i : toIterable(gen)) {
             classification.classifyCall(i == null, NULL);
         }
@@ -94,14 +94,14 @@ class CombinedGeneratorsTest {
     @Test
     void vectorEmpty() {
         Generator<List<Integer>> gen = vectors(PrimitiveGenerators.integers(), 0);
-        List<Integer> next = gen.next();
+        var next = gen.next();
         assertTrue(next.isEmpty());
     }
 
     @Test
     void vector() {
         Generator<List<Integer>> gen = vectors(PrimitiveGenerators.integers(), 3);
-        List<Integer> actual = gen.next();
+        var actual = gen.next();
         assertEquals(3, actual.size());
         for (Integer i : actual) {
             assertNotNull(i);
@@ -111,8 +111,8 @@ class CombinedGeneratorsTest {
     @Test
     void pair() {
 
-        Object returnByFirst = new Object();
-        Object returnBySecond = new Object();
+        var returnByFirst = new Object();
+        var returnBySecond = new Object();
 
         Generator<Pair<Object, Object>> pairs = pairs(fixedValues(returnByFirst), fixedValues(returnBySecond));
 
@@ -132,9 +132,9 @@ class CombinedGeneratorsTest {
 
     @Test
     void triple() {
-        Object returnByFirst = new Object();
-        Object returnBySecond = new Object();
-        Object returnByThird = new Object();
+        var returnByFirst = new Object();
+        var returnBySecond = new Object();
+        var returnByThird = new Object();
 
         Generator<Triple<Object, Object, Object>> triples = CombinedGenerators.triples(fixedValues(returnByFirst),
                 fixedValues(returnBySecond), fixedValues(returnByThird));
@@ -157,11 +157,11 @@ class CombinedGeneratorsTest {
 
     @Test
     void nullsAnd() {
-        Classification classification = new Classification();
+        var classification = new Classification();
         for (Integer i : toIterable(CombinedGenerators.nullsAnd(integers()))) {
             classification.classifyCall(i == null, NULL);
         }
-        double nullFrequency = classification.getFrequency(NULL);
+        var nullFrequency = classification.getFrequency(NULL);
         assertTrue(nullFrequency > 5 && nullFrequency < 65);
     }
 
@@ -169,7 +169,7 @@ class CombinedGeneratorsTest {
     void testNullsAndWithVargsParameter() {
         List<Object> expected = new ArrayList<>(asList(new Object(), new Object(), null));
         Generator<Object> generator = CombinedGenerators.nullsAnd(expected.get(0), expected.get(1));
-        for (int i = 0; i < 1 << 10 && expected.size() > 0; i++) {
+        for (var i = 0; i < 1 << 10 && expected.size() > 0; i++) {
             expected.remove(generator.next());
         }
         assertTrue(expected.isEmpty());

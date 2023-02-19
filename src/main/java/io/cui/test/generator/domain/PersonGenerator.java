@@ -17,8 +17,8 @@ public class PersonGenerator implements TypedGenerator<Person> {
 
     @Override
     public Person next() {
-        final String firstname = firstNames.next();
-        final String lastname = familyNames.next();
+        final var firstname = firstNames.next();
+        final var lastname = familyNames.next();
         return Person.builder().email(EmailGenerator.createEmail(firstname, lastname)).firstname(firstname)
                 .lastname(lastname).organisation(organizations.next()).title(titles.next()).build();
     }

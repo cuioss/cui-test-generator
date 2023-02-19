@@ -14,10 +14,10 @@ class UUIDStringGeneratorTest {
         long seed = Generators.longs().next();
 
         RandomConfiguration.setSeed(seed);
-        String result1 = new UUIDStringGenerator().next();
+        var result1 = new UUIDStringGenerator().next();
 
         RandomConfiguration.setSeed(seed);
-        String result2 = new UUIDStringGenerator().next();
+        var result2 = new UUIDStringGenerator().next();
 
         assertEquals(result1, result2, "UUIDStringGenerator produces non reproducible data");
     }

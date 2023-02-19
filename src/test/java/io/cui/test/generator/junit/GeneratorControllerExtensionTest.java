@@ -32,8 +32,8 @@ class GeneratorControllerExtensionTest {
 
     @Test
     void shouldRethrowTestAbortedException() {
-        TestAbortedException exception = new TestAbortedException();
-        GeneratorControllerExtension extension = new GeneratorControllerExtension();
+        var exception = new TestAbortedException();
+        var extension = new GeneratorControllerExtension();
 
         try {
             extension.handleTestExecutionException(null, exception);
@@ -45,8 +45,8 @@ class GeneratorControllerExtensionTest {
 
     @Test
     void shouldRethrowAssertionFailedError() {
-        AssertionFailedError exception = new AssertionFailedError();
-        GeneratorControllerExtension extension = new GeneratorControllerExtension();
+        var exception = new AssertionFailedError();
+        var extension = new GeneratorControllerExtension();
         RandomConfiguration.setSeed(DEFAULT_SEED);
         try {
             extension.handleTestExecutionException(null, exception);
@@ -59,8 +59,8 @@ class GeneratorControllerExtensionTest {
 
     @Test
     void shouldRethrowIllegalArgumentException() {
-        IllegalArgumentException exception = new IllegalArgumentException();
-        GeneratorControllerExtension extension = new GeneratorControllerExtension();
+        var exception = new IllegalArgumentException();
+        var extension = new GeneratorControllerExtension();
         RandomConfiguration.setSeed(DEFAULT_SEED);
         try {
             extension.handleTestExecutionException(null, exception);
