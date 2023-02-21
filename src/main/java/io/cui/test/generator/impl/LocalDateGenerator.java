@@ -8,7 +8,7 @@ import io.cui.test.generator.internal.net.java.quickcheck.generator.PrimitiveGen
 /**
  * Provide any valid value for {@linkplain LocalDate}
  *
- * @author i000576
+ * @author Eugen Fischer
  */
 public class LocalDateGenerator implements TypedGenerator<LocalDate> {
 

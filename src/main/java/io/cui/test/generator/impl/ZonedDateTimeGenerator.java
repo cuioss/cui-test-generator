@@ -10,7 +10,7 @@ import io.cui.test.generator.TypedGenerator;
 /**
  * Provide any value for {@linkplain ZonedDateTime}
  *
- * @author i000576
+ * @author Eugen Fischer
  */
 public class ZonedDateTimeGenerator implements TypedGenerator<ZonedDateTime> {
 

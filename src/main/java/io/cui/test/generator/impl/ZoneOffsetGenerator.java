@@ -13,7 +13,7 @@ import io.cui.test.generator.TypedGenerator;
 /**
  * Provide any valid value for {@linkplain ZoneOffset}
  *
- * @author i000576
+ * @author Eugen Fischer
  */
 public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 

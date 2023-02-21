@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 /**
  * The generator {@link #READABLE} is for visual mocks, {@link #UNIT_TESTS} for unit-tests.
  *
- * @author i000369 *
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum OrganizationNameGenerator {
