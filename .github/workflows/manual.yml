@@ -6,25 +6,19 @@ name: Manual workflow
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
+  display-variables:
+    name: ${{ vars.JOB_NAME }}
+    # You can use configuration variables with the `vars` context for dynamic jobs
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: Use variables
+      run: |
+        echo "repository variable : ${{ vars.REPOSITORY_VAR }}"
+        echo "organization variable : ${{ vars.ORGANIZATION_VAR }}"
+        echo "overridden variable : ${{ vars.OVERRIDE_VAR }}"
+        echo "branch variable : ${{vars.GITHUB_BASE_REF}}"
+        echo "variable from shell environment : $env_var"

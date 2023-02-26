@@ -11,19 +11,7 @@ env:
     env_var: ${{ vars.ENV_CONTEXT_VAR }}      
 
 jobs:
-  display-variables:
-    name: ${{ vars.JOB_NAME }}
-    # You can use configuration variables with the `vars` context for dynamic jobs
-    runs-on: ${{ vars.RUNNER }}
-    environment: ${{ vars.ENVIRONMENT_STAGE }}
-    steps:
-    - name: Use variables
-      run: |
-        echo "repository variable : ${{ vars.REPOSITORY_VAR }}"
-        echo "organization variable : ${{ vars.ORGANIZATION_VAR }}"
-        echo "overridden variable : ${{ vars.OVERRIDE_VAR }}"
-        echo "branch variable : ${{vars.GITHUB_BASE_REF}}"
-        echo "variable from shell environment : $env_var"
+
   release:
     runs-on: ubuntu-latest
     name: release
