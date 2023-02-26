@@ -27,6 +27,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     name: release
+    if: false
 
     steps:
     - uses: actions/checkout@v3
