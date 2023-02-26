@@ -67,11 +67,11 @@ jobs:
         branch: main
         token:  ${{ secrets.PAGES_DEPLOY_TOKEN }}
 #        
-    - name: Push changes to  ${{vars.GITHUB_BASE_REF}}
+    - name: Push changes to  ${{github.ref_name}}
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch:  ${{vars.GITHUB_BASE_REF}}
+        branch:  ${{github.ref_name}}
         force: true
 
     - name: Push tags
