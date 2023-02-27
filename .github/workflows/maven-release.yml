@@ -22,7 +22,7 @@ jobs:
       name: Retrieve project metadata from '.github/project.yml'
       id: metadata
       with:
-        github-token: ${{secrets.PA_TOKEN}}
+        github-token: ${{secrets.GITHUB_TOKEN}}
         metadata-file-path: '.github/project.yml'
         local-file: true
 
@@ -68,7 +68,7 @@ jobs:
     - name: Push changes to ${{github.ref_name}}
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.PA_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch:  ${{github.ref_name}}
         force: true
 
@@ -76,6 +76,6 @@ jobs:
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch:  ${{github.ref_name}}
-        github_token: ${{ secrets.PA_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         tags: true
         force: true
