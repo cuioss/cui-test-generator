@@ -50,7 +50,7 @@ jobs:
         mvn -B -Prelease javadoc:javadoc site:site site:stage
         git checkout ${{vars.GITHUB_BASE_REF}}
         git rebase release
-       # mvn -B -Prelease release:perform -DskipTests
+        mvn -B -Prelease release:perform -DskipTests
       env:
         MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
         MAVEN_CENTRAL_TOKEN: ${{ secrets.OSS_SONATYPE_PASSWORD }}
@@ -66,7 +66,7 @@ jobs:
         token:  ${{ secrets.PAGES_DEPLOY_TOKEN }}
 #        
     - name: Push changes to ${{github.ref_name}}
-      uses: ad-m/github-push-action@master
+      uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch:  ${{github.ref_name}}
