@@ -68,7 +68,7 @@ jobs:
     - name: Push changes to ${{github.ref_name}}
       uses: ad-m/github-push-action@master
       with:
-        PA_TOKEN: ${{ secrets.PA_TOKEN }}
+        github_token: ${{ secrets.PA_TOKEN }}
         branch:  ${{github.ref_name}}
         force: true
 
@@ -76,6 +76,6 @@ jobs:
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch:  ${{github.ref_name}}
-        PA_TOKEN: ${{ secrets.PA_TOKEN }}
+        github_token: ${{ secrets.PA_TOKEN }}
         tags: true
         force: true
