@@ -14,9 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        persist-credentials: false # otherwise, the token used is the PA_TOKEN, instead of your personal access token.
-        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
 
     - uses: radcortez/project-metadata-action@main
       name: Retrieve project metadata from '.github/project.yml'
@@ -50,7 +47,7 @@ jobs:
         mvn -B -Prelease javadoc:javadoc site:site site:stage
         git checkout ${{github.ref_name}}
         git rebase release
-        mvn -B -Prelease release:perform -DskipTests
+       # mvn -B -Prelease release:perform -DskipTests
       env:
         MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
         MAVEN_CENTRAL_TOKEN: ${{ secrets.OSS_SONATYPE_PASSWORD }}
