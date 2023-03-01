@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.github.cuioss</groupId>
         <artifactId>cui-java-parent</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
         <relativePath />
     </parent>
     <groupId>io.github.cuioss.test</groupId>
@@ -25,22 +25,6 @@
         <url>https://github.com/cuioss/cui-test-generator/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.easymock</groupId>
-                <artifactId>easymock</artifactId>
-                <version>5.1.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest</artifactId>
-                <version>2.2</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -66,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest</artifactId>
+            <artifactId>hamcrest-core</artifactId>
         </dependency>
     </dependencies>
 </project>
