@@ -10,7 +10,7 @@
     <groupId>de.cuioss.test</groupId>
     <artifactId>cui-test-generator</artifactId>
     <name>cui test generator</name>
-    <version>1.1.0</version>
+    <version>1.2.0-SNAPSHOT</version>
     <description>Provides Generator for arbitrary Java-Types 
     </description>
     <packaging>jar</packaging>
@@ -19,7 +19,7 @@
         <url>https://github.com/cuioss/cui-test-generator/</url>
         <connection>scm:git:https://github.com/cuioss/cui-test-generator.git</connection>
         <developerConnection>scm:git:https://github.com/cuioss/cui-test-generator/</developerConnection>
-        <tag>1.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <url>https://github.com/cuioss/cui-test-generator/issues</url>
