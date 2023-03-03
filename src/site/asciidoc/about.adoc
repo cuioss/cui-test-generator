@@ -1,17 +1,17 @@
 == About
 
 === Generators
-Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `io.cui.test.generator.junit.EnableGeneratorController` and `io.cui.test.generator.junit.GeneratorSeed` for details.
+Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `de.cuioss.test.generator.junit.EnableGeneratorController` and `de.cuioss.test.generator.junit.GeneratorSeed` for details.
 
 === Provided Features
 The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part.
-This code is isolated in `io.cui.test.generator.internal.net.java.quickcheck` and will be replaced in the future.
+This code is isolated in `de.cuioss.test.generator.internal.net.java.quickcheck` and will be replaced in the future.
 
 Therefore: Do not use any of that code at all! Central elements are:
 
-* `io.cui.test.generator.TypedGenerator`: Is the core type. Instances of it are used for generating arbitrary instances of any value-object. Compared to `io.cui.test.generator.internal.net.java.quickcheck.Generator` it provides an additional method providing runtime information on the type being generated: `io.cui.test.generator.TypedGenerator.getType()`.
-* `io.cui.test.generator.Generators`: Factory methods for accessing io.cui.test.generator.TypedGenerator for many java-lang types.
-* `io.cui.test.generator.domain`: Provides some domain specific io.cui.test.generator.TypedGenerator
+* `de.cuioss.test.generator.TypedGenerator`: Is the core type. Instances of it are used for generating arbitrary instances of any value-object. Compared to `de.cuioss.test.generator.internal.net.java.quickcheck.Generator` it provides an additional method providing runtime information on the type being generated: `de.cuioss.test.generator.TypedGenerator.getType()`.
+* `de.cuioss.test.generator.Generators`: Factory methods for accessing de.cuioss.test.generator.TypedGenerator for many java-lang types.
+* `de.cuioss.test.generator.domain`: Provides some domain specific de.cuioss.test.generator.TypedGenerator
 
 === Usage
 
@@ -19,7 +19,7 @@ The usage is straight forward `TypedGenerator#next()` always returns a random ob
 
 === TypedGenerator
 
-`io.cui.test.generator.TypedGenerator`
+`de.cuioss.test.generator.TypedGenerator`
 
 Central interface for a concrete generator instance. `TypedGenerator#next()` provides a random instance, `TypedGenerator#getType()` provides the types.
 Sample implementation: 
@@ -46,7 +46,7 @@ public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 
 === Generators
 
-`io.cui.test.generator.Generators`
+`de.cuioss.test.generator.Generators`
 
 Central factory for `TypedGenerator` for most java-built-in types and wrappers for `fixedValue` and `enumValue` variants
 
@@ -68,7 +68,7 @@ Central factory for `TypedGenerator` for most java-built-in types and wrappers f
 
 === CollectionGenerator
 
-`io.cui.test.generator.impl.CollectionGenerator<T>`
+`de.cuioss.test.generator.impl.CollectionGenerator<T>`
 
 Wraps a given `TypedGenerator` and provides  additional methods for creating `Lists` and `Sets`
 
@@ -81,9 +81,9 @@ Wraps a given `TypedGenerator` and provides  additional methods for creating `Li
 
 === EnableGeneratorController
 
-`io.cui.test.generator.junit.EnableGeneratorController`
+`de.cuioss.test.generator.junit.EnableGeneratorController`
 
-This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `io.cui.test.generator.junit.GeneratorSeed` for details.
+This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `de.cuioss.test.generator.junit.GeneratorSeed` for details.
 This fixed seed results in the generators reproducing the exact same test-data.
 
 Sample output:
@@ -96,7 +96,7 @@ or by using the system property '-Dio.cui.test.generator.seed=4711'
 
 === GeneratorSeed
 
-`io.cui.test.generator.junit.GeneratorSeed`
+`de.cuioss.test.generator.junit.GeneratorSeed`
 
 This annotation is to be used in the context of EnableGeneratorController. It explicitly sets the seed for the generators.
 
