@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * <pre>
 GeneratorController seed was 4711L.
 Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
-or by using the system property '-Dio.cui.test.generator.seed=4711'
+or by using the system property '-Dde.cuioss.test.generator.seed=4711'
  * </pre>
  * 
  * <h2>Implementation</h2>
