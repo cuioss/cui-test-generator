@@ -11,7 +11,7 @@ Gate Status]]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=ncloc[Lines of Code,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=coverage[Coverage,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 
-https://cuioss.github.io/cui-test-generator/index.html[Generated Documentation on github-pages]
+https://cuioss.github.io/cui-test-generator/about.html[Generated Documentation on github-pages]
 
 == What is it?
 
