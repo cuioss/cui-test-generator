@@ -23,7 +23,7 @@ Using the generators help creating variations of test-data. On the one hand it p
 ----
     <dependency>
         <groupId>de.cuioss.test</groupId>
-        <name>cui-test-generator</name>
+        <artifactId>cui-test-generator</artifactId>
     </dependency>
 ----
 
