@@ -83,7 +83,7 @@ Central factory for `TypedGenerator` for most java-built-in types and wrappers f
  
  assertNotNull(Generators.booleans().next());
  assertNotNull(Generators.localTimes().next());
- assertNotNull(Generators.fixedValues(String.class, "http://de.icw-global.com", "https://www.heise.de", "http://getbootstrap.com").next());
+ assertNotNull(Generators.fixedValues(String.class, "https://cuioss.de", "https://www.heise.de", "http://getbootstrap.com").next());
  
  assertEquals(Temporal.class, Generators.temporals().getType());
  assertNotNull(Generators.enumValues(PropertyMemberInfo.class).next());
