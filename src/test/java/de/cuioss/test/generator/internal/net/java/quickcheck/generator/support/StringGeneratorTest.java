@@ -51,8 +51,8 @@ class StringGeneratorTest {
 
     @Test
     void testGeneratePrintableLetters() {
-        for (String any : toIterable(
-                de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.printableStrings())) {
+        for (String any : toIterable(de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators
+                .printableStrings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
             for (var i = 0; i < any.length(); i++) {
                 var actualLetter = any.charAt(i);
@@ -84,14 +84,12 @@ class StringGeneratorTest {
         testOnlyAllowedCharacters(allowedCharacters, generator, min, max);
     }
 
-    private void testOnlyAllowedCharacters(final String allowedCharacters,
-            Generator<String> generator) {
-        testOnlyAllowedCharacters(allowedCharacters, generator, 0,
-                StringGenerator.MAX_LENGTH);
+    private void testOnlyAllowedCharacters(final String allowedCharacters, Generator<String> generator) {
+        testOnlyAllowedCharacters(allowedCharacters, generator, 0, StringGenerator.MAX_LENGTH);
     }
 
-    private void testOnlyAllowedCharacters(final String allowedCharacters,
-            Generator<String> generator, final int min, final int max) {
+    private void testOnlyAllowedCharacters(final String allowedCharacters, Generator<String> generator, final int min,
+            final int max) {
         forAll(generator, new AbstractCharacteristic<>() {
 
             @Override
@@ -100,8 +98,7 @@ class StringGeneratorTest {
                 assertTrue(any.length() >= min, Integer.toString(any.length()));
                 for (var i = 0; i < any.length(); i++) {
 
-                    assertTrue(allowedCharacters.contains(Character
-                            .toString(any.charAt(i))));
+                    assertTrue(allowedCharacters.contains(Character.toString(any.charAt(i))));
                 }
             }
         });
@@ -147,8 +144,7 @@ class StringGeneratorTest {
     void testLetterStringsSize() {
         final var lo = 1;
         final var hi = 100;
-        testStringLengthCharacteristic(lo, hi, PrimitiveGenerators
-                .letterStrings(lo, hi));
+        testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.letterStrings(lo, hi));
     }
 
     @Test
@@ -159,8 +155,7 @@ class StringGeneratorTest {
         testStringLengthCharacteristic(min, max, generator);
     }
 
-    private void testStringLengthCharacteristic(final int lo, final int hi,
-            Generator<String> extendibleGenerator) {
+    private void testStringLengthCharacteristic(final int lo, final int hi, Generator<String> extendibleGenerator) {
         final var ltMiddle = "<1/2";
         final var gtMiddle = ">1/2";
         AbstractCharacteristic<String> characteristic = new AbstractCharacteristic<>() {
@@ -182,8 +177,7 @@ class StringGeneratorTest {
     void testStringsSize() {
         final var lo = 1;
         final var hi = 100;
-        testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.strings(lo,
-                hi));
+        testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.strings(lo, hi));
     }
 
     @Test

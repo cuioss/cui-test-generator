@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables;
-import lombok.val;
 
 class SubstringGeneratorTest {
 
@@ -60,7 +59,7 @@ class SubstringGeneratorTest {
     void invalidMinSize() {
         var base = new StringGenerator().next();
         var invalidMin = new IntegerGenerator(Integer.MIN_VALUE, -1).nextInt();
-        val baseLength = base.length();
+        final var baseLength = base.length();
         assertThrows(IllegalArgumentException.class,
                 () -> PrimitiveGenerators.substrings(base, invalidMin, baseLength));
     }

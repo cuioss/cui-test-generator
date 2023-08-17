@@ -19,10 +19,10 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribu
 import static java.lang.Math.abs;
 
 /**
- * <a
- * href="http://en.wikipedia.org/wiki/Image:Normal_distribution_pdf.png">Normal
- * distribution</a> and <a
- * href="http://en.wikipedia.org/wiki/Image:Uniform_distribution_PDF.png">uniform
+ * <a href=
+ * "http://en.wikipedia.org/wiki/Image:Normal_distribution_pdf.png">Normal
+ * distribution</a> and <a href=
+ * "http://en.wikipedia.org/wiki/Image:Uniform_distribution_PDF.png">uniform
  * distribution</a> distribution functions.
  *
  * @author $Id$
@@ -30,8 +30,8 @@ import static java.lang.Math.abs;
 public interface Distribution {
 
     /**
-     * Right side of the bell curve. Values range from 0.0 to 1.0. Values near
-     * 0.0 are the most probable.
+     * Right side of the bell curve. Values range from 0.0 to 1.0. Values near 0.0
+     * are the most probable.
      */
     Distribution POSITIV_NORMAL = new AbstractDistribution() {
 
@@ -42,8 +42,8 @@ public interface Distribution {
     };
 
     /**
-     * Left side of the bell curve. Values range from 0.0 to 1.0. Values near
-     * 1.0 are the most probable.
+     * Left side of the bell curve. Values range from 0.0 to 1.0. Values near 1.0
+     * are the most probable.
      */
     Distribution NEGATIV_NORMAL = new AbstractDistribution() {
 
@@ -54,8 +54,8 @@ public interface Distribution {
     };
 
     /**
-     * An inverted bell curve. Values range from 0.0 to 1.0. Values near 0.0 and
-     * 1.0 are the most probable.
+     * An inverted bell curve. Values range from 0.0 to 1.0. Values near 0.0 and 1.0
+     * are the most probable.
      */
     Distribution INVERTED_NORMAL = new AbstractDistribution() {
 

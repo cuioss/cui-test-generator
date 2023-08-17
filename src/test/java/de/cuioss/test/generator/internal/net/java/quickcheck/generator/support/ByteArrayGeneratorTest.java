@@ -40,15 +40,13 @@ class ByteArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Test
     void testGenerateDefaultPrimitiveArray() {
-        testGenerateDefaultPrimitiveArray(ByteArrayGenerator.MIN_SIZE,
-                ByteArrayGenerator.MAX_SIZE);
+        testGenerateDefaultPrimitiveArray(ByteArrayGenerator.MIN_SIZE, ByteArrayGenerator.MAX_SIZE);
     }
 
     @Override
     protected Generator<Object> createGenerator() {
 
-        return new AbstractTransformerGenerator<>(
-                CombinedGenerators.byteArrays()) {
+        return new AbstractTransformerGenerator<>(CombinedGenerators.byteArrays()) {
 
             @Override
             protected Object transform(Generator<byte[]> inputGenerator) {
@@ -59,9 +57,9 @@ class ByteArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Override
     protected Object createGeneratorValue(long min, long max, int size) {
-        return CombinedGenerators.byteArrays(
-                PrimitiveGenerators.bytes((byte) min, (byte) max),
-                PrimitiveGenerators.fixedValues(size)).next();
+        return CombinedGenerators
+                .byteArrays(PrimitiveGenerators.bytes((byte) min, (byte) max), PrimitiveGenerators.fixedValues(size))
+                .next();
     }
 
     @Override

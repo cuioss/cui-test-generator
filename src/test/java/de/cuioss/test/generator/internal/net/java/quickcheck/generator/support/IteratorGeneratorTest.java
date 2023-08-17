@@ -70,8 +70,8 @@ class IteratorGeneratorTest extends AbstractCollectionTestCase {
 
     @Override
     protected Generator<Collection<Integer>> normalDistributionGenerator() {
-        return toCollectionGenerator(CombinedGenerators.iterators(integers(),
-                integers(0, MAX_SIZE, Distribution.POSITIV_NORMAL)));
+        return toCollectionGenerator(
+                CombinedGenerators.iterators(integers(), integers(0, MAX_SIZE, Distribution.POSITIV_NORMAL)));
     }
 
     @Test

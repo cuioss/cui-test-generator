@@ -25,8 +25,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
 import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
-abstract class WholeNumberGeneratorTestCase<T extends Number> extends
-        NumberGeneratorTestCase<T> {
+abstract class WholeNumberGeneratorTestCase<T extends Number> extends NumberGeneratorTestCase<T> {
 
     @Test
     void testDistributionOfBoundsValues() {
@@ -40,8 +39,7 @@ abstract class WholeNumberGeneratorTestCase<T extends Number> extends
         };
         byte high = 1;
         byte low = -1;
-        QuickCheck.forAll(1000, generator(low, high, Distribution.UNIFORM),
-                characteristic);
+        QuickCheck.forAll(1000, generator(low, high, Distribution.UNIFORM), characteristic);
 
         assertEquals(3, characteristic.getClassification().getCategories().size());
         assertFrequencyGreater(characteristic.getClassification(), 28.0, -1L, 0L, 1L);

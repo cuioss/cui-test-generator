@@ -45,8 +45,7 @@ class RoundRobinGeneratorTest {
         List<Generator<Integer>> generators = new ArrayList<>();
         generators.add(ensureValues(asList(1, 2)));
         generators.add(ensureValues(asList(11, 12)));
-        var roundRobinGenerator = new RoundRobinGenerator<Integer>(
-                generators);
+        var roundRobinGenerator = new RoundRobinGenerator<>(generators);
         List<Integer> actual = new ArrayList<>();
         for (var i = 0; i < 4; i++) {
             actual.add(roundRobinGenerator.next());

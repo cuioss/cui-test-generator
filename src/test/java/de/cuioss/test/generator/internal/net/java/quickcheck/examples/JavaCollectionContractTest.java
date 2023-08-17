@@ -36,34 +36,30 @@ class JavaCollectionContractTest {
 
     @Test
     void collectionAdd() {
-        forAll(pairs(integers(), lists(integers())),
-                new AbstractCharacteristic<>() {
+        forAll(pairs(integers(), lists(integers())), new AbstractCharacteristic<>() {
 
-                    @Override
-                    protected void doSpecify(Pair<Integer, List<Integer>> any) {
-                        var element = any.getFirst();
-                        Collection<Integer> collection = any.getSecond();
+            @Override
+            protected void doSpecify(Pair<Integer, List<Integer>> any) {
+                var element = any.getFirst();
+                Collection<Integer> collection = any.getSecond();
 
-                        var changedCollection = false;
-                        var exceptionThrown = false;
-                        try {
-                            changedCollection = collection.add(element);
-                        } catch (Exception e) {
-                            assertException(e);
-                            exceptionThrown = true;
-                        }
-                        assertNotEquals(collection.contains(element), exceptionThrown);
-                        assertEquals(changedCollection, containsInstance(
-                                collection, element));
-                    }
-                });
+                var changedCollection = false;
+                var exceptionThrown = false;
+                try {
+                    changedCollection = collection.add(element);
+                } catch (Exception e) {
+                    assertException(e);
+                    exceptionThrown = true;
+                }
+                assertNotEquals(collection.contains(element), exceptionThrown);
+                assertEquals(changedCollection, containsInstance(collection, element));
+            }
+        });
     }
 
     private void assertException(Exception e) {
-        assertTrue(e instanceof UnsupportedOperationException
-                || e instanceof ClassCastException
-                || e instanceof IllegalArgumentException
-                || e instanceof IllegalStateException);
+        assertTrue(e instanceof UnsupportedOperationException || e instanceof ClassCastException
+                || e instanceof IllegalArgumentException || e instanceof IllegalStateException);
     }
 
     private boolean containsInstance(Collection<?> collection, Object element) {

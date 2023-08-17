@@ -16,8 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
-import static java.lang.String.format;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +79,7 @@ public class Classification {
         builder.append("Classifications :");
         List<Object> categories = getCategories();
         for (Object key : categories) {
-            builder.append(format("%n%s = %1.2f%%", key, classified.get(key)));
+            builder.append("%n%s = %1.2f%%".formatted(key, classified.get(key)));
         }
         if (classified.isEmpty()) {
             builder.append("none");
@@ -96,10 +94,8 @@ public class Classification {
     /**
      * Increment the classification counter for the given classification.
      *
-     * @param predicate
-     *            increment only if the predicate is true.
-     * @param classification
-     *            classification key
+     * @param predicate      increment only if the predicate is true.
+     * @param classification classification key
      */
     public void doClassify(boolean predicate, Object classification) {
         checkReportState();
@@ -144,8 +140,7 @@ public class Classification {
         return toSort;
     }
 
-    private ArrayList<Object> transFormPairListToCategoryList(
-            ArrayList<Pair<Object, Double>> toSort) {
+    private ArrayList<Object> transFormPairListToCategoryList(ArrayList<Pair<Object, Double>> toSort) {
         ArrayList<Object> sortedCategoryList = new ArrayList<>();
         for (Pair<Object, Double> pair : toSort) {
             sortedCategoryList.add(pair.getFirst());

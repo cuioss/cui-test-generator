@@ -49,8 +49,7 @@ abstract class PrimitiveArrayGeneratorTestCase {
         assertArrayValues(arrayValue, size, min, max);
     }
 
-    private void assertArrayValues(Object arrayValue, int size, long min,
-            long max) {
+    private void assertArrayValues(Object arrayValue, int size, long min, long max) {
         Class<?> componentType = arrayValue.getClass().getComponentType();
         assertTrue(componentType.isPrimitive());
         assertEquals(getType(), arrayValue.getClass().getComponentType());
@@ -78,8 +77,7 @@ abstract class PrimitiveArrayGeneratorTestCase {
 
     protected abstract Generator<Object> createGenerator();
 
-    void testGenerateDefaultPrimitiveArray(final int minSize,
-            final int maxSize) {
+    void testGenerateDefaultPrimitiveArray(final int minSize, final int maxSize) {
         forAll(createGenerator(), new AbstractCharacteristic<>() {
 
             @Override
@@ -89,8 +87,7 @@ abstract class PrimitiveArrayGeneratorTestCase {
         });
     }
 
-    void testGeneratePrimitiveArrayWithSizeParameter(final long min,
-            final long max) {
+    void testGeneratePrimitiveArrayWithSizeParameter(final long min, final long max) {
         forAll(integers(0, 3), new AbstractCharacteristic<>() {
 
             @Override

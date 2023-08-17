@@ -4,7 +4,7 @@
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
-# documentation.
+# documentation. 
 
 name: Master Build
 
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [11, 17]
+        version: [17,20]
 
     steps:
     - uses: actions/checkout@v3
@@ -42,10 +42,10 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Set up JDK 11 for Sonar-build
+    - name: Set up JDK 17 for Sonar-build
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: maven
         
@@ -76,10 +76,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11 for snapshot release
+    - name: Set up JDK 17 for snapshot release
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         server-id: sonatype-nexus-snapshots
         server-username: MAVEN_USERNAME
@@ -95,7 +95,7 @@ jobs:
     - name: Deploy Snapshot with Maven, version ${{ steps.project.outputs.version }}
       if: ${{endsWith(steps.project.outputs.version, '-SNAPSHOT')}}
       run: |
-        mvn -B -Prelease-snapshot javadoc:javadoc
+        mvn -B -Prelease-snapshot javadoc:aggregate
         mvn -B -Prelease-snapshot deploy -Dmaven.test.skip=true
       env:
         MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}

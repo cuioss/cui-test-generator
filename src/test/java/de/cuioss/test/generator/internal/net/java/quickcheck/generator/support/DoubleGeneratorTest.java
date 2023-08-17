@@ -23,8 +23,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 class DoubleGeneratorTest extends NumberGeneratorTestCase<Double> {
 
     @Override
-    protected Generator<Double> generator(byte lo, byte hi,
-            Distribution distribution) {
+    protected Generator<Double> generator(byte lo, byte hi, Distribution distribution) {
         return PrimitiveGenerators.doubles(lo, hi, distribution);
     }
 }

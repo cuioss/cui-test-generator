@@ -23,11 +23,9 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 
 public class CharacterGenerator implements Generator<Character> {
 
-    public static final Pair<Character, Character> BASIC_LATIN = new Pair<>(
-            (char) 0x20, (char) 0x7F);
+    public static final Pair<Character, Character> BASIC_LATIN = new Pair<>((char) 0x20, (char) 0x7F);
 
-    public static final Pair<Character, Character> LATIN_1_SUPPLEMENT = new Pair<>(
-            (char) 0xa0, (char) 0xFF);
+    public static final Pair<Character, Character> LATIN_1_SUPPLEMENT = new Pair<>((char) 0xa0, (char) 0xFF);
 
     private final IntegerGenerator generator;
 

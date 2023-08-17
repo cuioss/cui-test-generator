@@ -25,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
 
 class TripleTest {
@@ -36,8 +34,7 @@ class TripleTest {
         var anyInt = integers().next();
         var anyString = strings().next();
         var anyDate = dates().next();
-        var triple = new Triple<Integer, String, Date>(
-                anyInt, anyString, anyDate);
+        var triple = new Triple<>(anyInt, anyString, anyDate);
         assertSame(anyInt, triple.getFirst());
         assertSame(anyString, triple.getSecond());
         assertSame(anyDate, triple.getThird());

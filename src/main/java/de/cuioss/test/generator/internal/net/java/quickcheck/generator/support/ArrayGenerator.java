@@ -22,8 +22,7 @@ import java.util.Objects;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
-public class ArrayGenerator<T> extends
-        AbstractTransformerGenerator<List<T>, T[]> {
+public class ArrayGenerator<T> extends AbstractTransformerGenerator<List<T>, T[]> {
 
     public static final int MAX_SIZE = ListGenerator.MAX_SIZE;
     public static final int MIN_SIZE = ListGenerator.MIN_SIZE;
@@ -35,8 +34,7 @@ public class ArrayGenerator<T> extends
         setEmptyArrayOfT(type);
     }
 
-    public ArrayGenerator(Generator<? extends T> content, Generator<Integer> size,
-            Class<T> type) {
+    public ArrayGenerator(Generator<? extends T> content, Generator<Integer> size, Class<T> type) {
         super(new ListGenerator<>(content, size));
         setEmptyArrayOfT(type);
     }

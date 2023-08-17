@@ -17,7 +17,6 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.lang.String.format;
 
 import java.util.Objects;
 
@@ -58,6 +57,6 @@ public class DoubleGenerator implements Generator<Double> {
 
     @Override
     public String toString() {
-        return format("%s[min=%s, max=%s, distribution=%s", getClass().getSimpleName(), min, max, distribution);
+        return "%s[min=%s, max=%s, distribution=%s".formatted(getClass().getSimpleName(), min, max, distribution);
     }
 }

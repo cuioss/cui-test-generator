@@ -47,8 +47,7 @@ class StrictlyOrderedGeneratorTest {
 
     @Test
     void orderedComparator() {
-        var actual = CombinedGenerators.strictlyOrdered(bytes(),
-                Collections.reverseOrder()).next();
+        var actual = CombinedGenerators.strictlyOrdered(bytes(), Collections.reverseOrder()).next();
         Collections.reverse(actual);
         assertIsStrictlyOrder(actual);
     }

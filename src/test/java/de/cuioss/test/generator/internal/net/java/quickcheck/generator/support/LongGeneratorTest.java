@@ -32,8 +32,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
 
     @Override
-    protected Generator<Long> generator(byte lo, byte hi,
-            Distribution distribution) {
+    protected Generator<Long> generator(byte lo, byte hi, Distribution distribution) {
         return PrimitiveGenerators.longs(lo, hi, distribution);
     }
 

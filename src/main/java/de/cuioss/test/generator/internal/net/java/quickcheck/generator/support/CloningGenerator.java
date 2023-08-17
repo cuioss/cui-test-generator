@@ -29,8 +29,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
  * prototype object. For each call of {@link CloningGenerator#next()} a new copy
  * of the prototype will be generated.
  *
- * @param <T>
- *            Type of the prototype object
+ * @param <T> Type of the prototype object
  *
  */
 public class CloningGenerator<T> implements Generator<T> {
@@ -49,18 +48,15 @@ public class CloningGenerator<T> implements Generator<T> {
         try {
             return cloneObject();
         } catch (IOException e) {
-            throw new IllegalArgumentException("prototype " + prototype
-                    + " not serializable.", e);
+            throw new IllegalArgumentException("prototype " + prototype + " not serializable.", e);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("this should not happen "
-                    + e.getMessage(), e);
+            throw new RuntimeException("this should not happen " + e.getMessage(), e);
         }
     }
 
     private T cloneObject() throws IOException, ClassNotFoundException {
         ByteArrayOutputStream bytesStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                bytesStream);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(bytesStream);
         objectOutputStream.writeObject(prototype);
         objectOutputStream.flush();
         objectOutputStream.close();
@@ -70,8 +66,7 @@ public class CloningGenerator<T> implements Generator<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private T castObjectToT(ObjectInputStream objectInputStream)
-        throws IOException, ClassNotFoundException {
+    private T castObjectToT(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         return (T) objectInputStream.readObject();
     }
 

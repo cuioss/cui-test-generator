@@ -19,8 +19,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
-class NullGeneratorTest extends
-        AbstractFixedValueGeneratorTestCase<Object> {
+class NullGeneratorTest extends AbstractFixedValueGeneratorTestCase<Object> {
 
     @Override
     protected Object value() {

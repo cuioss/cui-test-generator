@@ -23,13 +23,11 @@ import static java.lang.reflect.Array.set;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
-abstract class AbstractPrimitiveArrayGenerator<I, P> extends
-        AbstractTransformerGenerator<I, P> {
+abstract class AbstractPrimitiveArrayGenerator<I, P> extends AbstractTransformerGenerator<I, P> {
 
     private final Class<?> componentType;
 
-    AbstractPrimitiveArrayGenerator(Generator<I> inputGenerator,
-            Class<?> componentType) {
+    AbstractPrimitiveArrayGenerator(Generator<I> inputGenerator, Class<?> componentType) {
         super(inputGenerator);
         this.componentType = componentType;
     }

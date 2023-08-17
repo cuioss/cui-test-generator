@@ -21,7 +21,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
  * <p>
  * User should call implementation of ObjectGenerator as follows:
  * </p>
- * 
+ *
  * <pre>{@code
  * ObjectGenerator<T> g;
  * Generator<R> methodGenerator;
@@ -33,8 +33,8 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
 public interface ObjectGenerator<T> extends Generator<T> {
 
     /**
-     * Implementation of T that is used to define the method a generator should
-     * be defined for.
+     * Implementation of T that is used to define the method a generator should be
+     * defined for.
      *
      * @return an implementation of T used only to record method calls
      */
@@ -43,12 +43,9 @@ public interface ObjectGenerator<T> extends Generator<T> {
     /**
      * Define a method a generator should be defined for.
      *
-     * @param <R>
-     *            type of the return type
-     * @param value
-     *            is ignored
-     * @return {@link ReturnValue} instance to define a generator for this
-     *         method
+     * @param <R>   type of the return type
+     * @param value is ignored
+     * @return {@link ReturnValue} instance to define a generator for this method
      */
     <R> ReturnValue<R> on(R value);
 

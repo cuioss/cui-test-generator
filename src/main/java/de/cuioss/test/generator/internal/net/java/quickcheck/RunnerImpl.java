@@ -17,7 +17,6 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
 import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
 import java.io.PrintWriter;
@@ -64,12 +63,12 @@ class RunnerImpl<T> implements Runner<T> {
                 characteristic.specify(value);
                 return;
             } catch (GuardException e) {
-                print(format("%d: skipped [%s]", currentRuns, value));
+                print("%d: skipped [%s]".formatted(currentRuns, value));
             } catch (Throwable e) {
                 throwFailedException(value, e, characteristic, currentRuns);
             }
         }
-        var message = format("Generator max tries (%s) reached. Check your guard expressions.", maxRuns);
+        var message = "Generator max tries (%s) reached. Check your guard expressions.".formatted(maxRuns);
         throw new GeneratorException(message, generator);
     }
 
@@ -99,13 +98,13 @@ class RunnerImpl<T> implements Runner<T> {
     }
 
     private void printCurrentValue(int currentRuns, T value) {
-        print(format("%s:[%s]", currentRuns, value));
+        print("%s:[%s]".formatted(currentRuns, value));
     }
 
     private void throwFailedException(T value, Throwable e, Characteristic<?> characteristic, int currentRuns) {
         var characteristicName = characteristic.name() == null ? "" : characteristic.name();
         var message = "Characteristic %s is not true for value(# %s):[%s] message: >%s<";
-        var msg = format(message, characteristicName, currentRuns, value, e.getMessage());
+        var msg = message.formatted(characteristicName, currentRuns, value, e.getMessage());
         print(msg);
         throw new CharacteristicException(msg, e, characteristic, value);
     }

@@ -19,7 +19,6 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.createStrictMock;
 
-@SuppressWarnings({ "unchecked" })
 public class MockFactory {
 
     public static Generator<Object> createObjectGenerator() {

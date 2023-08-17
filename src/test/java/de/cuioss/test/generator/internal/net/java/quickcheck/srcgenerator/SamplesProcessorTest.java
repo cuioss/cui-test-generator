@@ -39,8 +39,7 @@ class SamplesProcessorTest {
     @Test
     void primitiveSubtype() {
         assertNotNull(UserSamples.anyPrimitiveSubtype());
-        assertEquals(Integer.class, UserSamples.anyPrimitiveSubtype()
-                .getClass());
+        assertEquals(Integer.class, UserSamples.anyPrimitiveSubtype().getClass());
     }
 
     @Test

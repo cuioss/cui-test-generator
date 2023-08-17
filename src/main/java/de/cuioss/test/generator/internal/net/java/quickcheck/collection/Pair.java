@@ -24,10 +24,8 @@ import lombok.ToString;
 /**
  * A tuple of two values.
  *
- * @param <A>
- *            type of first entry
- * @param <B>
- *            type of second entry
+ * @param <A> type of first entry
+ * @param <B> type of second entry
  *
  */
 @EqualsAndHashCode

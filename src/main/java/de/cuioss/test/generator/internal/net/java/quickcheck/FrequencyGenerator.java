@@ -28,10 +28,8 @@ public interface FrequencyGenerator<T> extends ExtendibleGenerator<T, T> {
     /**
      * Add a new input generator.
      *
-     * @param gen
-     *            input generator
-     * @param weight
-     *            weight of this generator
+     * @param gen    input generator
+     * @param weight weight of this generator
      * @return this generator
      */
     FrequencyGenerator<T> add(Generator<T> gen, int weight);

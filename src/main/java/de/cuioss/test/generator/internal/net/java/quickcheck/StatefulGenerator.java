@@ -19,8 +19,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
 /**
  * Any generator keeping state information has to implemet this interface.
  *
- * @param <T>
- *            type of the generated instance
+ * @param <T> type of the generated instance
  */
 public interface StatefulGenerator<T> extends Generator<T> {
 

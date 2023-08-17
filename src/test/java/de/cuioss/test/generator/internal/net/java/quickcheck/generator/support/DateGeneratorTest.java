@@ -26,7 +26,6 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.di
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
 import static java.lang.Long.MAX_VALUE;
 import static java.lang.Long.MIN_VALUE;
-import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -146,8 +145,8 @@ class DateGeneratorTest {
 
     private void assertBounds(Long lo, Long hi, Date date) {
         var next = date.getTime();
-        assertTrue(lo <= next, format("lo <= next, %s, %s", lo, next));
-        assertTrue(hi >= next, format("hi >= next, %s, %s", hi, next));
+        assertTrue(lo <= next, "lo <= next, %s, %s".formatted(lo, next));
+        assertTrue(hi >= next, "hi >= next, %s, %s".formatted(hi, next));
     }
 
     private void classify(Classification classification, Date date) {

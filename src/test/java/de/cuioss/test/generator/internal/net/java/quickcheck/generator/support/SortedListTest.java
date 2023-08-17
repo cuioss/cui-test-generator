@@ -41,7 +41,7 @@ class SortedListTest {
     @Test
     void testSortedList() {
         for (List<Integer> any : toIterable(sortedLists(PrimitiveGenerators.integers()))) {
-            var sorted = new ArrayList<Integer>(any);
+            var sorted = new ArrayList<>(any);
             Collections.sort(sorted);
             assertEquals(any, sorted);
         }
@@ -51,8 +51,7 @@ class SortedListTest {
     void testSortedWithBounds() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
             var bounds = bounds(sizes);
-            var sortedList = CombinedGenerators
-                    .sortedLists(integers(), bounds.getFirst(), bounds.getSecond()).next();
+            var sortedList = CombinedGenerators.sortedLists(integers(), bounds.getFirst(), bounds.getSecond()).next();
             assertBounds(bounds, sortedList);
         }
     }
@@ -61,14 +60,13 @@ class SortedListTest {
     void testSortedWithBoundsGenerator() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
             var bounds = bounds(sizes);
-            var sortedList = CombinedGenerators.sortedLists(integers(),
-                    integers(bounds.getFirst(), bounds.getSecond())).next();
+            var sortedList = CombinedGenerators.sortedLists(integers(), integers(bounds.getFirst(), bounds.getSecond()))
+                    .next();
             assertBounds(bounds, sortedList);
         }
     }
 
-    private void assertBounds(Pair<Integer, Integer> bounds,
-            List<Integer> sortedList) {
+    private void assertBounds(Pair<Integer, Integer> bounds, List<Integer> sortedList) {
         assertTrue(sortedList.size() <= bounds.getSecond());
         assertTrue(sortedList.size() >= bounds.getFirst());
     }

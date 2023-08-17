@@ -90,8 +90,7 @@ class QuickCheckTest {
         characteristic.setUp();
         characteristic.specify(last);
         expectLastCall().andThrow(thrown);
-        expect(characteristic.name()).andReturn(
-                PrimitiveGenerators.strings().next()).atLeastOnce();
+        expect(characteristic.name()).andReturn(PrimitiveGenerators.strings().next()).atLeastOnce();
         characteristic.tearDown();
 
         return last;
@@ -102,8 +101,7 @@ class QuickCheckTest {
         var runs = 2;
         expectRuns(runs);
         replayMocks();
-        QuickCheck.forAll(runs, PrimitiveGenerators.fixedValues(new Object()),
-                characteristic);
+        QuickCheck.forAll(runs, PrimitiveGenerators.fixedValues(new Object()), characteristic);
         verifyMocks();
     }
 
@@ -138,8 +136,7 @@ class QuickCheckTest {
 
         var writer = new StringWriter();
 
-        var runner =
-            new RunnerImpl<Object>(characteristic, 1, generator, new PrintWriter(writer));
+        var runner = new RunnerImpl<>(characteristic, 1, generator, new PrintWriter(writer));
         runner.forAll();
         var actual = writer.toString();
         var expected = "1:[returned]";
@@ -173,8 +170,7 @@ class QuickCheckTest {
     void testForWithGuardAbortsAfterMaxTry() throws Throwable {
         var runs = 3;
         var maxGeneratorTries = RunnerImpl.getMaxGeneratorTries(runs);
-        expect(generator.next()).andReturn(new Object()).times(
-                maxGeneratorTries);
+        expect(generator.next()).andReturn(new Object()).times(maxGeneratorTries);
         characteristic.setUp();
         for (var i = 0; i < maxGeneratorTries; i++) {
             characteristic.specify(anyObject());

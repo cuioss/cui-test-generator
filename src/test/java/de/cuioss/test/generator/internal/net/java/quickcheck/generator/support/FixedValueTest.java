@@ -30,7 +30,7 @@ class FixedValueTest extends AbstractFixedValueGeneratorTestCase<Object> {
 
     @Override
     protected Object value() {
-        return this.value;
+        return value;
     }
 
 }

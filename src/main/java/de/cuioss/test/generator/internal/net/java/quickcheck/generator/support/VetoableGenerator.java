@@ -16,8 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.String.format;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
 import de.cuioss.tools.base.Preconditions;
@@ -55,8 +53,9 @@ public abstract class VetoableGenerator<T> implements Generator<T> {
             if (tryValue(value))
                 return value;
         }
-        throw new GeneratorException(format("Failed to generate another value after [%s] tries (generator: %s)",
-                maxTries, generator), generator);
+        throw new GeneratorException(
+                "Failed to generate another value after [%s] tries (generator: %s)".formatted(maxTries, generator),
+                generator);
     }
 
     /**

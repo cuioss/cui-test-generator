@@ -16,8 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.String.format;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +30,11 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
  * </p>
  * <ul>
  * <li>{@link AbstractTreeGenerator#createNode()}: create current node</li>
- * <li>{@link AbstractTreeGenerator#getChildCount(int, int)}: calculate number of child nodes</li>
+ * <li>{@link AbstractTreeGenerator#getChildCount(int, int)}: calculate number
+ * of child nodes</li>
  * <li>(create child nodes)</li>
- * <li>{@link AbstractTreeGenerator#addChildren(Object, List)}: add child nodes to node</li>
+ * <li>{@link AbstractTreeGenerator#addChildren(Object, List)}: add child nodes
+ * to node</li>
  * </ul>
  *
  * @param <T> type of tree node
@@ -56,11 +56,9 @@ public abstract class AbstractTreeGenerator<T> implements Generator<T> {
     /**
      * Get the number of children for the current level.
      *
-     * @param level
-     *            current level starting with 0 for the root level
-     * @param numberOfSiblings
-     *            number of siblings (number of siblings is 1 for the root
-     *            node.)
+     * @param level            current level starting with 0 for the root level
+     * @param numberOfSiblings number of siblings (number of siblings is 1 for the
+     *                         root node.)
      */
     protected abstract int getChildCount(int level, int numberOfSiblings);
 
@@ -85,8 +83,7 @@ public abstract class AbstractTreeGenerator<T> implements Generator<T> {
 
     private void checkDepth(int level) {
         if (level > MAX_TREE_DEPTH) {
-            throw new GeneratorException(format(
-                    "Max tree depth (%s) exceeded.", MAX_TREE_DEPTH), this);
+            throw new GeneratorException("Max tree depth (%s) exceeded.".formatted(MAX_TREE_DEPTH), this);
         }
     }
 

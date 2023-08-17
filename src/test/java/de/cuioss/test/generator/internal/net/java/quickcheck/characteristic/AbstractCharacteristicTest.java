@@ -39,14 +39,12 @@ class AbstractCharacteristicTest {
 
     @Test
     void testClassifyEmpty() {
-        assertEquals(EMPTY_LIST, characteristic.getClassification()
-                .getCategories());
+        assertEquals(EMPTY_LIST, characteristic.getClassification().getCategories());
     }
 
     @Test
     void testToClassifiedString() {
-        assertEquals("Classifications :none", characteristic
-                .getClassification().toString());
+        assertEquals("Classifications :none", characteristic.getClassification().toString());
     }
 
     @Test
@@ -58,7 +56,6 @@ class AbstractCharacteristicTest {
 
     private void expectOneClassificationEntry(String classification) throws Throwable {
         characteristic.specify(0);
-        assertEquals(100.0, characteristic.getClassification().getFrequency(classification),
-                0.01);
+        assertEquals(100.0, characteristic.getClassification().getFrequency(classification), 0.01);
     }
 }

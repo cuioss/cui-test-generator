@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Prototype;
-import lombok.val;
 
 class CloningGeneratorTest {
 
@@ -59,7 +58,7 @@ class CloningGeneratorTest {
 
     @Test
     void testThrowsExceptionIfNotSerializable() {
-        val generator = new CloningGenerator<>(new Object());
+        final var generator = new CloningGenerator<>(new Object());
         assertThrows(IllegalArgumentException.class, generator::next);
     }
 

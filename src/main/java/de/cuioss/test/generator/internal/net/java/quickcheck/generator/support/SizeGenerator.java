@@ -36,8 +36,8 @@ public class SizeGenerator implements Generator<Integer> {
     }
 
     /**
-     * A minimum and maximum size value in the {@link ListGenerator#MIN_SIZE}
-     * and {@link ListGenerator#MAX_SIZE} range.
+     * A minimum and maximum size value in the {@link ListGenerator#MIN_SIZE} and
+     * {@link ListGenerator#MAX_SIZE} range.
      */
     public static List<Integer> anyMinMax() {
         FixedValuesGenerator<Integer> sized = new FixedValuesGenerator<>(2);

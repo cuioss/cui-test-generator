@@ -54,7 +54,7 @@ class SetGeneratorTest extends AbstractCollectionTestCase {
 
     @Test
     void testSizeIsValid() throws de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException,
-        de.cuioss.test.generator.internal.net.java.quickcheck.CharacteristicException {
+            de.cuioss.test.generator.internal.net.java.quickcheck.CharacteristicException {
         forAll(sets(integers(0, MAX_SIZE * 10), MAX_SIZE, MAX_SIZE), new AbstractCharacteristic<>() {
 
             @Override

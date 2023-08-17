@@ -51,12 +51,11 @@ public final class Iterables {
     /**
      * Calculate the size of an {@link Iterable}.
      * <p>
-     * The size of an {@link Iterable} is the number of {@link Iterator#next()} calls not throwing
-     * a {@link NoSuchElementException}.
+     * The size of an {@link Iterable} is the number of {@link Iterator#next()}
+     * calls not throwing a {@link NoSuchElementException}.
      * </p>
      *
-     * @param iterable
-     *            to calculate the size of
+     * @param iterable to calculate the size of
      */
     public static <T> int sizeOf(Iterable<T> iterable) {
         requireNonNull(iterable, "iterable");

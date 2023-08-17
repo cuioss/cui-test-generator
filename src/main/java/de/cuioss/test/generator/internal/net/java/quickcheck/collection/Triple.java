@@ -23,12 +23,9 @@ import lombok.ToString;
 /**
  * A tuple of three values.
  *
- * @param <A>
- *            type of first entry
- * @param <B>
- *            type of second entry
- * @param <C>
- *            type of third entry
+ * @param <A> type of first entry
+ * @param <B> type of second entry
+ * @param <C> type of third entry
  *
  */
 @EqualsAndHashCode(callSuper = true)

@@ -37,8 +37,7 @@ class TupleGeneratorTest {
         expect(generator1.next()).andReturn(return1);
         expect(generator2.next()).andReturn(return2);
         replay(generator1, generator2);
-        var inhomogeneousGenerator = new TupleGenerator(generator1,
-                generator2);
+        var inhomogeneousGenerator = new TupleGenerator(generator1, generator2);
         var next = inhomogeneousGenerator.next();
         verify(generator1, generator2);
         assertEquals(2, next.length);

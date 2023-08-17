@@ -61,8 +61,7 @@ public class ObjectDefaultMappingGenerator<T> extends ObjectGeneratorImpl<T> {
         }
     }
 
-    private <R> ObjectDefaultMappingGenerator<R> buildGenerator(
-            Class<R> returnType) {
+    private <R> ObjectDefaultMappingGenerator<R> buildGenerator(Class<R> returnType) {
         return new ObjectDefaultMappingGenerator<>(returnType);
     }
 }

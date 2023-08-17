@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * https://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.cuioss.test.generator.junit;
 
 import java.lang.reflect.Method;
@@ -13,19 +28,22 @@ import org.opentest4j.TestAbortedException;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 
 /**
- * If enabled, either by using {@link ExtendWith} or {@link EnableGeneratorController} this
- * {@link Extension} controls the seed initialization, by checking for {@link GeneratorSeed} and
- * intercepts Test-failures by printing information providing the seed to reproduce.
+ * If enabled, either by using {@link ExtendWith} or
+ * {@link EnableGeneratorController} this {@link Extension} controls the seed
+ * initialization, by checking for {@link GeneratorSeed} and intercepts
+ * Test-failures by printing information providing the seed to reproduce.
  *
  * @author Oliver Wolff
  *
  */
 public class GeneratorControllerExtension implements BeforeEachCallback, TestExecutionExceptionHandler {
 
-    private static final String MSG_TEMPLATE = "%s\nGeneratorController seed was %sL. "
-            + "\nUse a fixed seed by applying @GeneratorSeed(%sL) for the method/class, "
-            + "\nor by using the system property '-D" + RandomConfiguration.SEED_SYSTEM_PROPERTY
-            + "=%s'\n";
+    private static final String MSG_TEMPLATE = """
+            %s
+            GeneratorController seed was %sL.\s
+            Use a fixed seed by applying @GeneratorSeed(%sL) for the method/class,\s
+            or by using the system property '-D\
+            """ + RandomConfiguration.SEED_SYSTEM_PROPERTY + "=%s'\n";
 
     @Override
     public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
@@ -38,9 +56,8 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
         } else {
-            var failure =
-                new AssertionFailedError(
-                        throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+            var failure = new AssertionFailedError(
+                    throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
         }
@@ -55,9 +72,8 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
         if (context.getElement().isPresent()) {
             var annotatedElement = context.getElement().get();
             var seedAnnotation = annotatedElement.getAnnotation(GeneratorSeed.class);
-            if (null == seedAnnotation && annotatedElement instanceof Method) {
-                seedAnnotation = ((Method) annotatedElement).getDeclaringClass()
-                        .getAnnotation(GeneratorSeed.class);
+            if (null == seedAnnotation && annotatedElement instanceof Method method) {
+                seedAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
             }
             if (null != seedAnnotation) {
                 initialSeed = seedAnnotation.value();
@@ -73,7 +89,7 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
 
     private String createErrorMessage(Throwable e, Long seed) {
         var causeMsg = e.getMessage() == null ? "" : e.getMessage();
-        return String.format(MSG_TEMPLATE, causeMsg, seed, seed, seed);
+        return MSG_TEMPLATE.formatted(causeMsg, seed, seed, seed);
     }
 
 }

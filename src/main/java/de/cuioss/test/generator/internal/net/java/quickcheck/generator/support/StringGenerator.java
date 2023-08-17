@@ -43,8 +43,7 @@ public class StringGenerator implements ExtendibleGenerator<Character, String> {
         this(new IntegerGenerator(MIN_LENGTH, MAX_LENGTH), characters);
     }
 
-    public StringGenerator(Generator<Integer> length,
-            Generator<Character> characters) {
+    public StringGenerator(Generator<Integer> length, Generator<Character> characters) {
         Objects.requireNonNull(length, "length");
 
         this.length = length;
@@ -62,8 +61,7 @@ public class StringGenerator implements ExtendibleGenerator<Character, String> {
     }
 
     @Override
-    public ExtendibleGenerator<Character, String> add(
-            Generator<Character> characterGenerator) {
+    public ExtendibleGenerator<Character, String> add(Generator<Character> characterGenerator) {
         characters.add(characterGenerator);
         return this;
     }

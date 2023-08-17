@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import lombok.val;
 
 class SubmapGeneratorTest {
 
@@ -59,7 +58,7 @@ class SubmapGeneratorTest {
         var supermap = maps(longs(), integers()).next();
         Generator<Integer> invalidSizes = oneOf(integers(Integer.MIN_VALUE, -1)).add(integers(supermap.size() + 1));
         for (Integer size : toIterable(invalidSizes)) {
-            val generator = CombinedGenerators.maps(supermap, PrimitiveGenerators.fixedValues(size));
+            final var generator = CombinedGenerators.maps(supermap, PrimitiveGenerators.fixedValues(size));
             assertThrows(IllegalArgumentException.class, generator::next);
         }
     }

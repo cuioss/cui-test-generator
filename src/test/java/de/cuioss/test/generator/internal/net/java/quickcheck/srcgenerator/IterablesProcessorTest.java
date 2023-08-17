@@ -75,8 +75,7 @@ class IterablesProcessorTest {
         assertEquals(new Pair<>(1, "two"), next);
     }
 
-    private <T> void assertIteratorReturnType(Class<T> expectedType,
-            Iterable<T> iterable) {
+    private <T> void assertIteratorReturnType(Class<T> expectedType, Iterable<T> iterable) {
         assertEquals(expectedType, iterable.iterator().next().getClass());
     }
 }

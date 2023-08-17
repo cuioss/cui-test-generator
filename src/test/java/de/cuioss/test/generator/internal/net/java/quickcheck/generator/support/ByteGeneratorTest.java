@@ -23,8 +23,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 class ByteGeneratorTest extends WholeNumberGeneratorTestCase<Byte> {
 
     @Override
-    protected Generator<Byte> generator(byte lo, byte hi,
-            Distribution distribution) {
+    protected Generator<Byte> generator(byte lo, byte hi, Distribution distribution) {
         return PrimitiveGenerators.bytes(lo, hi, distribution);
     }
 

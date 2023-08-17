@@ -42,8 +42,7 @@ class ArrayGeneratorTest extends AbstractCollectionTestCase {
 
     @Override
     protected Generator<Collection<Integer>> defaultGenerator() {
-        return toCollectionGenerator(arrays(PrimitiveGenerators.integers(),
-                Integer.class));
+        return toCollectionGenerator(arrays(PrimitiveGenerators.integers(), Integer.class));
     }
 
     @Override
@@ -52,14 +51,11 @@ class ArrayGeneratorTest extends AbstractCollectionTestCase {
                 integers(0, MAX_SIZE, Distribution.POSITIV_NORMAL), Integer.class));
     }
 
-    private Generator<Collection<Integer>> toCollectionGenerator(
-            Generator<Integer[]> listsGenerator) {
-        return new AbstractTransformerGenerator<>(
-                listsGenerator) {
+    private Generator<Collection<Integer>> toCollectionGenerator(Generator<Integer[]> listsGenerator) {
+        return new AbstractTransformerGenerator<>(listsGenerator) {
 
             @Override
-            protected Collection<Integer> transform(
-                    Generator<Integer[]> inputGenerator) {
+            protected Collection<Integer> transform(Generator<Integer[]> inputGenerator) {
 
                 var next = inputGenerator.next();
                 return Arrays.asList(next);

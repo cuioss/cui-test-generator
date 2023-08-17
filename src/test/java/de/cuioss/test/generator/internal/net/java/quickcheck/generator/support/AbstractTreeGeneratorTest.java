@@ -61,14 +61,11 @@ class AbstractTreeGeneratorTest {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
-                switch (level) {
-                    case 0:
-                        return 2;
-                    case 1:
-                        return 1;
-                    default:
-                        return 0;
-                }
+                return switch (level) {
+                case 0 -> 2;
+                case 1 -> 1;
+                default -> 0;
+                };
             }
         }.next();
 
@@ -196,8 +193,7 @@ class AbstractTreeGeneratorTest {
 
         @Override
         public String toString() {
-            return String.format("Node[size=%d,children=%s]", children.size(),
-                    children);
+            return "Node[size=%d,children=%s]".formatted(children.size(), children);
         }
     }
 }

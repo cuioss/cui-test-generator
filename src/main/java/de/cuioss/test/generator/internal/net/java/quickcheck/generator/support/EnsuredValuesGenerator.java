@@ -69,9 +69,8 @@ public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
     }
 
     /**
-     * @return true if an ensured values should be taken. The results should be
-     *         such that the ensured values are uniformly distributed over the
-     *         window.
+     * @return true if an ensured values should be taken. The results should be such
+     *         that the ensured values are uniformly distributed over the window.
      */
     private boolean spreadOverWindow() {
         assert valuesLeft > 0 && generatesLeft >= 0;

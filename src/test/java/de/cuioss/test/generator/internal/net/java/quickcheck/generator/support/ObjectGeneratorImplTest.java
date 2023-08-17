@@ -35,14 +35,12 @@ class ObjectGeneratorImplTest {
 
     @Test
     void objects() {
-        ObjectGenerator<Simple> generator = PrimitiveGenerators
-                .objects(Simple.class);
+        ObjectGenerator<Simple> generator = PrimitiveGenerators.objects(Simple.class);
         var expected = defineGeneratorValueForGetValue(generator);
         assertEquals(expected, generator.next().getValue());
     }
 
-    private Integer defineGeneratorValueForGetValue(
-            ObjectGenerator<? extends Simple> generator) {
+    private Integer defineGeneratorValueForGetValue(ObjectGenerator<? extends Simple> generator) {
         var expected = integers().next();
         Simple recorder = generator.getRecorder();
         generator.on(recorder.getValue()).returns(integerGenerator(expected));
@@ -51,14 +49,10 @@ class ObjectGeneratorImplTest {
 
     @Test
     void compoundObjects() {
-        ObjectGenerator<Simple> simpleGenerator = PrimitiveGenerators
-                .objects(Simple.class);
-        simpleGenerator.on(simpleGenerator.getRecorder().getValue()).returns(
-                integers());
-        ObjectGenerator<Compound> compoundGenerator = PrimitiveGenerators
-                .objects(Compound.class);
-        compoundGenerator.on(compoundGenerator.getRecorder().simple()).returns(
-                simpleGenerator);
+        ObjectGenerator<Simple> simpleGenerator = PrimitiveGenerators.objects(Simple.class);
+        simpleGenerator.on(simpleGenerator.getRecorder().getValue()).returns(integers());
+        ObjectGenerator<Compound> compoundGenerator = PrimitiveGenerators.objects(Compound.class);
+        compoundGenerator.on(compoundGenerator.getRecorder().simple()).returns(simpleGenerator);
 
         var simple = compoundGenerator.next().simple();
         var value = simple.getValue();
@@ -67,8 +61,7 @@ class ObjectGeneratorImplTest {
 
     @Test
     void defaultObjects() {
-        Generator<AllSupportedPrimitives> objects = PrimitiveGenerators
-                .defaultObjects(AllSupportedPrimitives.class);
+        Generator<AllSupportedPrimitives> objects = PrimitiveGenerators.defaultObjects(AllSupportedPrimitives.class);
         var next = objects.next();
         assertInstanceOf(Byte.class, next.aByte());
         assertInstanceOf(Double.class, next.aDouble());
@@ -84,15 +77,13 @@ class ObjectGeneratorImplTest {
 
     @Test
     void defaultCompoundObjects() {
-        Generator<Compound> defaultObjects = PrimitiveGenerators
-                .defaultObjects(Compound.class);
+        Generator<Compound> defaultObjects = PrimitiveGenerators.defaultObjects(Compound.class);
         assertNotNull(defaultObjects.next().simple().getValue());
     }
 
     @Test
     void defaultObjectsMixedMode() {
-        ObjectGenerator<Mixed> defaultObjects = PrimitiveGenerators
-                .defaultObjects(Mixed.class);
+        ObjectGenerator<Mixed> defaultObjects = PrimitiveGenerators.defaultObjects(Mixed.class);
         var expectedValue = defineGeneratorValueForGetValue(defaultObjects);
         var next = defaultObjects.next();
         assertNotNull(next.simple().getValue());
@@ -108,8 +99,7 @@ class ObjectGeneratorImplTest {
 
     @Test
     void objectsReturnTypesAreCovariant() {
-        ObjectGenerator<Covariant> generator = PrimitiveGenerators
-                .objects(Covariant.class);
+        ObjectGenerator<Covariant> generator = PrimitiveGenerators.objects(Covariant.class);
         var expected = integers().next();
         var recorder = generator.getRecorder();
         generator.on(recorder.aNumber()).returns(integerGenerator(expected));
@@ -118,8 +108,7 @@ class ObjectGeneratorImplTest {
 
     @Test
     void objectsDefinitionMissing() {
-        ObjectGenerator<Simple> generator = PrimitiveGenerators
-                .objects(Simple.class);
+        ObjectGenerator<Simple> generator = PrimitiveGenerators.objects(Simple.class);
         assertThrows(IllegalStateException.class, generator::next);
     }
 
@@ -147,8 +136,7 @@ class ObjectGeneratorImplTest {
             public void setValue(Integer v) {
             }
         };
-        ObjectGenerator<Simple> generator = PrimitiveGenerators
-                .objects(Simple.class);
+        ObjectGenerator<Simple> generator = PrimitiveGenerators.objects(Simple.class);
         assertThrows(IllegalStateException.class, () -> generator.on(notARecorder.getValue()));
     }
 

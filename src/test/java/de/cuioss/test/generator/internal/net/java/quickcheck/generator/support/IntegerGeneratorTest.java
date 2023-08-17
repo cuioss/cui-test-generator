@@ -78,8 +78,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
     void testOneAndZero() {
-        var integerGenerator = PrimitiveGenerators
-                .integers(0, 1);
+        var integerGenerator = PrimitiveGenerators.integers(0, 1);
         var classification = new Classification();
         for (Integer i : Iterables.toIterable(integerGenerator)) {
             classification.classifyCall(i);
@@ -111,8 +110,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
         var loHi = sortedLists(integers(), fixedValues(2)).next();
         int lo = loHi.get(0);
         int hi = loHi.get(1);
-        var integerGenerator = PrimitiveGenerators.integers(lo,
-                hi, Distribution.POSITIV_NORMAL);
+        var integerGenerator = PrimitiveGenerators.integers(lo, hi, Distribution.POSITIV_NORMAL);
         testBounds(integerGenerator, lo, hi);
     }
 
@@ -139,8 +137,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
         });
     }
 
-    private void testBounds(Generator<Integer> integerGenerator, final int lo,
-            final int hi) {
+    private void testBounds(Generator<Integer> integerGenerator, final int lo, final int hi) {
         forAll(1000, integerGenerator, new AbstractCharacteristic<>() {
 
             @Override
@@ -152,8 +149,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     }
 
     @Override
-    protected Generator<Integer> generator(byte lo, byte hi,
-            Distribution distribution) {
+    protected Generator<Integer> generator(byte lo, byte hi, Distribution distribution) {
         return integers(lo, hi, distribution);
     }
 }

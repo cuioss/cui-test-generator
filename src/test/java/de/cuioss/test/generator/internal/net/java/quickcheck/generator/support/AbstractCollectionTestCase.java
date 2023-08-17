@@ -20,7 +20,6 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.f
 import static de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.ClassificationTestHelper.assertFrequencyGreater;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MIN_SIZE;
-import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,8 +42,7 @@ abstract class AbstractCollectionTestCase {
         var listsGenerator = normalDistributionGenerator();
         var expectedLowerHalfFrequency = 60.0;
         var expectedUpperHalfFrequency = 10.0;
-        testCollectionGenerator(listsGenerator, expectedLowerHalfFrequency,
-                expectedUpperHalfFrequency);
+        testCollectionGenerator(listsGenerator, expectedLowerHalfFrequency, expectedUpperHalfFrequency);
     }
 
     protected abstract Generator<Collection<Integer>> normalDistributionGenerator();
@@ -54,29 +52,24 @@ abstract class AbstractCollectionTestCase {
         var expectedLowerHalfFrequency = 40.0;
         var expectedUpperHalfFrequency = 40.0;
         var collectionGenerator = defaultGenerator();
-        testCollectionGenerator(collectionGenerator,
-                expectedLowerHalfFrequency, expectedUpperHalfFrequency);
+        testCollectionGenerator(collectionGenerator, expectedLowerHalfFrequency, expectedUpperHalfFrequency);
     }
 
     protected abstract Generator<Collection<Integer>> defaultGenerator();
 
-    void testCollectionGenerator(
-            Generator<Collection<Integer>> generator,
-            double expectedLowerHalfFrequency, double expectedUpperHalfFrequency) {
-        testCollectionGenerator(generator, expectedLowerHalfFrequency,
-                expectedUpperHalfFrequency, MIN_SIZE, MAX_SIZE);
+    void testCollectionGenerator(Generator<Collection<Integer>> generator, double expectedLowerHalfFrequency,
+            double expectedUpperHalfFrequency) {
+        testCollectionGenerator(generator, expectedLowerHalfFrequency, expectedUpperHalfFrequency, MIN_SIZE, MAX_SIZE);
     }
 
-    void testCollectionGenerator(
-            Generator<Collection<Integer>> listGenerator,
-            double expectedLowerHalfFrequency,
+    void testCollectionGenerator(Generator<Collection<Integer>> listGenerator, double expectedLowerHalfFrequency,
             double expectedUpperHalfFrequency, final int lo, final int hi) {
         final var half = (hi - lo) / 2 + lo;
         AbstractCharacteristic<Collection<Integer>> characteristic = new AbstractCharacteristic<>() {
 
             @Override
             public void doSpecify(Collection<Integer> any) {
-                var msg = format("size was %s", any.size());
+                var msg = "size was %s".formatted(any.size());
                 assertTrue(any.size() <= hi, msg);
                 assertTrue(any.size() >= lo, msg);
                 for (Integer e : any) {

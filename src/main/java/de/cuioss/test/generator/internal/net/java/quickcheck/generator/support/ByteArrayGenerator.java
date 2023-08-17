@@ -24,8 +24,7 @@ public class ByteArrayGenerator extends AbstractPrimitiveArrayGenerator<Byte[], 
     public static final int MIN_SIZE = ArrayGenerator.MIN_SIZE;
 
     public ByteArrayGenerator() {
-        super(new ArrayGenerator<>(new ByteGenerator(), Byte.class),
-                byte.class);
+        super(new ArrayGenerator<>(new ByteGenerator(), Byte.class), byte.class);
     }
 
     public ByteArrayGenerator(Generator<Integer> size) {

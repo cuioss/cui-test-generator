@@ -17,7 +17,6 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static java.lang.Math.signum;
-import static java.lang.String.format;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,8 +29,7 @@ public class DateGenerator implements Generator<Date> {
     private final VetoableGenerator<Long> generator;
 
     public DateGenerator(TimeUnit precision, long low, long high, int tries) {
-        generator = new VetoableGenerator<>(new MillisGenerator(precision,
-                low, high), tries) {
+        generator = new VetoableGenerator<>(new MillisGenerator(precision, low, high), tries) {
 
             @Override
             protected boolean tryValue(Long value) {
@@ -65,15 +63,15 @@ public class DateGenerator implements Generator<Date> {
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(millis);
             switch (precision) {
-                case DAYS:
-                    time.set(Calendar.HOUR, 0); //$FALL-THROUGH$
-                case HOURS:
-                    time.set(Calendar.MINUTE, 0); //$FALL-THROUGH$
-                case MINUTES:
-                    time.set(Calendar.SECOND, 0); //$FALL-THROUGH$
-                case SECONDS:
-                    time.set(Calendar.MILLISECOND, 0); //$FALL-THROUGH$
-                default:
+            case DAYS:
+                time.set(Calendar.HOUR, 0); //$FALL-THROUGH$
+            case HOURS:
+                time.set(Calendar.MINUTE, 0); //$FALL-THROUGH$
+            case MINUTES:
+                time.set(Calendar.SECOND, 0); //$FALL-THROUGH$
+            case SECONDS:
+                time.set(Calendar.MILLISECOND, 0); //$FALL-THROUGH$
+            default:
             }
             long correctedMillis = time.getTimeInMillis();
             return isOutOffBounds(correctedMillis) || isOverflow(millis, correctedMillis) ? null : correctedMillis;
@@ -90,7 +88,7 @@ public class DateGenerator implements Generator<Date> {
 
         @Override
         public String toString() {
-            return format("%s[low=%s, high=%s, precision=%s", getClass().getSimpleName(), low, high, precision);
+            return "%s[low=%s, high=%s, precision=%s".formatted(getClass().getSimpleName(), low, high, precision);
         }
 
     }

@@ -79,8 +79,7 @@ class ListGeneratorTest extends AbstractCollectionTestCase {
         }
     }
 
-    private void testListGenerator(int lo, int hi,
-            Generator<List<Integer>> generator) {
+    private void testListGenerator(int lo, int hi, Generator<List<Integer>> generator) {
         testCollectionGenerator(cast(generator), 40.0, 40.0, lo, hi);
     }
 }

@@ -21,20 +21,15 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 public class IntegerArrayGenerator extends AbstractPrimitiveArrayGenerator<Integer[], int[]> {
 
     public IntegerArrayGenerator() {
-        super(
-                new ArrayGenerator<>(new IntegerGenerator(),
-                        Integer.class),
-                int.class);
+        super(new ArrayGenerator<>(new IntegerGenerator(), Integer.class), int.class);
     }
 
     public IntegerArrayGenerator(Generator<Integer> size) {
         this(new IntegerGenerator(), size);
     }
 
-    public IntegerArrayGenerator(Generator<Integer> content,
-            Generator<Integer> size) {
-        super(new ArrayGenerator<>(content, size, Integer.class),
-                int.class);
+    public IntegerArrayGenerator(Generator<Integer> content, Generator<Integer> size) {
+        super(new ArrayGenerator<>(content, size, Integer.class), int.class);
     }
 
     public static final int MIN_SIZE = ArrayGenerator.MIN_SIZE;

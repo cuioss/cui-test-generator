@@ -33,30 +33,21 @@ public class CharacteristicException extends RuntimeException {
     private final Characteristic<?> charateristic;
 
     /**
-     * @param message
-     *            error message
-     * @param cause
-     *            causing exception thrown by characteristic
-     * @param charateristic
-     *            characteristic violated
+     * @param message       error message
+     * @param cause         causing exception thrown by characteristic
+     * @param charateristic characteristic violated
      */
-    public CharacteristicException(String message, Throwable cause,
-            Characteristic<?> charateristic) {
+    public CharacteristicException(String message, Throwable cause, Characteristic<?> charateristic) {
         this(message, cause, charateristic, null);
     }
 
     /**
-     * @param message
-     *            error message
-     * @param cause
-     *            causing exception thrown by characteristic
-     * @param instance
-     *            violating the specified characteristic
-     * @param charateristic
-     *            characteristic violated
+     * @param message       error message
+     * @param cause         causing exception thrown by characteristic
+     * @param instance      violating the specified characteristic
+     * @param charateristic characteristic violated
      */
-    public CharacteristicException(String message, Throwable cause,
-            Characteristic<?> charateristic, Object instance) {
+    public CharacteristicException(String message, Throwable cause, Characteristic<?> charateristic, Object instance) {
         super(message, cause);
         this.instance = instance;
         this.charateristic = charateristic;
@@ -68,6 +59,6 @@ public class CharacteristicException extends RuntimeException {
      * @return the violating instance
      */
     public Object getInstance() {
-        return this.instance;
+        return instance;
     }
 }

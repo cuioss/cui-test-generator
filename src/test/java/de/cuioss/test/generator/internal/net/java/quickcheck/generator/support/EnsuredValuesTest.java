@@ -41,8 +41,7 @@ class EnsuredValuesTest {
 
     private static final String[] STRING_VALUES = { "a", "b", "c", "d", "e", "f", "g", "h" };
     private static final String DISJUNCT_STRING = "z";
-    private static final Set<String> VALUES =
-        Set.of(STRING_VALUES);
+    private static final Set<String> VALUES = Set.of(STRING_VALUES);
     static {
         assert !VALUES.contains(DISJUNCT_STRING);
     }
@@ -84,11 +83,8 @@ class EnsuredValuesTest {
     @Test
     void returnGeneratorValuesAfterFirstSequence() {
         var len = 2;
-        Generator<String> strings = new StringGenerator(
-                new FixedValuesGenerator<>(len),
-                new CharacterGenerator());
-        Generator<String> generator = CombinedGenerators.ensureValues(
-                new HashSet<>(VALUES), strings);
+        Generator<String> strings = new StringGenerator(new FixedValuesGenerator<>(len), new CharacterGenerator());
+        Generator<String> generator = CombinedGenerators.ensureValues(new HashSet<>(VALUES), strings);
         for (var idx = 0; idx < VALUES.size(); idx++) {
             assertNotEquals(generator.next().length(), len);
         }
@@ -99,8 +95,8 @@ class EnsuredValuesTest {
 
     @Test
     void resetGenerator() {
-        StatefulGenerator<Boolean> generator = CombinedGenerators.ensureValues(
-                Collections.singleton(true), PrimitiveGenerators.fixedValues(false));
+        StatefulGenerator<Boolean> generator = CombinedGenerators.ensureValues(Collections.singleton(true),
+                PrimitiveGenerators.fixedValues(false));
         assertTrue(generator.next());
         assertFalse(generator.next());
         generator.reset();
@@ -112,7 +108,7 @@ class EnsuredValuesTest {
     void generateEnsuredValuesInWindow() {
         Generator<String> generator = CombinedGenerators.ensureValues(VALUES, VALUES.size(),
                 new FixedValuesGenerator<>(DISJUNCT_STRING));
-        var rest = new HashSet<String>(VALUES);
+        var rest = new HashSet<>(VALUES);
         for (var i = 0; i < VALUES.size(); i++) {
             assertTrue(rest.remove(generator.next()));
         }
@@ -125,7 +121,7 @@ class EnsuredValuesTest {
         var window = VALUES.size() * 2;
         Generator<String> generator = CombinedGenerators.ensureValues(VALUES, window,
                 new FixedValuesGenerator<>(DISJUNCT_STRING));
-        var rest = new HashSet<String>(VALUES);
+        var rest = new HashSet<>(VALUES);
         for (var i = 0; i < window; i++) {
             var n = generator.next();
             assertTrue(rest.remove(n) || n.equals(DISJUNCT_STRING));
@@ -138,21 +134,21 @@ class EnsuredValuesTest {
     void generateEnsuredValuesSpreadInWindow() {
         List<String> values = asList(STRING_VALUES);
         var window = values.size() * 20;
-        Generator<String> generator = CombinedGenerators.ensureValues(values,
-                window, new FixedValuesGenerator<>(DISJUNCT_STRING));
+        Generator<String> generator = CombinedGenerators.ensureValues(values, window,
+                new FixedValuesGenerator<>(DISJUNCT_STRING));
         var c = new String[STRING_VALUES.length];
         for (var i = 0; i < c.length; i++) {
             c[i] = generator.next();
         }
         // Although it is not part of contract we know that the values are taken
-        // in order from the ensured values iterable. If the values are nicely spread over the
+        // in order from the ensured values iterable. If the values are nicely spread
+        // over the
         // window they should not be the first values to generate.
         // (Note: this is only were likely to work)
         assertFalse(Arrays.equals(c, STRING_VALUES));
         assert c.length == STRING_VALUES.length;
 
-        generator = CombinedGenerators.ensureValues(values, c.length,
-                new FixedValuesGenerator<>(DISJUNCT_STRING));
+        generator = CombinedGenerators.ensureValues(values, c.length, new FixedValuesGenerator<>(DISJUNCT_STRING));
         for (var i = 0; i < c.length; i++) {
             c[i] = generator.next();
         }

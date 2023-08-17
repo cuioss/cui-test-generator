@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * https://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
 @SuppressWarnings("unused")
@@ -245,7 +260,8 @@ public class CombinedGeneratorSamples {
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> java.util.List<T> anyList(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
+    public static <T> java.util.List<T> anyList(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
             de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
         return CombinedGenerators.lists(content, size).next();
     }
@@ -253,16 +269,16 @@ public class CombinedGeneratorSamples {
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> java.util.List<T> anyList(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
-            int low, int high) {
+    public static <T> java.util.List<T> anyList(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content, int low, int high) {
         return CombinedGenerators.lists(content, low, high).next();
     }
 
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> java.util.List<T> anyList(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
-            int low) {
+    public static <T> java.util.List<T> anyList(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content, int low) {
         return CombinedGenerators.lists(content, low).next();
     }
 
@@ -396,15 +412,16 @@ public class CombinedGeneratorSamples {
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> java.util.Set<T> anySet(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
-            int low, int high) {
+    public static <T> java.util.Set<T> anySet(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content, int low, int high) {
         return CombinedGenerators.sets(content, low, high).next();
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> java.util.Set<T> anySet(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
+    public static <T> java.util.Set<T> anySet(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
             de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
         return CombinedGenerators.sets(content, size).next();
     }
@@ -412,7 +429,8 @@ public class CombinedGeneratorSamples {
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> java.util.Set<T> anySet(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
+    public static <T> java.util.Set<T> anySet(
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
         return CombinedGenerators.sets(content).next();
     }
 
@@ -459,7 +477,8 @@ public class CombinedGeneratorSamples {
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
     public static <T> java.util.List<T> anyStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input, java.util.Comparator<T> comparator) {
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input,
+            java.util.Comparator<T> comparator) {
         return CombinedGenerators.strictlyOrdered(input, comparator).next();
     }
 
@@ -467,7 +486,8 @@ public class CombinedGeneratorSamples {
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
     public static <T> java.util.List<T> anyStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input, java.util.Comparator<T> comparator,
+            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input,
+            java.util.Comparator<T> comparator,
             de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
         return CombinedGenerators.strictlyOrdered(input, comparator, size).next();
     }

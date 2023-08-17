@@ -27,8 +27,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
  * have to throw an exception.
  * </p>
  *
- * @param <T>
- *            type of generated random test instances
+ * @param <T> type of generated random test instances
  *
  */
 @SuppressWarnings("ProhibitedExceptionDeclared")
@@ -37,23 +36,19 @@ public interface Characteristic<T> {
     /**
      * Checks the characteristic's specification for a test case instance.
      *
-     * @param instance
-     *            for which to check the characteristic
-     * @throws Throwable
-     *             if the instance does not confirm to the characteristic's
-     *             specification
+     * @param instance for which to check the characteristic
+     * @throws Throwable if the instance does not confirm to the characteristic's
+     *                   specification
      */
     void specify(T instance) throws Throwable;
 
     /**
-     * Set up operation before {@link Characteristic#specify(Object)} is
-     * executed.
+     * Set up operation before {@link Characteristic#specify(Object)} is executed.
      */
     void setUp() throws Exception;
 
     /**
-     * Clean up operation after {@link Characteristic#specify(Object)} was
-     * executed.
+     * Clean up operation after {@link Characteristic#specify(Object)} was executed.
      */
     void tearDown() throws Exception;
 

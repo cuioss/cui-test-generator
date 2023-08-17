@@ -24,14 +24,11 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
  * {@link Generator} implementation that transforms input generator test cases
  * of type I to output test cases of type T.
  *
- * @param <I>
- *            input generator test case type
- * @param <T>
- *            output generator test case type
+ * @param <I> input generator test case type
+ * @param <T> output generator test case type
  *
  */
-public abstract class AbstractTransformerGenerator<I, T> implements
-        Generator<T> {
+public abstract class AbstractTransformerGenerator<I, T> implements Generator<T> {
 
     private Generator<I> inputGenerator;
 

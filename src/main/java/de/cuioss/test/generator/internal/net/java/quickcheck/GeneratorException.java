@@ -30,8 +30,7 @@ public class GeneratorException extends RuntimeException {
     private transient Generator<?> generator;
 
     /**
-     * @param message
-     *            error message
+     * @param message   error message
      * @param generator offending generator
      */
     public GeneratorException(String message, Generator<?> generator) {

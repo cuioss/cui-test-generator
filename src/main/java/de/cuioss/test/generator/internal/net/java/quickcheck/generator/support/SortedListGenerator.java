@@ -21,8 +21,7 @@ import java.util.List;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
-public class SortedListGenerator<T extends Comparable<T>> implements
-        Generator<List<T>> {
+public class SortedListGenerator<T extends Comparable<T>> implements Generator<List<T>> {
 
     private final ListGenerator<T> listGenerator;
 

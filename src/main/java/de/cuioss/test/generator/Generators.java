@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * https://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.cuioss.test.generator;
 
 import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
@@ -53,17 +68,16 @@ public class Generators {
      * Factory method for creating a generator for a possible given enum.
      *
      * @param type to be checked must represent an enum
-     * @return an {@link Optional} on the corresponding {@link TypedGenerator} if the given type is
-     *         an enum can be found, {@link Optional#empty()} otherwise
+     * @return an {@link Optional} on the corresponding {@link TypedGenerator} if
+     *         the given type is an enum can be found, {@link Optional#empty()}
+     *         otherwise
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static <T> Optional<TypedGenerator<T>> enumValuesIfAvailable(
-            final Class<T> type) {
+    public static <T> Optional<TypedGenerator<T>> enumValuesIfAvailable(final Class<T> type) {
         if (null == type || !type.isEnum()) {
             return Optional.empty();
         }
-        return Optional
-                .of(new QuickCheckGeneratorAdapter(type, PrimitiveGenerators.enumValues((Class<Enum>) type)));
+        return Optional.of(new QuickCheckGeneratorAdapter(type, PrimitiveGenerators.enumValues((Class<Enum>) type)));
     }
 
     /**
@@ -72,8 +86,7 @@ public class Generators {
      * @param type to be checked must represent an enum
      * @return A {@link TypedGenerator} for the given enmu
      */
-    public static <T extends Enum<T>> TypedGenerator<T> enumValues(
-            final Class<T> type) {
+    public static <T extends Enum<T>> TypedGenerator<T> enumValues(final Class<T> type) {
         requireNonNull(type);
         return new QuickCheckGeneratorAdapter<>(type, PrimitiveGenerators.enumValues(type));
     }
@@ -110,7 +123,7 @@ public class Generators {
     /**
      * Factory method for creating strings with given characters and size.
      *
-     * @param chars to be generated
+     * @param chars   to be generated
      * @param minSize lower bound of size
      * @param maxSize upper bound of size
      * @return a {@link TypedGenerator} for Strings
@@ -120,7 +133,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for any Strings, may be null or empty.
+     * Factory method for creating a {@link TypedGenerator} for any Strings, may be
+     * null or empty.
      *
      * @return a {@link TypedGenerator} for Strings
      */
@@ -136,13 +150,13 @@ public class Generators {
      * @return a {@link TypedGenerator} for Strings
      */
     public static TypedGenerator<String> letterStrings(final int minSize, final int maxSize) {
-        return new QuickCheckGeneratorAdapter<>(String.class,
-                PrimitiveGenerators.letterStrings(minSize, maxSize));
+        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.letterStrings(minSize, maxSize));
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for sensible / simple non empty letter
-     * Strings. The mininmal size is 3, the maximal size between 3 and 256 characters
+     * Factory method for creating a {@link TypedGenerator} for sensible / simple
+     * non empty letter Strings. The mininmal size is 3, the maximal size between 3
+     * and 256 characters
      *
      * @return a {@link TypedGenerator} for Strings
      */
@@ -151,9 +165,10 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for a number of fixed values.
+     * Factory method for creating a {@link TypedGenerator} for a number of fixed
+     * values.
      *
-     * @param type of the value
+     * @param type   of the value
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
      */
@@ -163,7 +178,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for a number of fixed values.
+     * Factory method for creating a {@link TypedGenerator} for a number of fixed
+     * values.
      *
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
@@ -174,9 +190,10 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for a number of fixed values.
+     * Factory method for creating a {@link TypedGenerator} for a number of fixed
+     * values.
      *
-     * @param type of the value
+     * @param type   of the value
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
      */
@@ -185,7 +202,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for a number of fixed values.
+     * Factory method for creating a {@link TypedGenerator} for a number of fixed
+     * values.
      *
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
@@ -197,8 +215,8 @@ public class Generators {
     /* Combined generators */
 
     /**
-     * Factory method for creating a {@link TypedGenerator} generating unique values. In case this
-     * does not work it will throw an {@link RuntimeException}
+     * Factory method for creating a {@link TypedGenerator} generating unique
+     * values. In case this does not work it will throw an {@link RuntimeException}
      *
      * @param source to be generated from.
      * @return a {@link TypedGenerator} for the given values
@@ -211,8 +229,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link CollectionGenerator} generating {@link Collection}s from
-     * the given {@link TypedGenerator} .
+     * Factory method for creating a {@link CollectionGenerator} generating
+     * {@link Collection}s from the given {@link TypedGenerator} .
      *
      * @param source to be generated from.
      * @return a {@link TypedGenerator} for the given values
@@ -289,7 +307,7 @@ public class Generators {
     /**
      * Factory method for creating a {@link TypedGenerator} for {@link Double}.
      *
-     * @param low lower bound of range
+     * @param low  lower bound of range
      * @param high upper bound of range
      * @return a {@link TypedGenerator} for {@link Double}
      */
@@ -318,7 +336,7 @@ public class Generators {
     /**
      * Factory method for creating a {@link TypedGenerator} for {@link Float}.
      *
-     * @param low lower bound of range
+     * @param low  lower bound of range
      * @param high upper bound of range
      * @return a {@link TypedGenerator} for {@link Float}
      */
@@ -347,7 +365,7 @@ public class Generators {
     /**
      * Factory method for creating a {@link TypedGenerator} for {@link Integer}.
      *
-     * @param low lower bound of range
+     * @param low  lower bound of range
      * @param high upper bound of range
      * @return a {@link TypedGenerator} for {@link Integer}
      */
@@ -403,7 +421,7 @@ public class Generators {
     /**
      * Factory method for creating a {@link TypedGenerator} for Long primitives.
      *
-     * @param low lower bound of range
+     * @param low  lower bound of range
      * @param high upper bound of range
      * @return a {@link TypedGenerator} for long primitives
      */
@@ -448,7 +466,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for {@link LocalDateTime}.
+     * Factory method for creating a {@link TypedGenerator} for
+     * {@link LocalDateTime}.
      *
      * @return a {@link TypedGenerator} for {@link LocalDateTime}
      */
@@ -457,7 +476,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for {@link ZonedDateTime}.
+     * Factory method for creating a {@link TypedGenerator} for
+     * {@link ZonedDateTime}.
      *
      * @return a {@link TypedGenerator} for {@link ZonedDateTime}
      */
@@ -484,8 +504,8 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link ZoneId}
      */
     public static TypedGenerator<ZoneId> zoneIds() {
-        return fixedValues(ZoneId.class, ZoneId.getAvailableZoneIds().stream()
-                .map(ZoneId::of).collect(Collectors.toList()));
+        return fixedValues(ZoneId.class,
+                ZoneId.getAvailableZoneIds().stream().map(ZoneId::of).collect(Collectors.toList()));
     }
 
     /**
@@ -520,7 +540,8 @@ public class Generators {
     // Advanced Java Types
 
     /**
-     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Class} Objects
+     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Class}
+     * Objects
      *
      * @return a {@link TypedGenerator} for the given values
      */
@@ -530,7 +551,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Locale} Objects
+     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Locale}
+     * Objects
      *
      * @return a {@link TypedGenerator} for all {@link Locale}s
      */
@@ -539,7 +561,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Serializable} Objects
+     * Factory method for creating a {@link TypedGenerator} arbitrary
+     * {@link Serializable} Objects
      *
      * @return a {@link TypedGenerator} for all {@link Serializable}s
      */
@@ -549,8 +572,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} arbitrary {@link RuntimeException}
-     * Objects
+     * Factory method for creating a {@link TypedGenerator} arbitrary
+     * {@link RuntimeException} Objects
      *
      * @return a {@link TypedGenerator} for all {@link RuntimeException}s
      */
@@ -560,8 +583,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} arbitrary {@link Throwable}
-     * Objects
+     * Factory method for creating a {@link TypedGenerator} arbitrary
+     * {@link Throwable} Objects
      *
      * @return a {@link TypedGenerator} for all {@link Throwable}s
      */
@@ -581,11 +604,12 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} from an existing QuickCheck
-     * {@link Generator}. Note: This method is for internal use only and will be removed soon!!!
+     * Factory method for creating a {@link TypedGenerator} from an existing
+     * QuickCheck {@link Generator}. Note: This method is for internal use only and
+     * will be removed soon!!!
      *
      * @param qcGenerator to be wrapped
-     * @param type of the value
+     * @param type        of the value
      * @return a {@link TypedGenerator} for the given {@link Generator}
      */
     static <T> TypedGenerator<T> wrap(final Class<T> type, final Generator<T> qcGenerator) {
@@ -594,8 +618,8 @@ public class Generators {
 
     /**
      * Factory method for creating a QuickCheck {@link Generator} from an existing
-     * {@link TypedGenerator}. Note: This method is for internal
-     * use only and will be removed soon!!!
+     * {@link TypedGenerator}. Note: This method is for internal use only and will
+     * be removed soon!!!
      *
      * @param generator to be un-wrapped
      * @return a {@link TypedGenerator} for the given {@link Generator}
@@ -605,8 +629,9 @@ public class Generators {
     }
 
     /**
-     * Helper method that determines the actual type of a given {@link Iterable} by peeking into it.
-     * <em>For testing only, should never be used in productive code</em>
+     * Helper method that determines the actual type of a given {@link Iterable} by
+     * peeking into it. <em>For testing only, should never be used in productive
+     * code</em>
      *
      * @param iterable must not be null nor empty, the iterator must be reentrant.
      * @return The Class of the given {@link Iterable}.

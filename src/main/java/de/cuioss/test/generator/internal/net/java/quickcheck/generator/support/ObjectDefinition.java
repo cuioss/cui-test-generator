@@ -16,8 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.String.format;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -61,8 +59,7 @@ class ObjectDefinition<T> implements InvocationHandler {
 
     private Method currentCalledMethod() {
         if (calledTargetMethod == null) {
-            throw new IllegalStateException(
-                    "Has to be called with recorder instance.");
+            throw new IllegalStateException("Has to be called with recorder instance.");
         }
         final Method currentCalled = calledTargetMethod;
         calledTargetMethod = null;
@@ -71,15 +68,13 @@ class ObjectDefinition<T> implements InvocationHandler {
 
     @SuppressWarnings("unchecked")
     private T createTargetMethodRecorder(Class<T> type) {
-        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-                new Class[] { type }, this);
+        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { type }, this);
 
     }
 
     private void checkIsInterface(Class<T> objectType) {
         if (!objectType.isInterface()) {
-            String message = format("Only interfaces supported (class: %s).",
-                    objectType.getName());
+            String message = "Only interfaces supported (class: %s).".formatted(objectType.getName());
             throw new IllegalArgumentException(message);
         }
     }

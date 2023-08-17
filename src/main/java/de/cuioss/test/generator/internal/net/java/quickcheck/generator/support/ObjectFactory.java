@@ -16,7 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.String.format;
 import static java.lang.reflect.Proxy.newProxyInstance;
 
 import java.lang.reflect.InvocationHandler;
@@ -37,10 +36,8 @@ class ObjectFactory<T> implements InvocationHandler {
 
     private void checkAllMethodsAreDefined() {
         for (Method method : definition.getType().getMethods()) {
-            if (!method.getReturnType().equals(Void.TYPE)
-                    && definition.retrieveMapping(method) == null) {
-                String message = format("Definition for method %s missing.",
-                        method.getName());
+            if (!method.getReturnType().equals(Void.TYPE) && definition.retrieveMapping(method) == null) {
+                String message = "Definition for method %s missing.".formatted(method.getName());
                 throw new IllegalStateException(message);
             }
         }
@@ -49,7 +46,6 @@ class ObjectFactory<T> implements InvocationHandler {
     @SuppressWarnings("unchecked")
     T newValue() {
         checkAllMethodsAreDefined();
-        return (T) newProxyInstance(this.getClass().getClassLoader(),
-                new Class[] { definition.getType() }, this);
+        return (T) newProxyInstance(this.getClass().getClassLoader(), new Class[] { definition.getType() }, this);
     }
 }

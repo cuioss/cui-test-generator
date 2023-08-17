@@ -53,7 +53,7 @@ class CombinedGeneratorsTest {
     @Test
     void frequencyTrivial() {
         var classification = new Classification();
-        for (Integer i : toIterable(frequency(PrimitiveGenerators.<Integer> nulls(), 1))) {
+        for (Integer i : toIterable(frequency(PrimitiveGenerators.<Integer>nulls(), 1))) {
             classification.classifyCall(i == null, NULL);
         }
         assertEquals(100, classification.getFrequency(NULL), 0);

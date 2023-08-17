@@ -55,7 +55,7 @@ public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
     /**
      * Add a classification with the given key if the predicate is true.
      *
-     * @param predicate Predicate for the classification.
+     * @param predicate      Predicate for the classification.
      * @param classification classification key.
      */
     protected void classify(boolean predicate, Object classification) {
@@ -65,15 +65,15 @@ public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
     /**
      * Add a classification with the given key.
      *
-     * @param classification
-     *            classification key.
+     * @param classification classification key.
      */
     protected void classify(Object classification) {
         classify(true, classification);
     }
 
     /**
-     * Implement this method to specify the characteristic ({@link Characteristic#specify(Object)}).
+     * Implement this method to specify the characteristic
+     * ({@link Characteristic#specify(Object)}).
      */
     protected abstract void doSpecify(T any) throws Throwable;
 

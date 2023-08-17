@@ -28,8 +28,7 @@ class IntegerArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Test
     void testGenerateDefaultPrimitiveArray() {
-        testGenerateDefaultPrimitiveArray(IntegerArrayGenerator.MIN_SIZE,
-                IntegerArrayGenerator.MAX_SIZE);
+        testGenerateDefaultPrimitiveArray(IntegerArrayGenerator.MIN_SIZE, IntegerArrayGenerator.MAX_SIZE);
     }
 
     @Test
@@ -41,8 +40,7 @@ class IntegerArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Override
     protected Generator<Object> createGenerator() {
-        return new AbstractTransformerGenerator<>(
-                CombinedGenerators.intArrays()) {
+        return new AbstractTransformerGenerator<>(CombinedGenerators.intArrays()) {
 
             @Override
             protected Object transform(Generator<int[]> inputGenerator) {
@@ -58,9 +56,8 @@ class IntegerArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Override
     protected Object createGeneratorValue(long min, long max, int size) {
-        return CombinedGenerators.intArrays(
-                PrimitiveGenerators.integers((int) min, (int) max),
-                fixedValues(size)).next();
+        return CombinedGenerators.intArrays(PrimitiveGenerators.integers((int) min, (int) max), fixedValues(size))
+                .next();
     }
 
     @Override

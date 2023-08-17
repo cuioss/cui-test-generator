@@ -53,20 +53,18 @@ abstract class AbstractNumberGenerator<T> implements Generator<T> {
     }
 
     private long longImpl() {
-        return min
-                + (long) floor(distribution.nextRandomNumber() * (range + 1.0));
+        return min + (long) floor(distribution.nextRandomNumber() * (range + 1.0));
     }
 
     /**
-     * Same implementation as {@link AbstractNumberGenerator#longImpl()} based
-     * on {@link BigDecimal} to prevent long overflows.
+     * Same implementation as {@link AbstractNumberGenerator#longImpl()} based on
+     * {@link BigDecimal} to prevent long overflows.
      *
      * @return next long value
      */
     private long bigDecimalImpl() {
         BigDecimal localRange = valueOf(max).add(valueOf(1L)).subtract(valueOf(min));
-        return valueOf(min).add(
-                valueOf(distribution.nextRandomNumber()).multiply(localRange))
+        return valueOf(min).add(valueOf(distribution.nextRandomNumber()).multiply(localRange))
                 .setScale(0, RoundingMode.FLOOR).longValue();
     }
 }

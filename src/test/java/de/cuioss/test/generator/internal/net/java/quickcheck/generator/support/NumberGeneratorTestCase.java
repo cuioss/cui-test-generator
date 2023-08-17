@@ -36,18 +36,16 @@ abstract class NumberGeneratorTestCase<T extends Number> {
 
     @Test
     void testNotNull() {
-        QuickCheck.forAll(generator(LOW_VALUE, HIGH_VALUE, Distribution.UNIFORM),
-                new AbstractCharacteristic<>() {
+        QuickCheck.forAll(generator(LOW_VALUE, HIGH_VALUE, Distribution.UNIFORM), new AbstractCharacteristic<>() {
 
-                    @Override
-                    protected void doSpecify(T any) {
-                        assertNotNull(any);
-                    }
-                });
+            @Override
+            protected void doSpecify(T any) {
+                assertNotNull(any);
+            }
+        });
     }
 
-    protected abstract Generator<T> generator(byte lo, byte hi,
-            Distribution distribution);
+    protected abstract Generator<T> generator(byte lo, byte hi, Distribution distribution);
 
     @Test
     void testBounds() {
@@ -60,30 +58,25 @@ abstract class NumberGeneratorTestCase<T extends Number> {
 
     @Test
     void testDiffNull() {
-        assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.UNIFORM).next()
-                .doubleValue());
-        assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.POSITIV_NORMAL)
-                .next().doubleValue());
+        assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.UNIFORM).next().doubleValue());
+        assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.POSITIV_NORMAL).next().doubleValue());
     }
 
     @Test
     void testBoundsGausian() {
         var expectedLt = 0.5;
         var expectedGt = 0.2;
-        var generator = generator(LOW_VALUE, HIGH_VALUE,
-                Distribution.POSITIV_NORMAL);
+        var generator = generator(LOW_VALUE, HIGH_VALUE, Distribution.POSITIV_NORMAL);
         assertValue(generator, expectedLt, expectedGt);
     }
 
-    private void assertValue(Generator<T> doubleGenerator, double expectedLt,
-            double expectedGt) {
+    private void assertValue(Generator<T> doubleGenerator, double expectedLt, double expectedGt) {
         AbstractCharacteristic<T> characteristic = new AbstractCharacteristic<>() {
 
             @Override
             protected void doSpecify(T any) {
                 var anyDoubleValue = any.doubleValue();
-                assertTrue(LOW_VALUE <= anyDoubleValue
-                        && HIGH_VALUE >= anyDoubleValue);
+                assertTrue(LOW_VALUE <= anyDoubleValue && HIGH_VALUE >= anyDoubleValue);
                 classify(anyDoubleValue < 0, LT_0);
                 classify(anyDoubleValue > 0, GT_0);
             }

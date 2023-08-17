@@ -19,27 +19,27 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
 class AssertThrows {
 
     /**
-     * Assert that an exception (the type of which is given as first argument) is thrown
-     * when the code given as second argument is executed.
-     * An {@link AssertionError} is thrown when no exception is thrown in the code,
-     * or the wrong type of exception is thrown.
+     * Assert that an exception (the type of which is given as first argument) is
+     * thrown when the code given as second argument is executed. An
+     * {@link AssertionError} is thrown when no exception is thrown in the code, or
+     * the wrong type of exception is thrown.
      *
      * @return The thrown exception for further inspection.
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Throwable> T assertThrows(
-            Class<T> expectedType, ExceptionThrowingExecutor executor) {
+    public static <T extends Throwable> T assertThrows(Class<T> expectedType, ExceptionThrowingExecutor executor) {
         try {
             executor.execute();
         } catch (Throwable t) {
             if (expectedType.isInstance(t)) {
                 return (T) t;
             }
-            throw new AssertionError("Expected an exception of type "
-                    + expectedType.getName() + ", but got: " + t.getClass().getName(), t);
+            throw new AssertionError(
+                    "Expected an exception of type " + expectedType.getName() + ", but got: " + t.getClass().getName(),
+                    t);
         }
-        throw new AssertionError("No exception was thrown, but expected an exception of type: "
-                + expectedType.getName());
+        throw new AssertionError(
+                "No exception was thrown, but expected an exception of type: " + expectedType.getName());
     }
 
     public interface ExceptionThrowingExecutor {

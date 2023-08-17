@@ -24,7 +24,7 @@ public class ClassificationTestHelper {
 
     @SafeVarargs
     public static <T> void assertFrequencyGreater(Classification classification, double expected, T... categories)
-        throws AssertionFailedError {
+            throws AssertionFailedError {
         for (Object category : categories) {
             assertTrue(classification.getFrequency(category) > expected);
         }
@@ -32,7 +32,7 @@ public class ClassificationTestHelper {
 
     @SafeVarargs
     public static <T> void assertFrequencySmaller(Classification classification, double expected, T... categories)
-        throws AssertionFailedError {
+            throws AssertionFailedError {
         for (Object category : categories) {
             assertTrue(classification.getFrequency(category) <= expected);
         }
