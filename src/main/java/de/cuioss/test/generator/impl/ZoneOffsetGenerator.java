@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import static java.time.ZoneId.getAvailableZoneIds;
-import static java.util.stream.Collectors.toList;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -33,7 +32,7 @@ import de.cuioss.test.generator.TypedGenerator;
 public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 
     private static final TypedGenerator<ZoneId> ZONE_IDS_GEN = Generators.fixedValues(ZoneId.class,
-            getAvailableZoneIds().stream().map(ZoneId::of).collect(toList()));
+            getAvailableZoneIds().stream().map(ZoneId::of).toList());
 
     @Override
     public java.time.ZoneOffset next() {

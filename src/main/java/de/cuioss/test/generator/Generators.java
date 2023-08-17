@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
 import de.cuioss.test.generator.impl.DecoratorGenerator;
@@ -504,8 +503,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link ZoneId}
      */
     public static TypedGenerator<ZoneId> zoneIds() {
-        return fixedValues(ZoneId.class,
-                ZoneId.getAvailableZoneIds().stream().map(ZoneId::of).collect(Collectors.toList()));
+        return fixedValues(ZoneId.class, ZoneId.getAvailableZoneIds().stream().map(ZoneId::of).toList());
     }
 
     /**
