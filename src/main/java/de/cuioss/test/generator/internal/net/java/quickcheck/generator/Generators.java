@@ -79,7 +79,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.U
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.UniqueValuesGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.VetoableGenerator;
 
-@SuppressWarnings({ "WeakerAccess", "unused" })
+@SuppressWarnings({ "WeakerAccess" })
 public class Generators {
 
     public static final int DEFAULT_STRING_MAX_LENGTH = StringGenerator.MAX_LENGTH;

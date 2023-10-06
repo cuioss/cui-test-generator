@@ -15,7 +15,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-@SuppressWarnings("unused")
 public class PrimitiveGeneratorSamples {
 
     /**

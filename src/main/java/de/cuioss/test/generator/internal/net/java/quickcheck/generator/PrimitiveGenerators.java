@@ -31,7 +31,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
  * The default distribution for generators is {@link Distribution#UNIFORM}.
  * </p>
  */
-@SuppressWarnings({ "WeakerAccess", "unused" })
+@SuppressWarnings({ "WeakerAccess" })
 public class PrimitiveGenerators {
 
     public static final int DEFAULT_STRING_MAX_LENGTH = Generators.DEFAULT_STRING_MAX_LENGTH;
