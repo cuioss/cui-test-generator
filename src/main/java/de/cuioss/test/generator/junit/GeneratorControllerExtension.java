@@ -55,12 +55,11 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             var failure = new AssertionFailedError(createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
-        } else {
-            var failure = new AssertionFailedError(
-                    throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
-            failure.setStackTrace(throwable.getStackTrace());
-            throw failure;
         }
+        var failure = new AssertionFailedError(
+                throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+        failure.setStackTrace(throwable.getStackTrace());
+        throw failure;
 
     }
 

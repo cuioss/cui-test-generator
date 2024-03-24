@@ -56,7 +56,6 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      * @param sizeGenerator must not be null
      */
     public CollectionGenerator(final TypedGenerator<T> wrapped, final TypedGenerator<Integer> sizeGenerator) {
-        super();
         this.wrapped = requireNonNull(wrapped, "wrapped must not be null");
         this.sizeGenerator = requireNonNull(sizeGenerator, "sizeGenerator must not be null");
     }
