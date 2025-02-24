@@ -15,13 +15,6 @@
  */
 package de.cuioss.test.generator.impl;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-
 import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.lastMonthAgo;
 import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.lastTenYearsAgo;
 import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someDaysAgo;
@@ -31,6 +24,13 @@ import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someMonthsAgo
 import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someYearsAgo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("ZonedDateTimeGenerator should")
 class ZonedDateTimeGeneratorTest {
@@ -145,7 +145,7 @@ class ZonedDateTimeGeneratorTest {
         var unitsBetween = unit.between(generatedTime, now);
 
         assertTrue(unitsBetween >= minUnits && unitsBetween <= maxUnits,
-                String.format("Generated time should be between %d and %d %s ago, but was %d",
+                "Generated time should be between %d and %d %s ago, but was %d".formatted(
                         minUnits, maxUnits, unit.toString().toLowerCase(), unitsBetween));
     }
 

@@ -15,16 +15,17 @@
  */
 package de.cuioss.test.generator.junit;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 
 @EnableGeneratorController
 @DisplayName("GeneratorController without seed info should")
 class GeneratorControllerExtensionWOSeedInfoTest {
-    
+
     @RepeatedTest(5)
     @DisplayName("generate non-null seeds across test invocations")
     void shouldGenerateSeeds() {

@@ -52,19 +52,19 @@ public class PersonGenerator implements TypedGenerator<Person> {
         final var lastname = familyNames.next();
         final var organization = organizations.next();
         final var title = titles.next();
-        
+
         if (null == firstname || null == lastname) {
             LOGGER.warn("Generated null name components: firstname=%s, lastname=%s", firstname, lastname);
         }
-        
+
         var person = Person.builder()
-            .email(EmailGenerator.createEmail(firstname, lastname))
-            .firstname(firstname)
-            .lastname(lastname)
-            .organisation(organization)
-            .title(title)
-            .build();
-            
+                .email(EmailGenerator.createEmail(firstname, lastname))
+                .firstname(firstname)
+                .lastname(lastname)
+                .organisation(organization)
+                .title(title)
+                .build();
+
         LOGGER.debug("Generated person: %s %s", firstname, lastname);
         return person;
     }

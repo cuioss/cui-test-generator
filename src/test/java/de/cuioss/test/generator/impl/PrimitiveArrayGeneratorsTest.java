@@ -37,14 +37,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(boolean.class);
 
             // Assert type
-            assertEquals(boolean.class, generator.getType(), 
-                "Generator should return boolean.class as type");
+            assertEquals(boolean.class, generator.getType(),
+                    "Generator should return boolean.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (boolean[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -61,14 +61,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(byte.class);
 
             // Assert type
-            assertEquals(byte.class, generator.getType(), 
-                "Generator should return byte.class as type");
+            assertEquals(byte.class, generator.getType(),
+                    "Generator should return byte.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (byte[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -85,14 +85,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(char.class);
 
             // Assert type
-            assertEquals(char.class, generator.getType(), 
-                "Generator should return char.class as type");
+            assertEquals(char.class, generator.getType(),
+                    "Generator should return char.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (char[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -109,14 +109,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(int.class);
 
             // Assert type
-            assertEquals(int.class, generator.getType(), 
-                "Generator should return int.class as type");
+            assertEquals(int.class, generator.getType(),
+                    "Generator should return int.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (int[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -133,14 +133,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(long.class);
 
             // Assert type
-            assertEquals(long.class, generator.getType(), 
-                "Generator should return long.class as type");
+            assertEquals(long.class, generator.getType(),
+                    "Generator should return long.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (long[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -157,14 +157,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(float.class);
 
             // Assert type
-            assertEquals(float.class, generator.getType(), 
-                "Generator should return float.class as type");
+            assertEquals(float.class, generator.getType(),
+                    "Generator should return float.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (float[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -181,14 +181,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(double.class);
 
             // Assert type
-            assertEquals(double.class, generator.getType(), 
-                "Generator should return double.class as type");
+            assertEquals(double.class, generator.getType(),
+                    "Generator should return double.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (double[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -205,14 +205,14 @@ class PrimitiveArrayGeneratorsTest {
             var generator = PrimitiveArrayGenerators.resolveForType(short.class);
 
             // Assert type
-            assertEquals(short.class, generator.getType(), 
-                "Generator should return short.class as type");
+            assertEquals(short.class, generator.getType(),
+                    "Generator should return short.class as type");
 
             // Assert array generation
             var array = generator.next();
             assertNotNull(array, "Generated array should not be null");
             assertTrue(array.getClass().isArray(), "Generated object should be an array");
-            
+
             var castArray = (short[]) array;
             assertNotNull(castArray, "Cast array should not be null");
             assertTrue(castArray.length > 0, "Generated array should not be empty");
@@ -226,18 +226,18 @@ class PrimitiveArrayGeneratorsTest {
         @DisplayName("throw exception for null type")
         void shouldHandleNullType() {
             // Act & Assert
-            assertThrows(NullPointerException.class, 
-                () -> PrimitiveArrayGenerators.resolveForType(null),
-                "Should throw NPE for null type");
+            assertThrows(NullPointerException.class,
+                    () -> PrimitiveArrayGenerators.resolveForType(null),
+                    "Should throw NPE for null type");
         }
 
         @Test
         @DisplayName("throw exception for non-primitive type")
         void shouldHandleNonPrimitiveType() {
             // Act & Assert
-            assertThrows(IllegalArgumentException.class, 
-                () -> PrimitiveArrayGenerators.resolveForType(String.class),
-                "Should throw IllegalArgumentException for non-primitive type");
+            assertThrows(IllegalArgumentException.class,
+                    () -> PrimitiveArrayGenerators.resolveForType(String.class),
+                    "Should throw IllegalArgumentException for non-primitive type");
         }
     }
 }

@@ -30,8 +30,8 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 @DisplayName("UUIDStringGenerator should")
 class UUIDStringGeneratorTest {
 
-    private static final String UUID_PATTERN = 
-        "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+    private static final String UUID_PATTERN =
+            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 
     @Test
     @DisplayName("produce reproducible UUID strings with same seed")
@@ -74,9 +74,9 @@ class UUIDStringGeneratorTest {
 
         // Assert
         assertNotNull(uuidString, "Generated UUID string should not be null");
-        assertTrue(uuidString.matches(UUID_PATTERN), 
-            "Generated string should match UUID pattern: " + uuidString);
-        
+        assertTrue(uuidString.matches(UUID_PATTERN),
+                "Generated string should match UUID pattern: " + uuidString);
+
         // Verify it can be parsed as UUID
         var uuid = UUID.fromString(uuidString);
         assertNotNull(uuid, "UUID string should be parseable to UUID object");

@@ -15,15 +15,16 @@
  */
 package de.cuioss.test.generator.impl;
 
-import de.cuioss.test.generator.TypedGenerator;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import de.cuioss.test.generator.TypedGenerator;
 
 @DisplayName("NonBlankStringGenerator should")
 class NonBlankStringGeneratorTest {
@@ -34,8 +35,8 @@ class NonBlankStringGeneratorTest {
     @DisplayName("return String.class as type")
     void getTypeReturnsString() {
         // Act & Assert
-        assertEquals(String.class, underTest.getType(), 
-            "Generator should return String.class as type");
+        assertEquals(String.class, underTest.getType(),
+                "Generator should return String.class as type");
     }
 
     @Nested
@@ -82,8 +83,8 @@ class NonBlankStringGeneratorTest {
             var trimmed = result.trim();
 
             // Assert
-            assertEquals(result, trimmed, 
-                "Generated string should not have leading or trailing whitespace");
+            assertEquals(result, trimmed,
+                    "Generated string should not have leading or trailing whitespace");
         }
     }
 }

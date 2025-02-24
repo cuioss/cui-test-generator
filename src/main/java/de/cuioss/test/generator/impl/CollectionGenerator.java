@@ -15,9 +15,8 @@
  */
 package de.cuioss.test.generator.impl;
 
-import de.cuioss.test.generator.Generators;
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
+import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,8 +25,9 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
-import static java.util.Objects.requireNonNull;
+import de.cuioss.test.generator.Generators;
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.logging.CuiLogger;
 
 /**
  * Enhances a {@link TypedGenerator} with collection generation capabilities.
