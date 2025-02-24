@@ -16,28 +16,27 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.arrays;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.nonEmptyArrays;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.arrays;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.nonEmptyArrays;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 class ArrayGeneratorTest extends AbstractCollectionTestCase {
 
     @Test
     void typeVariance() {
         Generator<Object[]> objs = nonEmptyArrays(PrimitiveGenerators.integers(), Object.class);
-        assertTrue(objs.next()[0] instanceof Integer);
+        assertInstanceOf(Integer.class, objs.next()[0]);
     }
 
     @Override

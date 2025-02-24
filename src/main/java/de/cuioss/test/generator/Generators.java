@@ -692,20 +692,6 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} from an existing
-     * QuickCheck {@link Generator}. Note: This method is for internal use only and
-     * will be removed soon!!!
-     *
-     * @param <T> The type of values
-     * @param qcGenerator to be wrapped
-     * @param type        of the value
-     * @return a {@link TypedGenerator} for the given {@link Generator}
-     */
-    static <T> TypedGenerator<T> wrap(final Class<T> type, final Generator<T> qcGenerator) {
-        return new QuickCheckGeneratorAdapter<>(type, qcGenerator);
-    }
-
-    /**
      * Factory method for creating a QuickCheck {@link Generator} from an existing
      * {@link TypedGenerator}. Note: This method is for internal use only and will
      * be removed soon!!!

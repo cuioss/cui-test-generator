@@ -178,10 +178,9 @@ class AbstractTreeGeneratorTest {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof Node)) {
+            if (!(obj instanceof Node node)) {
                 return false;
             }
-            var node = (Node) obj;
             return node.children.equals(children) && node.content == content;
         }
 

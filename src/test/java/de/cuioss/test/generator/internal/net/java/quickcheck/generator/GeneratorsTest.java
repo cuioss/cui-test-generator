@@ -16,24 +16,24 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GeneratorsTest {
 
     @Test
     void integerGeneratorIsObjectGenerator() {
         Generator<Object> objects = Generators.cast(integers());
-        assertTrue(objects.next() instanceof Integer);
+        assertInstanceOf(Integer.class, objects.next());
     }
 
     @Test

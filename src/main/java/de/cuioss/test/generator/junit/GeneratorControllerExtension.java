@@ -15,15 +15,14 @@
  */
 package de.cuioss.test.generator.junit;
 
-import java.lang.reflect.Method;
-import org.opentest4j.AssertionFailedError;
-import org.opentest4j.TestAbortedException;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
+import org.opentest4j.AssertionFailedError;
+import org.opentest4j.TestAbortedException;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import java.lang.reflect.Method;
 
 /**
  * JUnit 5 extension that manages test data generation by controlling generator seeds
@@ -106,7 +105,7 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
 
     @Override
     @SuppressWarnings("java:S3655") // owolff: false positive: isPresent is checked
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         var seedSetByAnnotation = false;
         long initialSeed = -1;
         if (context.getElement().isPresent()) {

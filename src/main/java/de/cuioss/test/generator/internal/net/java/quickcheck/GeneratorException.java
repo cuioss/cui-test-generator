@@ -29,7 +29,7 @@ public class GeneratorException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private transient Generator<?> generator;
+    private final transient Generator<?> generator;
 
     /**
      * @param message   error message
