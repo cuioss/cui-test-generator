@@ -23,12 +23,52 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is to be used in the context of
- * {@link EnableGeneratorController}. It explicitly sets the seed for the
- * generators.
+ * Annotation for configuring fixed generator seeds in test cases.
+ * This annotation works in conjunction with {@link EnableGeneratorController}
+ * to provide reproducible test data generation.
+ *
+ * <h2>Features</h2>
+ * <ul>
+ *   <li>Can be applied at method or class level</li>
+ *   <li>Takes precedence over system property configuration</li>
+ *   <li>Ensures consistent test data across test runs</li>
+ *   <li>Useful for debugging and reproducing test failures</li>
+ * </ul>
+ *
+ * <h2>Usage Examples</h2>
+ * <pre>
+ * // Method-level configuration
+ * &#64;EnableGeneratorController
+ * class MyTest {
+ *     &#64;Test
+ *     &#64;GeneratorSeed(4711L)
+ *     void shouldGenerateConsistentData() {
+ *         var result = Generators.strings().next();
+ *         // Will always generate the same string
+ *     }
+ * }
+ *
+ * // Class-level configuration
+ * &#64;EnableGeneratorController
+ * &#64;GeneratorSeed(8042L)
+ * class MyReproducibleTest {
+ *     &#64;Test
+ *     void allTestsUseTheSameSeed() {
+ *         // All tests in this class use seed 8042L
+ *     }
+ * }
+ * </pre>
+ *
+ * <h2>Configuration Priority</h2>
+ * <ol>
+ *   <li>Method-level {@code @GeneratorSeed}</li>
+ *   <li>Class-level {@code @GeneratorSeed}</li>
+ *   <li>System property configuration</li>
+ * </ol>
  *
  * @author Oliver Wolff
- *
+ * @see EnableGeneratorController
+ * @see GeneratorControllerExtension
  */
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})

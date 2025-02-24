@@ -22,9 +22,34 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * {@link TypedGenerator} for generating basic {@link URL}s
+ * Generates valid {@link URL} instances from a predefined set of well-known websites.
+ * 
+ * <p>URL characteristics:</p>
+ * <ul>
+ *   <li>All URLs are valid and accessible</li>
+ *   <li>Mix of HTTP and HTTPS protocols</li>
+ *   <li>Includes popular tech, development, and reference sites</li>
+ * </ul>
+ * 
+ * <p>Available domains include:</p>
+ * <ul>
+ *   <li>Development: github.com, gitlab.com, sonarcloud.io</li>
+ *   <li>Technology: heise.de, stackoverflow.com</li>
+ *   <li>Reference: wikipedia.org, mozilla.org</li>
+ *   <li>Corporate: microsoft.com, apple.com, x-tention.com</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new URLGenerator();
+ * URL url = generator.next(); // Returns a random URL from the predefined set
+ * </pre>
+ * 
+ * <p>Note: While the generator ensures syntactically correct URLs,
+ * it does not guarantee that the URLs are currently reachable.</p>
  *
  * @author Oliver Wolff
+ * @see URL
  */
 public class URLGenerator implements TypedGenerator<URL> {
 

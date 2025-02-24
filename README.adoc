@@ -6,8 +6,7 @@ image:https://github.com/cuioss/cui-test-generator/actions/workflows/maven.yml/b
 image:http://img.shields.io/:license-apache-blue.svg[License,link=http://www.apache.org/licenses/LICENSE-2.0.html]
 image:https://maven-badges.herokuapp.com/maven-central/de.cuioss.test/cui-test-generator/badge.svg[Maven Central,link=https://maven-badges.herokuapp.com/maven-central/de.cuioss.test/cui-test-generator]
 
-https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator[image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=alert_status[Quality
-Gate Status]]
+https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator[image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=alert_status[Quality Gate Status]]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=ncloc[Lines of Code,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=coverage[Coverage,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 
@@ -15,132 +14,137 @@ https://cuioss.github.io/cui-test-generator/about.html[Generated Documentation o
 
 == What is it?
 
-Using the generators help creating variations of test-data. On the one hand it produces a large number of different values. On the other hand it makes error cases reproducible see `de.cuioss.test.generator.junit.EnableGeneratorController` and `de.cuioss.test.generator.junit.GeneratorSeed` for details.
+The CUI Test Generator framework provides robust and reproducible test data generation. It combines random data generation with the ability to reproduce specific test scenarios, making it ideal for both thorough testing and precise debugging.
 
 === Maven Coordinates
 
 [source,xml]
 ----
-    <dependency>
-        <groupId>de.cuioss.test</groupId>
-        <artifactId>cui-test-generator</artifactId>
-    </dependency>
+<dependency>
+    <groupId>de.cuioss.test</groupId>
+    <artifactId>cui-test-generator</artifactId>
+</dependency>
 ----
 
-=== Provided Features
-The generators defined within this packages are the base for the cui-value-object test framework. In essence, it is a variant of QuickCheck. In the current implementation it actually uses code derived from QuickCheck, thanks guys, but mostly the generator part.
-This code is isolated in `de.cuioss.test.generator.internal.net.java.quickcheck` and will be replaced in the future.
+=== Core Components
 
-Therefore: Do not use any of that code at all! Central elements are:
+==== Generators - The Central Factory
 
-* `de.cuioss.test.generator.TypedGenerator`: Is the core type. Instances of it are used for generating arbitrary instances of any value-object. Compared to `de.cuioss.test.generator.internal.net.java.quickcheck.Generator` it provides an additional method providing runtime information on the type being generated: `de.cuioss.test.generator.TypedGenerator.getType()`.
-* `de.cuioss.test.generator.Generators`: Factory methods for accessing de.cuioss.test.generator.TypedGenerator for many java-lang types.
-* `de.cuioss.test.generator.domain`: Provides some domain specific de.cuioss.test.generator.TypedGenerator
-
-=== Usage
-
-The usage is straight forward `TypedGenerator#next()` always returns a random object that can be used for testing. See section 'Generators' on samples for concrete generators.
-
-=== TypedGenerator
-
-`de.cuioss.test.generator.TypedGenerator`
-
-Central interface for a concrete generator instance. `TypedGenerator#next()` provides a random instance, `TypedGenerator#getType()` provides the types.
-Sample implementation: 
+The `Generators` class is your primary entry point for test data generation. It provides factory methods for creating generators for most Java built-in types:
 
 [source,java]
 ----
-public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
+// Basic type generation
+String text = Generators.strings().next();
+Integer number = Generators.integers().next();
+LocalDateTime dateTime = Generators.localDateTimes().next();
 
-    private static final TypedGenerator<ZoneId> ZONE_IDS_GEN =
-        Generators.fixedValues(ZoneId.class, getAvailableZoneIds().stream().map(ZoneId::of).collect(toList()));
+// Configurable generation
+String letters = Generators.letterStrings(5, 10).next(); // 5-10 characters
+List<Integer> numbers = Generators.integers(1, 100).list(5); // 5 numbers between 1-100
 
-    @Override
-    public java.time.ZoneOffset next() {
-        return LocalDateTime.now().atZone(ZONE_IDS_GEN.next()).getOffset();
-    }
-
-    @Override
-    public Class<ZoneOffset> getType() {
-        return ZoneOffset.class;
-    }
-
-}
+// Fixed and enum values
+var urlGen = Generators.fixedValues(String.class, 
+    "https://cuioss.de", 
+    "https://www.heise.de");
+var enumGen = Generators.enumValues(TimeUnit.class);
 ----
 
-=== Generators
+==== Test Reproducibility with JUnit 5
 
-`de.cuioss.test.generator.Generators`
+===== EnableGeneratorController
 
-Central factory for `TypedGenerator` for most java-built-in types and wrappers for `fixedValue` and `enumValue` variants
-
-[source,java]
-----
- assertNotNull(Generators.strings().next());
- assertNotNull(Generators.letterStrings().next());
- assertFalse(isEmpty(Generators.nonEmptyStrings().next())); 
- assertFalse(isEmpty(Generators.letterStrings(1, 2).next()));
- 
- assertNotNull(Generators.booleans().next());
- assertNotNull(Generators.localTimes().next());
- assertNotNull(Generators.fixedValues(String.class, "https://cuioss.de", "https://www.heise.de", "http://getbootstrap.com").next());
- 
- assertEquals(Temporal.class, Generators.temporals().getType());
- assertNotNull(Generators.enumValues(PropertyMemberInfo.class).next());
- assertEquals(PropertyMemberInfo.class, Generators.enumValues(PropertyMemberInfo.class).getType());
-----
-
-=== CollectionGenerator
-
-`de.cuioss.test.generator.impl.CollectionGenerator<T>`
-
-Wraps a given `TypedGenerator` and provides  additional methods for creating `Lists` and `Sets`
-
-[source,java]
-----
- CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.nonEmptyStrings());
- assertNotNull(generator.list());
- assertNotNull(generator.set());
-----
-
-=== EnableGeneratorController
-
-`de.cuioss.test.generator.junit.EnableGeneratorController`
-
-This annotation is meant to be set on a junit 5 test-case. It controls the generator subsystem and, in case of test-failures, provides information, that can be used for repeating the failed tests with a fixed seed for the generators, see `de.cuioss.test.generator.junit.GeneratorSeed` for details.
-This fixed seed results in the generators reproducing the exact same test-data.
-
-Sample output:
-[source,text]
-----
-GeneratorController seed was 4711L.
-Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
-or by using the system property '-Dio.cui.test.generator.seed=4711'
-----
-
-=== GeneratorSeed
-
-`de.cuioss.test.generator.junit.GeneratorSeed`
-
-This annotation is to be used in the context of EnableGeneratorController. It explicitly sets the seed for the generators.
-
-Usage:
+The `@EnableGeneratorController` annotation enables reproducible test data generation:
 
 [source,java]
 ----
 @EnableGeneratorController
-@GeneratorSeed(5L)
-class GeneratorControllerExtensionTest {
-
+class MyGeneratorTest {
     @Test
-    @GeneratorSeed(11L)
-    void shouldReadFromMethod() {
-        assertEquals(11L, RandomConfiguration.getLastSeed());
+    void shouldGenerateConsistentData() {
+        var result = Generators.strings().next();
+        assertThat(result).isNotEmpty();
     }
-
-    @Test
-    void shouldReadFromType() {
-        assertEquals(5L, RandomConfiguration.getLastSeed());
-    }
+}
 ----
 
+===== GeneratorSeed
+
+Use `@GeneratorSeed` to fix the random seed for reproducible tests:
+
+[source,java]
+----
+@EnableGeneratorController
+class MyTest {
+    @Test
+    @GeneratorSeed(4711L) // Method-level seed
+    void shouldGenerateSpecificData() {
+        // Always generates the same data
+        var data = Generators.strings().next();
+    }
+}
+
+@EnableGeneratorController
+@GeneratorSeed(8042L) // Class-level seed
+class AllTestsReproducible {
+    // All tests use the same seed
+}
+----
+
+==== TypedGenerator - The Core Interface
+
+`TypedGenerator` is the foundation interface for all generators:
+
+[source,java]
+----
+public class CustomGenerator implements TypedGenerator<MyType> {
+    @Override
+    public MyType next() {
+        // Generate and return a new instance
+        return new MyType(Generators.strings().next());
+    }
+
+    @Override
+    public Class<MyType> getType() {
+        return MyType.class;
+    }
+}
+----
+
+==== Domain-Specific Generators
+
+The framework provides specialized generators for common domains:
+
+[source,java]
+----
+// Collection generation
+var stringList = new CollectionGenerator<>(Generators.strings())
+    .list(5); // List of 5 strings
+
+// Date/Time with zones
+var dateTime = new ZonedDateTimeGenerator().future();
+
+// Numeric ranges
+var floats = new FloatObjectGenerator(0.0f, 100.0f).next();
+
+// URLs and strings
+var url = new URLGenerator().next();
+var nonBlank = new NonBlankStringGenerator().next();
+----
+
+=== Important Note
+
+The package `de.cuioss.test.generator.internal.net.java.quickcheck` contains internal implementation details derived from QuickCheck. *Do not use any classes from this package directly*. Instead, always use the public API through:
+
+* `de.cuioss.test.generator.Generators`
+* `de.cuioss.test.generator.TypedGenerator`
+* Classes in `de.cuioss.test.generator.domain` and `de.cuioss.test.generator.impl`
+
+=== Best Practices
+
+1. Use `Generators` as your primary entry point
+2. Enable `@EnableGeneratorController` for reproducible tests
+3. Document seeds used for specific test scenarios
+4. Create custom generators by implementing `TypedGenerator`
+5. Use domain-specific generators for specialized test data
+6. Never use classes from the internal package

@@ -22,9 +22,42 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generates arrays of primitive types.
+ * Provides generators for arrays of all Java primitive types.
+ * Each generator creates arrays of random length (1-128 elements) with random values
+ * appropriate for the primitive type.
+ * 
+ * <p>Available generators:</p>
+ * <ul>
+ *   <li>{@link #BOOLEAN} - boolean[] arrays with random true/false values</li>
+ *   <li>{@link #BYTE} - byte[] arrays with random byte values</li>
+ *   <li>{@link #CHAR} - char[] arrays with random character values</li>
+ *   <li>{@link #SHORT} - short[] arrays with random short values</li>
+ *   <li>{@link #INTEGER} - int[] arrays with random integer values</li>
+ *   <li>{@link #LONG} - long[] arrays with random long values</li>
+ *   <li>{@link #FLOAT} - float[] arrays with random float values</li>
+ *   <li>{@link #DOUBLE} - double[] arrays with random double values</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * // Generate arrays of different primitive types
+ * boolean[] booleans = (boolean[]) PrimitiveArrayGenerators.BOOLEAN.next();
+ * int[] integers = (int[]) PrimitiveArrayGenerators.INTEGER.next();
+ * 
+ * // Get a generator for a specific primitive type
+ * var generator = PrimitiveArrayGenerators.resolveForType(int.class);
+ * int[] moreIntegers = (int[]) generator.next();
+ * </pre>
+ * 
+ * <p>Implementation notes:</p>
+ * <ul>
+ *   <li>All generators are thread-safe</li>
+ *   <li>Array size is randomly chosen between 1 and 128 elements</li>
+ *   <li>Values are generated using the corresponding primitive generators from {@link Generators}</li>
+ * </ul>
  *
  * @author Oliver Wolff
+ * @see Generators
  */
 public enum PrimitiveArrayGenerators {
 

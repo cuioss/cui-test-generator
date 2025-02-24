@@ -24,10 +24,35 @@ import lombok.RequiredArgsConstructor;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Combines different variants of Generators for firstnames. The generators
- * {@link #FIRSTNAMES_MALE_GERMAN}, {@link #FIRSTNAMES_FEMALE_GERMAN} and
- * {@link #FIRSTNAMES_ANY_GERMAN} are for visual mocks, {@link #UNIT_TESTS} for
- * unit-tests.
+ * Provides a collection of name generators for testing purposes.
+ * Includes both German and English names, separated by gender and usage context.
+ * 
+ * <p>Available generators for German names:</p>
+ * <ul>
+ *   <li>{@link #FIRSTNAMES_MALE_GERMAN} - Top 10 male names in Germany (2014)</li>
+ *   <li>{@link #FIRSTNAMES_FEMALE_GERMAN} - Top 10 female names in Germany (2014)</li>
+ *   <li>{@link #FIRSTNAMES_ANY_GERMAN} - Combined German names</li>
+ *   <li>{@link #FAMILY_NAMES_GERMAN} - Top 10 German family names</li>
+ * </ul>
+ * 
+ * <p>Available generators for English names:</p>
+ * <ul>
+ *   <li>{@link #FIRSTNAMES_MALE_ENGLISH} - Top 10 male names in US (2014)</li>
+ *   <li>{@link #FIRSTNAMES_FEMALE_ENGLISH} - Top 10 female names in US (2014)</li>
+ *   <li>{@link #FIRSTNAMES_ANY_ENGLISH} - Combined English names</li>
+ *   <li>{@link #FAMILY_NAMES_ENGLISH} - Top 10 US family names</li>
+ * </ul>
+ * 
+ * <p>Special generators:</p>
+ * <ul>
+ *   <li>{@link #UNIT_TESTS} - Technical string generator for unit testing</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * TypedGenerator<String> generator = NameGenerators.FIRSTNAMES_MALE_ENGLISH.generator();
+ * String name = generator.next(); // Returns a common English male first name
+ * </pre>
  *
  * @author Oliver Wolff
  */
@@ -35,44 +60,43 @@ import de.cuioss.test.generator.TypedGenerator;
 public enum NameGenerators {
 
     // German
-    /** Top 10 male name in Germany 2014 */
+    /** Top 10 male names in Germany (2014) */
     FIRSTNAMES_MALE_GERMAN(fixedValues(NameLibrary.FIRSTNAMES_MALE_GERMAN)),
 
-    /** Top 10 female name in Germany 2014 */
+    /** Top 10 female names in Germany (2014) */
     FIRSTNAMES_FEMALE_GERMAN(fixedValues(NameLibrary.FIRSTNAMES_FEMALE_GERMAN)),
 
-    /**
-     * The intersection of {@link #FIRSTNAMES_MALE_GERMAN} and
-     * {@link #FIRSTNAMES_FEMALE_GERMAN} names
-     */
+    /** Combined set of male and female German names */
     FIRSTNAMES_ANY_GERMAN(fixedValues(NameLibrary.FIRSTNAMES_ANY_GERMAN)),
 
-    /** Top 10 names in Wikipedia */
+    /** Top 10 German family names from Wikipedia */
     FAMILY_NAMES_GERMAN(fixedValues(NameLibrary.LAST_NAMES_GERMAN)),
 
     // English
-    /** Top 10 male name in US 2014 */
+    /** Top 10 male names in US (2014) */
     FIRSTNAMES_MALE_ENGLISH(fixedValues(NameLibrary.FIRSTNAMES_MALE_ENGLISH)),
 
-    /** Top 10 female name in US 2014 */
+    /** Top 10 female names in US (2014) */
     FIRSTNAMES_FEMALE_ENGLISH(fixedValues(NameLibrary.FIRSTNAMES_FEMALE_ENGLISH)),
 
-    /**
-     * The intersection of {@link #FIRSTNAMES_MALE_ENGLISH} and
-     * {@link #FIRSTNAMES_FEMALE_ENGLISH} names
-     */
+    /** Combined set of male and female English names */
     FIRSTNAMES_ANY_ENGLISH(fixedValues(NameLibrary.FIRSTNAMES_ANY_ENGLISH)),
 
-    /** Top 10 names from U.S. Census Bureau */
+    /** Top 10 family names from U.S. Census Bureau */
     FAMILY_NAMES_ENGLISH(fixedValues(NameLibrary.LAST_NAMES_ENGLISH)),
 
-    /** Technical String for unit-testing. Min size is 1, max size 256 */
+    /** 
+     * Technical string generator for unit testing.
+     * Generates random strings between 1 and 256 characters.
+     */
     UNIT_TESTS(strings(1, 256));
 
     private final TypedGenerator<String> generator;
 
     /**
-     * @return the concrete generator.
+     * Provides access to the underlying name generator.
+     *
+     * @return A {@link TypedGenerator} that generates names according to the enum constant's specification
      */
     public TypedGenerator<String> generator() {
         return generator;

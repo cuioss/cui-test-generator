@@ -25,9 +25,40 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Provide any valid value for {@linkplain ZoneOffset}
+ * Generates {@link ZoneOffset} instances based on the available system time zones.
+ * This generator creates offsets by sampling from all available zone IDs and
+ * extracting their current offsets.
+ * 
+ * <p>Features:</p>
+ * <ul>
+ *   <li>Uses all system-available zone IDs ({@link ZoneId#getAvailableZoneIds()})</li>
+ *   <li>Generates valid offsets based on current time</li>
+ *   <li>Covers both positive and negative offsets</li>
+ *   <li>Thread-safe implementation</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new ZoneOffsetGenerator();
+ * ZoneOffset offset = generator.next();
+ * 
+ * // Use with collection generator
+ * var collectionGen = new CollectionGenerator<>(generator);
+ * List<ZoneOffset> offsets = collectionGen.list(5); // List of 5 offsets
+ * </pre>
+ * 
+ * <p>This generator is particularly useful for testing:</p>
+ * <ul>
+ *   <li>Time zone offset calculations</li>
+ *   <li>UTC conversions</li>
+ *   <li>Date-time formatting with offsets</li>
+ *   <li>International time handling</li>
+ * </ul>
  *
  * @author Eugen Fischer
+ * @see ZoneOffset
+ * @see ZoneId
+ * @see LocalDateTime
  */
 public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 

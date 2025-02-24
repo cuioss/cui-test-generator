@@ -21,9 +21,39 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Provide any valid value for {@linkplain LocalTime}
+ * Generates {@link LocalTime} instances covering all possible times within a day.
+ * The generator creates times with second precision, evenly distributed across
+ * the full 24-hour period.
+ * 
+ * <p>Features:</p>
+ * <ul>
+ *   <li>Generates times from 00:00:00 to 23:59:59</li>
+ *   <li>Uses second-level precision</li>
+ *   <li>Even distribution across all possible seconds of the day</li>
+ *   <li>Thread-safe implementation</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new LocalTimeGenerator();
+ * LocalTime time = generator.next();
+ * 
+ * // Use with collection generator for multiple times
+ * var collectionGen = new CollectionGenerator<>(generator);
+ * List<LocalTime> times = collectionGen.list(5); // List of 5 times
+ * </pre>
+ * 
+ * <p>This generator is particularly useful for testing:</p>
+ * <ul>
+ *   <li>Time formatting and parsing</li>
+ *   <li>Time-based calculations</li>
+ *   <li>Time range validations</li>
+ *   <li>24-hour format handling</li>
+ * </ul>
  *
  * @author Eugen Fischer
+ * @see LocalTime
+ * @see Generators#integers(int, int)
  */
 public class LocalTimeGenerator implements TypedGenerator<LocalTime> {
 

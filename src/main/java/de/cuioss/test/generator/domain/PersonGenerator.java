@@ -16,15 +16,31 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.logging.CuiLogger;
 
 /**
- * Creates arbitrary {@link Person} objects
- *
+ * Generates realistic {@link Person} objects for testing purposes.
+ * The generator creates persons with:
+ * <ul>
+ *   <li>English first names (male and female) from {@link NameGenerators#FIRSTNAMES_ANY_ENGLISH}</li>
+ *   <li>English family names from {@link NameGenerators#FAMILY_NAMES_ENGLISH}</li>
+ *   <li>Organization names from {@link OrganizationNameGenerator#READABLE}</li>
+ *   <li>Professional titles from {@link TitleGenerator#READABLE}</li>
+ *   <li>Email addresses generated from the person's name using {@link EmailGenerator}</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new PersonGenerator();
+ * Person person = generator.next();
+ * // person will have realistic first name, last name, title, organization and email
+ * </pre>
+ * 
  * @author Oliver Wolff
- *
  */
 public class PersonGenerator implements TypedGenerator<Person> {
 
+    private static final CuiLogger LOGGER = new CuiLogger(PersonGenerator.class);
     private final TypedGenerator<String> firstNames = NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator();
     private final TypedGenerator<String> familyNames = NameGenerators.FAMILY_NAMES_ENGLISH.generator();
     private final TypedGenerator<String> organizations = OrganizationNameGenerator.READABLE.generator();
@@ -34,8 +50,23 @@ public class PersonGenerator implements TypedGenerator<Person> {
     public Person next() {
         final var firstname = firstNames.next();
         final var lastname = familyNames.next();
-        return Person.builder().email(EmailGenerator.createEmail(firstname, lastname)).firstname(firstname)
-                .lastname(lastname).organisation(organizations.next()).title(titles.next()).build();
+        final var organization = organizations.next();
+        final var title = titles.next();
+        
+        if (null == firstname || null == lastname) {
+            LOGGER.warn("Generated null name components: firstname=%s, lastname=%s", firstname, lastname);
+        }
+        
+        var person = Person.builder()
+            .email(EmailGenerator.createEmail(firstname, lastname))
+            .firstname(firstname)
+            .lastname(lastname)
+            .organisation(organization)
+            .title(title)
+            .build();
+            
+        LOGGER.debug("Generated person: %s %s", firstname, lastname);
+        return person;
     }
 
 }

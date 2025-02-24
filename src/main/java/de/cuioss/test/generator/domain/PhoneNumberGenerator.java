@@ -20,10 +20,35 @@ import static de.cuioss.test.generator.Generators.integers;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Simply generates random phone numbers.
+ * Generates random German-style phone numbers for testing purposes.
+ * 
+ * <p>Phone number format: 0XXX/YYYY where:</p>
+ * <ul>
+ *   <li>XXX: Area code (100-999)</li>
+ *   <li>YYYY: Local number (1000-9999)</li>
+ * </ul>
+ * 
+ * <p>The generated numbers follow a simplified German phone number pattern:
+ * <ul>
+ *   <li>Always starts with '0' (domestic format)</li>
+ *   <li>3-digit area code</li>
+ *   <li>Forward slash separator</li>
+ *   <li>4-digit local number</li>
+ * </ul>
+ * 
+ * <p><em>Example outputs:</em></p>
+ * <pre>
+ * "0123/4567"
+ * "0789/1234"
+ * </pre>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new PhoneNumberGenerator();
+ * String phoneNumber = generator.next(); // Returns a phone number like "0123/4567"
+ * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class PhoneNumberGenerator implements TypedGenerator<String> {
 

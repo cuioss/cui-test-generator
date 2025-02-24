@@ -20,10 +20,23 @@ import static de.cuioss.test.generator.Generators.integers;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generator for some German Streets with Housenumber.
+ * Generates complete German street addresses by combining street names from {@link StreetNameGenerator}
+ * with random house numbers.
+ * 
+ * <p>The generator creates addresses in the format: "streetname housenumber"</p>
+ * <ul>
+ *   <li>Street names are typical German street names (e.g., "Hauptstraße", "Bahnhofstraße")</li>
+ *   <li>House numbers range from 1 to 111</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new StreetGenerator();
+ * String address = generator.next(); // e.g. "Hauptstraße 42"
+ * </pre>
  *
  * @author Oliver Wolff
- *
+ * @see StreetNameGenerator
  */
 public class StreetGenerator implements TypedGenerator<String> {
 

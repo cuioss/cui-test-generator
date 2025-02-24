@@ -30,10 +30,31 @@ import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Wraps a given {@link TypedGenerator} and provides additional methods for
- * creating {@link List}s and {@link Set}s
+ * Enhances a {@link TypedGenerator} with collection generation capabilities.
+ * This wrapper adds methods for creating {@link List}s, {@link Set}s, and other collection types
+ * from any existing generator.
+ * 
+ * <p>Features:</p>
+ * <ul>
+ *   <li>Generates Lists with configurable size</li>
+ *   <li>Creates Sets (both regular and sorted)</li>
+ *   <li>Supports any collection type that can be built from Lists or Sets</li>
+ *   <li>Thread-safe if the wrapped generator is thread-safe</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * // Create a generator for lists of integers
+ * var intGenerator = Generators.integers(1, 100);
+ * var collectionGen = new CollectionGenerator<>(intGenerator);
+ * 
+ * // Generate collections
+ * List<Integer> list = collectionGen.list(5);      // List of 5 integers
+ * Set<Integer> set = collectionGen.set(3);         // Set of 3 integers
+ * SortedSet<Integer> sorted = collectionGen.sortedSet(4); // Sorted set of 4 integers
+ * </pre>
  *
- * @param <T> identifying the type of the object being generated
+ * @param <T> The type of elements to be generated
  * @author Oliver Wolff
  */
 public class CollectionGenerator<T> implements TypedGenerator<T> {

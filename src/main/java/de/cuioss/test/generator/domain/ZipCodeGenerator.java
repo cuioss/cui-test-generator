@@ -20,10 +20,26 @@ import static de.cuioss.test.generator.Generators.integers;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generator for some zipCodes, number between 10000 - 99999
+ * Generates German postal codes (Postleitzahlen) for test data generation.
+ * 
+ * <p>Characteristics:</p>
+ * <ul>
+ *   <li>Generates 5-digit postal codes</li>
+ *   <li>Range: 10000 - 99999</li>
+ *   <li>Format matches official German postal code format</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new ZipCodeGenerator();
+ * Integer zipCode = generator.next(); // e.g. 12345
+ * String formattedZip = String.format("%05d", zipCode); // Ensures 5 digits with leading zeros
+ * </pre>
+ * 
+ * <p>Note: This generator returns {@link Integer} values. For display purposes,
+ * you may want to format the number to ensure it always shows 5 digits.</p>
  *
  * @author Oliver Wolff
- *
  */
 public class ZipCodeGenerator implements TypedGenerator<Integer> {
 
