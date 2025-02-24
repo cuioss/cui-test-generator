@@ -15,8 +15,9 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
-import static java.util.Objects.requireNonNull;
+import de.cuioss.test.generator.Generators;
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.logging.CuiLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,9 +26,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import de.cuioss.test.generator.Generators;
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
+import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps a given {@link TypedGenerator} and provides additional methods for
@@ -38,7 +38,7 @@ import de.cuioss.tools.logging.CuiLogger;
  */
 public class CollectionGenerator<T> implements TypedGenerator<T> {
 
-    private static final CuiLogger log = new CuiLogger(CollectionGenerator.class);
+    private static final CuiLogger LOGGER = new CuiLogger(CollectionGenerator.class);
     private static final String JAVA_UTIL_SORTED_SET = "java.util.SortedSet";
 
     private static final String JAVA_UTIL_COLLECTION = "java.util.Collection";
@@ -163,7 +163,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      *
      * @param expectedType type of the expected {@link Iterable}
      * @return depending on the given expectedType a corresponding {@link Iterable},
-     *         {@link Collection}, {@link List}, {@link SortedSet} or {@link Set}
+     * {@link Collection}, {@link List}, {@link SortedSet} or {@link Set}
      */
     public Iterable<T> nextCollection(final Class<? extends Iterable<?>> expectedType) {
         requireNonNull(expectedType, "expectedType must not be null");
@@ -173,7 +173,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
             case JAVA_UTIL_COLLECTION -> list();
             case JAVA_UTIL_SORTED_SET -> sortedSet();
             default -> {
-                log.info("No specific case defined for {}. Returning list-implementation.", expectedType.getName());
+                LOGGER.info("No specific case defined for %s. Returning list-implementation.", expectedType.getName());
                 yield list();
             }
         };
