@@ -39,7 +39,7 @@ class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
     private static final int VALUES = 5;
 
     @Test
-    void testBigLongValues() {
+    void bigLongValues() {
         var classifiction = new Classification();
         for (Long any : toIterable(longs(Long.MAX_VALUE - VALUES, Long.MAX_VALUE))) {
             classifiction.classifyCall(any);
@@ -56,7 +56,7 @@ class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
     }
 
     @Test
-    void testLongRangeOverflow() {
+    void longRangeOverflow() {
         for (Long longs : toIterable(positiveLongs())) {
             var lowerBound = -1 * longs;
             long next = longs(lowerBound, Long.MAX_VALUE).next();
@@ -66,7 +66,7 @@ class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
     }
 
     @Test
-    void testLongRangeNegativeOverflow() {
+    void longRangeNegativeOverflow() {
         for (Long upperBound : toIterable(positiveLongs())) {
             long next = PrimitiveGenerators.longs(Long.MIN_VALUE, upperBound).next();
             assertTrue(upperBound > 0, "upper bound valid");
@@ -82,7 +82,7 @@ class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
     }
 
     @Test
-    void testPositiveLongWithUpperBound() {
+    void positiveLongWithUpperBound() {
         for (long bound : toIterable(positiveLongs())) {
             var next = PrimitiveGenerators.positiveLongs(bound).next();
             assertTrue(next > 0 && next <= bound);

@@ -15,11 +15,12 @@
  */
 package de.cuioss.test.generator.impl;
 
-import de.cuioss.test.generator.TypedGenerator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+
+import de.cuioss.test.generator.TypedGenerator;
 
 /**
  * Wrapper for decorating an already existing {@link TypedGenerator}. This is

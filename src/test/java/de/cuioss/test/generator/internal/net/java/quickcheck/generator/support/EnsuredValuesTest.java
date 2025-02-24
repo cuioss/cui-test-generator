@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,9 +38,10 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 
 class EnsuredValuesTest {
 
-    private static final String[] STRING_VALUES = { "a", "b", "c", "d", "e", "f", "g", "h" };
+    private static final String[] STRING_VALUES = {"a", "b", "c", "d", "e", "f", "g", "h"};
     private static final String DISJUNCT_STRING = "z";
     private static final Set<String> VALUES = Set.of(STRING_VALUES);
+
     static {
         assert !VALUES.contains(DISJUNCT_STRING);
     }
@@ -95,7 +95,7 @@ class EnsuredValuesTest {
 
     @Test
     void resetGenerator() {
-        StatefulGenerator<Boolean> generator = CombinedGenerators.ensureValues(Collections.singleton(true),
+        StatefulGenerator<Boolean> generator = CombinedGenerators.ensureValues(Set.of(true),
                 PrimitiveGenerators.fixedValues(false));
         assertTrue(generator.next());
         assertFalse(generator.next());

@@ -39,7 +39,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 class StringGeneratorTest {
 
     @Test
-    void testGenerateLetters() {
+    void generateLetters() {
         for (String any : toIterable(PrimitiveGenerators.strings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
             for (var i = 0; i < any.length(); i++) {
@@ -50,7 +50,7 @@ class StringGeneratorTest {
     }
 
     @Test
-    void testGeneratePrintableLetters() {
+    void generatePrintableLetters() {
         for (String any : toIterable(de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators
                 .printableStrings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
@@ -62,21 +62,21 @@ class StringGeneratorTest {
     }
 
     @Test
-    void testGenerateOnlyA() {
+    void generateOnlyA() {
         final var allowedCharacters = "a";
         Generator<String> generator = strings('a', 'a');
         testOnlyAllowedCharacters(allowedCharacters, generator);
     }
 
     @Test
-    void testGenerateOnlyAllowedStrings() {
+    void generateOnlyAllowedStrings() {
         final var allowedCharacters = "abc";
         Generator<String> generator = strings(allowedCharacters);
         testOnlyAllowedCharacters(allowedCharacters, generator);
     }
 
     @Test
-    void testGenerateOnlyAllowedStringsWithSize() {
+    void generateOnlyAllowedStringsWithSize() {
         final var allowedCharacters = "abc";
         var max = 10;
         var min = 3;
@@ -108,7 +108,7 @@ class StringGeneratorTest {
     private static final String SMALL_LETTER = "a-z";
 
     @Test
-    void testLettersStrings() {
+    void lettersStrings() {
         Generator<String> largeStrings = PrimitiveGenerators.letterStrings(1000, 1000);
         for (String any : toIterable(largeStrings)) {
             var classification = new Classification();
@@ -141,14 +141,14 @@ class StringGeneratorTest {
     }
 
     @Test
-    void testLetterStringsSize() {
+    void letterStringsSize() {
         final var lo = 1;
         final var hi = 100;
         testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.letterStrings(lo, hi));
     }
 
     @Test
-    void testStringsGenerateWithMaxSize() {
+    void stringsGenerateWithMaxSize() {
         var max = 10;
         var min = 0;
         Generator<String> generator = strings(max);
@@ -174,14 +174,14 @@ class StringGeneratorTest {
     }
 
     @Test
-    void testStringsSize() {
+    void stringsSize() {
         final var lo = 1;
         final var hi = 100;
         testStringLengthCharacteristic(lo, hi, PrimitiveGenerators.strings(lo, hi));
     }
 
     @Test
-    void testStringGeneratorWithLengthAndCharacterGenerators() {
+    void stringGeneratorWithLengthAndCharacterGenerators() {
         var characterGenerator = MockFactory.createCharacterGenerator();
         var lengthGenerator = MockFactory.createIntegerGenerator();
         expect(lengthGenerator.next()).andReturn(2);
@@ -195,7 +195,7 @@ class StringGeneratorTest {
     }
 
     @Test
-    void testGenerateNonEmptyStrings() {
+    void generateNonEmptyStrings() {
         for (String any : toIterable(PrimitiveGenerators.nonEmptyStrings())) {
             assertTrue(any.length() > 0 && any.length() <= StringGenerator.MAX_LENGTH);
         }

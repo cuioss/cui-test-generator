@@ -36,7 +36,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedG
 class UniqueValuesGeneratorTest {
 
     @Test
-    void testStopGenerationOfValuesAfterMaxTries() {
+    void stopGenerationOfValuesAfterMaxTries() {
         var tries = 100;
         var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);
@@ -49,7 +49,7 @@ class UniqueValuesGeneratorTest {
     }
 
     @Test
-    void testGenerationOfUniqueValuesOnly() {
+    void generationOfUniqueValuesOnly() {
         var tries = 3;
         var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true).times(tries - 1);
@@ -63,7 +63,7 @@ class UniqueValuesGeneratorTest {
     }
 
     @Test
-    void testDefaultValueForMaxTries() {
+    void defaultValueForMaxTries() {
         var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);
         expectLastCall().times(CombinedGenerators.DEFAULT_MAX_TRIES + 1);
@@ -76,7 +76,7 @@ class UniqueValuesGeneratorTest {
     }
 
     @Test
-    void testResetOfGenerator() {
+    void resetOfGenerator() {
         var tries = 1;
         var generator = MockFactory.createBooleanMock();
         expect(generator.next()).andReturn(true);

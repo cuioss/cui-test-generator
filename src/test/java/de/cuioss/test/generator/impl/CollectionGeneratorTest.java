@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import de.cuioss.test.generator.Generators;
 import de.cuioss.tools.property.PropertyUtil;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({"unchecked", "rawtypes"})
 class CollectionGeneratorTest {
 
     private final CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.letterStrings());
@@ -74,9 +74,9 @@ class CollectionGeneratorTest {
 
     @Test
     void shouldWrapStrings() {
-        var generator = new CollectionGenerator<>(Generators.nonEmptyStrings());
-        assertNotNull(generator.list());
-        assertNotNull(generator.set());
+        var localGenerator = new CollectionGenerator<>(Generators.nonEmptyStrings());
+        assertNotNull(localGenerator.list());
+        assertNotNull(localGenerator.set());
     }
 
 }

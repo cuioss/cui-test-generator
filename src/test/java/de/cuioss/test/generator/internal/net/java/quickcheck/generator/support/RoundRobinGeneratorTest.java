@@ -33,14 +33,14 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 class RoundRobinGeneratorTest {
 
     @Test
-    void testEmpty() {
+    void empty() {
         List<Generator<Object>> emptyList = Collections.emptyList();
 
         assertThrows(IllegalArgumentException.class, () -> new RoundRobinGenerator<>(emptyList));
     }
 
     @Test
-    void testGenerateRoundRobin() {
+    void generateRoundRobin() {
 
         List<Generator<Integer>> generators = new ArrayList<>();
         generators.add(ensureValues(asList(1, 2)));

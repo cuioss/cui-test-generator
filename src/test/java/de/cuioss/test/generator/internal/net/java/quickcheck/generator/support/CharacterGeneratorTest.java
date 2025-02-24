@@ -74,7 +74,7 @@ class CharacterGeneratorTest {
 
     @Test
     void generatorMultipleFixedCharacters() {
-        Character[] chars = { 'a', 'x', 'q' };
+        Character[] chars = {'a', 'x', 'q'};
         var input = new StringBuilder();
         for (char c : chars) {
             input.append(c);

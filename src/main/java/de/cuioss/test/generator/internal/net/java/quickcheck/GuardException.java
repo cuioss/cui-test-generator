@@ -16,11 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
+import java.io.Serial;
+
 /**
  * Internal exception thrown by {@link QuickCheck#guard(boolean)}
  *
  */
 class GuardException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

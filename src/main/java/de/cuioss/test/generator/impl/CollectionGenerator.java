@@ -168,14 +168,14 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
     public Iterable<T> nextCollection(final Class<? extends Iterable<?>> expectedType) {
         requireNonNull(expectedType, "expectedType must not be null");
         return switch (expectedType.getName()) {
-        case JAVA_UTIL_LIST -> list();
-        case JAVA_UTIL_SET -> set();
-        case JAVA_UTIL_COLLECTION -> list();
-        case JAVA_UTIL_SORTED_SET -> sortedSet();
-        default -> {
-            log.info("No specific case defined for {}. Returning list-implementation.", expectedType.getName());
-            yield list();
-        }
+            case JAVA_UTIL_LIST -> list();
+            case JAVA_UTIL_SET -> set();
+            case JAVA_UTIL_COLLECTION -> list();
+            case JAVA_UTIL_SORTED_SET -> sortedSet();
+            default -> {
+                log.info("No specific case defined for {}. Returning list-implementation.", expectedType.getName());
+                yield list();
+            }
         };
     }
 }

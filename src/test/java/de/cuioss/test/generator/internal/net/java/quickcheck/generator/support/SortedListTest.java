@@ -39,7 +39,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 class SortedListTest {
 
     @Test
-    void testSortedList() {
+    void sortedList() {
         for (List<Integer> any : toIterable(sortedLists(PrimitiveGenerators.integers()))) {
             var sorted = new ArrayList<>(any);
             Collections.sort(sorted);
@@ -48,7 +48,7 @@ class SortedListTest {
     }
 
     @Test
-    void testSortedWithBounds() {
+    void sortedWithBounds() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
             var bounds = bounds(sizes);
             var sortedList = CombinedGenerators.sortedLists(integers(), bounds.getFirst(), bounds.getSecond()).next();
@@ -57,7 +57,7 @@ class SortedListTest {
     }
 
     @Test
-    void testSortedWithBoundsGenerator() {
+    void sortedWithBoundsGenerator() {
         for (Pair<Integer, Integer> sizes : toIterable(sizes())) {
             var bounds = bounds(sizes);
             var sortedList = CombinedGenerators.sortedLists(integers(), integers(bounds.getFirst(), bounds.getSecond()))

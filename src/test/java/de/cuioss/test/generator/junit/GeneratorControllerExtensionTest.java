@@ -22,9 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 import org.opentest4j.TestAbortedException;
+
+import org.junit.jupiter.api.Test;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 

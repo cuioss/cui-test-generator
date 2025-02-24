@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TimeZone;
+import lombok.experimental.UtilityClass;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
 import de.cuioss.test.generator.impl.DecoratorGenerator;
@@ -53,7 +54,6 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.FixedValuesGenerator;
-import lombok.experimental.UtilityClass;
 
 /**
  * Provides a number of {@link TypedGenerator} for arbitrary java-types
@@ -71,7 +71,7 @@ public class Generators {
      *         the given type is an enum can be found, {@link Optional#empty()}
      *         otherwise
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> Optional<TypedGenerator<T>> enumValuesIfAvailable(final Class<T> type) {
         if (null == type || !type.isEnum()) {
             return Optional.empty();
@@ -564,7 +564,7 @@ public class Generators {
      *
      * @return a {@link TypedGenerator} for all {@link Serializable}s
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static TypedGenerator<Serializable> serializables() {
         return new QuickCheckGeneratorAdapter(Serializable.class, PrimitiveGenerators.nonEmptyStrings());
     }

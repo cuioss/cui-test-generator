@@ -27,12 +27,12 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 class IntegerArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Test
-    void testGenerateDefaultPrimitiveArray() {
+    void generateDefaultPrimitiveArray() {
         testGenerateDefaultPrimitiveArray(IntegerArrayGenerator.MIN_SIZE, IntegerArrayGenerator.MAX_SIZE);
     }
 
     @Test
-    void testGeneratePrimitiveArrayWithSizeParameter() {
+    void generatePrimitiveArrayWithSizeParameter() {
         final long min = Integer.MIN_VALUE;
         final long max = Integer.MAX_VALUE;
         testGeneratePrimitiveArrayWithSizeParameter(min, max);

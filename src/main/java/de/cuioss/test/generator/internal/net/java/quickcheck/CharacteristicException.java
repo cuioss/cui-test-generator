@@ -16,6 +16,7 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
+import java.io.Serial;
 import lombok.Getter;
 
 /**
@@ -25,6 +26,7 @@ import lombok.Getter;
 @SuppressWarnings("java:S1948") // owolff: not a problem for test-code
 public class CharacteristicException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final Object instance;

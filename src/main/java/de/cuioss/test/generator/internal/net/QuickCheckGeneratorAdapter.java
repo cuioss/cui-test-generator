@@ -15,12 +15,13 @@
  */
 package de.cuioss.test.generator.internal.net;
 
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 /**
  * Wrapper for {@link Generator} provided by QuickCheck

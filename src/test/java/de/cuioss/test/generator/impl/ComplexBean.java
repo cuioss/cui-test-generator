@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -22,16 +23,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode(exclude = { "noObjectIdentityString", "badstring" })
-@ToString(exclude = { "noObjectIdentityString", "badstring" })
+@EqualsAndHashCode(exclude = {"noObjectIdentityString", "badstring"})
+@ToString(exclude = {"noObjectIdentityString", "badstring"})
 class ComplexBean implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -7914292255779711820L;
 
     public static final String STRING_WITH_DEFAULT_VALUE = "stringWithDefault";

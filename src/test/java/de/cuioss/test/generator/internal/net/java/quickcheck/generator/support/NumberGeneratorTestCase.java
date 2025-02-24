@@ -35,7 +35,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
     private static final byte HIGH_VALUE = 10;
 
     @Test
-    void testNotNull() {
+    void notNull() {
         QuickCheck.forAll(generator(LOW_VALUE, HIGH_VALUE, Distribution.UNIFORM), new AbstractCharacteristic<>() {
 
             @Override
@@ -57,7 +57,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
     }
 
     @Test
-    void testDiffNull() {
+    void diffNull() {
         assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.UNIFORM).next().doubleValue());
         assertEquals(LOW_VALUE, generator(LOW_VALUE, LOW_VALUE, Distribution.POSITIV_NORMAL).next().doubleValue());
     }

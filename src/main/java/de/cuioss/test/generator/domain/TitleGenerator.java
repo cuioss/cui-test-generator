@@ -18,9 +18,10 @@ package de.cuioss.test.generator.domain;
 import static de.cuioss.test.generator.Generators.fixedValues;
 import static de.cuioss.test.generator.Generators.strings;
 
-import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+
+import de.cuioss.test.generator.TypedGenerator;
 
 /**
  * The generator {@link #READABLE} is for visual mocks, {@link #UNIT_TESTS} for

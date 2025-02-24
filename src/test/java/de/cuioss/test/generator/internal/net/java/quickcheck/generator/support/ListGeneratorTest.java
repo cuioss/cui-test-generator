@@ -58,7 +58,7 @@ class ListGeneratorTest extends AbstractCollectionTestCase {
     }
 
     @Test
-    void testListGeneratorWithHiAndLowValue() {
+    void listGeneratorWithHiAndLowValue() {
         var hiLow = SizeGenerator.anyMinMax();
         int lo = hiLow.get(0);
         int hi = hiLow.get(1);
@@ -66,14 +66,14 @@ class ListGeneratorTest extends AbstractCollectionTestCase {
     }
 
     @Test
-    void testListGeneratorWithLowValue() {
+    void listGeneratorWithLowValue() {
         for (int low : toIterable(new SizeGenerator())) {
             testListGenerator(low, MAX_SIZE, lists(integers(), low));
         }
     }
 
     @Test
-    void testListGeneratorWithLowValueLargerThanDefaultMaxValue() {
+    void listGeneratorWithLowValueLargerThanDefaultMaxValue() {
         for (int low : toIterable(integers(MAX_SIZE, MAX_SIZE + MAX_SIZE))) {
             assertEquals(low, CombinedGenerators.lists(integers(), low).next().size());
         }
