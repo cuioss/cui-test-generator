@@ -181,7 +181,7 @@ public enum PrimitiveArrayGenerators {
         }
     };
 
-    private static final TypedGenerator<Integer> sizeGenerator = Generators.integers(0, 128);
+    private static final TypedGenerator<Integer> sizeGenerator = Generators.integers(1, 128);
 
     /**
      * @return an primitive array of the configured type, with the sizes 1-128

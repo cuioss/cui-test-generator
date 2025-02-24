@@ -101,13 +101,13 @@ public class ZonedDateTimeGenerator implements TypedGenerator<ZonedDateTime> {
      * @return value of ZonedDateTime with date somewhere 10 years ago
      */
     public static ZonedDateTime lastTenYearsAgo() {
-        return now().minusYears(SOME_INT.next()).minusMonths(SOME_INT.next()).minusDays(SOME_INT.next());
+        return now().minusYears(10);
     }
 
     /**
      * @return value of ZonedDateTime with date somewhere lastMonth
      */
     public static ZonedDateTime lastMonthAgo() {
-        return now().minusMinutes(SOME_INT.next()).minusHours(SOME_INT.next()).minusDays(SOME_INT.next());
+        return now().minusMonths(1);
     }
 }
