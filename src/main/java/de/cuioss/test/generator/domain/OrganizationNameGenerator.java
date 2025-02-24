@@ -35,7 +35,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
- * TypedGenerator<String> generator = OrganizationNameGenerator.READABLE.generator();
+ * {@code TypedGenerator<String> generator = OrganizationNameGenerator.READABLE.generator();}
  * String company = generator.next(); // Returns names like "Acme Corp.", "Stark Industries", etc.
  * </pre>
  *

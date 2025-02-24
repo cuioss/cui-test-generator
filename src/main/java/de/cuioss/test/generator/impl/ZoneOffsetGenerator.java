@@ -39,12 +39,17 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
+ * {@code
+ * // Create a generator
  * var generator = new ZoneOffsetGenerator();
+ * 
+ * // Generate single values
  * ZoneOffset offset = generator.next();
  * 
- * // Use with collection generator
- * var collectionGen = new CollectionGenerator<>(generator);
- * List<ZoneOffset> offsets = collectionGen.list(5); // List of 5 offsets
+ * // Generate collections
+ * var collectionGen = new CollectionGenerator&lt;&gt;(generator);
+ * List&lt;ZoneOffset&gt; offsets = collectionGen.list(5); // List of 5 offsets
+ * }
  * </pre>
  * 
  * <p>This generator is particularly useful for testing:</p>

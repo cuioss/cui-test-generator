@@ -44,14 +44,18 @@ import static java.util.Objects.requireNonNull;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
- * // Create a generator for lists of integers
- * var intGenerator = Generators.integers(1, 100);
- * var collectionGen = new CollectionGenerator<>(intGenerator);
+ * {@code
+ * // Create a generator for integers
+ * TypedGenerator<Integer> intGen = Generators.integers(1, 100);
+ * 
+ * // Create a collection generator
+ * var collectionGen = new CollectionGenerator<>(intGen);
  * 
  * // Generate collections
  * List<Integer> list = collectionGen.list(5);      // List of 5 integers
  * Set<Integer> set = collectionGen.set(3);         // Set of 3 integers
- * SortedSet<Integer> sorted = collectionGen.sortedSet(4); // Sorted set of 4 integers
+ * Collection<Integer> coll = collectionGen.next(); // Random size collection
+ * }
  * </pre>
  *
  * @param <T> The type of elements to be generated

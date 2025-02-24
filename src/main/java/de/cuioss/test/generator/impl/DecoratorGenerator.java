@@ -37,12 +37,14 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
+ * {@code
  * // Create a decorator for integer generation
- * TypedGenerator<Integer> baseGenerator = Generators.integers(1, 100);
- * var decorator = new DecoratorGenerator<>(Integer.class, baseGenerator);
+ * TypedGenerator&lt;Integer&gt; baseGenerator = Generators.integers(1, 100);
+ * var decorator = new DecoratorGenerator&lt;>(Integer.class, baseGenerator);
  * 
  * // Use the decorated generator
  * Integer value = decorator.next();
+ * }
  * </pre>
  * 
  * <p>Common use cases include:</p>

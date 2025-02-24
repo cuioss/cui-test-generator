@@ -12,14 +12,16 @@
  *
  * <h2>Basic Usage</h2>
  * <pre>
- * &#64;EnableGeneratorController
+ * {@code
+ * @EnableGeneratorController
  * class MyGeneratorTest {
- *     &#64;Test
+ *     @Test
  *     void shouldGenerateTestData() {
- *         var generator = new CollectionGenerator<>(Generators.strings());
+ *         var generator = new CollectionGenerator&lt;?&gt;(Generators.strings());
  *         var result = generator.list(5);
  *         assertThat(result).hasSize(5);
  *     }
+ * }
  * }
  * </pre>
  *

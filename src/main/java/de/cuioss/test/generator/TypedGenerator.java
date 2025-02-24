@@ -29,9 +29,16 @@ package de.cuioss.test.generator;
  *
  * <p><em>Usage example from tests:</em></p>
  * <pre>
+ * {@code
+ * // Create a generator
  * TypedGenerator<String> generator = Generators.nonEmptyStrings();
+ * 
+ * // Generate values
  * String value = generator.next();
+ * 
+ * // Get type information
  * Class<String> type = generator.getType();
+ * }
  * </pre>
  *
  * @param <T> The type of objects to be generated. Can be any Java type including primitives,

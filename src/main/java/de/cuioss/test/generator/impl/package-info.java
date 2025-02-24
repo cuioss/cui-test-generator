@@ -39,14 +39,15 @@
  * 
  * <h2>Common Usage Patterns</h2>
  * <pre>
+ * {@code
  * // Basic generator usage
  * var stringGen = new NonBlankStringGenerator();
  * String value = stringGen.next();
  * 
  * // Collection generation
- * var intGen = Generators.integers(1, 100);
- * var collectionGen = new CollectionGenerator<>(intGen);
- * List<Integer> list = collectionGen.list(5);
+ * TypedGenerator&lt;Integer&gt; intGen = Generators.integers(1, 100);
+ * var collectionGen = new CollectionGenerator&lt;&gt;(intGen);
+ * List&lt;Integer&gt; list = collectionGen.list(5);
  * 
  * // Date/Time generation with zones
  * var dateTimeGen = new ZonedDateTimeGenerator();
@@ -55,6 +56,17 @@
  * // Numeric generation with ranges
  * var floatGen = new FloatObjectGenerator(0.0f, 100.0f);
  * Float number = floatGen.next();
+ * 
+ * // Create a generator for integers
+ * TypedGenerator&lt;Integer&gt; intGen = Generators.integers(1, 100);
+ * 
+ * // Wrap it in a collection generator
+ * var collectionGen = new CollectionGenerator&lt;&gt;(intGen);
+ * 
+ * // Generate lists and sets
+ * List&lt;Integer&gt; list = collectionGen.list(5);  // List of 5 integers
+ * Set&lt;Integer&gt; set = collectionGen.set(3);     // Set of 3 integers
+ * }
  * </pre>
  * 
  * <h2>Implementation Notes</h2>

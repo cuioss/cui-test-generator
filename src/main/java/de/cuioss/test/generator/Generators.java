@@ -70,17 +70,27 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.F
  * 
  * <p><em>Usage examples from tests:</em></p>
  * <pre>
- * // Generate non-empty strings
- * TypedGenerator<String> stringGen = Generators.nonEmptyStrings();
- * String value = stringGen.next();
+ * {@code
+ * // Basic generators
+ * TypedGenerator&lt;String&gt; generator = Generators.strings("X", 2, 2);
+ * String value = generator.next();
  * 
- * // Generate integers within a range
- * TypedGenerator<Integer> intGen = Generators.integers(1, 100);
- * int number = intGen.next();
+ * // Fixed values
+ * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
+ * String value = generator.next();
  * 
- * // Generate dates
- * TypedGenerator<LocalDate> dateGen = Generators.localDates();
- * LocalDate date = dateGen.next();
+ * // Enum values
+ * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
+ * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
+ * 
+ * // Unique values
+ * TypedGenerator&lt;Integer&gt; baseGen = Generators.integers(1, 10);
+ * TypedGenerator&lt;Integer&gt; uniqueGen = Generators.uniqueValues(baseGen);
+ * Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+ * for (int i = 0; i &lt; 10; i++) {
+ *     seen.add(uniqueGen.next());
+ * }
+ * }
  * </pre>
  *
  * @author Oliver Wolff
@@ -94,7 +104,7 @@ public class Generators {
      * 
      * <p><em>Example from tests:</em></p>
      * <pre>
-     * Optional<TypedGenerator<TimeUnit>> generator = Generators.enumValuesIfAvailable(TimeUnit.class);
+     * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
      * assertTrue(generator.isPresent());
      * assertNotNull(generator.get().next());
      * </pre>
@@ -118,7 +128,7 @@ public class Generators {
      * 
      * <p><em>Example from tests:</em></p>
      * <pre>
-     * TypedGenerator<TimeUnit> generator = Generators.enumValues(TimeUnit.class);
+     * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
      * TimeUnit value = generator.next();
      * assertNotNull(value);
      * </pre>
@@ -168,7 +178,7 @@ public class Generators {
      *
      * <p><em>Example from tests:</em></p>
      * <pre>
-     * TypedGenerator<String> generator = Generators.strings("X", 2, 2);
+     * TypedGenerator&lt;String&gt; generator = Generators.strings("X", 2, 2);
      * String result = generator.next();
      * assertEquals(2, result.length());
      * assertTrue(result.matches("^X+$"));
@@ -223,7 +233,7 @@ public class Generators {
      *
      * <p><em>Example from tests:</em></p>
      * <pre>
-     * TypedGenerator<String> generator = Generators.fixedValues("A", "B", "C");
+     * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
      * assertEquals("A", generator.next());
      * assertEquals("B", generator.next());
      * assertEquals("C", generator.next());
@@ -284,10 +294,10 @@ public class Generators {
      *
      * <p><em>Example from tests:</em></p>
      * <pre>
-     * TypedGenerator<Integer> baseGen = Generators.integers(1, 10);
-     * TypedGenerator<Integer> uniqueGen = Generators.uniqueValues(baseGen);
-     * Set<Integer> seen = new HashSet<>();
-     * for (int i = 0; i < 10; i++) {
+     * TypedGenerator&lt;Integer&gt; baseGen = Generators.integers(1, 10);
+     * TypedGenerator&lt;Integer&gt; uniqueGen = Generators.uniqueValues(baseGen);
+     * Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+     * for (int i = 0; i &lt; 10; i++) {
      *     assertTrue(seen.add(uniqueGen.next())); // Each value is unique
      * }
      * </pre>

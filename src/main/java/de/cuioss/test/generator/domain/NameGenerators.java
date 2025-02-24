@@ -50,7 +50,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
- * TypedGenerator<String> generator = NameGenerators.FIRSTNAMES_MALE_ENGLISH.generator();
+ * {@code TypedGenerator<String> generator = NameGenerators.FIRSTNAMES_MALE_ENGLISH.generator();}
  * String name = generator.next(); // Returns a common English male first name
  * </pre>
  *

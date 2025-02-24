@@ -35,12 +35,17 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
+ * {@code
+ * // Create a generator
  * var generator = new LocalTimeGenerator();
+ * 
+ * // Generate single values
  * LocalTime time = generator.next();
  * 
- * // Use with collection generator for multiple times
- * var collectionGen = new CollectionGenerator<>(generator);
- * List<LocalTime> times = collectionGen.list(5); // List of 5 times
+ * // Generate collections
+ * var collectionGen = new CollectionGenerator&lt;>(generator);
+ * List&lt;LocalTime&gt; times = collectionGen.list(5); // List of 5 times
+ * }
  * </pre>
  * 
  * <p>This generator is particularly useful for testing:</p>

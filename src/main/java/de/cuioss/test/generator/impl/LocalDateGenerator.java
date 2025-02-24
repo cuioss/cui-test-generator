@@ -35,12 +35,17 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
+ * {@code
+ * // Create a generator
  * var generator = new LocalDateGenerator();
+ * 
+ * // Generate single values
  * LocalDate date = generator.next();
  * 
- * // Use with collection generator
- * var collectionGen = new CollectionGenerator<>(generator);
- * List<LocalDate> dates = collectionGen.list(5); // List of 5 dates
+ * // Generate collections
+ * var collectionGen = new CollectionGenerator&lt;&gt;(generator);
+ * List&lt;LocalDate&gt; dates = collectionGen.list(5); // List of 5 dates
+ * }
  * </pre>
  * 
  * <p>This generator is particularly useful for testing:</p>

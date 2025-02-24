@@ -34,12 +34,17 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
+ * {@code
+ * // Create a generator
  * var generator = new NumberGenerator();
+ * 
+ * // Generate single values
  * Number value = generator.next();
  * 
- * // Use with collection generator
- * var collectionGen = new CollectionGenerator<>(generator);
- * List<Number> numbers = collectionGen.list(5); // List of 5 numbers
+ * // Generate collections
+ * var collectionGen = new CollectionGenerator&lt;>(generator);
+ * List&lt;Number&gt; numbers = collectionGen.list(5); // List of 5 numbers
+ * }
  * </pre>
  * 
  * <p>This generator is particularly useful for testing:</p>

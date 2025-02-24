@@ -34,7 +34,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * <p><em>Example usage:</em></p>
  * <pre>
- * TypedGenerator<String> generator = TitleGenerator.READABLE.generator();
+ * {@code TypedGenerator<String> generator = TitleGenerator.READABLE.generator();}
  * String title = generator.next(); // Returns titles like "Dr.", "M.A.", etc.
  * </pre>
  *
