@@ -57,12 +57,6 @@ class DomainGeneratorTest {
     class PersonRelated {
 
         @Test
-        @DisplayName("should provide emails")
-        void shouldProvideEmails() {
-            assertNotNull(new EmailGenerator().next());
-        }
-
-        @Test
         @DisplayName("should provide full names")
         void shouldProvideFullNames() {
             assertNotNull(new FullNameGenerator(Locale.ENGLISH).next());

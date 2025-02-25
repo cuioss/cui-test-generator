@@ -15,33 +15,33 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
-
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.tools.logging.CuiLogger;
+import de.cuioss.tools.string.MoreStrings;
+
+import static de.cuioss.test.generator.Generators.fixedValues;
 
 /**
  * Generates syntactically valid email addresses for testing purposes.
  * The generator creates email addresses in the format: firstname.lastname@domain.tld
- * 
+ *
  * <ul>
- *   <li>First and last names are taken from {@link NameGenerators#FIRSTNAMES_ANY_ENGLISH} 
+ *   <li>First and last names are taken from {@link NameGenerators#FIRSTNAMES_ANY_ENGLISH}
  *       and {@link NameGenerators#FAMILY_NAMES_ENGLISH}</li>
  *   <li>Domains include: email, mail, cuioss, message, example, hospital</li>
  *   <li>TLDs include: de, org, com, net</li>
  * </ul>
- * 
+ *
  * <p><em>Example usage:</em></p>
  * <pre>
  * var generator = new EmailGenerator();
  * String email = generator.next(); // e.g. "john.doe@mail.com"
- * 
+ *
  * // Or create email directly from names
  * String email = EmailGenerator.createEmail("john", "doe"); // e.g. "john.doe@example.org"
  * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class EmailGenerator implements TypedGenerator<String> {
 
@@ -62,14 +62,14 @@ public class EmailGenerator implements TypedGenerator<String> {
     /**
      * Creates an email address from given first and last names.
      * All components are converted to lowercase.
-     * 
+     *
      * @param firstname The person's first name, must not be null or empty
-     * @param lastname The person's last name, must not be null or empty
+     * @param lastname  The person's last name, must not be null or empty
      * @return An email address in the format firstname.lastname@domain.tld.
-     *         Returns "invalid.email@example.com" if either name component is null or empty.
+     * Returns "invalid.email@example.com" if either name component is null or empty.
      */
     public static String createEmail(final String firstname, final String lastname) {
-        if (null == firstname || null == lastname || firstname.isEmpty() || lastname.isEmpty()) {
+        if (MoreStrings.isBlank(firstname) || MoreStrings.isBlank(lastname)) {
             LOGGER.warn("Invalid name components for email generation: firstname='%s', lastname='%s'", firstname, lastname);
             return "invalid.email@example.com";
         }
