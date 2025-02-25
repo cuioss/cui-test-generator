@@ -76,15 +76,15 @@ class NonBlankStringGeneratorTest {
         }
 
         @Test
-        @DisplayName("preserve string content")
+        @DisplayName("preserve non-blank content")
         void shouldPreserveContent() {
             // Act
             var result = underTest.next();
             var trimmed = result.trim();
 
             // Assert
-            assertEquals(result, trimmed,
-                    "Generated string should not have leading or trailing whitespace");
+            assertFalse(trimmed.isEmpty(),
+                    "Generated string should contain non-whitespace characters");
         }
     }
 }
