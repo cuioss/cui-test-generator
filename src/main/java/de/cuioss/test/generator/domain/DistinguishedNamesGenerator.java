@@ -25,10 +25,35 @@ import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.tools.string.Joiner;
 
 /**
- * Generates formally correct Distinguished Names
+ * Generates LDAP Distinguished Names (DN) for testing purposes.
+ * The generated DNs follow the standard format of comma-separated name-value pairs.
+ * 
+ * <p>Components:</p>
+ * <ul>
+ *   <li>Prefixes: ou (Organizational Unit), o (Organization), dc (Domain Component)</li>
+ *   <li>Values: Common LDAP terms like proxies, accounts, groups, roles, etc.</li>
+ * </ul>
+ * 
+ * <p>Generation rules:</p>
+ * <ul>
+ *   <li>Each DN contains 2-12 components</li>
+ *   <li>Components are in the format prefix=value</li>
+ *   <li>Components are joined with commas</li>
+ * </ul>
+ * 
+ * <p><em>Example outputs:</em></p>
+ * <pre>
+ * "ou=proxies,dc=accounts,o=services"
+ * "dc=groups,ou=roles,dc=ID"
+ * </pre>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new DistinguishedNamesGenerator();
+ * String dn = generator.next(); // Returns a valid LDAP DN string
+ * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class DistinguishedNamesGenerator implements TypedGenerator<String> {
 

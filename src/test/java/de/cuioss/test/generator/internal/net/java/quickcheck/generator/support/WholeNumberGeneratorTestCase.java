@@ -28,7 +28,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 abstract class WholeNumberGeneratorTestCase<T extends Number> extends NumberGeneratorTestCase<T> {
 
     @Test
-    void testDistributionOfBoundsValues() {
+    void distributionOfBoundsValues() {
 
         AbstractCharacteristic<T> characteristic = new AbstractCharacteristic<>() {
 

@@ -44,7 +44,7 @@ class AssertThrows {
 
     public interface ExceptionThrowingExecutor {
 
-        @SuppressWarnings({ "checkstyle:illegalthrows", "ProhibitedExceptionDeclared" })
+        @SuppressWarnings({"checkstyle:illegalthrows", "ProhibitedExceptionDeclared"})
         void execute() throws Throwable;
     }
 }

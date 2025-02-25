@@ -17,7 +17,6 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
 import java.io.PrintWriter;
-
 import lombok.experimental.UtilityClass;
 
 /**

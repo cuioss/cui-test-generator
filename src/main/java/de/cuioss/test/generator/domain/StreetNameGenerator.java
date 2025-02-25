@@ -20,10 +20,29 @@ import static de.cuioss.test.generator.Generators.fixedValues;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generator for some German Street-names.
+ * Generates typical German street names for test data generation.
+ * 
+ * <p>Available street names:</p>
+ * <ul>
+ *   <li>Hauptstraße</li>
+ *   <li>Bahnhofstraße</li>
+ *   <li>Brunnenweg</li>
+ *   <li>Schlossallee</li>
+ *   <li>Altrottstrasse</li>
+ *   <li>Parkweg</li>
+ *   <li>Paradeplatz</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new StreetNameGenerator();
+ * String streetName = generator.next(); // Returns one of the predefined street names
+ * </pre>
+ * 
+ * <p>This generator is primarily used by {@link StreetGenerator} to create complete addresses.</p>
  *
  * @author Oliver Wolff
- *
+ * @see StreetGenerator
  */
 public class StreetNameGenerator implements TypedGenerator<String> {
 

@@ -20,8 +20,26 @@ import static de.cuioss.test.generator.Generators.fixedValues;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Provides a number of dummy Texts. Taken from
- * <a href="http://www.blindtextgenerator.de">blindtextgenerator.de</a>
+ * Provides a collection of placeholder texts (blind texts) for testing purposes.
+ * These texts are sourced from <a href="http://www.blindtextgenerator.de">blindtextgenerator.de</a>
+ * and include various styles and languages.
+ * 
+ * <p>Available text types:</p>
+ * <ul>
+ *   <li>German blind texts</li>
+ *   <li>Lorem ipsum variants</li>
+ *   <li>Pangrams (sentences containing every letter of the alphabet)</li>
+ *   <li>Fictional language samples</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new BlindTextGenerator();
+ * String text = generator.next(); // Returns one of eight predefined texts
+ * </pre>
+ * 
+ * <p>The texts vary in length and content, making them suitable for different testing scenarios
+ * such as layout testing, text field validation, or content display testing.</p>
  *
  * @author Oliver Wolff
  *

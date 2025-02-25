@@ -63,15 +63,15 @@ public class DateGenerator implements Generator<Date> {
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(millis);
             switch (precision) {
-            case DAYS:
-                time.set(Calendar.HOUR, 0); //$FALL-THROUGH$
-            case HOURS:
-                time.set(Calendar.MINUTE, 0); //$FALL-THROUGH$
-            case MINUTES:
-                time.set(Calendar.SECOND, 0); //$FALL-THROUGH$
-            case SECONDS:
-                time.set(Calendar.MILLISECOND, 0); //$FALL-THROUGH$
-            default:
+                case DAYS:
+                    time.set(Calendar.HOUR, 0); //$FALL-THROUGH$
+                case HOURS:
+                    time.set(Calendar.MINUTE, 0); //$FALL-THROUGH$
+                case MINUTES:
+                    time.set(Calendar.SECOND, 0); //$FALL-THROUGH$
+                case SECONDS:
+                    time.set(Calendar.MILLISECOND, 0); //$FALL-THROUGH$
+                default:
             }
             long correctedMillis = time.getTimeInMillis();
             return isOutOffBounds(correctedMillis) || isOverflow(millis, correctedMillis) ? null : correctedMillis;

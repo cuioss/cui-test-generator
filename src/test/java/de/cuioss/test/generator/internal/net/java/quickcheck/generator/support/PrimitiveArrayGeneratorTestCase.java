@@ -31,7 +31,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Abst
 abstract class PrimitiveArrayGeneratorTestCase {
 
     @Test
-    void testGeneratePrimitiveArrayWithValueRangeAndSizeParameters() {
+    void generatePrimitiveArrayWithValueRangeAndSizeParameters() {
         var size = 10;
         var min = 2L;
         var max = 4L;

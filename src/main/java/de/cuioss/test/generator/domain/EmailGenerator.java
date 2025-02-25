@@ -15,17 +15,37 @@
  */
 package de.cuioss.test.generator.domain;
 
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.logging.CuiLogger;
+import de.cuioss.tools.string.MoreStrings;
+
 import static de.cuioss.test.generator.Generators.fixedValues;
 
-import de.cuioss.test.generator.TypedGenerator;
-
 /**
- * Creates syntactically valid email-addresses
+ * Generates syntactically valid email addresses for testing purposes.
+ * The generator creates email addresses in the format: firstname.lastname@domain.tld
+ *
+ * <ul>
+ *   <li>First and last names are taken from {@link NameGenerators#FIRSTNAMES_ANY_ENGLISH}
+ *       and {@link NameGenerators#FAMILY_NAMES_ENGLISH}</li>
+ *   <li>Domains include: email, mail, cuioss, message, example, hospital</li>
+ *   <li>TLDs include: de, org, com, net</li>
+ * </ul>
+ *
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new EmailGenerator();
+ * String email = generator.next(); // e.g. "john.doe@mail.com"
+ *
+ * // Or create email directly from names
+ * String email = EmailGenerator.createEmail("john", "doe"); // e.g. "john.doe@example.org"
+ * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class EmailGenerator implements TypedGenerator<String> {
+
+    private static final CuiLogger LOGGER = new CuiLogger(EmailGenerator.class);
 
     private final TypedGenerator<String> firstNames = NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator();
     private final TypedGenerator<String> familyNames = NameGenerators.FAMILY_NAMES_ENGLISH.generator();
@@ -40,13 +60,22 @@ public class EmailGenerator implements TypedGenerator<String> {
     }
 
     /**
-     * @param firstname
-     * @param lastname
-     * @return an email address created in the form of
-     *         firstname.lastname@|email|mail|icw.de|org|com|net
+     * Creates an email address from given first and last names.
+     * All components are converted to lowercase.
+     *
+     * @param firstname The person's first name, must not be null or empty
+     * @param lastname  The person's last name, must not be null or empty
+     * @return An email address in the format firstname.lastname@domain.tld.
+     * Returns "invalid.email@example.com" if either name component is null or empty.
      */
     public static String createEmail(final String firstname, final String lastname) {
-        return firstname.toLowerCase() + '.' + lastname.toLowerCase() + '@' + DOMAINS.next() + '.' + TLDS.next();
+        if (MoreStrings.isBlank(firstname) || MoreStrings.isBlank(lastname)) {
+            LOGGER.warn("Invalid name components for email generation: firstname='%s', lastname='%s'", firstname, lastname);
+            return "invalid.email@example.com";
+        }
+        var email = (firstname + "." + lastname + "@" + DOMAINS.next()).toLowerCase();
+        LOGGER.debug("Generated email: %s", email + '.' + TLDS.next());
+        return email + '.' + TLDS.next();
     }
 
 }

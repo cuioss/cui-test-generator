@@ -49,7 +49,7 @@ class ClassificationTest {
     }
 
     @Test
-    void testToStringClassification() {
+    void toStringClassification() {
         var classification = new Classification();
         classification.doClassify(true, category);
         classification.call();
@@ -60,7 +60,7 @@ class ClassificationTest {
     }
 
     @Test
-    void testClassifyWithPredicateFalse() {
+    void classifyWithPredicateFalse() {
         var classification = new Classification();
         classification.doClassify(false, "cat");
         classification.call();
@@ -68,8 +68,8 @@ class ClassificationTest {
     }
 
     @Test
-    void testClassifyMultipleValues() {
-        String[] categories = { category, category, category, otherCategory };
+    void classifyMultipleValues() {
+        String[] categories = {category, category, category, otherCategory};
         var classification = new Classification();
         for (String cat : categories) {
             classification.classifyCall(cat);
@@ -79,7 +79,7 @@ class ClassificationTest {
     }
 
     @Test
-    void testCategoriesAreSortedByFrequency() {
+    void categoriesAreSortedByFrequency() {
         StatefulGenerator<Integer> uniqueInts = uniqueValues(integers(1, DEFAULT_COLLECTION_MAX_SIZE));
         for (List<Integer> frequencies : someSortedLists(uniqueInts)) {
             uniqueInts.reset();
@@ -99,21 +99,21 @@ class ClassificationTest {
     }
 
     @Test
-    void testDoNotClassifyAfterGetCategories() {
+    void doNotClassifyAfterGetCategories() {
         var classification = new Classification();
         classification.getCategories();
         assertClassifyFails(classification);
     }
 
     @Test
-    void testDoNotClassifyAfterGetFrequency() {
+    void doNotClassifyAfterGetFrequency() {
         var classification = new Classification();
         classification.getFrequency(new Object());
         assertClassifyFails(classification);
     }
 
     @Test
-    void testDoNotClassifyAfterToString() {
+    void doNotClassifyAfterToString() {
         var classification = new Classification();
         // noinspection ResultOfMethodCallIgnored
         classification.toString();
@@ -126,7 +126,7 @@ class ClassificationTest {
     }
 
     @Test
-    void testUnknownClassificationIsEmpty() {
+    void unknownClassificationIsEmpty() {
         assertEquals(0.0, new Classification().getFrequency(strings().next()), 0.0);
         assertTrue(new Classification().getCategories().isEmpty());
     }

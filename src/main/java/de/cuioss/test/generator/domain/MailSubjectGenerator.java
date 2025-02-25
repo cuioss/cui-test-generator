@@ -25,10 +25,36 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 import de.cuioss.tools.string.Joiner;
 
 /**
- * Provides Subjects for messages
+ * Generates realistic email subject lines for testing purposes, particularly focused
+ * on healthcare-related communications.
+ * 
+ * <p>Subject line components:</p>
+ * <ul>
+ *   <li>Prefixes (0-3): "Re:", "Fw:", "Answ:", "Yep:"</li>
+ *   <li>Content words (0-7): Healthcare-related terms like "Patient", "Document", "Hospital", etc.</li>
+ * </ul>
+ * 
+ * <p>The generator creates subject lines by combining:</p>
+ * <ol>
+ *   <li>Random number (0-3) of prefix elements</li>
+ *   <li>Random number (0-7) of content words</li>
+ *   <li>All elements are joined with spaces</li>
+ * </ol>
+ * 
+ * <p><em>Example outputs:</em></p>
+ * <pre>
+ * "Re: Fw: Patient Document"
+ * "Hospital Doctor Referral"
+ * "Answ: Registration Physician"
+ * </pre>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new MailSubjectGenerator();
+ * String subject = generator.next(); // Returns a randomly generated subject line
+ * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class MailSubjectGenerator implements TypedGenerator<String> {
 

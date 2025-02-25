@@ -21,6 +21,7 @@ import static de.cuioss.tools.collect.MoreCollections.requireNotEmpty;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
@@ -34,7 +35,7 @@ public class FixedValuesGenerator<T> implements Generator<T> {
     }
 
     public FixedValuesGenerator(T value) {
-        this(Collections.singleton(value));
+        this(Set.of(value));
     }
 
     public FixedValuesGenerator(Iterable<T> values) {

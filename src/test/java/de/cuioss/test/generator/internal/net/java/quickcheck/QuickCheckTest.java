@@ -62,7 +62,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForAllCallCharacteristic() throws Throwable {
+    void forAllCallCharacteristic() throws Throwable {
         expectRuns(QuickCheck.getDefaultNumberOfRuns());
         replayMocks();
         forAll(PrimitiveGenerators.fixedValues(new Object()), characteristic);
@@ -70,7 +70,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForAllFailsException() throws Throwable {
+    void forAllFailsException() throws Throwable {
         var exception = new Exception();
         var last = expectExceptionThrownAfterFirstGenerator(exception);
         replayMocks();
@@ -97,7 +97,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForNumberOfRuns() throws Throwable {
+    void forNumberOfRuns() throws Throwable {
         var runs = 2;
         expectRuns(runs);
         replayMocks();
@@ -114,7 +114,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testChoose() {
+    void choose() {
         final var lo = 10;
         final var hi = 100;
         forAll(integers(lo, hi), new AbstractCharacteristic<>() {
@@ -128,7 +128,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForAllVerbose() throws Throwable {
+    void forAllVerbose() throws Throwable {
         var genReturned = "returned";
         expect(generator.next()).andReturn(genReturned);
         setUpCallTearDown(genReturned);
@@ -151,7 +151,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForAllWithGuard() throws Throwable {
+    void forAllWithGuard() throws Throwable {
         var first = new Object();
         var second = new Object();
         expect(generator.next()).andReturn(first);
@@ -167,7 +167,7 @@ class QuickCheckTest {
     }
 
     @Test
-    void testForWithGuardAbortsAfterMaxTry() throws Throwable {
+    void forWithGuardAbortsAfterMaxTry() throws Throwable {
         var runs = 3;
         var maxGeneratorTries = RunnerImpl.getMaxGeneratorTries(runs);
         expect(generator.next()).andReturn(new Object()).times(maxGeneratorTries);
@@ -189,17 +189,17 @@ class QuickCheckTest {
     }
 
     @Test
-    void testGuardThrowsGuardException() {
+    void guardThrowsGuardException() {
         assertThrows(GuardException.class, () -> guard(false));
     }
 
     @Test
-    void testGetDefaultNumberOfRuns() {
+    void getDefaultNumberOfRuns() {
         assertEquals(MAX_NUMBER_OF_RUNS, QuickCheck.getDefaultNumberOfRuns());
     }
 
     @Test
-    void testGetDefaultNumberOfRunsOverwriteProperty() {
+    void getDefaultNumberOfRunsOverwriteProperty() {
         var runs = integers(1, Integer.MAX_VALUE).next();
         System.setProperty(QuickCheck.SYSTEM_PROPERTY_RUNS, runs.toString());
         assertEquals(runs.intValue(), QuickCheck.getDefaultNumberOfRuns());

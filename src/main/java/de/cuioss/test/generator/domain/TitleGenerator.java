@@ -18,28 +18,49 @@ package de.cuioss.test.generator.domain;
 import static de.cuioss.test.generator.Generators.fixedValues;
 import static de.cuioss.test.generator.Generators.strings;
 
-import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import de.cuioss.test.generator.TypedGenerator;
+
 /**
- * The generator {@link #READABLE} is for visual mocks, {@link #UNIT_TESTS} for
- * unit-tests.
+ * Provides generators for academic and professional titles.
+ * 
+ * <p>Available generators:</p>
+ * <ul>
+ *   <li>{@link #READABLE} - Common academic titles for realistic test data</li>
+ *   <li>{@link #UNIT_TESTS} - Technical string generator for unit testing</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * {@code TypedGenerator<String> generator = TitleGenerator.READABLE.generator();}
+ * String title = generator.next(); // Returns titles like "Dr.", "M.A.", etc.
+ * </pre>
  *
+ * @author Oliver Wolff
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TitleGenerator {
 
-    /** Some Titles */
+    /** 
+     * Common academic and professional titles.
+     * Includes: Dr., Dr. h.c., M.A., Dr. med.
+     */
     READABLE(fixedValues("Dr.", "Dr. h.c.", "M.A.", "Dr. med.")),
 
-    /** Technical String for unit-testing. Min size is 1, max size 256 */
+    /** 
+     * Technical string generator for unit testing.
+     * Generates random strings between 1 and 10 characters.
+     */
     UNIT_TESTS(strings(1, 10));
 
     private final TypedGenerator<String> generator;
 
     /**
-     * @return the concrete generator.
+     * Provides access to the underlying title generator.
+     *
+     * @return A {@link TypedGenerator} that generates titles according to the enum constant's specification
      */
     public TypedGenerator<String> generator() {
         return generator;

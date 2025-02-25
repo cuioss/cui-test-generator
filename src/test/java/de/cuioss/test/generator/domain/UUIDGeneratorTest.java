@@ -16,25 +16,60 @@
 package de.cuioss.test.generator.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.UUID;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 
+@DisplayName("UUIDGenerator should")
 class UUIDGeneratorTest {
 
     @Test
+    @DisplayName("produce reproducible UUIDs with same seed")
     void producesReproducibleData() {
+        // Arrange
         long seed = Generators.longs().next();
+        var generator = new UUIDGenerator();
 
+        // Act & Assert - First run
         RandomConfiguration.setSeed(seed);
-        var result1 = new UUIDGenerator().next();
+        var result1 = generator.next();
+        assertNotNull(result1, "Generated UUID should not be null");
 
+        // Act & Assert - Second run with same seed
         RandomConfiguration.setSeed(seed);
-        var result2 = new UUIDGenerator().next();
+        var result2 = generator.next();
+        assertNotNull(result2, "Generated UUID should not be null");
 
-        assertEquals(result1, result2, "UUIDGenerator produces non reproducible data");
+        assertEquals(result1, result2, "UUIDGenerator should produce reproducible data with same seed");
     }
 
+    @Test
+    @DisplayName("provide correct type information")
+    void shouldProvideCorrectType() {
+        // Arrange
+        var generator = new UUIDGenerator();
+
+        // Act & Assert
+        assertEquals(UUID.class, generator.getType(), "Generator should return UUID.class as type");
+    }
+
+    @Test
+    @DisplayName("generate valid UUIDs")
+    void shouldGenerateValidUUIDs() {
+        // Arrange
+        var generator = new UUIDGenerator();
+
+        // Act
+        var uuid = generator.next();
+
+        // Assert
+        assertNotNull(uuid, "Generated UUID should not be null");
+        assertNotNull(uuid.toString(), "UUID string representation should not be null");
+    }
 }

@@ -15,26 +15,66 @@
  */
 package de.cuioss.test.generator.junit;
 
-import java.lang.reflect.Method;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 import org.opentest4j.AssertionFailedError;
 import org.opentest4j.TestAbortedException;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import java.lang.reflect.Method;
 
 /**
- * If enabled, either by using {@link ExtendWith} or
- * {@link EnableGeneratorController} this {@link Extension} controls the seed
- * initialization, by checking for {@link GeneratorSeed} and intercepts
- * Test-failures by printing information providing the seed to reproduce.
+ * JUnit 5 extension that manages test data generation by controlling generator seeds
+ * and providing detailed failure information for test reproduction.
+ *
+ * <h2>Features</h2>
+ * <ul>
+ *   <li>Initializes generator seeds before each test</li>
+ *   <li>Supports seed configuration via {@link GeneratorSeed} annotation</li>
+ *   <li>Provides detailed failure information for test reproduction</li>
+ *   <li>Handles both method and class-level seed configuration</li>
+ * </ul>
+ *
+ * <h2>Usage</h2>
+ * Can be enabled in two ways:
+ * <pre>
+ * // Option 1: Direct extension usage
+ * &#64;ExtendWith(GeneratorControllerExtension.class)
+ * class MyTest {
+ *     &#64;Test
+ *     void shouldGenerateData() { ... }
+ * }
+ *
+ * // Option 2: Via meta-annotation (preferred)
+ * &#64;EnableGeneratorController
+ * class MyTest {
+ *     &#64;Test
+ *     void shouldGenerateData() { ... }
+ * }
+ * </pre>
+ *
+ * <h2>Seed Configuration</h2>
+ * Seeds can be configured in order of precedence:
+ * <ol>
+ *   <li>Method-level {@code @GeneratorSeed}</li>
+ *   <li>Class-level {@code @GeneratorSeed}</li>
+ *   <li>System property {@code de.cuioss.test.generator.seed}</li>
+ *   <li>Random seed (if no configuration present)</li>
+ * </ol>
+ *
+ * <h2>Failure Handling</h2>
+ * On test failure, provides a detailed message with:
+ * <ul>
+ *   <li>The original test failure message</li>
+ *   <li>The seed used for test data generation</li>
+ *   <li>Instructions for test reproduction</li>
+ * </ul>
  *
  * @author Oliver Wolff
- *
+ * @see EnableGeneratorController
+ * @see GeneratorSeed
+ * @see RandomConfiguration#SEED_SYSTEM_PROPERTY
  */
 public class GeneratorControllerExtension implements BeforeEachCallback, TestExecutionExceptionHandler {
 
@@ -65,7 +105,7 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
 
     @Override
     @SuppressWarnings("java:S3655") // owolff: false positive: isPresent is checked
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         var seedSetByAnnotation = false;
         long initialSeed = -1;
         if (context.getElement().isPresent()) {

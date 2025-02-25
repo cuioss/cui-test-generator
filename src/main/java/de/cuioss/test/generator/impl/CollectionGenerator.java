@@ -30,15 +30,40 @@ import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.tools.logging.CuiLogger;
 
 /**
- * Wraps a given {@link TypedGenerator} and provides additional methods for
- * creating {@link List}s and {@link Set}s
+ * Enhances a {@link TypedGenerator} with collection generation capabilities.
+ * This wrapper adds methods for creating {@link List}s, {@link Set}s, and other collection types
+ * from any existing generator.
+ * 
+ * <p>Features:</p>
+ * <ul>
+ *   <li>Generates Lists with configurable size</li>
+ *   <li>Creates Sets (both regular and sorted)</li>
+ *   <li>Supports any collection type that can be built from Lists or Sets</li>
+ *   <li>Thread-safe if the wrapped generator is thread-safe</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * {@code
+ * // Create a generator for integers
+ * TypedGenerator<Integer> intGen = Generators.integers(1, 100);
+ * 
+ * // Create a collection generator
+ * var collectionGen = new CollectionGenerator<>(intGen);
+ * 
+ * // Generate collections
+ * List<Integer> list = collectionGen.list(5);      // List of 5 integers
+ * Set<Integer> set = collectionGen.set(3);         // Set of 3 integers
+ * Collection<Integer> coll = collectionGen.next(); // Random size collection
+ * }
+ * </pre>
  *
- * @param <T> identifying the type of the object being generated
+ * @param <T> The type of elements to be generated
  * @author Oliver Wolff
  */
 public class CollectionGenerator<T> implements TypedGenerator<T> {
 
-    private static final CuiLogger log = new CuiLogger(CollectionGenerator.class);
+    private static final CuiLogger LOGGER = new CuiLogger(CollectionGenerator.class);
     private static final String JAVA_UTIL_SORTED_SET = "java.util.SortedSet";
 
     private static final String JAVA_UTIL_COLLECTION = "java.util.Collection";
@@ -163,19 +188,19 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      *
      * @param expectedType type of the expected {@link Iterable}
      * @return depending on the given expectedType a corresponding {@link Iterable},
-     *         {@link Collection}, {@link List}, {@link SortedSet} or {@link Set}
+     * {@link Collection}, {@link List}, {@link SortedSet} or {@link Set}
      */
     public Iterable<T> nextCollection(final Class<? extends Iterable<?>> expectedType) {
         requireNonNull(expectedType, "expectedType must not be null");
         return switch (expectedType.getName()) {
-        case JAVA_UTIL_LIST -> list();
-        case JAVA_UTIL_SET -> set();
-        case JAVA_UTIL_COLLECTION -> list();
-        case JAVA_UTIL_SORTED_SET -> sortedSet();
-        default -> {
-            log.info("No specific case defined for {}. Returning list-implementation.", expectedType.getName());
-            yield list();
-        }
+            case JAVA_UTIL_LIST -> list();
+            case JAVA_UTIL_SET -> set();
+            case JAVA_UTIL_COLLECTION -> list();
+            case JAVA_UTIL_SORTED_SET -> sortedSet();
+            default -> {
+                LOGGER.info("No specific case defined for %s. Returning list-implementation.", expectedType.getName());
+                yield list();
+            }
         };
     }
 }

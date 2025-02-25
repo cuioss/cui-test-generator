@@ -20,10 +20,29 @@ import static de.cuioss.test.generator.Generators.fixedValues;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generator for some German cities.
+ * Generates names of major German cities for testing purposes.
+ * Provides a fixed set of well-known cities, primarily from southern Germany.
+ * 
+ * <p>Available cities:</p>
+ * <ul>
+ *   <li>Heidelberg</li>
+ *   <li>Walldorf</li>
+ *   <li>Mannheim</li>
+ *   <li>Stuttgart</li>
+ *   <li>Karlsruhe</li>
+ *   <li>Berlin</li>
+ *   <li>Freiburg</li>
+ *   <li>Hamburg</li>
+ *   <li>München</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new CityGenerator();
+ * String city = generator.next(); // Returns one of the predefined German cities
+ * </pre>
  *
  * @author Oliver Wolff
- *
  */
 public class CityGenerator implements TypedGenerator<String> {
 

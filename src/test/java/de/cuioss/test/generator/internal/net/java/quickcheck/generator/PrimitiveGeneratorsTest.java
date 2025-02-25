@@ -37,8 +37,8 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Clas
 class PrimitiveGeneratorsTest {
 
     @Test
-    void testFixedValuesGenerator() {
-        final var values = new Integer[] { integers().next(), integers().next(), integers().next() };
+    void fixedValuesGenerator() {
+        final var values = new Integer[]{integers().next(), integers().next(), integers().next()};
         var classification = new Classification();
         for (Integer i : toIterable(fixedValues(values))) {
             classification.classifyCall(i);
@@ -52,7 +52,7 @@ class PrimitiveGeneratorsTest {
     }
 
     @Test
-    void testEnums() {
+    void enums() {
         Generator<TestEnum> generator = enumValues(TestEnum.class);
         var classification = new Classification();
         for (TestEnum e : toIterable(generator)) {
@@ -68,7 +68,7 @@ class PrimitiveGeneratorsTest {
     }
 
     @Test
-    void testEnumsExcept() {
+    void enumsExcept() {
         var excluded = enumValues(TestEnum.class).next();
         Generator<TestEnum> generator = enumValues(TestEnum.class, excluded);
         var classification = new Classification();
@@ -87,13 +87,13 @@ class PrimitiveGeneratorsTest {
 
     @Test
     @SuppressWarnings("java:S5778")
-    void testEnumAllExcluded() {
+    void enumAllExcluded() {
         assertThrows(IllegalArgumentException.class,
                 () -> PrimitiveGenerators.enumValues(TestEnum.class, TestEnum.values()));
     }
 
     @Test
-    void testBooleansGeneration() {
+    void booleansGeneration() {
         var classification = new Classification();
         for (Boolean b : toIterable(PrimitiveGenerators.booleans())) {
             classification.classifyCall(b);

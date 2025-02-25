@@ -24,25 +24,51 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
- * <h2>Purpose and Usage</h2> This annotation is meant to be set on a junit 5
- * test-case. It controls the generator subsystem and, in case of test-failures,
- * provides information, that can be used for repeating the failed tests with a
- * fixed seed for the generators, see {@link GeneratorSeed} for details. This
- * fixed seed results in the generators reproducing the exact same test-data.
- * Sample output:
+ * JUnit 5 annotation that enables and controls the generator subsystem for test cases.
+ * This annotation provides reproducible test data generation by managing generator seeds
+ * and providing detailed failure information for test reproduction.
  *
+ * <h2>Features</h2>
+ * <ul>
+ *   <li>Controls generator seed initialization</li>
+ *   <li>Provides detailed failure information for test reproduction</li>
+ *   <li>Supports fixed seeds via {@link GeneratorSeed} annotation</li>
+ *   <li>Enables system property configuration for seeds</li>
+ * </ul>
+ *
+ * <h2>Usage</h2>
  * <pre>
-GeneratorController seed was 4711L.
-Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
-or by using the system property '-Dde.cuioss.test.generator.seed=4711'
+ * {@code
+ * @EnableGeneratorController
+ * class MyGeneratorTest {
+ *     @Test
+ *     void shouldGenerateData() {
+ *         var generator = new CollectionGenerator&lt;&gt;(Generators.strings());
+ *         var result = generator.list(5);
+ *         assertThat(result).hasSize(5);
+ *     }
+ * }
+ * }
  * </pre>
  *
- * <h2>Implementation</h2> Shorthand for enabling
- * {@link GeneratorControllerExtension} for a certain test-class. This type is
- * equivalent to {@link ExtendWith} {@link GeneratorControllerExtension}
+ * <h2>Test Reproduction</h2>
+ * On test failure, the extension provides detailed information about the generator seed:
+ * <pre>
+ * GeneratorController seed was 4711L.
+ * Use a fixed seed by applying @GeneratorSeed(4711L) for the method/class,
+ * or by using the system property '-Dde.cuioss.test.generator.seed=4711'
+ * </pre>
+ *
+ * <h2>Seed Configuration Options</h2>
+ * <ol>
+ *   <li>Method-level: {@code @GeneratorSeed(4711L)}</li>
+ *   <li>Class-level: {@code @GeneratorSeed(4711L)}</li>
+ *   <li>System Property: {@code -Dde.cuioss.test.generator.seed=4711}</li>
+ * </ol>
  *
  * @author Oliver Wolff
- *
+ * @see GeneratorControllerExtension
+ * @see GeneratorSeed
  */
 @Retention(RUNTIME)
 @Target(TYPE)

@@ -39,7 +39,7 @@ class CloningGeneratorTest {
     }
 
     @Test
-    void testCloningGeneratorPrototypeNotSameObjectAsGeneratedValue() {
+    void cloningGeneratorPrototypeNotSameObjectAsGeneratedValue() {
 
         var next = cloningGenerator.next();
         assertNotNull(next);
@@ -47,7 +47,7 @@ class CloningGeneratorTest {
     }
 
     @Test
-    void testCloningGeneratorGeneratedValuesAreNotTheSame() {
+    void cloningGeneratorGeneratedValuesAreNotTheSame() {
         Prototype last = null;
         for (var i = 0; i < 10; i++) {
             var next = cloningGenerator.next();
@@ -57,7 +57,7 @@ class CloningGeneratorTest {
     }
 
     @Test
-    void testThrowsExceptionIfNotSerializable() {
+    void throwsExceptionIfNotSerializable() {
         final var generator = new CloningGenerator<>(new Object());
         assertThrows(IllegalArgumentException.class, generator::next);
     }

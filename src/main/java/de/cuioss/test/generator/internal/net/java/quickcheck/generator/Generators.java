@@ -21,7 +21,6 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.su
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
 import static de.cuioss.tools.base.Preconditions.checkArgument;
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Collections;
@@ -79,7 +78,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.U
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.UniqueValuesGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.VetoableGenerator;
 
-@SuppressWarnings({ "WeakerAccess" })
+@SuppressWarnings({"WeakerAccess"})
 public class Generators {
 
     public static final int DEFAULT_STRING_MAX_LENGTH = StringGenerator.MAX_LENGTH;
@@ -1332,7 +1331,7 @@ public class Generators {
      * @param excluded  value. This value will not be returned.
      */
     public static <T> Generator<T> excludeValues(Generator<T> generator, T excluded) {
-        return excludeValues(generator, singletonList(excluded));
+        return excludeValues(generator, List.of(excluded));
     }
 
     /**

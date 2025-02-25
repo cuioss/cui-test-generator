@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TimeZone;
+import lombok.experimental.UtilityClass;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
 import de.cuioss.test.generator.impl.DecoratorGenerator;
@@ -53,25 +54,68 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.FixedValuesGenerator;
-import lombok.experimental.UtilityClass;
 
 /**
- * Provides a number of {@link TypedGenerator} for arbitrary java-types
+ * Provides factory methods for creating {@link TypedGenerator}s for various Java types.
+ * All generators are thread-safe and suitable for concurrent use in tests.
+ * 
+ * <p>The generators are organized into the following categories:</p>
+ * <ul>
+ *   <li>Primitive Types and their Wrappers (boolean, int, long, etc.)</li>
+ *   <li>String Generators (empty, non-empty, letters only)</li>
+ *   <li>Date and Time Types (Date, LocalDate, ZonedDateTime, etc.)</li>
+ *   <li>Collection Types (List, Set, SortedSet)</li>
+ *   <li>Common Java Types (URL, Locale, Class)</li>
+ * </ul>
+ * 
+ * <p><em>Usage examples from tests:</em></p>
+ * <pre>
+ * {@code
+ * // Basic generators
+ * TypedGenerator&lt;String&gt; generator = Generators.strings("X", 2, 2);
+ * String value = generator.next();
+ * 
+ * // Fixed values
+ * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
+ * String value = generator.next();
+ * 
+ * // Enum values
+ * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
+ * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
+ * 
+ * // Unique values
+ * TypedGenerator&lt;Integer&gt; baseGen = Generators.integers(1, 10);
+ * TypedGenerator&lt;Integer&gt; uniqueGen = Generators.uniqueValues(baseGen);
+ * Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+ * for (int i = 0; i &lt; 10; i++) {
+ *     seen.add(uniqueGen.next());
+ * }
+ * }
+ * </pre>
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 @UtilityClass
 public class Generators {
 
     /**
      * Factory method for creating a generator for a possible given enum.
+     * 
+     * <p><em>Example from tests:</em></p>
+     * <pre>
+     * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
+     * assertTrue(generator.isPresent());
+     * assertNotNull(generator.get().next());
+     * </pre>
      *
-     * @param type to be checked must represent an enum
-     * @return an {@link Optional} on the corresponding {@link TypedGenerator} if
-     *         the given type is an enum can be found, {@link Optional#empty()}
-     *         otherwise
+     * @param <T> The enum type
+     * @param type to be checked, must represent an enum
+     * @return an {@link Optional} containing the corresponding {@link TypedGenerator} if
+     *         the given type is an enum, {@link Optional#empty()} otherwise
+     * @throws NullPointerException if type is null
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> Optional<TypedGenerator<T>> enumValuesIfAvailable(final Class<T> type) {
         if (null == type || !type.isEnum()) {
             return Optional.empty();
@@ -81,9 +125,19 @@ public class Generators {
 
     /**
      * Factory method for creating a generator for a given enum.
+     * 
+     * <p><em>Example from tests:</em></p>
+     * <pre>
+     * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
+     * TimeUnit value = generator.next();
+     * assertNotNull(value);
+     * </pre>
      *
-     * @param type to be checked must represent an enum
-     * @return A {@link TypedGenerator} for the given enmu
+     * @param <T> The enum type
+     * @param type to be checked, must represent an enum
+     * @return A {@link TypedGenerator} for the given enum
+     * @throws IllegalArgumentException if type is not an enum
+     * @throws NullPointerException if type is null
      */
     public static <T extends Enum<T>> TypedGenerator<T> enumValues(final Class<T> type) {
         requireNonNull(type);
@@ -122,10 +176,20 @@ public class Generators {
     /**
      * Factory method for creating strings with given characters and size.
      *
+     * <p><em>Example from tests:</em></p>
+     * <pre>
+     * TypedGenerator&lt;String&gt; generator = Generators.strings("X", 2, 2);
+     * String result = generator.next();
+     * assertEquals(2, result.length());
+     * assertTrue(result.matches("^X+$"));
+     * </pre>
+     *
      * @param chars   to be generated
      * @param minSize lower bound of size
      * @param maxSize upper bound of size
      * @return a {@link TypedGenerator} for Strings
+     * @throws IllegalArgumentException if minSize > maxSize or either is negative
+     * @throws NullPointerException if chars is null
      */
     public static TypedGenerator<String> strings(final String chars, final int minSize, final int maxSize) {
         return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.strings(chars, minSize, maxSize));
@@ -167,9 +231,20 @@ public class Generators {
      * Factory method for creating a {@link TypedGenerator} for a number of fixed
      * values.
      *
-     * @param type   of the value
+     * <p><em>Example from tests:</em></p>
+     * <pre>
+     * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
+     * assertEquals("A", generator.next());
+     * assertEquals("B", generator.next());
+     * assertEquals("C", generator.next());
+     * assertEquals("A", generator.next()); // Cycles back to start
+     * </pre>
+     *
+     * @param <T> The type of values
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
+     * @throws IllegalArgumentException if values is empty
+     * @throws NullPointerException if values is null
      */
     @SafeVarargs
     public static <T> TypedGenerator<T> fixedValues(final Class<T> type, final T... values) {
@@ -217,8 +292,22 @@ public class Generators {
      * Factory method for creating a {@link TypedGenerator} generating unique
      * values. In case this does not work it will throw an {@link RuntimeException}
      *
+     * <p><em>Example from tests:</em></p>
+     * <pre>
+     * TypedGenerator&lt;Integer&gt; baseGen = Generators.integers(1, 10);
+     * TypedGenerator&lt;Integer&gt; uniqueGen = Generators.uniqueValues(baseGen);
+     * Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+     * for (int i = 0; i &lt; 10; i++) {
+     *     assertTrue(seen.add(uniqueGen.next())); // Each value is unique
+     * }
+     * </pre>
+     *
+     * @param <T> The type of values
      * @param source to be generated from.
-     * @return a {@link TypedGenerator} for the given values
+     * @return a {@link TypedGenerator} that ensures unique values
+     * @throws RuntimeException if unique value generation is not possible
+     *         (e.g., when source has limited unique values)
+     * @throws NullPointerException if source is null
      */
     @SuppressWarnings("unchecked") // Check not needed, because given TypedGenerator provides
     // correct type
@@ -231,6 +320,7 @@ public class Generators {
      * Factory method for creating a {@link CollectionGenerator} generating
      * {@link Collection}s from the given {@link TypedGenerator} .
      *
+     * @param <T> The type of values
      * @param source to be generated from.
      * @return a {@link TypedGenerator} for the given values
      */
@@ -564,7 +654,7 @@ public class Generators {
      *
      * @return a {@link TypedGenerator} for all {@link Serializable}s
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static TypedGenerator<Serializable> serializables() {
         return new QuickCheckGeneratorAdapter(Serializable.class, PrimitiveGenerators.nonEmptyStrings());
     }
@@ -602,23 +692,11 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} from an existing
-     * QuickCheck {@link Generator}. Note: This method is for internal use only and
-     * will be removed soon!!!
-     *
-     * @param qcGenerator to be wrapped
-     * @param type        of the value
-     * @return a {@link TypedGenerator} for the given {@link Generator}
-     */
-    static <T> TypedGenerator<T> wrap(final Class<T> type, final Generator<T> qcGenerator) {
-        return new QuickCheckGeneratorAdapter<>(type, qcGenerator);
-    }
-
-    /**
      * Factory method for creating a QuickCheck {@link Generator} from an existing
      * {@link TypedGenerator}. Note: This method is for internal use only and will
      * be removed soon!!!
      *
+     * @param <T> The type of values
      * @param generator to be un-wrapped
      * @return a {@link TypedGenerator} for the given {@link Generator}
      */

@@ -20,8 +20,25 @@ import java.util.Locale;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Generates name strings in the form of 'firstname lastname', depending on the
- * given {@link Locale}
+ * Generates full names in the format 'firstname lastname' based on the specified locale.
+ * Supports both German and English name sets.
+ * 
+ * <p>Name sources:</p>
+ * <ul>
+ *   <li>German names from {@link NameGenerators#FIRSTNAMES_ANY_GERMAN} and {@link NameGenerators#FAMILY_NAMES_GERMAN}</li>
+ *   <li>English names from {@link NameGenerators#FIRSTNAMES_ANY_ENGLISH} and {@link NameGenerators#FAMILY_NAMES_ENGLISH}</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * // For German names
+ * var generator = new FullNameGenerator(Locale.GERMAN);
+ * String name = generator.next(); // e.g. "Hans Schmidt"
+ * 
+ * // For English names
+ * generator = new FullNameGenerator(Locale.ENGLISH);
+ * name = generator.next(); // e.g. "John Smith"
+ * </pre>
  *
  * @author Oliver Wolff
  *
@@ -32,9 +49,10 @@ public class FullNameGenerator implements TypedGenerator<String> {
     private final TypedGenerator<String> familyNames;
 
     /**
-     * @param locale to be used for determining the concrete name-set. In case it is
-     *               {@link Locale#GERMAN} german names will be generated, in all
-     *               other cases english-names.
+     * Creates a new FullNameGenerator for the specified locale.
+     * 
+     * @param locale Determines the name set to use. If {@link Locale#GERMAN}, German names will be used;
+     *              for all other locales, English names will be used.
      */
     public FullNameGenerator(final Locale locale) {
         if (Locale.GERMAN.equals(locale)) {

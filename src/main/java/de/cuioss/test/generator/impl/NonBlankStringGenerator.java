@@ -20,7 +20,30 @@ import static de.cuioss.test.generator.Generators.nonEmptyStrings;
 import de.cuioss.test.generator.TypedGenerator;
 
 /**
- * Provide any {@link String} which is not empty and not blank.
+ * Generates non-empty and non-blank string values for testing purposes.
+ * This generator ensures that the produced strings contain at least one
+ * non-whitespace character.
+ * 
+ * <p>Generation rules:</p>
+ * <ul>
+ *   <li>Uses {@link de.cuioss.test.generator.Generators#nonEmptyStrings()} as base generator</li>
+ *   <li>Validates that the string contains non-whitespace characters</li>
+ *   <li>Retries up to 100 times to generate a valid string</li>
+ *   <li>Throws {@link IllegalStateException} if no valid string can be generated</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * var generator = new NonBlankStringGenerator();
+ * String value = generator.next(); // Returns a string with at least one non-whitespace char
+ * </pre>
+ * 
+ * <p>This generator is particularly useful for testing input validation
+ * where whitespace-only strings should be treated differently from
+ * strings with actual content.</p>
+ *
+ * @author Oliver Wolff
+ * @see de.cuioss.test.generator.Generators#nonEmptyStrings()
  */
 public class NonBlankStringGenerator implements TypedGenerator<String> {
 

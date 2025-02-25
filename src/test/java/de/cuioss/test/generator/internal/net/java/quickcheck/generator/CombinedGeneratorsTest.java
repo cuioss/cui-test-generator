@@ -166,7 +166,7 @@ class CombinedGeneratorsTest {
     }
 
     @Test
-    void testNullsAndWithVargsParameter() {
+    void nullsAndWithVargsParameter() {
         List<Object> expected = new ArrayList<>(asList(new Object(), new Object(), null));
         Generator<Object> generator = CombinedGenerators.nullsAnd(expected.get(0), expected.get(1));
         for (var i = 0; i < 1 << 10 && expected.size() > 0; i++) {

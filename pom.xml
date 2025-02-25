@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.cuioss</groupId>
         <artifactId>cui-java-parent</artifactId>
-        <version>0.8.6</version>
+        <version>0.9.0</version>
         <relativePath/>
     </parent>
     <groupId>de.cuioss.test</groupId>
     <artifactId>cui-test-generator</artifactId>
-    <name>cui test generator</name>
     <version>2.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>cui test generator</name>
     <description>Provides Generator for arbitrary Java-Types
     </description>
-    <packaging>jar</packaging>
     <url>https://github.com/cuioss/cui-test-generator/</url>
     <scm>
         <url>https://github.com/cuioss/cui-test-generator/</url>
@@ -44,6 +44,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- Unit testing -->
         <dependency>

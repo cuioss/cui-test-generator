@@ -29,7 +29,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.MockFactory;
 class TupleGeneratorTest {
 
     @Test
-    void testIt() {
+    void it() {
         var generator1 = MockFactory.createObjectGenerator();
         var generator2 = MockFactory.createObjectGenerator();
         var return1 = new Object();

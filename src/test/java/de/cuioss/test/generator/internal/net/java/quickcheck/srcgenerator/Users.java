@@ -18,7 +18,6 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
 
-import java.util.Collections;
 import java.util.List;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
@@ -54,7 +53,7 @@ class Users {
     }
 
     public static Generator<List<Integer>> generics(List<Integer> is) {
-        return PrimitiveGenerators.fixedValues(Collections.singletonList(is));
+        return PrimitiveGenerators.fixedValues(List.of(is));
     }
 
     public static Generator<Triple<Integer, Double, String>> multipleTypeParameters() {

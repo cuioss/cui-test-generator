@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 class TripleTest {
 
     @Test
-    void testTriple() {
+    void triple() {
         var anyInt = integers().next();
         var anyString = strings().next();
         var anyDate = dates().next();
@@ -41,7 +41,7 @@ class TripleTest {
     }
 
     @Test
-    void testEquals() {
+    void equals() {
         for (Triple<Integer, Integer, Integer> t : someTriples(nullsAnd(integers()), nullsAnd(integers()),
                 nullsAnd(integers()))) {
             assertEquals(new Triple<>(t.getFirst(), t.getSecond(), t.getThird()), t);

@@ -15,19 +15,49 @@
  */
 package de.cuioss.test.generator.impl;
 
-import de.cuioss.test.generator.TypedGenerator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import de.cuioss.test.generator.TypedGenerator;
+
 /**
- * Wrapper for decorating an already existing {@link TypedGenerator}. This is
- * usually used for modeling corner cases.
+ * A decorator pattern implementation for {@link TypedGenerator} that allows wrapping
+ * and enhancing existing generators. This is particularly useful for testing corner cases
+ * and special scenarios.
+ * 
+ * <p>Features:</p>
+ * <ul>
+ *   <li>Wraps any existing TypedGenerator</li>
+ *   <li>Preserves type safety through generic type parameter</li>
+ *   <li>Provides explicit type information via {@link #getType()}</li>
+ *   <li>Thread-safe if the decorated generator is thread-safe</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * {@code
+ * // Create a decorator for integer generation
+ * TypedGenerator&lt;Integer&gt; baseGenerator = Generators.integers(1, 100);
+ * var decorator = new DecoratorGenerator&lt;>(Integer.class, baseGenerator);
+ * 
+ * // Use the decorated generator
+ * Integer value = decorator.next();
+ * }
+ * </pre>
+ * 
+ * <p>Common use cases include:</p>
+ * <ul>
+ *   <li>Adding validation or transformation logic</li>
+ *   <li>Logging or monitoring generator behavior</li>
+ *   <li>Implementing special case handling</li>
+ *   <li>Combining multiple generators</li>
+ * </ul>
  *
  * @author Oliver Wolff
- * @param <T> identifying the type of elements to be generated
- *
+ * @param <T> The type of elements to be generated
+ * @see TypedGenerator
  */
 @RequiredArgsConstructor
 @ToString(of = "type")

@@ -21,105 +21,143 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Locale;
 import java.util.UUID;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Domain Generator provides")
 class DomainGeneratorTest {
 
-    @Test
-    void shouldProvideBlindtTexts() {
-        assertNotNull(new BlindTextGenerator().next());
+    @Nested
+    @DisplayName("text content generators that")
+    class TextContent {
+
+        @Test
+        @DisplayName("should provide blind texts")
+        void shouldProvideBlindTexts() {
+            assertNotNull(new BlindTextGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide mail subjects")
+        void shouldProvideMailSubjects() {
+            assertNotNull(new MailSubjectGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide titles")
+        void shouldProvideTitle() {
+            assertNotNull(TitleGenerator.READABLE.generator().next());
+            assertNotNull(TitleGenerator.UNIT_TESTS.generator().next());
+        }
     }
 
-    @Test
-    void shouldProvideEmails() {
-        assertNotNull(new EmailGenerator().next());
+    @Nested
+    @DisplayName("person related generators that")
+    class PersonRelated {
+
+        @Test
+        @DisplayName("should provide full names")
+        void shouldProvideFullNames() {
+            assertNotNull(new FullNameGenerator(Locale.ENGLISH).next());
+        }
+
+        @Test
+        @DisplayName("should provide various names")
+        void shouldProvideNames() {
+            assertNotNull(NameGenerators.UNIT_TESTS.generator().next());
+            assertNotNull(NameGenerators.FAMILY_NAMES_ENGLISH.generator().next());
+            assertNotNull(NameGenerators.FAMILY_NAMES_GERMAN.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_ANY_GERMAN.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_FEMALE_ENGLISH.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_FEMALE_GERMAN.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_MALE_ENGLISH.generator().next());
+            assertNotNull(NameGenerators.FIRSTNAMES_MALE_GERMAN.generator().next());
+        }
+
+        @Test
+        @DisplayName("should provide persons")
+        void shouldProvidePersons() {
+            assertNotNull(new PersonGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide phone numbers")
+        void shouldProvidePhoneNumber() {
+            assertEquals(String.class, new PhoneNumberGenerator().getType());
+            assertNotNull(new PhoneNumberGenerator().next());
+        }
     }
 
-    @Test
-    void shouldProvideFullNames() {
-        assertNotNull(new FullNameGenerator(Locale.ENGLISH).next());
+    @Nested
+    @DisplayName("organization related generators that")
+    class OrganizationRelated {
+
+        @Test
+        @DisplayName("should provide organization names")
+        void shouldProvideOrganisationNames() {
+            assertNotNull(OrganizationNameGenerator.READABLE.generator().next());
+            assertNotNull(OrganizationNameGenerator.UNIT_TESTS.generator().next());
+        }
+
+        @Test
+        @DisplayName("should provide distinguished names")
+        void shouldProvideDns() {
+            assertEquals(String.class, new DistinguishedNamesGenerator().getType());
+            assertNotNull(new DistinguishedNamesGenerator().next());
+        }
     }
 
-    @Test
-    void shouldProvideMailSubjects() {
-        assertNotNull(new MailSubjectGenerator().next());
+    @Nested
+    @DisplayName("address related generators that")
+    class AddressRelated {
+
+        @Test
+        @DisplayName("should provide cities")
+        void shouldProvideCities() {
+            assertEquals(String.class, new CityGenerator().getType());
+            assertNotNull(new CityGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide street names")
+        void shouldProvideStreetNames() {
+            assertEquals(String.class, new StreetNameGenerator().getType());
+            assertNotNull(new StreetNameGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide complete streets")
+        void shouldProvideStreets() {
+            assertEquals(String.class, new StreetGenerator().getType());
+            assertNotNull(new StreetGenerator().next());
+        }
+
+        @Test
+        @DisplayName("should provide zip codes")
+        void shouldProvideZipcodes() {
+            assertEquals(Integer.class, new ZipCodeGenerator().getType());
+            assertNotNull(new ZipCodeGenerator().next());
+        }
     }
 
-    @Test
-    void shouldProvideNames() {
-        assertNotNull(NameGenerators.UNIT_TESTS.generator().next());
-        assertNotNull(NameGenerators.FAMILY_NAMES_ENGLISH.generator().next());
-        assertNotNull(NameGenerators.FAMILY_NAMES_GERMAN.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_ANY_GERMAN.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_FEMALE_ENGLISH.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_FEMALE_GERMAN.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_MALE_ENGLISH.generator().next());
-        assertNotNull(NameGenerators.FIRSTNAMES_MALE_GERMAN.generator().next());
-    }
+    @Nested
+    @DisplayName("identifier generators that")
+    class IdentifierRelated {
 
-    @Test
-    void shouldProvideOrganisationNames() {
-        assertNotNull(OrganizationNameGenerator.READABLE.generator().next());
-        assertNotNull(OrganizationNameGenerator.UNIT_TESTS.generator().next());
-    }
+        @Test
+        @DisplayName("should provide UUIDs")
+        void shouldProvideUUIDs() {
+            assertEquals(UUID.class, new UUIDGenerator().getType());
+            assertNotNull(new UUIDGenerator().next());
+        }
 
-    @Test
-    void shouldProvidePersons() {
-        assertNotNull(new PersonGenerator().next());
-    }
-
-    @Test
-    void shouldProvideTitle() {
-        assertNotNull(TitleGenerator.READABLE.generator().next());
-        assertNotNull(TitleGenerator.UNIT_TESTS.generator().next());
-    }
-
-    @Test
-    void shouldProvideDns() {
-        assertEquals(String.class, new DistinguishedNamesGenerator().getType());
-        assertNotNull(new DistinguishedNamesGenerator().next());
-    }
-
-    @Test
-    void shouldProvideCities() {
-        assertEquals(String.class, new CityGenerator().getType());
-        assertNotNull(new CityGenerator().next());
-    }
-
-    @Test
-    void shouldProvideStreetNames() {
-        assertEquals(String.class, new StreetNameGenerator().getType());
-        assertNotNull(new StreetNameGenerator().next());
-    }
-
-    @Test
-    void shouldProvideStreets() {
-        assertEquals(String.class, new StreetGenerator().getType());
-        assertNotNull(new StreetGenerator().next());
-    }
-
-    @Test
-    void shouldProvideZipcodes() {
-        assertEquals(Integer.class, new ZipCodeGenerator().getType());
-        assertNotNull(new ZipCodeGenerator().next());
-    }
-
-    @Test
-    void shouldProvidePhoneNumber() {
-        assertEquals(String.class, new PhoneNumberGenerator().getType());
-        assertNotNull(new PhoneNumberGenerator().next());
-    }
-
-    @Test
-    void shouldProvideUUIDs() {
-        assertEquals(UUID.class, new UUIDGenerator().getType());
-        assertNotNull(new UUIDGenerator().next());
-    }
-
-    @Test
-    void shouldProvideUUIDStrings() {
-        assertEquals(String.class, new UUIDStringGenerator().getType());
-        assertNotNull(new UUIDStringGenerator().next());
+        @Test
+        @DisplayName("should provide UUID strings")
+        void shouldProvideUUIDStrings() {
+            assertEquals(String.class, new UUIDStringGenerator().getType());
+            assertNotNull(new UUIDStringGenerator().next());
+        }
     }
 }

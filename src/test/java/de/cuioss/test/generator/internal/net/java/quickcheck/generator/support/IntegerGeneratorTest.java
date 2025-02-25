@@ -37,14 +37,14 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.
 class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Test
-    void testGeneratesNotNull() {
+    void generatesNotNull() {
         for (var i = 0; i < 100; i++) {
             assertNotNull(PrimitiveGenerators.integers().next());
         }
     }
 
     @Test
-    void testGeneratorDistribution() {
+    void generatorDistribution() {
         final var gt0 = ">0";
         final var lt0 = "<0";
 
@@ -63,7 +63,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     }
 
     @Test
-    void testZero() {
+    void zero() {
         var integerGenerator = PrimitiveGenerators.integers(0, 0);
         forAll(integerGenerator, new AbstractCharacteristic<>() {
 
@@ -77,7 +77,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     }
 
     @Test
-    void testOneAndZero() {
+    void oneAndZero() {
         var integerGenerator = PrimitiveGenerators.integers(0, 1);
         var classification = new Classification();
         for (Integer i : Iterables.toIterable(integerGenerator)) {
@@ -98,7 +98,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     }
 
     @Test
-    void testLowerBound() {
+    void lowerBound() {
         var low = integers().next();
         var integerGenerator = PrimitiveGenerators.integers(low);
         testBounds(integerGenerator, low, Integer.MAX_VALUE);
@@ -126,7 +126,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
     }
 
     @Test
-    void testPositiveIntegersWithUpperBound() {
+    void positiveIntegersWithUpperBound() {
         final var upper = positiveIntegers().next();
         forAll(positiveIntegers(upper), new AbstractCharacteristic<>() {
 

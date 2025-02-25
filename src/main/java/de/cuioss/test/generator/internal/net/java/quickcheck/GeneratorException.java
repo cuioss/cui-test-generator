@@ -16,6 +16,7 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
+import java.io.Serial;
 import lombok.Getter;
 
 /**
@@ -24,10 +25,11 @@ import lombok.Getter;
  */
 public class GeneratorException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private transient Generator<?> generator;
+    private final transient Generator<?> generator;
 
     /**
      * @param message   error message

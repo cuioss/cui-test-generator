@@ -38,17 +38,17 @@ class AbstractCharacteristicTest {
     }
 
     @Test
-    void testClassifyEmpty() {
+    void classifyEmpty() {
         assertEquals(EMPTY_LIST, characteristic.getClassification().getCategories());
     }
 
     @Test
-    void testToClassifiedString() {
+    void toClassifiedString() {
         assertEquals("Classifications :none", characteristic.getClassification().toString());
     }
 
     @Test
-    void testClassify() throws Throwable {
+    void classify() throws Throwable {
         var classification = "string";
         characteristic.classify(classification);
         expectOneClassificationEntry(classification);

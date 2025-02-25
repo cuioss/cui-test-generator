@@ -38,7 +38,7 @@ abstract class AbstractCollectionTestCase {
     private static final String LOWER_HALF = "lowerHalf";
 
     @Test
-    void testGeneratorPositiveNormalLength() {
+    void generatorPositiveNormalLength() {
         var listsGenerator = normalDistributionGenerator();
         var expectedLowerHalfFrequency = 60.0;
         var expectedUpperHalfFrequency = 10.0;
@@ -48,7 +48,7 @@ abstract class AbstractCollectionTestCase {
     protected abstract Generator<Collection<Integer>> normalDistributionGenerator();
 
     @Test
-    void testGenerator() {
+    void generator() {
         var expectedLowerHalfFrequency = 40.0;
         var expectedUpperHalfFrequency = 40.0;
         var collectionGenerator = defaultGenerator();
@@ -86,7 +86,7 @@ abstract class AbstractCollectionTestCase {
     }
 
     @Test
-    void testNonEmptyList() {
+    void nonEmptyList() {
         forAll(nonEmpty(), new AbstractCharacteristic<>() {
 
             @Override

@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 class PairTest {
 
     @Test
-    void testPair() {
+    void pair() {
         var anyString = strings().next();
         var anyInt = integers().next();
         var pair = new Pair<>(anyInt, anyString);
@@ -38,7 +38,7 @@ class PairTest {
     }
 
     @Test
-    void testEquals() {
+    void equals() {
         for (Pair<Integer, Integer> t : somePairs(nullsAnd(integers()), nullsAnd(integers()))) {
             assertEquals(new Pair<>(t.getFirst(), t.getSecond()), t);
             assertNotEquals(new Pair<>(inc(t.getFirst()), t.getSecond()), t);

@@ -18,20 +18,31 @@ package de.cuioss.test.generator.domain;
 import java.util.UUID;
 
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.logging.CuiLogger;
 
 /**
- * Creates instrances of random uid-strings
- *
+ * Generates random UUID strings in the standard 8-4-4-4-12 format (e.g. "550e8400-e29b-41d4-a716-446655440000").
+ * The generator is thread-safe and produces reproducible results when using the same seed.
+ * 
+ * <p><em>Example usage from tests:</em></p>
+ * <pre>
+ * var generator = new UUIDStringGenerator();
+ * String uuid = generator.next(); // Returns a valid UUID string
+ * UUID.fromString(uuid); // Can be parsed back to UUID
+ * </pre>
+ * 
  * @author Oliver Wolff
- *
  */
 public class UUIDStringGenerator implements TypedGenerator<String> {
 
+    private static final CuiLogger LOGGER = new CuiLogger(UUIDStringGenerator.class);
     private final TypedGenerator<UUID> uuids = new UUIDGenerator();
 
     @Override
     public String next() {
-        return uuids.next().toString();
+        var result = uuids.next().toString();
+        LOGGER.debug("Generated UUID: %s", result);
+        return result;
     }
 
     @Override

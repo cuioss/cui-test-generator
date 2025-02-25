@@ -19,11 +19,21 @@ import lombok.Builder;
 import lombok.Value;
 
 /**
- * Simple person object containing a title, firstname, lastname, organization
- * and a corresponding email-address
- *
+ * Immutable value object representing a person with basic identifying information.
+ * Uses Lombok's {@code @Value} for immutability and {@code @Builder} for convenient object creation.
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * Person person = Person.builder()
+ *     .title("Dr.")
+ *     .firstname("John")
+ *     .lastname("Doe")
+ *     .email("john.doe@example.com")
+ *     .organisation("ACME Corp")
+ *     .build();
+ * </pre>
+ * 
  * @author Oliver Wolff
- *
  */
 @Value
 @Builder

@@ -27,7 +27,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 class ByteArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 
     @Test
-    void testGeneratePrimitiveArrayWithSizeParameter() {
+    void generatePrimitiveArrayWithSizeParameter() {
         final long min = Byte.MIN_VALUE;
         final long max = Byte.MAX_VALUE;
         testGeneratePrimitiveArrayWithSizeParameter(min, max);
@@ -39,7 +39,7 @@ class ByteArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
     }
 
     @Test
-    void testGenerateDefaultPrimitiveArray() {
+    void generateDefaultPrimitiveArray() {
         testGenerateDefaultPrimitiveArray(ByteArrayGenerator.MIN_SIZE, ByteArrayGenerator.MAX_SIZE);
     }
 

@@ -19,32 +19,54 @@ import static de.cuioss.test.generator.Generators.fixedValues;
 import static de.cuioss.test.generator.Generators.strings;
 import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
 
-import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import de.cuioss.test.generator.TypedGenerator;
+
 /**
- * The generator {@link #READABLE} is for visual mocks, {@link #UNIT_TESTS} for
- * unit-tests.
+ * Provides generators for organization names, including well-known fictional companies.
+ * 
+ * <p>Available generators:</p>
+ * <ul>
+ *   <li>{@link #READABLE} - Names of famous fictional companies from various media sources</li>
+ *   <li>{@link #UNIT_TESTS} - Technical string generator for unit testing</li>
+ * </ul>
+ * 
+ * <p><em>Example usage:</em></p>
+ * <pre>
+ * {@code TypedGenerator<String> generator = OrganizationNameGenerator.READABLE.generator();}
+ * String company = generator.next(); // Returns names like "Acme Corp.", "Stark Industries", etc.
+ * </pre>
  *
+ * @author Oliver Wolff
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum OrganizationNameGenerator {
 
-    /** The 25 largest fictional companies */
+    /** 
+     * The 25 largest fictional companies from popular culture.
+     * Includes companies from literature, movies, TV shows, and comics.
+     * Examples: Acme Corp., Stark Industries, Wayne Enterprises
+     */
     READABLE(fixedValues(immutableList("CHOAM", "Acme Corp.", "Sirius Cybernetics Corp.", "MomCorp", "Rich Industries",
             "Soylent Corp.", "Very Big Corp. of America", "Frobozz Magic Co.", "Warbucks Industries", "Tyrell Corp.",
             "Wayne Enterprises", "Virtucon", "Globex", "Umbrella Corp.", "Wonka Industries", "Stark Industries",
             "Clampett Oil", "Oceanic Airlines", "Yoyodyne Propulsion Sys.", "Cyberdyne Systems Corp.",
-            "d’Anconia Copper", "Gringotts", "Oscorp", "Nakatomi Trading Corp.", "Spacely Space Sprockets"))),
+            "d'Anconia Copper", "Gringotts", "Oscorp", "Nakatomi Trading Corp.", "Spacely Space Sprockets"))),
 
-    /** Technical String for unit-testing. Min size is 1, max size 256 */
+    /** 
+     * Technical string generator for unit testing.
+     * Generates random strings between 1 and 256 characters.
+     */
     UNIT_TESTS(strings(1, 256));
 
     private final TypedGenerator<String> generator;
 
     /**
-     * @return the concrete generator.
+     * Provides access to the underlying organization name generator.
+     *
+     * @return A {@link TypedGenerator} that generates organization names according to the enum constant's specification
      */
     public TypedGenerator<String> generator() {
         return generator;

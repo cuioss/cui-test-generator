@@ -16,7 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,13 +35,13 @@ class AbstractTreeGeneratorTest {
     private int id;
 
     @Test
-    void testFlatGenerationBaseOnLevel() {
+    void flatGenerationBaseOnLevel() {
         testFlatGenerationBaseOnLevel(0);
         testFlatGenerationBaseOnLevel(10);
     }
 
     @Test
-    void testFlatGenerationBaseOnSiblings() {
+    void flatGenerationBaseOnSiblings() {
         var root = new TreeGenerator() {
 
             @Override
@@ -55,16 +54,16 @@ class AbstractTreeGeneratorTest {
     }
 
     @Test
-    void testTreeGenerationBaseOnLevel() {
+    void treeGenerationBaseOnLevel() {
 
         var next = new TreeGenerator() {
 
             @Override
             protected int getChildCount(int level, int numberOfSiblings) {
                 return switch (level) {
-                case 0 -> 2;
-                case 1 -> 1;
-                default -> 0;
+                    case 0 -> 2;
+                    case 1 -> 1;
+                    default -> 0;
                 };
             }
         }.next();
@@ -73,7 +72,7 @@ class AbstractTreeGeneratorTest {
     }
 
     @Test
-    void testGenerationAbortsAfterMaxDepthReached() {
+    void generationAbortsAfterMaxDepthReached() {
 
         try {
             new TreeGenerator() {
@@ -90,7 +89,7 @@ class AbstractTreeGeneratorTest {
     }
 
     @Test
-    void testTreeGenerationBaseSiblings() {
+    void treeGenerationBaseSiblings() {
 
         var next = new TreeGenerator() {
 
@@ -122,7 +121,7 @@ class AbstractTreeGeneratorTest {
     }
 
     private void create10Node(List<Node> childrenOfRoot) {
-        childrenOfRoot.add(new Node(id++, singletonList(new Node(id++, Collections.emptyList()))));
+        childrenOfRoot.add(new Node(id++, List.of(new Node(id++, Collections.emptyList()))));
     }
 
     private void testFlatGenerationBaseOnLevel(final int numberOfChildren) {
@@ -179,16 +178,15 @@ class AbstractTreeGeneratorTest {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof Node)) {
+            if (!(obj instanceof Node node)) {
                 return false;
             }
-            var node = (Node) obj;
             return node.children.equals(children) && node.content == content;
         }
 
         @Override
         public int hashCode() {
-            return Arrays.hashCode(new Object[] { children.hashCode(), content });
+            return Arrays.hashCode(new Object[]{children.hashCode(), content});
         }
 
         @Override

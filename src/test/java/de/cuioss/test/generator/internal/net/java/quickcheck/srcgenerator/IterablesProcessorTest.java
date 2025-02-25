@@ -18,9 +18,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Collections;
 import java.util.List;
-
 import javax.tools.Diagnostic.Kind;
 
 import org.junit.jupiter.api.Test;
@@ -64,7 +62,7 @@ class IterablesProcessorTest {
 
     @Test
     void generics() {
-        List<Integer> in = Collections.singletonList(1);
+        List<Integer> in = List.of(1);
         var is = UsersIterables.someGenerics(in).iterator().next();
         assertEquals(in, is);
     }

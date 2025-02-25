@@ -18,6 +18,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.IteratorGenerator.MAX_SIZE;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,7 +40,7 @@ class IteratorGeneratorTest extends AbstractCollectionTestCase {
         Generator<Iterator<Object>> objs = CombinedGenerators.iterators(integers());
         var values = objs.next();
         while (values.hasNext()) {
-            assertTrue(values.next() instanceof Integer);
+            assertInstanceOf(Integer.class, values.next());
         }
     }
 

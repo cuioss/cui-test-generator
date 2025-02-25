@@ -46,7 +46,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
 class DateGeneratorTest {
 
     @Test
-    void testGenerateDateWithSecsPrecission() {
+    void generateDateWithSecsPrecission() {
         var classification = new Classification();
         for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.SECONDS))) {
             classify(classification, date);
@@ -61,7 +61,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testGenerateDateWithMillisPrecission() {
+    void generateDateWithMillisPrecission() {
         var classification = new Classification();
         for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.MILLISECONDS))) {
             classify(classification, date);
@@ -76,7 +76,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testGenerateDateWithDaysPrecission() {
+    void generateDateWithDaysPrecission() {
         var classification = new Classification();
         for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.DAYS))) {
             classify(classification, date);
@@ -91,7 +91,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testGenerateDateWithHoursPrecission() {
+    void generateDateWithHoursPrecission() {
         var classification = new Classification();
         for (Date date : toIterable(PrimitiveGenerators.dates(TimeUnit.HOURS))) {
             classify(classification, date);
@@ -122,7 +122,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testBoundedGenerator() {
+    void boundedGenerator() {
         for (List<Long> bounds : toIterable(boundGenerator())) {
             var lo = bounds.get(0);
             var hi = bounds.get(1);
@@ -133,7 +133,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testBoundedDayPrecisionGenerator() {
+    void boundedDayPrecisionGenerator() {
         var next = boundGenerator().next();
         long low = next.get(0);
         long high = next.get(1);
@@ -174,7 +174,7 @@ class DateGeneratorTest {
     }
 
     @Test
-    void testDateGenerator() {
+    void dateGenerator() {
         for (Date any : someDates()) {
             assertNotNull(any);
         }

@@ -68,7 +68,7 @@ class ObjectDefinition<T> implements InvocationHandler {
 
     @SuppressWarnings("unchecked")
     private T createTargetMethodRecorder(Class<T> type) {
-        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { type }, this);
+        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{type}, this);
 
     }
 

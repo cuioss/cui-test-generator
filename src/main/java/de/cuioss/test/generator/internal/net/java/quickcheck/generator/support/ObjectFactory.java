@@ -46,6 +46,6 @@ class ObjectFactory<T> implements InvocationHandler {
     @SuppressWarnings("unchecked")
     T newValue() {
         checkAllMethodsAreDefined();
-        return (T) newProxyInstance(this.getClass().getClassLoader(), new Class[] { definition.getType() }, this);
+        return (T) newProxyInstance(this.getClass().getClassLoader(), new Class[]{definition.getType()}, this);
     }
 }

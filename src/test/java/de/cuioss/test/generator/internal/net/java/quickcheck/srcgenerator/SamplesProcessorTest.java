@@ -19,9 +19,7 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Collections;
 import java.util.List;
-
 import javax.tools.Diagnostic.Kind;
 
 import org.junit.jupiter.api.Test;
@@ -70,7 +68,7 @@ class SamplesProcessorTest {
 
     @Test
     void generics() {
-        List<Integer> in = Collections.singletonList(1);
+        List<Integer> in = List.of(1);
         var is = UserSamples.anyGeneric(in);
         assertEquals(in, is);
     }
@@ -84,7 +82,7 @@ class SamplesProcessorTest {
     @Test
     void noVarArgsArray() {
         var s = PrimitiveGenerators.strings().next();
-        assertEquals(s, UserSamples.anyNoVarArgsArray(new String[] { s }, "x"));
+        assertEquals(s, UserSamples.anyNoVarArgsArray(new String[]{s}, "x"));
     }
 
 }

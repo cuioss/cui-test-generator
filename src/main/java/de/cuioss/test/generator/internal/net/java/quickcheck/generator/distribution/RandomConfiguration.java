@@ -48,7 +48,7 @@ public final class RandomConfiguration {
      */
     public static final String SEED_SYSTEM_PROPERTY = "de.cuioss.test.generator.seed";
     static final Random random = new Random(); // NOSONAR: owolff: This ist not about cryptography,
-                                               // therefore sufficient
+    // therefore sufficient
     static long lastSeed = 0L;
 
     private RandomConfiguration() {
