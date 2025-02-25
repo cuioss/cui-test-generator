@@ -63,7 +63,7 @@ class MyGeneratorTest {
     @Test
     void shouldGenerateConsistentData() {
         var result = Generators.strings().next();
-        assertThat(result).isNotEmpty();
+        assertFalse(result.isEmpty());
     }
 }
 ----
