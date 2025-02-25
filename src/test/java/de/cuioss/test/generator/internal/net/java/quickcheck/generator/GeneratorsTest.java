@@ -55,5 +55,17 @@ class GeneratorsTest {
 
         // Assert
         assertNotNull(generator, "Generator should not be null");
+        assertNotNull(generator.next(), "Generated string should not be null");
     }
+
+    @Test
+    void shouldCreateExcludeGenerator() {
+        // Act
+        var generator = Generators.excludeValues(Generators.characters(), 'a');
+
+        // Assert
+        assertNotNull(generator, "Generator should not be null");
+        assertNotNull(generator.next(), "Generated string should not be null");
+    }
+
 }
