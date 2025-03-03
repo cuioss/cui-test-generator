@@ -16,11 +16,8 @@
 package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
-import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 import org.junit.platform.commons.JUnitException;
 import org.junit.platform.commons.util.ReflectionUtils;
@@ -28,15 +25,13 @@ import org.junit.platform.commons.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * Implementation of {@link ArgumentsProvider} that provides arguments from multiple
+ * Implementation of {@link org.junit.jupiter.params.provider.ArgumentsProvider} that provides arguments from multiple
  * {@link TypedGenerator} instances for parameterized tests annotated with
  * {@link CompositeTypeGeneratorSource}.
  * 
@@ -56,9 +51,9 @@ import static java.util.Objects.requireNonNull;
  * @see CompositeTypeGeneratorSource
  * @see TypedGenerator
  */
-public class CompositeTypeGeneratorArgumentsProvider implements ArgumentsProvider, AnnotationConsumer<CompositeTypeGeneratorSource> {
+public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider 
+        implements AnnotationConsumer<CompositeTypeGeneratorSource> {
 
-    public static final String IN_CLASS = "] in class [";
     private Class<? extends TypedGenerator<?>>[] generatorClasses;
     private String[] generatorMethods;
     private int count;
@@ -75,51 +70,46 @@ public class CompositeTypeGeneratorArgumentsProvider implements ArgumentsProvide
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         if (generatorClasses.length == 0 && generatorMethods.length == 0) {
             throw new JUnitException("At least one generator class or method must be specified");
         }
         
-        // Handle seed management
-        var previousSeed = RandomConfiguration.getLastSeed();
-        var useSeed = determineSeed(context);
+        // Create generator instances
+        List<TypedGenerator<?>> generators = new ArrayList<>();
         
-        if (useSeed != previousSeed) {
-            RandomConfiguration.setSeed(useSeed);
+        // Add generators from classes
+        for (Class<? extends TypedGenerator<?>> generatorClass : generatorClasses) {
+            generators.add(createGeneratorInstance(generatorClass));
         }
         
-        try {
-            // Create generator instances
-            List<TypedGenerator<?>> generators = new ArrayList<>();
-            
-            // Add generators from classes
-            for (Class<? extends TypedGenerator<?>> generatorClass : generatorClasses) {
-                generators.add(createGeneratorInstance(generatorClass));
-            }
-            
-            // Add generators from methods
-            for (String methodName : generatorMethods) {
-                generators.add(getGenerator(methodName, context));
-            }
-            
-            // Generate values from each generator
-            List<List<Object>> generatedValues = new ArrayList<>();
-            for (TypedGenerator<?> generator : generators) {
-                List<Object> values = new ArrayList<>();
-                for (int i = 0; i < count; i++) {
-                    values.add(generator.next());
-                }
-                generatedValues.add(values);
-            }
-            
-            // Create combinations of values
-            return createArgumentsCombinations(generatedValues);
-        } finally {
-            // Restore previous seed if we changed it
-            if (useSeed != previousSeed) {
-                RandomConfiguration.setSeed(previousSeed);
-            }
+        // Add generators from methods
+        for (String methodName : generatorMethods) {
+            generators.add(getGenerator(methodName, context));
         }
+        
+        // Generate values from each generator
+        List<List<Object>> generatedValues = new ArrayList<>();
+        for (TypedGenerator<?> generator : generators) {
+            List<Object> values = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                values.add(generator.next());
+            }
+            generatedValues.add(values);
+        }
+        
+        // Create combinations of values
+        return createArgumentsCombinations(generatedValues);
+    }
+    
+    @Override
+    protected long getSeed() {
+        return seed;
+    }
+    
+    @Override
+    protected int getCount() {
+        return count;
     }
     
     /**
@@ -206,65 +196,6 @@ public class CompositeTypeGeneratorArgumentsProvider implements ArgumentsProvide
     }
     
     /**
-     * Determines the seed to use for the generator based on the following priority:
-     * 1. Seed specified in the annotation (if not -1)
-     * 2. Seed from @GeneratorSeed on the test method
-     * 3. Seed from @GeneratorSeed on the test class
-     * 4. Current global seed from RandomConfiguration
-     * 
-     * @param context the extension context
-     * @return the seed to use
-     */
-    @SuppressWarnings("java:S3655") // False positive, isPresent() is checked
-    private long determineSeed(ExtensionContext context) {
-        // If seed is explicitly set in the annotation, use it
-        if (seed != -1L) {
-            return seed;
-        }
-        
-        // Check for @GeneratorSeed on method or class
-        if (context.getElement().isPresent()) {
-            var element = context.getElement().get();
-            
-            // Check method first
-            if (element instanceof Method method) {
-                var seedAnnotation = method.getAnnotation(GeneratorSeed.class);
-                if (seedAnnotation != null) {
-                    return seedAnnotation.value();
-                }
-                
-                // Then check class
-                var classAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
-                if (classAnnotation != null) {
-                    return classAnnotation.value();
-                }
-            }
-        }
-        
-        // Fall back to current global seed
-        return RandomConfiguration.getLastSeed();
-    }
-    
-    /**
-     * Creates an instance of the specified generator class using its no-args constructor.
-     * 
-     * @param generatorClass the generator class to instantiate
-     * @return a new instance of the generator
-     * @throws JUnitException if the generator cannot be instantiated
-     */
-    private TypedGenerator<?> createGeneratorInstance(Class<? extends TypedGenerator<?>> generatorClass) {
-        requireNonNull(generatorClass, "Generator class must not be null");
-        
-        try {
-            return ReflectionUtils.newInstance(generatorClass);
-        } catch (Exception e) {
-            throw new JUnitException(
-                "Failed to create TypedGenerator instance for " + generatorClass.getName() + 
-                ". Make sure it has a public no-args constructor.", e);
-        }
-    }
-    
-    /**
      * Gets a TypedGenerator by invoking the specified method.
      * 
      * @param methodName the method name to invoke
@@ -335,20 +266,5 @@ public class CompositeTypeGeneratorArgumentsProvider implements ArgumentsProvide
         } catch (Exception e) {
             throw new JUnitException("Failed to invoke method [" + methodName + IN_CLASS + className + "]", e);
         }
-    }
-    
-    /**
-     * Finds a method in the given class that returns a TypedGenerator and takes no parameters.
-     * 
-     * @param clazz the class to search in
-     * @param methodName the method name to find
-     * @return an Optional containing the method, or empty if not found
-     */
-    private Optional<Method> findMethod(Class<?> clazz, String methodName) {
-        return Arrays.stream(clazz.getDeclaredMethods())
-            .filter(m -> m.getName().equals(methodName))
-            .filter(m -> m.getParameterCount() == 0)
-            .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
-            .findFirst();
     }
 }
