@@ -78,6 +78,7 @@ public @interface TypeGeneratorSource {
      * 
      * @return the TypedGenerator class
      */
+    @SuppressWarnings("java:S1452") // owolff: This wildcard is because of the TypedGenerator interface. Ok for testing
     Class<? extends TypedGenerator<?>> value();
     
     /**
