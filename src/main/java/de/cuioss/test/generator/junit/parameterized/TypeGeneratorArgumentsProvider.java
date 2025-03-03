@@ -15,13 +15,9 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
-import static java.util.Objects.requireNonNull;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -29,9 +25,12 @@ import org.junit.jupiter.params.support.AnnotationConsumer;
 import org.junit.platform.commons.JUnitException;
 import org.junit.platform.commons.util.ReflectionUtils;
 
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
-import de.cuioss.test.generator.junit.GeneratorSeed;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Implementation of {@link ArgumentsProvider} that provides arguments from a
@@ -106,6 +105,7 @@ public class TypeGeneratorArgumentsProvider implements ArgumentsProvider, Annota
      * @param context the extension context
      * @return the seed to use
      */
+    @SuppressWarnings("java:S3655") // owolff: False positive, isPresent() is checked
     private long determineSeed(ExtensionContext context) {
         // If seed is explicitly set in the annotation, use it
         if (seed != -1L) {
@@ -141,7 +141,6 @@ public class TypeGeneratorArgumentsProvider implements ArgumentsProvider, Annota
      * @return a new instance of the generator
      * @throws JUnitException if the generator cannot be instantiated
      */
-    @SuppressWarnings("unchecked")
     private TypedGenerator<?> createGeneratorInstance() {
         requireNonNull(generatorClass, "Generator class must not be null");
         
