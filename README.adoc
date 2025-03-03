@@ -91,6 +91,51 @@ class AllTestsReproducible {
 }
 ----
 
+===== TypeGenerator in Parameterized Tests
+
+Use `@TypeGeneratorSource` and `@TypeGeneratorMethodSource` to directly use TypeGenerator in parameterized tests:
+
+[source,java]
+----
+@EnableGeneratorController
+class ParameterizedGeneratorTest {
+    
+    // Class-based configuration - uses the generator's default constructor
+    @ParameterizedTest
+    @TypeGeneratorSource(NonBlankStringGenerator.class)
+    void testWithGeneratedStrings(String value) {
+        assertNotNull(value);
+        assertFalse(value.isBlank());
+    }
+    
+    // Generate multiple values
+    @ParameterizedTest
+    @TypeGeneratorSource(value = IntegerGenerator.class, count = 5)
+    void testWithMultipleIntegers(Integer value) {
+        assertNotNull(value);
+    }
+    
+    // Method-based configuration - uses a method that returns a configured generator
+    @ParameterizedTest
+    @TypeGeneratorMethodSource("createStringGenerator")
+    void testWithCustomGenerator(String value) {
+        assertNotNull(value);
+    }
+    
+    // Factory method that returns a configured generator
+    static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10); // Strings between 5-10 characters
+    }
+    
+    // Reference a method in another class
+    @ParameterizedTest
+    @TypeGeneratorMethodSource("de.cuioss.test.MyGeneratorFactory#createGenerator")
+    void testWithExternalGenerator(MyType value) {
+        // test with value
+    }
+}
+----
+
 ==== TypedGenerator - The Core Interface
 
 `TypedGenerator` is the foundation interface for all generators:
