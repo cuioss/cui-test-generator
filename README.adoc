@@ -136,6 +136,99 @@ class ParameterizedGeneratorTest {
 }
 ----
 
+===== Factory-Based TypeGenerator in Parameterized Tests
+
+Use `@TypeGeneratorFactorySource` to create generators using factory methods:
+
+[source,java]
+----
+@EnableGeneratorController
+class FactoryBasedGeneratorTest {
+    
+    // Use a factory method to create a generator
+    @ParameterizedTest
+    @TypeGeneratorFactorySource(
+        factoryClass = MyGeneratorFactory.class,
+        factoryMethod = "createStringGenerator"
+    )
+    void testWithFactoryGenerator(String value) {
+        assertNotNull(value);
+    }
+    
+    // Factory with parameters
+    @ParameterizedTest
+    @TypeGeneratorFactorySource(
+        factoryClass = MyGeneratorFactory.class,
+        factoryMethod = "createRangeGenerator",
+        methodParameters = {"1", "100"},
+        count = 5
+    )
+    void testWithParameterizedFactory(Integer value) {
+        assertNotNull(value);
+        assertTrue(value >= 1 && value <= 100);
+    }
+}
+
+// Factory class
+public class MyGeneratorFactory {
+    public static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10);
+    }
+    
+    public static TypedGenerator<Integer> createRangeGenerator(String min, String max) {
+        return Generators.integers(Integer.parseInt(min), Integer.parseInt(max));
+    }
+}
+----
+
+===== Composite TypeGenerator in Parameterized Tests
+
+Use `@CompositeTypeGeneratorSource` to combine multiple generators:
+
+[source,java]
+----
+@EnableGeneratorController
+class CompositeGeneratorTest {
+    
+    // Combine multiple generator classes
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generatorClasses = {
+            NonBlankStringGenerator.class,
+            IntegerGenerator.class
+        },
+        count = 3
+    )
+    void testWithMultipleGenerators(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+    
+    // Combine multiple generator methods
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generatorMethods = {
+            "createStringGenerator",
+            "createIntegerGenerator"
+        },
+        count = 2
+    )
+    void testWithMultipleMethodGenerators(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+    
+    // Generator methods
+    static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10);
+    }
+    
+    static TypedGenerator<Integer> createIntegerGenerator() {
+        return Generators.integers(1, 100);
+    }
+}
+----
+
 ==== TypedGenerator - The Core Interface
 
 `TypedGenerator` is the foundation interface for all generators:

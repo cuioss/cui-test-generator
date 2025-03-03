@@ -15,15 +15,14 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
+import de.cuioss.test.generator.TypedGenerator;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.junit.jupiter.params.provider.ArgumentsSource;
-
-import de.cuioss.test.generator.TypedGenerator;
 
 /**
  * {@code @TypeGeneratorSource} is an {@link ArgumentsSource} that provides
