@@ -1,4 +1,6 @@
 = cui-test-generator
+:toc:
+:toclevels: 4
 
 == Status
 
@@ -11,6 +13,8 @@ image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-g
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=coverage[Coverage,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 
 https://cuioss.github.io/cui-test-generator/about.html[Generated Documentation on github-pages]
+
+toc::[]
 
 == What is it?
 
