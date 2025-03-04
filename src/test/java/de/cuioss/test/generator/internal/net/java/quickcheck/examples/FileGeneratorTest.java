@@ -15,19 +15,18 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.examples;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.List;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.forAll;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.nonEmptyLists;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.letterStrings;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.File;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
 
 class FileGeneratorTest {
 

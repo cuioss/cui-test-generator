@@ -16,12 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.Collection;
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
 
 public class ExcludingGenerator<T> extends VetoableGenerator<T> {
 

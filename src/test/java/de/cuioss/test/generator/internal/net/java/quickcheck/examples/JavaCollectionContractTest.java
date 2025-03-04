@@ -16,21 +16,18 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.examples;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.forAll;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.pairs;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
-import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.forAll;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.pairs;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static org.junit.jupiter.api.Assertions.*;
 
 class JavaCollectionContractTest {
 

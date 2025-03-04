@@ -16,9 +16,18 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.DEFAULT_MAX_TRIES;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.oneOf;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.sortedLists;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.*;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.dates;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.longs;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGeneratorsIterables.someDates;
@@ -27,21 +36,7 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.it
 import static java.lang.Long.MAX_VALUE;
 import static java.lang.Long.MIN_VALUE;
 import static java.util.concurrent.TimeUnit.DAYS;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DateGeneratorTest {
 

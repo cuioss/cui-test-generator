@@ -16,14 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-import javax.tools.Diagnostic.Kind;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import javax.tools.Diagnostic.Kind;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IterablesProcessorTest {
 

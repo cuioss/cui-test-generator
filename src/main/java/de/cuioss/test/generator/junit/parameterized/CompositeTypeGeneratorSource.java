@@ -83,7 +83,7 @@ import java.lang.annotation.Target;
  * @see TypedGenerator
  * @see CompositeTypeGeneratorArgumentsProvider
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ArgumentsSource(CompositeTypeGeneratorArgumentsProvider.class)
@@ -97,7 +97,7 @@ public @interface CompositeTypeGeneratorSource {
      */
     @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
     Class<? extends TypedGenerator<?>>[] generatorClasses() default {};
-    
+
     /**
      * The method names to invoke to get TypedGenerator instances.
      * Methods can be in the test class or in external classes using the format
@@ -106,7 +106,7 @@ public @interface CompositeTypeGeneratorSource {
      * @return the method names
      */
     String[] generatorMethods() default {};
-    
+
     /**
      * Number of combinations to generate.
      * For each generator, this many values will be generated and combined
@@ -115,7 +115,7 @@ public @interface CompositeTypeGeneratorSource {
      * @return the number of values to generate per generator, defaults to 1
      */
     int count() default 1;
-    
+
     /**
      * Whether to generate a cartesian product of all generator values.
      * If true, all possible combinations of values from the generators will be created.
@@ -125,7 +125,7 @@ public @interface CompositeTypeGeneratorSource {
      * @return true to generate a cartesian product, false for one-to-one pairing
      */
     boolean cartesianProduct() default true;
-    
+
     /**
      * Optional seed for reproducible tests.
      * <p>

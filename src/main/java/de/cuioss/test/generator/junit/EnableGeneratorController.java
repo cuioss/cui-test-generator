@@ -15,13 +15,13 @@
  */
 package de.cuioss.test.generator.junit;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import org.junit.jupiter.api.extension.ExtendWith;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * JUnit 5 annotation that enables and controls the generator subsystem for test cases.

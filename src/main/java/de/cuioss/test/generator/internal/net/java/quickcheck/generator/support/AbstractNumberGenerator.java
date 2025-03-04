@@ -16,15 +16,15 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.lang.Math.floor;
-import static java.math.BigDecimal.valueOf;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
+import static java.lang.Math.floor;
+import static java.math.BigDecimal.valueOf;
 
 abstract class AbstractNumberGenerator<T> implements Generator<T> {
 

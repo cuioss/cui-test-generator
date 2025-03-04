@@ -16,23 +16,19 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExcludingGeneratorTest {
 

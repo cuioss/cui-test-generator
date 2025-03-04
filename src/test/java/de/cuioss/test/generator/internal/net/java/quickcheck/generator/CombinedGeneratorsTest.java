@@ -16,29 +16,20 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.frequency;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.pairs;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.vectors;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.nulls;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
-import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.*;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.*;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CombinedGeneratorsTest {
 

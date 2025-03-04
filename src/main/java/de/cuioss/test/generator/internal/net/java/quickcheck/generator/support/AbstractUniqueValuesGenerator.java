@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.Objects;
-import java.util.Set;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+
+import java.util.Objects;
+import java.util.Set;
 
 abstract class AbstractUniqueValuesGenerator<T> extends VetoableGenerator<T> implements StatefulGenerator<T> {
 

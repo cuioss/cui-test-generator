@@ -15,9 +15,9 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static de.cuioss.test.generator.Generators.integers;
-
 import de.cuioss.test.generator.TypedGenerator;
+
+import static de.cuioss.test.generator.Generators.integers;
 
 /**
  * Generates {@link Number} instances using integer values.

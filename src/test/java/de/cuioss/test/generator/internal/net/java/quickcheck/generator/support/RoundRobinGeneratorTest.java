@@ -16,19 +16,18 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.ensureValues;
-import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.ensureValues;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RoundRobinGeneratorTest {
 

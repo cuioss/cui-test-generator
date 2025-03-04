@@ -29,9 +29,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Additional tests for the generateArguments method in {@link AbstractTypedGeneratorArgumentsProvider}.
@@ -41,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class GenerateArgumentsTest {
 
     private static final long TEST_SEED = 42L;
-    
+
     @ParameterizedTest(name = "With count={0}, should generate {0} arguments")
     @ValueSource(ints = {1, 5, 10})
     @DisplayName("Should generate correct number of arguments")
@@ -49,10 +47,10 @@ class GenerateArgumentsTest {
         var provider = new TestProvider(TEST_SEED, count);
         var generator = Generators.strings(5, 10);
         var arguments = provider.generateArgumentsPublic(generator);
-        
+
         assertNotNull(arguments);
         assertEquals(count, arguments.size());
-        
+
         for (var argument : arguments) {
             assertNotNull(argument);
             Object[] args = argument.get();
@@ -60,41 +58,41 @@ class GenerateArgumentsTest {
             assertNotNull(args[0]);
         }
     }
-    
+
     @Test
     @DisplayName("Should handle zero count")
     void shouldHandleZeroCount() {
         var provider = new TestProvider(TEST_SEED, 0);
         var generator = Generators.strings(5, 10);
         var arguments = provider.generateArgumentsPublic(generator);
-        
+
         assertNotNull(arguments);
         assertEquals(0, arguments.size());
     }
-    
+
     @Test
     @DisplayName("Should generate arguments with consistent seed")
     void shouldGenerateArgumentsWithConsistentSeed() {
         // Use a fixed generator that always returns the same value
         var provider = new TestProvider(TEST_SEED, 3);
         var generator = new FixedStringGenerator("test-value");
-        
+
         var arguments1 = provider.generateArgumentsPublic(generator);
         var arguments2 = provider.generateArgumentsPublic(generator);
-        
+
         assertNotNull(arguments1);
         assertNotNull(arguments2);
         assertEquals(3, arguments1.size());
         assertEquals(3, arguments2.size());
-        
+
         // Compare each argument
         for (int i = 0; i < arguments1.size(); i++) {
-            assertEquals(arguments1.get(i).get()[0], arguments2.get(i).get()[0], 
+            assertEquals(arguments1.get(i).get()[0], arguments2.get(i).get()[0],
                     "Arguments should be the same with fixed generator");
             assertEquals("test-value", arguments1.get(i).get()[0]);
         }
     }
-    
+
     @ParameterizedTest(name = "With seed difference={0}, should generate different arguments")
     @ValueSource(longs = {1, 100, 1000})
     @DisplayName("Should generate different arguments with different seeds")
@@ -102,15 +100,15 @@ class GenerateArgumentsTest {
         var provider1 = new TestProvider(TEST_SEED, 3);
         var provider2 = new TestProvider(TEST_SEED + seedDifference, 3);
         var generator = Generators.strings(5, 10);
-        
+
         var arguments1 = provider1.generateArgumentsPublic(generator);
         var arguments2 = provider2.generateArgumentsPublic(generator);
-        
+
         assertNotNull(arguments1);
         assertNotNull(arguments2);
         assertEquals(3, arguments1.size());
         assertEquals(3, arguments2.size());
-        
+
         // Check if at least one argument is different
         boolean atLeastOneDifferent = false;
         for (int i = 0; i < arguments1.size(); i++) {
@@ -119,59 +117,59 @@ class GenerateArgumentsTest {
                 break;
             }
         }
-        
-        assertTrue(atLeastOneDifferent, 
+
+        assertTrue(atLeastOneDifferent,
                 "At least one argument should be different with different seeds");
     }
-    
+
     /**
      * Test implementation of AbstractTypedGeneratorArgumentsProvider.
      */
     private static class TestProvider extends AbstractTypedGeneratorArgumentsProvider {
         private final long seed;
         private final int count;
-        
+
         TestProvider(long seed, int count) {
             this.seed = seed;
             this.count = count;
         }
-        
+
         @Override
         protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
             return Stream.empty();
         }
-        
+
         @Override
         protected long getSeed() {
             return seed;
         }
-        
+
         @Override
         protected int getCount() {
             return count;
         }
-        
+
         // Public wrapper for protected method to enable testing
         public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
             return generateArguments(generator);
         }
     }
-    
+
     /**
      * A generator that always returns the same fixed string.
      */
     private static class FixedStringGenerator implements TypedGenerator<String> {
         private final String value;
-        
+
         FixedStringGenerator(String value) {
             this.value = value;
         }
-        
+
         @Override
         public String next() {
             return value;
         }
-        
+
         @Override
         public Class<String> getType() {
             return String.class;

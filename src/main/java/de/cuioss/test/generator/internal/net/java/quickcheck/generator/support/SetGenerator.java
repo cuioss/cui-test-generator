@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class SetGenerator<T> implements Generator<Set<T>> {
 

@@ -16,15 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DuplicateGeneratorTest {
 

@@ -16,10 +16,10 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.base.Preconditions.checkState;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+
+import static de.cuioss.tools.base.Preconditions.checkState;
 
 public class CharacterGenerator implements Generator<Character> {
 

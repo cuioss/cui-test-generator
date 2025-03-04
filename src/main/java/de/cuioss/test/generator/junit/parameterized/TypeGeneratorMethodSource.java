@@ -89,7 +89,7 @@ import java.lang.annotation.Target;
  * @see TypedGenerator
  * @see TypeGeneratorMethodArgumentsProvider
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ArgumentsSource(TypeGeneratorMethodArgumentsProvider.class)
@@ -118,7 +118,7 @@ public @interface TypeGeneratorMethodSource {
      * @return the number of values to generate
      */
     int count() default 1;
-    
+
     /**
      * The seed value to use for the TypedGenerator.
      * <p>

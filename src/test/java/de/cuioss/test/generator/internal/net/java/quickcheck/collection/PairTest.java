@@ -16,15 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.collection;
 
+import org.junit.jupiter.api.Test;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.nullsAnd;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGeneratorsIterables.somePairs;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.strings;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PairTest {
 

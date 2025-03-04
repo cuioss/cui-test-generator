@@ -16,9 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.opentest4j.AssertionFailedError;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ClassificationTestHelper {
 

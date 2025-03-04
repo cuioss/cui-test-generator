@@ -16,13 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
 
 class IntegerArrayGeneratorTest extends PrimitiveArrayGeneratorTestCase {
 

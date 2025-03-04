@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
+import de.cuioss.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
 
 public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 

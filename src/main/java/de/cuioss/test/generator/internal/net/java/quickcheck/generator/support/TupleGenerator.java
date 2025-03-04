@@ -16,9 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.ArrayList;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
+import java.util.ArrayList;
 
 public class TupleGenerator {
 

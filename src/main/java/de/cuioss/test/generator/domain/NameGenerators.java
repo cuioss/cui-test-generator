@@ -15,13 +15,12 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
-import static de.cuioss.test.generator.Generators.strings;
-
+import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-import de.cuioss.test.generator.TypedGenerator;
+import static de.cuioss.test.generator.Generators.fixedValues;
+import static de.cuioss.test.generator.Generators.strings;
 
 /**
  * Provides a collection of name generators for testing purposes.

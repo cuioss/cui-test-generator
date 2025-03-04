@@ -15,9 +15,9 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.integers;
-
 import de.cuioss.test.generator.TypedGenerator;
+
+import static de.cuioss.test.generator.Generators.integers;
 
 /**
  * Generates complete German street addresses by combining street names from {@link StreetNameGenerator}

@@ -15,12 +15,11 @@
  */
 package de.cuioss.test.generator.junit;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @EnableGeneratorController
 @DisplayName("GeneratorController without seed info should")

@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for tree generators.

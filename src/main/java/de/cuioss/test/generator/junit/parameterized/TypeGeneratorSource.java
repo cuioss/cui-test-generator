@@ -65,7 +65,7 @@ import java.lang.annotation.Target;
  * @see TypedGenerator
  * @see TypeGeneratorArgumentsProvider
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ArgumentsSource(TypeGeneratorArgumentsProvider.class)
@@ -79,14 +79,14 @@ public @interface TypeGeneratorSource {
      */
     @SuppressWarnings("java:S1452") // owolff: This wildcard is because of the TypedGenerator interface. Ok for testing
     Class<? extends TypedGenerator<?>> value();
-    
+
     /**
      * Number of instances to generate.
      * 
      * @return the number of instances to generate, defaults to 1
      */
     int count() default 1;
-    
+
     /**
      * Optional seed for reproducible tests.
      * <p>

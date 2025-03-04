@@ -43,7 +43,7 @@ import java.util.stream.Stream;
  * @see TypeGeneratorSource
  * @see TypedGenerator
  */
-public class TypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider 
+public class TypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider
         implements AnnotationConsumer<TypeGeneratorSource> {
 
     private Class<? extends TypedGenerator<?>> generatorClass;
@@ -61,16 +61,16 @@ public class TypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgume
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         // Create generator instance
         var generator = createGeneratorInstance(generatorClass);
-        
+
         // Generate values
         return generateArguments(generator).stream();
     }
-    
+
     @Override
     protected long getSeed() {
         return seed;
     }
-    
+
     @Override
     protected int getCount() {
         return count;

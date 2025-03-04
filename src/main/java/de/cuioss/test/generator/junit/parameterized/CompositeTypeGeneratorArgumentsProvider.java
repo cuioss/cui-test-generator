@@ -46,7 +46,7 @@ import java.util.stream.Stream;
  * @see CompositeTypeGeneratorSource
  * @see TypedGenerator
  */
-public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider 
+public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider
         implements AnnotationConsumer<CompositeTypeGeneratorSource> {
 
     private Class<? extends TypedGenerator<?>>[] generatorClasses;
@@ -62,7 +62,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         count = Math.max(1, annotation.count());
         cartesianProduct = annotation.cartesianProduct();
         seed = annotation.seed();
-        
+
         // If seed is 0, set it to current time for better test reproducibility
         if (seed == 0L) {
             seed = System.currentTimeMillis();
@@ -74,20 +74,20 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         if (generatorClasses.length == 0 && generatorMethods.length == 0) {
             throw new JUnitException("At least one generator class or method must be specified");
         }
-        
+
         // Create generator instances
         List<TypedGenerator<?>> generators = new ArrayList<>();
-        
+
         // Add generators from classes
         for (Class<? extends TypedGenerator<?>> generatorClass : generatorClasses) {
             generators.add(createGeneratorInstance(generatorClass));
         }
-        
+
         // Add generators from methods
         for (String methodName : generatorMethods) {
             generators.add(GeneratorMethodResolver.getGenerator(methodName, context));
         }
-        
+
         // Generate values from each generator
         List<List<Object>> generatedValues = new ArrayList<>();
         for (TypedGenerator<?> generator : generators) {
@@ -97,21 +97,21 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
             }
             generatedValues.add(values);
         }
-        
+
         // Create combinations of values
         return createArgumentsCombinations(generatedValues);
     }
-    
+
     @Override
     protected long getSeed() {
         return seed;
     }
-    
+
     @Override
     protected int getCount() {
         return count;
     }
-    
+
     /**
      * Creates combinations of values from the generated values.
      * 
@@ -122,14 +122,14 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         if (generatedValues.isEmpty()) {
             return Stream.empty();
         }
-        
+
         if (cartesianProduct) {
             return createCartesianProduct(generatedValues);
         } else {
             return createOneToOnePairs(generatedValues);
         }
     }
-    
+
     /**
      * Creates a cartesian product of all generated values.
      * 
@@ -140,11 +140,11 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         // Start with a single empty list
         List<List<Object>> combinations = new ArrayList<>();
         combinations.add(new ArrayList<>());
-        
+
         // For each list of generated values
         for (List<Object> values : generatedValues) {
             List<List<Object>> newCombinations = new ArrayList<>();
-            
+
             // For each existing combination
             for (List<Object> combination : combinations) {
                 // For each value in the current list
@@ -155,15 +155,15 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
                     newCombinations.add(newCombination);
                 }
             }
-            
+
             combinations = newCombinations;
         }
-        
+
         // Convert combinations to Arguments
         return combinations.stream()
-            .map(combination -> Arguments.of(combination.toArray()));
+                .map(combination -> Arguments.of(combination.toArray()));
     }
-    
+
     /**
      * Creates one-to-one pairs of generated values.
      * Requires all generators to produce the same number of values.
@@ -178,10 +178,10 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         for (List<Object> values : generatedValues) {
             if (values.size() != size) {
                 throw new JUnitException(
-                    "When cartesianProduct is false, all generators must produce the same number of values");
+                        "When cartesianProduct is false, all generators must produce the same number of values");
             }
         }
-        
+
         // Create one-to-one pairs
         List<Arguments> arguments = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -191,7 +191,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
             }
             arguments.add(Arguments.of(args));
         }
-        
+
         return arguments.stream();
     }
 }

@@ -15,17 +15,14 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("EmailGenerator")
 class EmailGeneratorTest {
@@ -53,10 +50,10 @@ class EmailGeneratorTest {
 
         @ParameterizedTest(name = "should create valid email from {0} {1}")
         @CsvSource({
-            "john,doe",
-            "JOHN,DOE",
-            "Jane,Smith",
-            "JANE,SMITH"
+                "john,doe",
+                "JOHN,DOE",
+                "Jane,Smith",
+                "JANE,SMITH"
         })
         void shouldCreateValidEmail(String firstname, String lastname) {
             var result = EmailGenerator.createEmail(firstname, lastname);
@@ -64,7 +61,7 @@ class EmailGeneratorTest {
             assertTrue(result.startsWith(expectedStart), "Email should start with lowercase name");
             assertTrue(result.matches("^[a-z]+\\.[a-z]+@[a-z]+\\.[a-z]+$"), "Email should have valid format");
             assertTrue(result.matches(".*@(email|mail|cuioss|message|example|hospital)\\.(de|org|com|net)$"),
-                "Email should use one of the predefined domains and TLDs");
+                    "Email should use one of the predefined domains and TLDs");
         }
 
         @ParameterizedTest(name = "should handle invalid firstname: {0}")

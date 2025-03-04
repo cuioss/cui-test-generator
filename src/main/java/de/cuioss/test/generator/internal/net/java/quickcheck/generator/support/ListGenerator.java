@@ -16,13 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.Math.max;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static java.lang.Math.max;
 
 public class ListGenerator<T> implements Generator<List<T>> {
 

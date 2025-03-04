@@ -15,16 +15,13 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.TypedGenerator;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("NonBlankStringGenerator should")
 class NonBlankStringGeneratorTest {

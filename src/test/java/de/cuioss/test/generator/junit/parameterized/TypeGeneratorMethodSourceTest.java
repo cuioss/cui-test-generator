@@ -21,9 +21,7 @@ import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link TypeGeneratorMethodSource} and {@link TypeGeneratorMethodArgumentsProvider}.
@@ -38,7 +36,7 @@ class TypeGeneratorMethodSourceTest {
         assertNotNull(value);
         assertTrue(value.length() >= 5 && value.length() <= 10);
     }
-    
+
     @ParameterizedTest
     @TypeGeneratorMethodSource(value = "createIntegerGenerator", count = 5)
     @DisplayName("Should generate multiple values")
@@ -46,14 +44,14 @@ class TypeGeneratorMethodSourceTest {
         assertNotNull(value);
         assertTrue(value >= 1 && value <= 100);
     }
-    
+
     @ParameterizedTest
     @TypeGeneratorMethodSource("de.cuioss.test.generator.junit.parameterized.TypeGeneratorMethodSourceTest#createExternalGenerator")
     @DisplayName("Should use external static method")
     void shouldUseExternalStaticMethod(String value) {
         assertEquals("external", value);
     }
-    
+
     /**
      * Creates a string generator for testing.
      * 
@@ -62,7 +60,7 @@ class TypeGeneratorMethodSourceTest {
     static TypedGenerator<String> createStringGenerator() {
         return Generators.strings(5, 10);
     }
-    
+
     /**
      * Creates an integer generator for testing.
      * 
@@ -71,7 +69,7 @@ class TypeGeneratorMethodSourceTest {
     static TypedGenerator<Integer> createIntegerGenerator() {
         return Generators.integers(1, 100);
     }
-    
+
     /**
      * Creates an external generator for testing.
      * 

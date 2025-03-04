@@ -75,14 +75,14 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
 
         return arguments.stream();
     }
-    
+
     /**
      * @return the seed value used for this provider
      */
     public long getSeed() {
         return seed;
     }
-    
+
     /**
      * @return the count of values to generate
      */

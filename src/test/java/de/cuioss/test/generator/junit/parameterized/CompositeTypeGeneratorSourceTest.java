@@ -22,9 +22,7 @@ import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link CompositeTypeGeneratorSource} and {@link CompositeTypeGeneratorArgumentsProvider}.
@@ -66,8 +64,8 @@ class CompositeTypeGeneratorSourceTest {
     @ParameterizedTest
     @DisplayName("Should generate combinations from mixed sources")
     @CompositeTypeGeneratorSource(
-            generatorClasses = { NonBlankStringGenerator.class },
-            generatorMethods = { "integerGenerator" },
+            generatorClasses = {NonBlankStringGenerator.class},
+            generatorMethods = {"integerGenerator"},
             count = 2
     )
     void shouldGenerateCombinationsFromMixedSources(String text, Integer number) {
@@ -115,7 +113,7 @@ class CompositeTypeGeneratorSourceTest {
     static TypedGenerator<String> stringGenerator() {
         return Generators.strings(3, 10);
     }
-    
+
     /**
      * Creates a generator for integers between 1 and 100.
      * 
@@ -124,7 +122,7 @@ class CompositeTypeGeneratorSourceTest {
     static TypedGenerator<Integer> integerGenerator() {
         return Generators.integers(1, 100);
     }
-    
+
     /**
      * Creates a generator that produces a fixed sequence of strings.
      * 
@@ -133,7 +131,7 @@ class CompositeTypeGeneratorSourceTest {
     static TypedGenerator<String> fixedStringGenerator() {
         return Generators.fixedValues("A", "B", "C");
     }
-    
+
     /**
      * Creates a generator that produces a fixed sequence of integers.
      * 
@@ -142,7 +140,7 @@ class CompositeTypeGeneratorSourceTest {
     static TypedGenerator<Integer> fixedIntegerGenerator() {
         return Generators.fixedValues(1, 2, 3);
     }
-    
+
     /**
      * A simple boolean generator for testing.
      */

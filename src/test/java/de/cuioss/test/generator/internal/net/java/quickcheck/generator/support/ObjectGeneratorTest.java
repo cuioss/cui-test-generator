@@ -16,12 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ObjectGeneratorTest {
 

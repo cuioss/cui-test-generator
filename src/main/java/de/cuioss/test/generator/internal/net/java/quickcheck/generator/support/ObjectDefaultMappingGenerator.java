@@ -16,12 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator;
 
 /**
  * {@link ObjectGenerator} implementation that can generate object graphs with

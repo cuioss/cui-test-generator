@@ -16,10 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-
-import java.util.List;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
@@ -29,6 +25,10 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedG
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.IntegerGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.StringGenerator;
+
+import java.util.List;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
 
 class Users {
 

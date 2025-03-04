@@ -16,9 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.Objects;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
+import java.util.Objects;
 
 /**
  * {@link Generator} implementation that transforms input generator test cases

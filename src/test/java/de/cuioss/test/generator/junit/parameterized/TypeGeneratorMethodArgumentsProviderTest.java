@@ -27,14 +27,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TypeGeneratorMethodArgumentsProviderTest {
 
@@ -93,7 +87,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         provider.accept(annotation);
 
         // Mock the context to return our test class
-        expect(context.getRequiredTestClass()).andReturn((Class)TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -160,7 +154,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(annotation);
         provider.accept(annotation);
 
-        expect(context.getRequiredTestClass()).andReturn((Class)TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -192,7 +186,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
      */
     @SuppressWarnings("unused")
     static class TestFactoryClass {
-        
+
         /**
          * Creates a string generator for testing.
          * @return a TypedGenerator that generates strings
@@ -200,7 +194,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         public static TypedGenerator<String> createGenerator() {
             return Generators.strings(5, 10);
         }
-        
+
         /**
          * Creates an integer generator for testing.
          * This method is intentionally not directly called in tests but is needed
@@ -210,7 +204,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         public static TypedGenerator<Integer> createIntegerGenerator() {
             return Generators.integers(1, 100);
         }
-        
+
         /**
          * Non-static method that should not be callable without an instance.
          * This method is intentionally not directly called in tests but is needed

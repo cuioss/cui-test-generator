@@ -16,22 +16,19 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.maps;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.oneOf;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.longs;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SubmapGeneratorTest {
 

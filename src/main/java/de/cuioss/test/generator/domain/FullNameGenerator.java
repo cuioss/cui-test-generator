@@ -15,9 +15,9 @@
  */
 package de.cuioss.test.generator.domain;
 
-import java.util.Locale;
-
 import de.cuioss.test.generator.TypedGenerator;
+
+import java.util.Locale;
 
 /**
  * Generates full names in the format 'firstname lastname' based on the specified locale.

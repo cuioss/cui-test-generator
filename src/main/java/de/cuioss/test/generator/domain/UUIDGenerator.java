@@ -15,11 +15,11 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.longs;
+import de.cuioss.test.generator.TypedGenerator;
 
 import java.util.UUID;
 
-import de.cuioss.test.generator.TypedGenerator;
+import static de.cuioss.test.generator.Generators.longs;
 
 /**
  * Creates instances of UUIDs

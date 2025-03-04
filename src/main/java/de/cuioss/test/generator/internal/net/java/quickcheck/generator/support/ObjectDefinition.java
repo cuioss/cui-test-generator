@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator.ReturnValue;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator.ReturnValue;
 
 class ObjectDefinition<T> implements InvocationHandler {
 

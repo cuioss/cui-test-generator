@@ -15,14 +15,14 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import de.cuioss.tools.string.Joiner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import de.cuioss.tools.string.Joiner;
+import static de.cuioss.test.generator.Generators.fixedValues;
 
 /**
  * Generates realistic email subject lines for testing purposes, particularly focused

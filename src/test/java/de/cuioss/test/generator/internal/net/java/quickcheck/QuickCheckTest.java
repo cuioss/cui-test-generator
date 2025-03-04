@@ -16,33 +16,21 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.AssertThrows.assertThrows;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.MAX_NUMBER_OF_RUNS;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.SYSTEM_PROPERTY_RUNS;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.forAll;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.guard;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static java.lang.System.clearProperty;
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.AssertThrows.assertThrows;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.*;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static java.lang.System.clearProperty;
+import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("ProhibitedExceptionDeclared")
 class QuickCheckTest {

@@ -16,13 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
 import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class AbstractFixedValueGeneratorTestCase<T> {
 

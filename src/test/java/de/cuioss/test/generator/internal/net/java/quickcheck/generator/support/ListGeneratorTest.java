@@ -16,6 +16,15 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
+import java.util.List;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.nonEmptyLists;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
@@ -23,16 +32,6 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.it
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-
-import java.util.Collection;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
 class ListGeneratorTest extends AbstractCollectionTestCase {
 

@@ -15,10 +15,10 @@
  */
 package de.cuioss.test.generator.impl;
 
-import java.time.LocalDateTime;
-
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+
+import java.time.LocalDateTime;
 
 /**
  * Generates random {@link LocalDateTime} instances for testing purposes.

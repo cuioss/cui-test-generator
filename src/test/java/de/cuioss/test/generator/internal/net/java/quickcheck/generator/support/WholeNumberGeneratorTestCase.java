@@ -16,14 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.ClassificationTestHelper.assertFrequencyGreater;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
 import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import org.junit.jupiter.api.Test;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.ClassificationTestHelper.assertFrequencyGreater;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class WholeNumberGeneratorTestCase<T extends Number> extends NumberGeneratorTestCase<T> {
 

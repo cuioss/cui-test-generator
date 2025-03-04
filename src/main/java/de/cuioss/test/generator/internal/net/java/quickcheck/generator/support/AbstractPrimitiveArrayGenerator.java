@@ -16,12 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.reflect.Array.get;
-import static java.lang.reflect.Array.getLength;
-import static java.lang.reflect.Array.newInstance;
-import static java.lang.reflect.Array.set;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
+import static java.lang.reflect.Array.*;
 
 abstract class AbstractPrimitiveArrayGenerator<I, P> extends AbstractTransformerGenerator<I, P> {
 

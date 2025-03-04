@@ -16,10 +16,10 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.reflect.Proxy.newProxyInstance;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import static java.lang.reflect.Proxy.newProxyInstance;
 
 class ObjectFactory<T> implements InvocationHandler {
 

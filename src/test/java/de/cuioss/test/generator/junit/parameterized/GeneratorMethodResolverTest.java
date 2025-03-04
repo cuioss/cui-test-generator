@@ -27,15 +27,8 @@ import org.junit.platform.commons.JUnitException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GeneratorMethodResolverTest {
@@ -55,10 +48,10 @@ class GeneratorMethodResolverTest {
 
     static Stream<Arguments> invalidExternalMethodReferences() {
         return Stream.of(
-            arguments("invalid#format#method", "Could not find class [invalid]"),
-            arguments("com.nonexistent.Class#method", "Could not find class [com.nonexistent.Class]"),
-            arguments(TestFactoryClass.class.getName() + "#nonExistentMethod", "Failed to invoke method [nonExistentMethod] in class [" + TestFactoryClass.class.getName() + "]"),
-            arguments(TestFactoryClass.class.getName() + "#createDoubleGenerator", "Failed to invoke method [createDoubleGenerator] in class [" + TestFactoryClass.class.getName() + "]")
+                arguments("invalid#format#method", "Could not find class [invalid]"),
+                arguments("com.nonexistent.Class#method", "Could not find class [com.nonexistent.Class]"),
+                arguments(TestFactoryClass.class.getName() + "#nonExistentMethod", "Failed to invoke method [nonExistentMethod] in class [" + TestFactoryClass.class.getName() + "]"),
+                arguments(TestFactoryClass.class.getName() + "#createDoubleGenerator", "Failed to invoke method [createDoubleGenerator] in class [" + TestFactoryClass.class.getName() + "]")
         );
     }
 
@@ -66,8 +59,8 @@ class GeneratorMethodResolverTest {
     @MethodSource("invalidExternalMethodReferences")
     void shouldThrowExceptionForInvalidExternalMethodReference(String methodReference, String expectedErrorMessage) {
         // when/then
-        JUnitException exception = assertThrows(JUnitException.class, () -> 
-            GeneratorMethodResolver.getGeneratorFromExternalClass(methodReference));
+        JUnitException exception = assertThrows(JUnitException.class, () ->
+                GeneratorMethodResolver.getGeneratorFromExternalClass(methodReference));
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
@@ -76,7 +69,7 @@ class GeneratorMethodResolverTest {
         // given
         String methodName = "createGenerator";
         ExtensionContext context = createMock(ExtensionContext.class);
-        expect(context.getRequiredTestClass()).andReturn((Class)TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -95,8 +88,8 @@ class GeneratorMethodResolverTest {
         String methodName = "createDoubleGenerator";
         ExtensionContext context = createMock(ExtensionContext.class);
         TestFactoryClass testInstance = new TestFactoryClass();
-        
-        expect(context.getRequiredTestClass()).andReturn((Class)TestFactoryClass.class).anyTimes();
+
+        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.of(testInstance)).anyTimes();
         replay(context);
 
@@ -111,9 +104,9 @@ class GeneratorMethodResolverTest {
 
     static Stream<Arguments> invalidMethodScenarios() {
         return Stream.of(
-            arguments("createDoubleGenerator", false, "Failed to invoke method [createDoubleGenerator]"),
-            arguments(null, true, null), // Should throw NullPointerException
-            arguments("", false, "Method name must not be blank")
+                arguments("createDoubleGenerator", false, "Failed to invoke method [createDoubleGenerator]"),
+                arguments(null, true, null), // Should throw NullPointerException
+                arguments("", false, "Method name must not be blank")
         );
     }
 
@@ -122,20 +115,20 @@ class GeneratorMethodResolverTest {
     void shouldThrowExceptionForInvalidMethodScenarios(String methodName, boolean isNullPointerExpected, String expectedErrorMessage) {
         // given
         ExtensionContext context = createMock(ExtensionContext.class);
-        
+
         if (methodName != null && !methodName.isEmpty()) {
-            expect(context.getRequiredTestClass()).andReturn((Class)TestFactoryClass.class).anyTimes();
+            expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
             expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         }
         replay(context);
 
         // when/then
         if (isNullPointerExpected) {
-            assertThrows(NullPointerException.class, () -> 
-                GeneratorMethodResolver.getGenerator(methodName, context));
+            assertThrows(NullPointerException.class, () ->
+                    GeneratorMethodResolver.getGenerator(methodName, context));
         } else {
-            JUnitException exception = assertThrows(JUnitException.class, () -> 
-                GeneratorMethodResolver.getGenerator(methodName, context));
+            JUnitException exception = assertThrows(JUnitException.class, () ->
+                    GeneratorMethodResolver.getGenerator(methodName, context));
             assertEquals(expectedErrorMessage, exception.getMessage());
         }
         verify(context);
@@ -143,10 +136,10 @@ class GeneratorMethodResolverTest {
 
     static Stream<Arguments> methodFindingScenarios() {
         return Stream.of(
-            arguments("createGenerator", true),
-            arguments("nonExistentMethod", false),
-            arguments("methodWithWrongReturnType", false),
-            arguments("methodWithParameters", false)
+                arguments("createGenerator", true),
+                arguments("nonExistentMethod", false),
+                arguments("methodWithWrongReturnType", false),
+                arguments("methodWithParameters", false)
         );
     }
 
@@ -175,7 +168,7 @@ class GeneratorMethodResolverTest {
      */
     @SuppressWarnings("unused")
     static class TestFactoryClass {
-        
+
         /**
          * Creates a string generator for testing.
          * @return a TypedGenerator that generates strings
@@ -183,7 +176,7 @@ class GeneratorMethodResolverTest {
         public static TypedGenerator<String> createGenerator() {
             return Generators.strings(5, 10);
         }
-        
+
         /**
          * Creates an integer generator for testing.
          * @return a TypedGenerator that generates integers
@@ -191,7 +184,7 @@ class GeneratorMethodResolverTest {
         public static TypedGenerator<Integer> createIntegerGenerator() {
             return Generators.integers(1, 100);
         }
-        
+
         /**
          * Non-static method that should not be callable without an instance.
          * @return a TypedGenerator that generates doubles
@@ -199,7 +192,7 @@ class GeneratorMethodResolverTest {
         public TypedGenerator<Double> createDoubleGenerator() {
             return Generators.doubles(0.0, 1.0);
         }
-        
+
         /**
          * Method with wrong return type for testing method resolution.
          * @return a string, not a TypedGenerator
@@ -207,7 +200,7 @@ class GeneratorMethodResolverTest {
         public static String methodWithWrongReturnType() {
             return "not a generator";
         }
-        
+
         /**
          * Method with parameters for testing method resolution.
          * @param min minimum value

@@ -15,10 +15,10 @@
  */
 package de.cuioss.test.generator.domain;
 
-import java.util.UUID;
-
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.tools.logging.CuiLogger;
+
+import java.util.UUID;
 
 /**
  * Generates random UUID strings in the standard 8-4-4-4-12 format (e.g. "550e8400-e29b-41d4-a716-446655440000").

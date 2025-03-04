@@ -16,6 +16,15 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck.MAX_NUMBER_OF_RUNS;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGeneratorSamples.anyNonEmptySet;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.ensureValues;
@@ -25,19 +34,7 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.Pr
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.strings;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGeneratorsIterables.someIntegers;
 import static java.util.Collections.emptySet;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import static org.junit.jupiter.api.Assertions.*;
 
 class IterablesTest {
 

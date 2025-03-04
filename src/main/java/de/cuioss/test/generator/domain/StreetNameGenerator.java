@@ -15,9 +15,9 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
-
 import de.cuioss.test.generator.TypedGenerator;
+
+import static de.cuioss.test.generator.Generators.fixedValues;
 
 /**
  * Generates typical German street names for test data generation.

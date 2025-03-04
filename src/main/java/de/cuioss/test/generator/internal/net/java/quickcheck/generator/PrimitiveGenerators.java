@@ -16,13 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * {@link PrimitiveGenerators} contains factory methods for primitive value

@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Objects;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 public class ArrayGenerator<T> extends AbstractTransformerGenerator<List<T>, T[]> {
 

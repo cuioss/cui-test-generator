@@ -16,15 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
+import de.cuioss.test.generator.internal.net.java.quickcheck.MockFactory;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.MockFactory;
+import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class TupleGeneratorTest {
 

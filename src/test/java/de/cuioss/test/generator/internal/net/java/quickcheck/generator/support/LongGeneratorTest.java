@@ -16,18 +16,17 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import org.junit.jupiter.api.Test;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.longs;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.positiveLongs;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
 import static java.lang.Long.MAX_VALUE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
 class LongGeneratorTest extends WholeNumberGeneratorTestCase<Long> {
 

@@ -21,9 +21,7 @@ import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link TypeGeneratorFactorySource} and {@link TypeGeneratorFactoryArgumentsProvider}.
@@ -82,7 +80,7 @@ class TypeGeneratorFactorySourceTest {
      * Test factory class for creating TypedGenerators.
      */
     public static class TestGeneratorFactory {
-        
+
         /**
          * Creates a generator that always returns the same fixed value.
          * 
@@ -91,7 +89,7 @@ class TypeGeneratorFactorySourceTest {
         public static TypedGenerator<String> createFixedValueGenerator() {
             return Generators.fixedValues("fixed-value");
         }
-        
+
         /**
          * Creates a generator for strings with length between 3 and 10.
          * 
@@ -100,7 +98,7 @@ class TypeGeneratorFactorySourceTest {
         public static TypedGenerator<String> createStringGenerator() {
             return Generators.strings(3, 10);
         }
-        
+
         /**
          * Creates a generator for integers within a specified range.
          * 

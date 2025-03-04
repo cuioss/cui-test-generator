@@ -20,9 +20,7 @@ import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link TypeGeneratorSource} and {@link TypeGeneratorArgumentsProvider}.
@@ -37,7 +35,7 @@ class TypeGeneratorSourceTest {
         assertNotNull(value);
         assertFalse(value.isBlank());
     }
-    
+
     @ParameterizedTest
     @TypeGeneratorSource(value = IntegerGenerator.class, count = 5)
     @DisplayName("Should generate multiple integers")
@@ -45,14 +43,14 @@ class TypeGeneratorSourceTest {
         assertNotNull(value);
         assertEquals(42, value.intValue());
     }
-    
+
     @ParameterizedTest
     @TypeGeneratorSource(value = SingleValueGenerator.class)
     @DisplayName("Should use generator with fixed value")
     void shouldUseGeneratorWithFixedValue(String value) {
         assertEquals("fixed-value", value);
     }
-    
+
     /**
      * Non-blank string generator for testing.
      */
@@ -61,13 +59,13 @@ class TypeGeneratorSourceTest {
         public String next() {
             return "test-string";
         }
-        
+
         @Override
         public Class<String> getType() {
             return String.class;
         }
     }
-    
+
     /**
      * Integer generator for testing.
      */
@@ -76,13 +74,13 @@ class TypeGeneratorSourceTest {
         public Integer next() {
             return 42;
         }
-        
+
         @Override
         public Class<Integer> getType() {
             return Integer.class;
         }
     }
-    
+
     /**
      * Generator that always returns a single fixed value.
      */
@@ -91,7 +89,7 @@ class TypeGeneratorSourceTest {
         public String next() {
             return "fixed-value";
         }
-        
+
         @Override
         public Class<String> getType() {
             return String.class;

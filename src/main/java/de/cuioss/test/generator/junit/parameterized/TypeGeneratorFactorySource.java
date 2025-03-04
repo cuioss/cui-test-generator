@@ -85,7 +85,7 @@ import java.lang.annotation.Target;
  * @see TypedGenerator
  * @see TypeGeneratorFactoryArgumentsProvider
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @ArgumentsSource(TypeGeneratorFactoryArgumentsProvider.class)
@@ -98,7 +98,7 @@ public @interface TypeGeneratorFactorySource {
      */
     @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
     Class<?> factoryClass();
-    
+
     /**
      * The name of the factory method to invoke.
      * The method must be static and return a TypedGenerator.
@@ -106,7 +106,7 @@ public @interface TypeGeneratorFactorySource {
      * @return the factory method name
      */
     String factoryMethod();
-    
+
     /**
      * Optional parameters to pass to the factory method.
      * All parameters are passed as strings, and the factory method
@@ -115,14 +115,14 @@ public @interface TypeGeneratorFactorySource {
      * @return the method parameters as strings
      */
     String[] methodParameters() default {};
-    
+
     /**
      * Number of instances to generate.
      * 
      * @return the number of instances to generate, defaults to 1
      */
     int count() default 1;
-    
+
     /**
      * Optional seed for reproducible tests.
      * <p>

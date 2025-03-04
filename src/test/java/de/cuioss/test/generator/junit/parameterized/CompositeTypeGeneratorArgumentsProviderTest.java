@@ -26,13 +26,8 @@ import org.junit.platform.commons.JUnitException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CompositeTypeGeneratorArgumentsProviderTest {
 
@@ -51,9 +46,9 @@ class CompositeTypeGeneratorArgumentsProviderTest {
     void shouldAcceptAnnotation() {
         // given
         @SuppressWarnings("unchecked")
-        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[] { StringGenerator.class };
-        String[] generatorMethods = new String[] { "createIntegerGenerator" };
-        
+        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
+        String[] generatorMethods = new String[]{"createIntegerGenerator"};
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(5).anyTimes();
@@ -74,9 +69,9 @@ class CompositeTypeGeneratorArgumentsProviderTest {
     void shouldUseDefaultValuesWhenNotSpecified() {
         // given
         @SuppressWarnings("unchecked")
-        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[] { StringGenerator.class };
+        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
         String[] generatorMethods = new String[0];
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(0).anyTimes(); // Should use default of 1
@@ -99,7 +94,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         @SuppressWarnings("unchecked")
         Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[0];
         String[] generatorMethods = new String[0];
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
@@ -119,9 +114,9 @@ class CompositeTypeGeneratorArgumentsProviderTest {
     void shouldProvideArgumentsFromGeneratorClasses() throws Exception {
         // given
         @SuppressWarnings("unchecked")
-        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[] { StringGenerator.class };
+        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
         String[] generatorMethods = new String[0];
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
@@ -150,10 +145,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         // given
         @SuppressWarnings("unchecked")
         Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[0];
-        String[] generatorMethods = new String[] { 
-            TestFactoryClass.class.getName() + "#createGenerator" 
+        String[] generatorMethods = new String[]{
+                TestFactoryClass.class.getName() + "#createGenerator"
         };
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
@@ -181,11 +176,11 @@ class CompositeTypeGeneratorArgumentsProviderTest {
     void shouldProvideArgumentsFromMultipleSources() throws Exception {
         // given
         @SuppressWarnings("unchecked")
-        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[] { StringGenerator.class };
-        String[] generatorMethods = new String[] { 
-            TestFactoryClass.class.getName() + "#createIntegerGenerator" 
+        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
+        String[] generatorMethods = new String[]{
+                TestFactoryClass.class.getName() + "#createIntegerGenerator"
         };
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
@@ -214,11 +209,11 @@ class CompositeTypeGeneratorArgumentsProviderTest {
     void shouldProvideOneToOnePairsWhenCartesianProductIsFalse() throws Exception {
         // given
         @SuppressWarnings("unchecked")
-        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[] { StringGenerator.class };
-        String[] generatorMethods = new String[] { 
-            TestFactoryClass.class.getName() + "#createIntegerGenerator" 
+        Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
+        String[] generatorMethods = new String[]{
+                TestFactoryClass.class.getName() + "#createIntegerGenerator"
         };
-        
+
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
@@ -265,7 +260,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
      */
     @SuppressWarnings("unused")
     static class TestFactoryClass {
-        
+
         /**
          * Creates a string generator for testing.
          * @return a TypedGenerator that generates strings
@@ -273,7 +268,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         public static TypedGenerator<String> createGenerator() {
             return Generators.strings(5, 10);
         }
-        
+
         /**
          * Creates an integer generator for testing.
          * @return a TypedGenerator that generates integers

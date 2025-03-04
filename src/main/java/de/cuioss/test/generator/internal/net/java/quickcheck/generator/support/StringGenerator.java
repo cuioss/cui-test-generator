@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.Objects;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
+import java.util.Objects;
 
 public class StringGenerator implements ExtendibleGenerator<Character, String> {
 

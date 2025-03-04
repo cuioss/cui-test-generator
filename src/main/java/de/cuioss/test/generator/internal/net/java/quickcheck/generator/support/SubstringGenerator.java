@@ -16,10 +16,10 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.Objects;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.tools.base.Preconditions;
+
+import java.util.Objects;
 
 public class SubstringGenerator implements Generator<String> {
 

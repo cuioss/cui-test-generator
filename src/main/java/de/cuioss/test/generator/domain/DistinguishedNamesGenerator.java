@@ -15,14 +15,14 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
-import static de.cuioss.test.generator.Generators.integers;
+import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.tools.string.Joiner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.string.Joiner;
+import static de.cuioss.test.generator.Generators.fixedValues;
+import static de.cuioss.test.generator.Generators.integers;
 
 /**
  * Generates LDAP Distinguished Names (DN) for testing purposes.

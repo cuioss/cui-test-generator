@@ -16,12 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
@@ -31,6 +25,12 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ByteArrayGenerator;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * {@link CombinedGenerators} can be used to create custom {@link Generator}s.

@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.sizeOf;
-import static de.cuioss.tools.base.Preconditions.checkArgument;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
 
 import java.util.Iterator;
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.sizeOf;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
 
 public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
 

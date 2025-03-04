@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable;
 
-import static java.util.Objects.requireNonNull;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Generators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.QuickCheck;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Generators;
+import static java.util.Objects.requireNonNull;
 
 public final class Iterables {
 

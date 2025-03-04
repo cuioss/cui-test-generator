@@ -15,65 +15,19 @@
  */
 package de.cuioss.test.generator;
 
-import static de.cuioss.test.generator.Generators.asCollectionGenerator;
-import static de.cuioss.test.generator.Generators.booleanObjects;
-import static de.cuioss.test.generator.Generators.booleans;
-import static de.cuioss.test.generator.Generators.byteObjects;
-import static de.cuioss.test.generator.Generators.bytes;
-import static de.cuioss.test.generator.Generators.characterObjects;
-import static de.cuioss.test.generator.Generators.characters;
-import static de.cuioss.test.generator.Generators.classTypes;
-import static de.cuioss.test.generator.Generators.dates;
-import static de.cuioss.test.generator.Generators.doubleObjects;
-import static de.cuioss.test.generator.Generators.doubles;
-import static de.cuioss.test.generator.Generators.enumValues;
-import static de.cuioss.test.generator.Generators.enumValuesIfAvailable;
-import static de.cuioss.test.generator.Generators.fixedValues;
-import static de.cuioss.test.generator.Generators.floatObjects;
-import static de.cuioss.test.generator.Generators.floats;
-import static de.cuioss.test.generator.Generators.integerObjects;
-import static de.cuioss.test.generator.Generators.integers;
-import static de.cuioss.test.generator.Generators.letterStrings;
-import static de.cuioss.test.generator.Generators.localDateTimes;
-import static de.cuioss.test.generator.Generators.localDates;
-import static de.cuioss.test.generator.Generators.localTimes;
-import static de.cuioss.test.generator.Generators.locales;
-import static de.cuioss.test.generator.Generators.longObjects;
-import static de.cuioss.test.generator.Generators.longs;
-import static de.cuioss.test.generator.Generators.nonBlankStrings;
-import static de.cuioss.test.generator.Generators.nonEmptyStrings;
-import static de.cuioss.test.generator.Generators.numbers;
-import static de.cuioss.test.generator.Generators.runtimeExceptions;
-import static de.cuioss.test.generator.Generators.serializables;
-import static de.cuioss.test.generator.Generators.shortObjects;
-import static de.cuioss.test.generator.Generators.shorts;
-import static de.cuioss.test.generator.Generators.strings;
-import static de.cuioss.test.generator.Generators.temporals;
-import static de.cuioss.test.generator.Generators.throwables;
-import static de.cuioss.test.generator.Generators.timeZones;
-import static de.cuioss.test.generator.Generators.uniqueValues;
-import static de.cuioss.test.generator.Generators.urls;
-import static de.cuioss.test.generator.Generators.zoneIds;
-import static de.cuioss.test.generator.Generators.zoneOffsets;
-import static de.cuioss.test.generator.Generators.zonedDateTimes;
-import static de.cuioss.tools.string.MoreStrings.isEmpty;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.time.temporal.Temporal;
-import java.util.ArrayList;
-
+import de.cuioss.test.generator.impl.CollectionGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
+import de.cuioss.tools.property.PropertyMemberInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import de.cuioss.test.generator.impl.CollectionGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
-import de.cuioss.tools.property.PropertyMemberInfo;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
+
+import static de.cuioss.test.generator.Generators.*;
+import static de.cuioss.tools.string.MoreStrings.isEmpty;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Generators utility class provides")
 class GeneratorsTest {

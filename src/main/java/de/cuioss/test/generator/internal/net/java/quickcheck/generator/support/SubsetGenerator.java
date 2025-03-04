@@ -16,9 +16,7 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
-import static java.util.Objects.requireNonNull;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,7 +24,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
+import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
+import static java.util.Objects.requireNonNull;
 
 public class SubsetGenerator<T> implements Generator<Set<T>> {
 

@@ -16,23 +16,22 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.lists;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.strings;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
 import static java.lang.String.CASE_INSENSITIVE_ORDER;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
 class UniqueComparableValuesGeneratorTest extends UniqueValuesGeneratorTest {
 

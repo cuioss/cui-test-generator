@@ -15,9 +15,9 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static de.cuioss.test.generator.Generators.nonEmptyStrings;
-
 import de.cuioss.test.generator.TypedGenerator;
+
+import static de.cuioss.test.generator.Generators.nonEmptyStrings;
 
 /**
  * Generates non-empty and non-blank string values for testing purposes.

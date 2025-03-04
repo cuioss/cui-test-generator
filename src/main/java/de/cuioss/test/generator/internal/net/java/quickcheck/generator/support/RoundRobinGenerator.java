@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.collect.MoreCollections.requireNotEmpty;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.List;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.tools.collect.MoreCollections.requireNotEmpty;
 
 public class RoundRobinGenerator<T> implements Generator<T> {
 

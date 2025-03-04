@@ -16,16 +16,15 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.bytes;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.bytes;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StrictlyOrderedGeneratorTest {
 

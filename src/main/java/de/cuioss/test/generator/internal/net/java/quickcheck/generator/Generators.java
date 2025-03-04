@@ -16,25 +16,6 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.BASIC_LATIN;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.LATIN_1_SUPPLEMENT;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.util.Arrays.asList;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.FrequencyGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
@@ -77,6 +58,25 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.T
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.UniqueComparableValuesGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.UniqueValuesGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.VetoableGenerator;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.BASIC_LATIN;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.LATIN_1_SUPPLEMENT;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
+import static java.util.Arrays.asList;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @SuppressWarnings({"WeakerAccess"})
 public class Generators {

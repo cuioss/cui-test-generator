@@ -16,13 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 public class StrictlyOrderedGenerator<T> implements Generator<List<T>> {
 

@@ -16,13 +16,13 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 public class SubmapGenerator<K, V> implements Generator<Map<K, V>> {
 

@@ -15,6 +15,11 @@
  */
 package de.cuioss.test.generator.impl;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZoneId;
@@ -23,10 +28,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @EqualsAndHashCode(exclude = {"noObjectIdentityString", "badstring"})
 @ToString(exclude = {"noObjectIdentityString", "badstring"})

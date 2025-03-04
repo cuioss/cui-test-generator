@@ -50,7 +50,7 @@ import static java.util.Objects.requireNonNull;
  * @see TypeGeneratorFactorySource
  * @see TypedGenerator
  */
-public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider 
+public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider
         implements AnnotationConsumer<TypeGeneratorFactorySource> {
 
     private Class<?> factoryClass;
@@ -72,21 +72,21 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         // Create generator instance using factory
         var generator = createGeneratorFromFactory();
-        
+
         // Generate values
         return generateArguments(generator).stream();
     }
-    
+
     @Override
     protected long getSeed() {
         return seed;
     }
-    
+
     @Override
     protected int getCount() {
         return count;
     }
-    
+
     /**
      * Creates a TypedGenerator instance by invoking the specified factory method.
      * 
@@ -97,20 +97,20 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
     private TypedGenerator<?> createGeneratorFromFactory() {
         requireNonNull(factoryClass, "Factory class must not be null");
         requireNonNull(factoryMethod, "Factory method must not be null");
-        
+
         try {
             // Find the factory method
             Method method = findFactoryMethod();
-            
+
             // Invoke the factory method with the provided parameters
             return (TypedGenerator<?>) method.invoke(null, (Object[]) methodParameters);
         } catch (Exception e) {
             throw new JUnitException(
-                "Failed to create TypedGenerator using factory method '" + factoryMethod + 
-                "' in class '" + factoryClass.getName() + "'", e);
+                    "Failed to create TypedGenerator using factory method '" + factoryMethod +
+                            "' in class '" + factoryClass.getName() + "'", e);
         }
     }
-    
+
     /**
      * Finds the factory method in the factory class.
      * 
@@ -120,31 +120,31 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
     private Method findFactoryMethod() {
         // Look for a method with the exact parameter count
         List<Method> candidateMethods = Arrays.stream(factoryClass.getMethods())
-            .filter(m -> m.getName().equals(factoryMethod))
-            .filter(ReflectionUtils::isStatic)
-            .filter(m -> m.getParameterCount() == methodParameters.length)
-            .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
-            .toList();
-        
+                .filter(m -> m.getName().equals(factoryMethod))
+                .filter(ReflectionUtils::isStatic)
+                .filter(m -> m.getParameterCount() == methodParameters.length)
+                .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
+                .toList();
+
         if (candidateMethods.isEmpty()) {
             throw new JUnitException(
-                "Could not find static factory method '" + factoryMethod + 
-                "' in class '" + factoryClass.getName() + 
-                "' with " + methodParameters.length + " parameters that returns TypedGenerator");
+                    "Could not find static factory method '" + factoryMethod +
+                            "' in class '" + factoryClass.getName() +
+                            "' with " + methodParameters.length + " parameters that returns TypedGenerator");
         }
-        
+
         if (candidateMethods.size() > 1) {
             // If multiple methods match, try to find one that accepts String parameters
             var stringParamMethods = candidateMethods.stream()
-                .filter(m -> Arrays.stream(m.getParameterTypes())
-                    .allMatch(p -> p == String.class))
-                .toList();
-            
+                    .filter(m -> Arrays.stream(m.getParameterTypes())
+                            .allMatch(p -> p == String.class))
+                    .toList();
+
             if (stringParamMethods.size() == 1) {
                 return stringParamMethods.get(0);
             }
         }
-        
+
         // If we have exactly one candidate or couldn't narrow down further, use the first one
         return candidateMethods.get(0);
     }

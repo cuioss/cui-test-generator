@@ -15,11 +15,10 @@
  */
 package de.cuioss.test.generator.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Generates {@link Float} objects within a configurable range.

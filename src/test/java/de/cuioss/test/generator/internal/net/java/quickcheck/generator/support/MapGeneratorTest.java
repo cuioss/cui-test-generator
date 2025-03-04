@@ -16,20 +16,17 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.DEFAULT_COLLECTION_MAX_SIZE;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGeneratorSamples.anyPositiveInteger;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.DEFAULT_COLLECTION_MAX_SIZE;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGeneratorSamples.anyPositiveInteger;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MapGeneratorTest {
 

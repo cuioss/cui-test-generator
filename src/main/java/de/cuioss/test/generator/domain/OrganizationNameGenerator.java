@@ -15,14 +15,13 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.test.generator.Generators.fixedValues;
-import static de.cuioss.test.generator.Generators.strings;
-import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
-
+import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-import de.cuioss.test.generator.TypedGenerator;
+import static de.cuioss.test.generator.Generators.fixedValues;
+import static de.cuioss.test.generator.Generators.strings;
+import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
 
 /**
  * Provides generators for organization names, including well-known fictional companies.

@@ -26,9 +26,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Integration test demonstrating the combined use of TypeGeneratorSource and TypeGeneratorMethodSource
@@ -47,7 +45,7 @@ class TypeGeneratorIntegrationTest {
         assertTrue(email.contains("@"));
         assertTrue(email.contains("."));
     }
-    
+
     // Example with count parameter to generate multiple test cases
     @ParameterizedTest
     @TypeGeneratorSource(value = PositiveIntegerGenerator.class, count = 5)
@@ -56,7 +54,7 @@ class TypeGeneratorIntegrationTest {
         assertNotNull(value);
         assertTrue(value > 0);
     }
-    
+
     // Example with fixed seed for reproducible tests
     @ParameterizedTest
     @TypeGeneratorSource(value = EnumGenerator.class, seed = 123L)
@@ -66,7 +64,7 @@ class TypeGeneratorIntegrationTest {
         assertNotNull(unit);
         // With seed 123L, the first value will always be the same
     }
-    
+
     // Example using method source with a method in the same class
     @ParameterizedTest
     @TypeGeneratorMethodSource("createDateGenerator")
@@ -77,7 +75,7 @@ class TypeGeneratorIntegrationTest {
         assertTrue(date.isAfter(now.minusYears(1)));
         assertTrue(date.isBefore(now.plusYears(1)));
     }
-    
+
     // Example using method source with count parameter
     @ParameterizedTest
     @TypeGeneratorMethodSource(value = "createBoundedStringGenerator", count = 3)
@@ -86,7 +84,7 @@ class TypeGeneratorIntegrationTest {
         assertNotNull(value);
         assertTrue(value.length() >= 5 && value.length() <= 10);
     }
-    
+
     // Example using method source with external method reference
     @ParameterizedTest
     @TypeGeneratorMethodSource("de.cuioss.test.generator.junit.parameterized.TypeGeneratorIntegrationTest#createExternalGenerator")
@@ -94,7 +92,7 @@ class TypeGeneratorIntegrationTest {
     void shouldUseExternalMethodReference(String value) {
         assertEquals("external-value", value);
     }
-    
+
     // Generator factory methods
     
     static TypedGenerator<LocalDate> createDateGenerator() {
@@ -111,15 +109,15 @@ class TypeGeneratorIntegrationTest {
             }
         };
     }
-    
+
     static TypedGenerator<String> createBoundedStringGenerator() {
         return Generators.strings(5, 10);
     }
-    
+
     public static TypedGenerator<String> createExternalGenerator() {
         return () -> "external-value";
     }
-    
+
     // Custom generator implementations
     
     public static class EmailGenerator implements TypedGenerator<String> {
@@ -127,37 +125,37 @@ class TypeGeneratorIntegrationTest {
         public String next() {
             return "user" + System.nanoTime() + "@example.com";
         }
-        
+
         @Override
         public Class<String> getType() {
             return String.class;
         }
     }
-    
+
     public static class PositiveIntegerGenerator implements TypedGenerator<Integer> {
         @Override
         public Integer next() {
             return Generators.integers(1, 1000).next();
         }
-        
+
         @Override
         public Class<Integer> getType() {
             return Integer.class;
         }
     }
-    
+
     public static class EnumGenerator implements TypedGenerator<TimeUnit> {
         private final TypedGenerator<TimeUnit> delegate;
-        
+
         public EnumGenerator() {
             delegate = Generators.enumValues(TimeUnit.class);
         }
-        
+
         @Override
         public TimeUnit next() {
             return delegate.next();
         }
-        
+
         @Override
         public Class<TimeUnit> getType() {
             return TimeUnit.class;

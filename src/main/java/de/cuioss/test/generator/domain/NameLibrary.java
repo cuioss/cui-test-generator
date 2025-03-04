@@ -15,13 +15,13 @@
  */
 package de.cuioss.test.generator.domain;
 
-import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
-
-import java.util.List;
-import lombok.experimental.UtilityClass;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.tools.collect.CollectionBuilder;
+import lombok.experimental.UtilityClass;
+
+import java.util.List;
+
+import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
 
 /**
  * Provides lists of names for creating name {@link Generator}.

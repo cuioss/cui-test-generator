@@ -15,11 +15,11 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+
+import static de.cuioss.tools.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Provides generators for arrays of all Java primitive types.

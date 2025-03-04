@@ -15,22 +15,16 @@
  */
 package de.cuioss.test.generator.impl;
 
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.lastMonthAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.lastTenYearsAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someDaysAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someHoursAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someMinutesAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someMonthsAgo;
-import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.someYearsAgo;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("ZonedDateTimeGenerator should")
 class ZonedDateTimeGeneratorTest {

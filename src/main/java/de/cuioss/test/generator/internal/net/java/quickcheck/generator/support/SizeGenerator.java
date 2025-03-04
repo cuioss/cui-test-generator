@@ -16,12 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MIN_SIZE;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.List;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MIN_SIZE;
 
 /**
  * Generator for the default collection size.

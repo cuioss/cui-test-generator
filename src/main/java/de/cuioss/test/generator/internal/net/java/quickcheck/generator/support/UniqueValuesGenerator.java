@@ -16,9 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import java.util.HashSet;
-
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
+import java.util.HashSet;
 
 public class UniqueValuesGenerator<T> extends AbstractUniqueValuesGenerator<T> {
 

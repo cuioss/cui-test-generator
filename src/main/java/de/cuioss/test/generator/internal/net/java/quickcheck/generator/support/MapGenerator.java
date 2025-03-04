@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.SetGenerator.MAX_SIZE;
-import static java.util.Objects.requireNonNull;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.SetGenerator.MAX_SIZE;
+import static java.util.Objects.requireNonNull;
 
 public class MapGenerator<K, V> implements Generator<Map<K, V>> {
 

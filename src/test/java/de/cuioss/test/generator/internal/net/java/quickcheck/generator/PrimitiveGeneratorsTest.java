@@ -16,23 +16,20 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.ClassificationTestHelper.assertFrequencyGreater;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.ClassificationTestHelper.assertFrequencySmaller;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.enumValues;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.fixedValues;
-import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.integers;
+import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.*;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.toIterable;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
-
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.Classification;
 
 class PrimitiveGeneratorsTest {
 

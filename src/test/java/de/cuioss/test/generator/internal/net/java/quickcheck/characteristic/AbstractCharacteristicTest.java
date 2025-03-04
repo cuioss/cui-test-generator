@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
-import static java.util.Collections.EMPTY_LIST;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static java.util.Collections.EMPTY_LIST;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("ProhibitedExceptionDeclared")
 class AbstractCharacteristicTest {

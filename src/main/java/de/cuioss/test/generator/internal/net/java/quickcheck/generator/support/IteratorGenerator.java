@@ -16,12 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static java.lang.Math.max;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.Iterator;
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import static java.lang.Math.max;
 
 public class IteratorGenerator<T> implements Generator<Iterator<T>> {
 

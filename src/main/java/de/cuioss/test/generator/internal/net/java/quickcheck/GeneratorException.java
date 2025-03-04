@@ -16,8 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
-import java.io.Serial;
 import lombok.Getter;
+
+import java.io.Serial;
 
 /**
  * GeneratorException is thrown if the creation of a new instance failed.

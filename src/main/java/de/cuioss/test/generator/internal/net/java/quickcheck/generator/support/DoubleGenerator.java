@@ -16,12 +16,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 
 import java.util.Objects;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import static de.cuioss.tools.base.Preconditions.checkArgument;
 
 public class DoubleGenerator implements Generator<Double> {
 

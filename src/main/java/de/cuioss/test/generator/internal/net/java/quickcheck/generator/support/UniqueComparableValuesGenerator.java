@@ -16,10 +16,10 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
 import java.util.Comparator;
 import java.util.TreeSet;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 public class UniqueComparableValuesGenerator<T> extends AbstractUniqueValuesGenerator<T> {
 

@@ -16,10 +16,10 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+
 import java.util.Collections;
 import java.util.List;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 public class SortedListGenerator<T extends Comparable<T>> implements Generator<List<T>> {
 

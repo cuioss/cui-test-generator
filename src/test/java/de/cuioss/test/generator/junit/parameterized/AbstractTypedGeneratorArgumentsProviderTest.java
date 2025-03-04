@@ -32,9 +32,7 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link AbstractTypedGeneratorArgumentsProvider}.
@@ -61,10 +59,10 @@ class AbstractTypedGeneratorArgumentsProviderTest {
 
     static Stream<Arguments> methodTestCases() {
         return Stream.of(
-            // methodName, expectedFound
-            Arguments.of("createGenerator", true),
-            Arguments.of("nonExistentMethod", false),
-            Arguments.of("wrongReturnType", false)
+                // methodName, expectedFound
+                Arguments.of("createGenerator", true),
+                Arguments.of("nonExistentMethod", false),
+                Arguments.of("wrongReturnType", false)
         );
     }
 
@@ -74,7 +72,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     void shouldFindMethodCorrectly(String methodName, boolean expectedFound) {
         var provider = new TestProvider(TEST_SEED, 1);
         var methodOpt = provider.findMethodPublic(TestClass.class, methodName);
-        
+
         assertNotNull(methodOpt);
         assertEquals(expectedFound, methodOpt.isPresent());
     }

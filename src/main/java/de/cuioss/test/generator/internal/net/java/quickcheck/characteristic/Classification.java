@@ -16,14 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Characteristic;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Characteristic;
-import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 
 /**
  * Gather frequency information about test values.

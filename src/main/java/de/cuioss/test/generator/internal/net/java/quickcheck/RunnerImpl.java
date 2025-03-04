@@ -16,11 +16,11 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-
 import java.io.PrintWriter;
 import java.util.Objects;
+
+import static de.cuioss.tools.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 class RunnerImpl<T> implements Runner<T> {
 

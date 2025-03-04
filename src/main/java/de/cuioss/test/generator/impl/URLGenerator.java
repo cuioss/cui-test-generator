@@ -15,11 +15,11 @@
  */
 package de.cuioss.test.generator.impl;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Generates valid {@link URL} instances from a predefined set of well-known websites.

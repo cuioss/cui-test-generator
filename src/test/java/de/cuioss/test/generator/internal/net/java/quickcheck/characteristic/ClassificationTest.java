@@ -16,6 +16,14 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.DEFAULT_COLLECTION_MAX_SIZE;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators.uniqueValues;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGeneratorsIterables.someSortedLists;
@@ -23,19 +31,7 @@ import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.Pr
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators.strings;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.reverse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.StatefulGenerator;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ClassificationTest {
 
