@@ -43,7 +43,6 @@ import java.lang.annotation.Target;
  * <li>Return a {@link TypedGenerator} instance</li>
  * <li>Take no parameters</li>
  * </ul>
- * </p>
  * 
  * <h2>Example Usage</h2>
  * 
@@ -105,7 +104,6 @@ public @interface TypeGeneratorMethodSource {
      * <li>A fully qualified method name in an external class (e.g.,
      * "com.example.MyGeneratorFactory#createGenerator")</li>
      * </ul>
-     * </p>
      * 
      * @return the method name or reference
      */

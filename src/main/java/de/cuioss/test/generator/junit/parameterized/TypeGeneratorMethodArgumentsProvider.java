@@ -42,8 +42,6 @@ import java.util.stream.Stream;
  * <li>A method in the test class</li>
  * <li>A static method in another class</li>
  * </ul>
- * </p>
- *
  * @author Oliver Wolff
  * @see TypeGeneratorMethodSource
  * @see TypedGenerator
@@ -65,7 +63,7 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         // Get the TypedGenerator from the method
         var generator = GeneratorMethodResolver.getGenerator(methodName, context);
 
