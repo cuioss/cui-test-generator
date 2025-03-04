@@ -32,6 +32,7 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -83,7 +84,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
     }
 
     @Test
-    void shouldProvideArgumentsFromTestClassMethod() throws Exception {
+    void shouldProvideArgumentsFromTestClassMethod() {
         // given
         expect(annotation.value()).andReturn("createGenerator").anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
@@ -104,13 +105,13 @@ class TypeGeneratorMethodArgumentsProviderTest {
         assertEquals(3, arguments.size());
         for (Arguments args : arguments) {
             assertEquals(1, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
+            assertInstanceOf(String.class, args.get()[0]);
         }
         verify(context);
     }
 
     @Test
-    void shouldProvideArgumentsFromExternalClassMethod() throws Exception {
+    void shouldProvideArgumentsFromExternalClassMethod() {
         // given
         String methodReference = TestFactoryClass.class.getName() + "#createGenerator";
         expect(annotation.value()).andReturn(methodReference).anyTimes();
@@ -129,7 +130,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         assertEquals(2, arguments.size());
         for (Arguments args : arguments) {
             assertEquals(1, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
+            assertInstanceOf(String.class, args.get()[0]);
         }
         verify(context);
     }
