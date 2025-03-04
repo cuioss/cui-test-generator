@@ -101,20 +101,33 @@ public @interface TypeGeneratorMethodSource {
      * <p>
      * This can be:
      * <ul>
-     * <li>A simple method name in the test class (e.g., "createGenerator")</li>
-     * <li>A fully qualified method name in another class (e.g.,
-     * "de.cuioss.test.MyGeneratorFactory#createGenerator")</li>
+     * <li>A method name in the test class (e.g., "createGenerator")</li>
+     * <li>A fully qualified method name in an external class (e.g.,
+     * "com.example.MyGeneratorFactory#createGenerator")</li>
      * </ul>
      * </p>
      * 
-     * @return the method name
+     * @return the method name or reference
      */
     String value();
-    
+
     /**
-     * Number of instances to generate.
+     * The number of values to generate from the TypedGenerator.
+     * <p>
+     * If set to a value less than 1, a default of 1 will be used.
+     * </p>
      * 
-     * @return the number of instances to generate, defaults to 1
+     * @return the number of values to generate
      */
     int count() default 1;
+    
+    /**
+     * The seed value to use for the TypedGenerator.
+     * <p>
+     * If set to 0, a random seed will be used.
+     * </p>
+     * 
+     * @return the seed value to use
+     */
+    long seed() default 0L;
 }

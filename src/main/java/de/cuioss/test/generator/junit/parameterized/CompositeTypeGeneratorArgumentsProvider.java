@@ -20,15 +20,10 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 import org.junit.platform.commons.JUnitException;
-import org.junit.platform.commons.util.ReflectionUtils;
-import org.junit.platform.commons.util.StringUtils;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Implementation of {@link org.junit.jupiter.params.provider.ArgumentsProvider} that provides arguments from multiple
@@ -67,6 +62,11 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         count = Math.max(1, annotation.count());
         cartesianProduct = annotation.cartesianProduct();
         seed = annotation.seed();
+        
+        // If seed is 0, set it to current time for better test reproducibility
+        if (seed == 0L) {
+            seed = System.currentTimeMillis();
+        }
     }
 
     @Override
@@ -85,7 +85,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         
         // Add generators from methods
         for (String methodName : generatorMethods) {
-            generators.add(getGenerator(methodName, context));
+            generators.add(GeneratorMethodResolver.getGenerator(methodName, context));
         }
         
         // Generate values from each generator
@@ -193,78 +193,5 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         }
         
         return arguments.stream();
-    }
-    
-    /**
-     * Gets a TypedGenerator by invoking the specified method.
-     * 
-     * @param methodName the method name to invoke
-     * @param context the extension context
-     * @return the TypedGenerator instance
-     * @throws JUnitException if the method cannot be found or invoked
-     */
-    private TypedGenerator<?> getGenerator(String methodName, ExtensionContext context) {
-        requireNonNull(methodName, "Method name must not be null");
-        
-        if (StringUtils.isBlank(methodName)) {
-            throw new JUnitException("Method name must not be blank");
-        }
-        
-        // Check if method name contains a class reference
-        if (methodName.contains("#")) {
-            return getGeneratorFromExternalClass(methodName);
-        }
-        
-        // Get method from test class
-        var testClass = context.getRequiredTestClass();
-        var testInstance = context.getTestInstance().orElse(null);
-        
-        var method = findMethod(testClass, methodName)
-                .orElseThrow(() -> new JUnitException("Could not find method [" + methodName + IN_CLASS + testClass.getName() + "]"));
-        
-        try {
-            if (ReflectionUtils.isStatic(method)) {
-                return (TypedGenerator<?>) method.invoke(null);
-            } else if (testInstance != null) {
-                return (TypedGenerator<?>) method.invoke(testInstance);
-            } else {
-                throw new JUnitException("Cannot invoke instance method [" + methodName + "] without a test instance");
-            }
-        } catch (Exception e) {
-            throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
-        }
-    }
-    
-    /**
-     * Gets a TypedGenerator by invoking a static method in an external class.
-     * 
-     * @param methodReference the method reference in format "fully.qualified.ClassName#methodName"
-     * @return the TypedGenerator instance
-     * @throws JUnitException if the method cannot be found or invoked
-     */
-    private TypedGenerator<?> getGeneratorFromExternalClass(String methodReference) {
-        String[] parts = methodReference.split("#", 2);
-        if (parts.length != 2) {
-            throw new JUnitException("Method reference [" + methodReference + "] must be in format 'fully.qualified.ClassName#methodName'");
-        }
-        
-        var className = parts[0];
-        var methodName = parts[1];
-        
-        try {
-            var clazz = Class.forName(className);
-            var method = findMethod(clazz, methodName)
-                    .orElseThrow(() -> new JUnitException("Could not find method [" + methodName + IN_CLASS + className + "]"));
-            
-            if (!ReflectionUtils.isStatic(method)) {
-                throw new JUnitException("Method [" + methodName + "] in external class [" + className + "] must be static");
-            }
-            
-            return (TypedGenerator<?>) method.invoke(null);
-        } catch (ClassNotFoundException e) {
-            throw new JUnitException("Could not find class [" + className + "]", e);
-        } catch (Exception e) {
-            throw new JUnitException("Failed to invoke method [" + methodName + IN_CLASS + className + "]", e);
-        }
     }
 }
