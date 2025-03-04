@@ -1,4 +1,6 @@
 = cui-test-generator
+:toc:
+:toclevels: 4
 
 == Status
 
@@ -11,6 +13,8 @@ image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-g
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=coverage[Coverage,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
 
 https://cuioss.github.io/cui-test-generator/about.html[Generated Documentation on github-pages]
+
+toc::[]
 
 == What is it?
 
@@ -88,6 +92,144 @@ class MyTest {
 @GeneratorSeed(8042L) // Class-level seed
 class AllTestsReproducible {
     // All tests use the same seed
+}
+----
+
+===== TypeGenerator in Parameterized Tests
+
+Use `@TypeGeneratorSource` and `@TypeGeneratorMethodSource` to directly use TypeGenerator in parameterized tests:
+
+[source,java]
+----
+@EnableGeneratorController
+class ParameterizedGeneratorTest {
+    
+    // Class-based configuration - uses the generator's default constructor
+    @ParameterizedTest
+    @TypeGeneratorSource(NonBlankStringGenerator.class)
+    void testWithGeneratedStrings(String value) {
+        assertNotNull(value);
+        assertFalse(value.isBlank());
+    }
+    
+    // Generate multiple values
+    @ParameterizedTest
+    @TypeGeneratorSource(value = IntegerGenerator.class, count = 5)
+    void testWithMultipleIntegers(Integer value) {
+        assertNotNull(value);
+    }
+    
+    // Method-based configuration - uses a method that returns a configured generator
+    @ParameterizedTest
+    @TypeGeneratorMethodSource("createStringGenerator")
+    void testWithCustomGenerator(String value) {
+        assertNotNull(value);
+    }
+    
+    // Factory method that returns a configured generator
+    static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10); // Strings between 5-10 characters
+    }
+    
+    // Reference a method in another class
+    @ParameterizedTest
+    @TypeGeneratorMethodSource("de.cuioss.test.MyGeneratorFactory#createGenerator")
+    void testWithExternalGenerator(MyType value) {
+        // test with value
+    }
+}
+----
+
+===== Factory-Based TypeGenerator in Parameterized Tests
+
+Use `@TypeGeneratorFactorySource` to create generators using factory methods:
+
+[source,java]
+----
+@EnableGeneratorController
+class FactoryBasedGeneratorTest {
+    
+    // Use a factory method to create a generator
+    @ParameterizedTest
+    @TypeGeneratorFactorySource(
+        factoryClass = MyGeneratorFactory.class,
+        factoryMethod = "createStringGenerator"
+    )
+    void testWithFactoryGenerator(String value) {
+        assertNotNull(value);
+    }
+    
+    // Factory with parameters
+    @ParameterizedTest
+    @TypeGeneratorFactorySource(
+        factoryClass = MyGeneratorFactory.class,
+        factoryMethod = "createRangeGenerator",
+        methodParameters = {"1", "100"},
+        count = 5
+    )
+    void testWithParameterizedFactory(Integer value) {
+        assertNotNull(value);
+        assertTrue(value >= 1 && value <= 100);
+    }
+}
+
+// Factory class
+public class MyGeneratorFactory {
+    public static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10);
+    }
+    
+    public static TypedGenerator<Integer> createRangeGenerator(String min, String max) {
+        return Generators.integers(Integer.parseInt(min), Integer.parseInt(max));
+    }
+}
+----
+
+===== Composite TypeGenerator in Parameterized Tests
+
+Use `@CompositeTypeGeneratorSource` to combine multiple generators:
+
+[source,java]
+----
+@EnableGeneratorController
+class CompositeGeneratorTest {
+    
+    // Combine multiple generator classes
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generatorClasses = {
+            NonBlankStringGenerator.class,
+            IntegerGenerator.class
+        },
+        count = 3
+    )
+    void testWithMultipleGenerators(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+    
+    // Combine multiple generator methods
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generatorMethods = {
+            "createStringGenerator",
+            "createIntegerGenerator"
+        },
+        count = 2
+    )
+    void testWithMultipleMethodGenerators(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+    
+    // Generator methods
+    static TypedGenerator<String> createStringGenerator() {
+        return Generators.strings(5, 10);
+    }
+    
+    static TypedGenerator<Integer> createIntegerGenerator() {
+        return Generators.integers(1, 100);
+    }
 }
 ----
 
