@@ -10,6 +10,11 @@
  *   <li>{@link de.cuioss.test.generator.junit.GeneratorControllerExtension} - JUnit extension implementing the core functionality</li>
  * </ul>
  *
+ * <h2>Subpackages</h2>
+ * <ul>
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized} - Provides integration with JUnit 5's parameterized testing framework</li>
+ * </ul>
+ *
  * <h2>Basic Usage</h2>
  * <pre>
  * {@code
