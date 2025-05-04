@@ -16,7 +16,9 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.CharacteristicException;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
 import de.cuioss.test.generator.internal.net.java.quickcheck.characteristic.AbstractCharacteristic;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
@@ -52,8 +54,8 @@ class SetGeneratorTest extends AbstractCollectionTestCase {
     }
 
     @Test
-    void sizeIsValid() throws de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException,
-            de.cuioss.test.generator.internal.net.java.quickcheck.CharacteristicException {
+    void sizeIsValid() throws GeneratorException,
+            CharacteristicException {
         forAll(sets(integers(0, MAX_SIZE * 10), MAX_SIZE, MAX_SIZE), new AbstractCharacteristic<>() {
 
             @Override

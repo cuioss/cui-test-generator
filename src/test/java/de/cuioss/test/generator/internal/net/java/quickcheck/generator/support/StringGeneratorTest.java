@@ -48,7 +48,7 @@ class StringGeneratorTest {
 
     @Test
     void generatePrintableLetters() {
-        for (String any : toIterable(de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators
+        for (String any : toIterable(PrimitiveGenerators
                 .printableStrings())) {
             assertTrue(any.length() <= StringGenerator.MAX_LENGTH);
             for (var i = 0; i < any.length(); i++) {

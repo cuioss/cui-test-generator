@@ -15,13 +15,20 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class PrimitiveGeneratorsIterables {
 
     /**
      * See documentation of {@link PrimitiveGenerators#objects}.
      */
     public static Iterable<Object> someObjects() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.objects());
     }
 
@@ -29,7 +36,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#objects}.
      */
     public static <T> Iterable<T> someObjects(Class<T> objectType) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.objects(objectType));
     }
 
@@ -37,7 +44,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#nulls}.
      */
     public static <T> Iterable<T> someNulls() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.nulls());
     }
 
@@ -45,7 +52,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#substrings}.
      */
     public static Iterable<String> someSubstrings(String base) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.substrings(base));
     }
 
@@ -53,7 +60,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#substrings}.
      */
     public static Iterable<String> someSubstrings(String base, int size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.substrings(base, size));
     }
 
@@ -61,7 +68,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#substrings}.
      */
     public static Iterable<String> someSubstrings(String base, int minSize, int maxSize) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.substrings(base, minSize, maxSize));
     }
 
@@ -69,7 +76,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#integers}.
      */
     public static Iterable<Integer> someIntegers() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.integers());
     }
 
@@ -77,7 +84,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#integers}.
      */
     public static Iterable<Integer> someIntegers(int low) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.integers(low));
     }
 
@@ -85,7 +92,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#integers}.
      */
     public static Iterable<Integer> someIntegers(int lo, int hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.integers(lo, hi));
     }
 
@@ -93,8 +100,8 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#integers}.
      */
     public static Iterable<Integer> someIntegers(int lo, int hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Distribution distribution) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.integers(lo, hi, distribution));
     }
 
@@ -102,7 +109,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#positiveLongs}.
      */
     public static Iterable<Long> somePositiveLongs() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.positiveLongs());
     }
 
@@ -110,7 +117,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#positiveLongs}.
      */
     public static Iterable<Long> somePositiveLongs(long hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.positiveLongs(hi));
     }
 
@@ -118,7 +125,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#defaultObjects}.
      */
     public static <T> Iterable<T> someDefaultObjects(Class<T> objectType) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.defaultObjects(objectType));
     }
 
@@ -126,7 +133,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#enumValues}.
      */
     public static <T extends Enum<T>> Iterable<T> someEnumValues(Class<T> enumClass) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.enumValues(enumClass));
     }
 
@@ -135,7 +142,7 @@ public class PrimitiveGeneratorsIterables {
      */
     @SafeVarargs
     public static <T extends Enum<T>> Iterable<T> someEnumValues(Class<T> enumClass, T... excluded) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.enumValues(enumClass, excluded));
     }
 
@@ -143,7 +150,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#enumValues}.
      */
     public static <T extends Enum<T>> Iterable<T> someEnumValues(Class<T> enumClass, Iterable<T> excludedValues) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.enumValues(enumClass, excludedValues));
     }
 
@@ -151,47 +158,47 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#printableStrings}.
      */
     public static Iterable<String> somePrintableStrings() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.printableStrings());
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static Iterable<java.util.Date> someDates() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Date> someDates() {
+        return Iterables
                 .toIterable(PrimitiveGenerators.dates());
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static Iterable<java.util.Date> someDates(java.util.concurrent.TimeUnit precision) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Date> someDates(TimeUnit precision) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.dates(precision));
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static Iterable<java.util.Date> someDates(java.util.Date low, java.util.Date high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Date> someDates(Date low, Date high) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.dates(low, high));
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static Iterable<java.util.Date> someDates(long low, long high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Date> someDates(long low, long high) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.dates(low, high));
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static Iterable<java.util.Date> someDates(Long low, Long high, java.util.concurrent.TimeUnit precision) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Date> someDates(Long low, Long high, TimeUnit precision) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.dates(low, high, precision));
     }
 
@@ -199,7 +206,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#latin1SupplementCharacters}.
      */
     public static Iterable<Character> someLatin1SupplementCharacters() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.latin1SupplementCharacters());
     }
 
@@ -207,7 +214,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#doubles}.
      */
     public static Iterable<Double> someDoubles() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.doubles());
     }
 
@@ -215,7 +222,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#doubles}.
      */
     public static Iterable<Double> someDoubles(double lo, double hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.doubles(lo, hi));
     }
 
@@ -223,8 +230,8 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#doubles}.
      */
     public static Iterable<Double> someDoubles(double lo, double hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Distribution distribution) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.doubles(lo, hi, distribution));
     }
 
@@ -232,7 +239,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#positiveIntegers}.
      */
     public static Iterable<Integer> somePositiveIntegers() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.positiveIntegers());
     }
 
@@ -240,7 +247,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#positiveIntegers}.
      */
     public static Iterable<Integer> somePositiveIntegers(int hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.positiveIntegers(hi));
     }
 
@@ -248,7 +255,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#nonEmptyStrings}.
      */
     public static Iterable<String> someNonEmptyStrings() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.nonEmptyStrings());
     }
 
@@ -256,7 +263,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#characters}.
      */
     public static Iterable<Character> someCharacters(char lo, char hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.characters(lo, hi));
     }
 
@@ -264,7 +271,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#characters}.
      */
     public static Iterable<Character> someCharacters() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.characters());
     }
 
@@ -272,7 +279,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#characters}.
      */
     public static Iterable<Character> someCharacters(Character... chars) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.characters(chars));
     }
 
@@ -280,7 +287,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#characters}.
      */
     public static Iterable<Character> someCharacters(String string) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.characters(string));
     }
 
@@ -288,7 +295,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#characters}.
      */
     public static Iterable<Character> someCharacters(Iterable<Character> chars) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.characters(chars));
     }
 
@@ -296,7 +303,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#longs}.
      */
     public static Iterable<Long> someLongs() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.longs());
     }
 
@@ -304,7 +311,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#longs}.
      */
     public static Iterable<Long> someLongs(long lo, long hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.longs(lo, hi));
     }
 
@@ -312,8 +319,8 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#longs}.
      */
     public static Iterable<Long> someLongs(long lo, long hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Distribution distribution) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.longs(lo, hi, distribution));
     }
 
@@ -321,7 +328,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings());
     }
 
@@ -329,7 +336,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(char lo, char hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(lo, hi));
     }
 
@@ -337,7 +344,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(String allowedCharacters) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(allowedCharacters));
     }
 
@@ -345,7 +352,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(String allowedCharacters, int min, int max) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(allowedCharacters, min, max));
     }
 
@@ -353,7 +360,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(int max) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(max));
     }
 
@@ -361,7 +368,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(int min, int max) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(min, max));
     }
 
@@ -369,9 +376,9 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> length,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Character> characters) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Integer> length,
+            Generator<Character> characters) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(length, characters));
     }
 
@@ -379,8 +386,8 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static Iterable<String> someStrings(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Character> characterGenerator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Character> characterGenerator) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.strings(characterGenerator));
     }
 
@@ -388,7 +395,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#fixedValues}.
      */
     public static <T> Iterable<T> someFixedValues(T value) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.fixedValues(value));
     }
 
@@ -397,7 +404,7 @@ public class PrimitiveGeneratorsIterables {
      */
     @SafeVarargs
     public static <T> Iterable<T> someFixedValues(T... values) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.fixedValues(values));
     }
 
@@ -405,7 +412,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#fixedValues}.
      */
     public static <T> Iterable<T> someFixedValues(Iterable<T> values) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.fixedValues(values));
     }
 
@@ -413,7 +420,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#clonedValues}.
      */
     public static <T> Iterable<T> someClonedValues(T prototype) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.clonedValues(prototype));
     }
 
@@ -421,7 +428,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#booleans}.
      */
     public static Iterable<Boolean> someBooleans() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.booleans());
     }
 
@@ -429,7 +436,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#basicLatinCharacters}.
      */
     public static Iterable<Character> someBasicLatinCharacters() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.basicLatinCharacters());
     }
 
@@ -437,7 +444,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#letterStrings}.
      */
     public static Iterable<String> someLetterStrings() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.letterStrings());
     }
 
@@ -445,7 +452,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#letterStrings}.
      */
     public static Iterable<String> someLetterStrings(int min, int max) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.letterStrings(min, max));
     }
 
@@ -453,7 +460,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#bytes}.
      */
     public static Iterable<Byte> someBytes() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.bytes());
     }
 
@@ -461,7 +468,7 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#bytes}.
      */
     public static Iterable<Byte> someBytes(byte lo, byte hi) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(PrimitiveGenerators.bytes(lo, hi));
     }
 
@@ -469,8 +476,8 @@ public class PrimitiveGeneratorsIterables {
      * See documentation of {@link PrimitiveGenerators#bytes}.
      */
     public static Iterable<Byte> someBytes(byte lo, byte hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Distribution distribution) {
+        return Iterables
                 .toIterable(PrimitiveGenerators.bytes(lo, hi, distribution));
     }
 }

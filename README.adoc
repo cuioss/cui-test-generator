@@ -95,15 +95,74 @@ class AllTestsReproducible {
 }
 ----
 
+===== Preferred: GeneratorsSource with Enum-Based Configuration
+
+The recommended way to use generators in parameterized tests is with `@GeneratorsSource` and the `GeneratorType` enum:
+
+[source,java]
+----
+@EnableGeneratorController
+class GeneratorsSourceTest {
+
+    // String generator with size parameters
+    @ParameterizedTest
+    @GeneratorsSource(
+        generator = GeneratorType.STRINGS,
+        minSize = 3,
+        maxSize = 10,
+        count = 5
+    )
+    void testWithStringGenerator(String value) {
+        assertNotNull(value);
+        assertTrue(value.length() >= 3 && value.length() <= 10);
+    }
+
+    // Number generator with range parameters
+    @ParameterizedTest
+    @GeneratorsSource(
+        generator = GeneratorType.INTEGERS,
+        low = "1",
+        high = "100",
+        count = 5
+    )
+    void testWithIntegerGenerator(Integer value) {
+        assertNotNull(value);
+        assertTrue(value >= 1 && value <= 100);
+    }
+
+    // Simple generator without parameters
+    @ParameterizedTest
+    @GeneratorsSource(
+        generator = GeneratorType.NON_EMPTY_STRINGS,
+        count = 3
+    )
+    void testWithNonEmptyStrings(String value) {
+        assertNotNull(value);
+        assertFalse(value.isEmpty());
+    }
+
+    // Domain-specific generator
+    @ParameterizedTest
+    @GeneratorsSource(
+        generator = GeneratorType.DOMAIN_EMAIL,
+        count = 3
+    )
+    void testWithEmailGenerator(String email) {
+        assertNotNull(email);
+        assertTrue(email.contains("@"));
+    }
+}
+----
+
 ===== TypeGenerator in Parameterized Tests
 
-Use `@TypeGeneratorSource` and `@TypeGeneratorMethodSource` to directly use TypeGenerator in parameterized tests:
+You can also directly use TypeGenerator in parameterized tests with `@TypeGeneratorSource` and `@TypeGeneratorMethodSource`:
 
 [source,java]
 ----
 @EnableGeneratorController
 class ParameterizedGeneratorTest {
-    
+
     // Class-based configuration - uses the generator's default constructor
     @ParameterizedTest
     @TypeGeneratorSource(NonBlankStringGenerator.class)
@@ -111,26 +170,26 @@ class ParameterizedGeneratorTest {
         assertNotNull(value);
         assertFalse(value.isBlank());
     }
-    
+
     // Generate multiple values
     @ParameterizedTest
     @TypeGeneratorSource(value = IntegerGenerator.class, count = 5)
     void testWithMultipleIntegers(Integer value) {
         assertNotNull(value);
     }
-    
+
     // Method-based configuration - uses a method that returns a configured generator
     @ParameterizedTest
     @TypeGeneratorMethodSource("createStringGenerator")
     void testWithCustomGenerator(String value) {
         assertNotNull(value);
     }
-    
+
     // Factory method that returns a configured generator
     static TypedGenerator<String> createStringGenerator() {
         return Generators.strings(5, 10); // Strings between 5-10 characters
     }
-    
+
     // Reference a method in another class
     @ParameterizedTest
     @TypeGeneratorMethodSource("de.cuioss.test.MyGeneratorFactory#createGenerator")
@@ -148,7 +207,7 @@ Use `@TypeGeneratorFactorySource` to create generators using factory methods:
 ----
 @EnableGeneratorController
 class FactoryBasedGeneratorTest {
-    
+
     // Use a factory method to create a generator
     @ParameterizedTest
     @TypeGeneratorFactorySource(
@@ -158,7 +217,7 @@ class FactoryBasedGeneratorTest {
     void testWithFactoryGenerator(String value) {
         assertNotNull(value);
     }
-    
+
     // Factory with parameters
     @ParameterizedTest
     @TypeGeneratorFactorySource(
@@ -178,7 +237,7 @@ public class MyGeneratorFactory {
     public static TypedGenerator<String> createStringGenerator() {
         return Generators.strings(5, 10);
     }
-    
+
     public static TypedGenerator<Integer> createRangeGenerator(String min, String max) {
         return Generators.integers(Integer.parseInt(min), Integer.parseInt(max));
     }
@@ -187,14 +246,43 @@ public class MyGeneratorFactory {
 
 ===== Composite TypeGenerator in Parameterized Tests
 
-Use `@CompositeTypeGeneratorSource` to combine multiple generators:
+Use `@CompositeTypeGeneratorSource` to combine multiple generators. The preferred approach is to use the `generators` attribute with `GeneratorType` enum values:
 
 [source,java]
 ----
 @EnableGeneratorController
 class CompositeGeneratorTest {
-    
-    // Combine multiple generator classes
+
+    // Preferred: Combine multiple generators using GeneratorType enum
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generators = {
+            GeneratorType.NON_EMPTY_STRINGS,
+            GeneratorType.INTEGERS
+        },
+        count = 3
+    )
+    void testWithGeneratorTypes(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+
+    // Domain-specific generators can also be used
+    @ParameterizedTest
+    @CompositeTypeGeneratorSource(
+        generators = {
+            GeneratorType.DOMAIN_EMAIL,
+            GeneratorType.DOMAIN_ZIP_CODE
+        },
+        count = 2
+    )
+    void testWithDomainGenerators(String email, String zipCode) {
+        assertNotNull(email);
+        assertTrue(email.contains("@"));
+        assertNotNull(zipCode);
+    }
+
+    // Alternative: Combine multiple generator classes
     @ParameterizedTest
     @CompositeTypeGeneratorSource(
         generatorClasses = {
@@ -207,8 +295,8 @@ class CompositeGeneratorTest {
         assertNotNull(text);
         assertNotNull(number);
     }
-    
-    // Combine multiple generator methods
+
+    // Alternative: Combine multiple generator methods
     @ParameterizedTest
     @CompositeTypeGeneratorSource(
         generatorMethods = {
@@ -221,12 +309,12 @@ class CompositeGeneratorTest {
         assertNotNull(text);
         assertNotNull(number);
     }
-    
+
     // Generator methods
     static TypedGenerator<String> createStringGenerator() {
         return Generators.strings(5, 10);
     }
-    
+
     static TypedGenerator<Integer> createIntegerGenerator() {
         return Generators.integers(1, 100);
     }
@@ -253,6 +341,31 @@ public class CustomGenerator implements TypedGenerator<MyType> {
 }
 ----
 
+==== GeneratorType Enum
+
+The `GeneratorType` enum provides a type-safe way to reference all available generators:
+
+* Standard generators from Generators class:
+** `GeneratorType.STRINGS` - Strings generator
+** `GeneratorType.INTEGERS` - Integers generator
+** `GeneratorType.BOOLEANS` - Booleans generator
+** `GeneratorType.LOCAL_DATE_TIMES` - LocalDateTime generator
+** `GeneratorType.URLS` - URL generator
+
+* Domain-specific generators with DOMAIN_ prefix:
+** `GeneratorType.DOMAIN_EMAIL` - Email address generator
+** `GeneratorType.DOMAIN_CITY` - City name generator
+** `GeneratorType.DOMAIN_FULL_NAME` - Person name generator
+** `GeneratorType.DOMAIN_ZIP_CODE` - Zip/postal code generator
+
+Each enum value contains:
+
+* The method name in the Generators class (for standard generators)
+* The factory class (Generators.class or the domain-specific generator class)
+* The return type of the generator
+
+This makes it easy to use with `@GeneratorsSource` and `@CompositeTypeGeneratorSource`.
+
 ==== Domain-Specific Generators
 
 The framework provides specialized generators for common domains:
@@ -272,6 +385,11 @@ var floats = new FloatObjectGenerator(0.0f, 100.0f).next();
 // URLs and strings
 var url = new URLGenerator().next();
 var nonBlank = new NonBlankStringGenerator().next();
+
+// Domain-specific generators (also available via GeneratorType enum)
+var email = new EmailGenerator().next();
+var city = new CityGenerator().next();
+var name = new FullNameGenerator().next();
 ----
 
 === Important Note

@@ -105,6 +105,21 @@ class CompositeTypeGeneratorSourceTest {
         assertNotNull(flag);
     }
 
+    @ParameterizedTest
+    @DisplayName("Should generate combinations from generator types")
+    @CompositeTypeGeneratorSource(
+            generators = {
+                    GeneratorType.NON_EMPTY_STRINGS,
+                    GeneratorType.BOOLEANS
+            },
+            count = 2
+    )
+    void shouldGenerateCombinationsFromGeneratorTypes(String text, Boolean flag) {
+        assertNotNull(text);
+        assertFalse(text.isEmpty());
+        assertNotNull(flag);
+    }
+
     /**
      * Creates a generator for strings with length between 3 and 10.
      * 

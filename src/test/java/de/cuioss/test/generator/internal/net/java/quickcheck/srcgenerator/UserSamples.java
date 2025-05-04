@@ -15,12 +15,17 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
+
+import java.util.List;
+
 class UserSamples {
 
     /**
      * See documentation of {@link Users#multipleTypeParameters}.
      */
-    public static de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple<Integer, Double, String> anyMultipleTypeParameter() {
+    public static Triple<Integer, Double, String> anyMultipleTypeParameter() {
         return Users.multipleTypeParameters().next();
     }
 
@@ -34,7 +39,7 @@ class UserSamples {
     /**
      * See documentation of {@link Users#generics}.
      */
-    public static java.util.List<Integer> anyGeneric(java.util.List<Integer> is) {
+    public static List<Integer> anyGeneric(List<Integer> is) {
         return Users.generics(is).next();
     }
 
@@ -48,7 +53,7 @@ class UserSamples {
     /**
      * See documentation of {@link Users#multipleTypeVariable}.
      */
-    public static <A, B> de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair<A, B> anyMultipleTypeVariable(
+    public static <A, B> Pair<A, B> anyMultipleTypeVariable(
             A a, B b) {
         return Users.multipleTypeVariable(a, b).next();
     }

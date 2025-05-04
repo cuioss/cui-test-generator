@@ -15,13 +15,19 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.srcgenerator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables;
+
+import java.util.List;
+
 class UsersIterables {
 
     /**
      * See documentation of {@link Users#multipleTypeParameters}.
      */
-    public static Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple<Integer, Double, String>> someMultipleTypeParameters() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<Triple<Integer, Double, String>> someMultipleTypeParameters() {
+        return Iterables
                 .toIterable(Users.multipleTypeParameters());
     }
 
@@ -29,15 +35,15 @@ class UsersIterables {
      * See documentation of {@link Users#primitives}.
      */
     public static Iterable<Integer> somePrimitives() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.primitives());
     }
 
     /**
      * See documentation of {@link Users#generics}.
      */
-    public static Iterable<java.util.List<Integer>> someGenerics(java.util.List<Integer> is) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static Iterable<List<Integer>> someGenerics(List<Integer> is) {
+        return Iterables
                 .toIterable(Users.generics(is));
     }
 
@@ -45,16 +51,16 @@ class UsersIterables {
      * See documentation of {@link Users#noVarArgsArrays}.
      */
     public static Iterable<String> someNoVarArgsArrays(String[] a, String x) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.noVarArgsArrays(a, x));
     }
 
     /**
      * See documentation of {@link Users#multipleTypeVariable}.
      */
-    public static <A, B> Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair<A, B>> someMultipleTypeVariable(
+    public static <A, B> Iterable<Pair<A, B>> someMultipleTypeVariable(
             A a, B b) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.multipleTypeVariable(a, b));
     }
 
@@ -62,7 +68,7 @@ class UsersIterables {
      * See documentation of {@link Users#primitiveSubtypes}.
      */
     public static Iterable<Integer> somePrimitiveSubtypes() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.primitiveSubtypes());
     }
 
@@ -70,7 +76,7 @@ class UsersIterables {
      * See documentation of {@link Users#bounds}.
      */
     public static <T extends Enum<T>> Iterable<T> someBounds(Class<T> enumClass) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.bounds(enumClass));
     }
 
@@ -78,7 +84,7 @@ class UsersIterables {
      * See documentation of {@link Users#complexSubtypes}.
      */
     public static Iterable<String> someComplexSubtypes() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.complexSubtypes());
     }
 
@@ -86,7 +92,7 @@ class UsersIterables {
      * See documentation of {@link Users#varArgsArrays}.
      */
     public static Iterable<String> someVarArgsArrays(String... a) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.varArgsArrays(a));
     }
 
@@ -94,7 +100,7 @@ class UsersIterables {
      * See documentation of {@link Users#parameters}.
      */
     public static Iterable<Integer> someParameters(int min, int max) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(Users.parameters(min, max));
     }
 }

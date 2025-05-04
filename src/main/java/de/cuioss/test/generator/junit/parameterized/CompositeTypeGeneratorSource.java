@@ -32,13 +32,19 @@ import java.lang.annotation.Target;
  * <p>
  * This annotation allows you to combine multiple {@link TypedGenerator} implementations
  * to generate combinations of values for your parameterized tests. The generators
- * can be specified either by class or by method reference.
+ * can be specified in three ways:
  * </p>
+ * <ul>
+ *   <li>By class using {@code generatorClasses}</li>
+ *   <li>By method reference using {@code generatorMethods}</li>
+ *   <li>By generator type using {@code generators} with {@link GeneratorType} enum values</li>
+ * </ul>
  * 
  * <h2>Example Usage</h2>
  * 
  * <pre>
  * {@code
+ * // Using generator classes
  * @ParameterizedTest
  * @CompositeTypeGeneratorSource(
  *     generatorClasses = {
@@ -53,6 +59,7 @@ import java.lang.annotation.Target;
  *     // Test with combinations of text and number
  * }
  * 
+ * // Using generator methods
  * @ParameterizedTest
  * @CompositeTypeGeneratorSource(
  *     generatorMethods = {
@@ -62,6 +69,21 @@ import java.lang.annotation.Target;
  *     count = 3
  * )
  * void testWithMultipleMethodGenerators(String text, Integer number) {
+ *     assertNotNull(text);
+ *     assertNotNull(number);
+ *     // Test with combinations of text and number
+ * }
+ * 
+ * // Using generator types from the Generators class
+ * @ParameterizedTest
+ * @CompositeTypeGeneratorSource(
+ *     generators = {
+ *         GeneratorType.NON_EMPTY_STRINGS,
+ *         GeneratorType.INTEGERS
+ *     },
+ *     count = 3
+ * )
+ * void testWithGeneratorTypes(String text, Integer number) {
  *     assertNotNull(text);
  *     assertNotNull(number);
  *     // Test with combinations of text and number
@@ -82,6 +104,7 @@ import java.lang.annotation.Target;
  * @since 2.0
  * @see TypedGenerator
  * @see CompositeTypeGeneratorArgumentsProvider
+ * @see GeneratorType
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -106,6 +129,15 @@ public @interface CompositeTypeGeneratorSource {
      * @return the method names
      */
     String[] generatorMethods() default {};
+
+    /**
+     * The generator types to use from {@link de.cuioss.test.generator.Generators} class.
+     * This is a convenient way to use the standard generators without having to create
+     * custom generator classes or methods.
+     * 
+     * @return the generator types
+     */
+    GeneratorType[] generators() default {};
 
     /**
      * Number of combinations to generate.

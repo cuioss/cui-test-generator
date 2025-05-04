@@ -15,6 +15,12 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class PrimitiveGeneratorSamples {
 
     /**
@@ -84,7 +90,7 @@ public class PrimitiveGeneratorSamples {
      * See documentation of {@link PrimitiveGenerators#integers}.
      */
     public static Integer anyInteger(int lo, int hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
+            Distribution distribution) {
         return PrimitiveGenerators.integers(lo, hi, distribution).next();
     }
 
@@ -141,35 +147,35 @@ public class PrimitiveGeneratorSamples {
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static java.util.Date anyDate() {
+    public static Date anyDate() {
         return PrimitiveGenerators.dates().next();
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static java.util.Date anyDate(java.util.concurrent.TimeUnit precision) {
+    public static Date anyDate(TimeUnit precision) {
         return PrimitiveGenerators.dates(precision).next();
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static java.util.Date anyDate(java.util.Date low, java.util.Date high) {
+    public static Date anyDate(Date low, Date high) {
         return PrimitiveGenerators.dates(low, high).next();
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static java.util.Date anyDate(long low, long high) {
+    public static Date anyDate(long low, long high) {
         return PrimitiveGenerators.dates(low, high).next();
     }
 
     /**
      * See documentation of {@link PrimitiveGenerators#dates}.
      */
-    public static java.util.Date anyDate(Long low, Long high, java.util.concurrent.TimeUnit precision) {
+    public static Date anyDate(Long low, Long high, TimeUnit precision) {
         return PrimitiveGenerators.dates(low, high, precision).next();
     }
 
@@ -198,7 +204,7 @@ public class PrimitiveGeneratorSamples {
      * See documentation of {@link PrimitiveGenerators#doubles}.
      */
     public static Double anyDouble(double lo, double hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
+            Distribution distribution) {
         return PrimitiveGenerators.doubles(lo, hi, distribution).next();
     }
 
@@ -276,7 +282,7 @@ public class PrimitiveGeneratorSamples {
      * See documentation of {@link PrimitiveGenerators#longs}.
      */
     public static Long anyLong(long lo, long hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
+            Distribution distribution) {
         return PrimitiveGenerators.longs(lo, hi, distribution).next();
     }
 
@@ -325,8 +331,8 @@ public class PrimitiveGeneratorSamples {
     /**
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
-    public static String anyString(de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> length,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Character> characters) {
+    public static String anyString(Generator<Integer> length,
+            Generator<Character> characters) {
         return PrimitiveGenerators.strings(length, characters).next();
     }
 
@@ -334,7 +340,7 @@ public class PrimitiveGeneratorSamples {
      * See documentation of {@link PrimitiveGenerators#strings}.
      */
     public static String anyString(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Character> characterGenerator) {
+            Generator<Character> characterGenerator) {
         return PrimitiveGenerators.strings(characterGenerator).next();
     }
 
@@ -413,7 +419,7 @@ public class PrimitiveGeneratorSamples {
      * See documentation of {@link PrimitiveGenerators#bytes}.
      */
     public static Byte anyByte(byte lo, byte hi,
-            de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution distribution) {
+            Distribution distribution) {
         return PrimitiveGenerators.bytes(lo, hi, distribution).next();
     }
 }

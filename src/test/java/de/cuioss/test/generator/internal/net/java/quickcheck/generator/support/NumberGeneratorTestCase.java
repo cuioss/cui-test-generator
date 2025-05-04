@@ -45,7 +45,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
     protected abstract Generator<T> generator(byte lo, byte hi, Distribution distribution);
 
     @Test
-    void testBounds() {
+    void bounds() {
 
         var expectedLt = 0.2;
         var expectedGt = 0.2;
@@ -60,7 +60,7 @@ abstract class NumberGeneratorTestCase<T extends Number> {
     }
 
     @Test
-    void testBoundsGausian() {
+    void boundsGausian() {
         var expectedLt = 0.5;
         var expectedGt = 0.2;
         var generator = generator(LOW_VALUE, HIGH_VALUE, Distribution.POSITIV_NORMAL);
