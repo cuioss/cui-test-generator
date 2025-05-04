@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
+import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -51,6 +52,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
 
     private Class<? extends TypedGenerator<?>>[] generatorClasses;
     private String[] generatorMethods;
+    private GeneratorType[] generators;
     private int count;
     private boolean cartesianProduct;
     private long seed;
@@ -59,6 +61,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
     public void accept(CompositeTypeGeneratorSource annotation) {
         generatorClasses = annotation.generatorClasses();
         generatorMethods = annotation.generatorMethods();
+        generators = annotation.generators();
         count = Math.max(1, annotation.count());
         cartesianProduct = annotation.cartesianProduct();
         seed = annotation.seed();
@@ -71,26 +74,31 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
 
     @Override
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
-        if (generatorClasses.length == 0 && generatorMethods.length == 0) {
-            throw new JUnitException("At least one generator class or method must be specified");
+        if (generatorClasses.length == 0 && generatorMethods.length == 0 && generators.length == 0) {
+            throw new JUnitException("At least one generator class, method, or type must be specified");
         }
 
         // Create generator instances
-        List<TypedGenerator<?>> generators = new ArrayList<>();
+        List<TypedGenerator<?>> generatorInstances = new ArrayList<>();
 
         // Add generators from classes
         for (Class<? extends TypedGenerator<?>> generatorClass : generatorClasses) {
-            generators.add(createGeneratorInstance(generatorClass));
+            generatorInstances.add(createGeneratorInstance(generatorClass));
         }
 
         // Add generators from methods
         for (String methodName : generatorMethods) {
-            generators.add(GeneratorMethodResolver.getGenerator(methodName, context));
+            generatorInstances.add(GeneratorMethodResolver.getGenerator(methodName, context));
+        }
+
+        // Add generators from GeneratorType enum values
+        for (GeneratorType generatorType : generators) {
+            generatorInstances.add(createGeneratorFromType(generatorType));
         }
 
         // Generate values from each generator
         List<List<Object>> generatedValues = new ArrayList<>();
-        for (TypedGenerator<?> generator : generators) {
+        for (TypedGenerator<?> generator : generatorInstances) {
             List<Object> values = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 values.add(generator.next());
@@ -193,5 +201,24 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         }
 
         return arguments.stream();
+    }
+
+    /**
+     * Creates a TypedGenerator from a GeneratorType enum value.
+     * 
+     * @param generatorType the generator type
+     * @return a TypedGenerator instance
+     * @throws JUnitException if the generator cannot be created
+     */
+    @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
+    private TypedGenerator<?> createGeneratorFromType(GeneratorType generatorType) {
+        try {
+            // Use reflection to invoke the method on Generators class
+            var methodName = generatorType.getMethodName();
+            var method = Generators.class.getMethod(methodName);
+            return (TypedGenerator<?>) method.invoke(null);
+        } catch (Exception e) {
+            throw new JUnitException("Failed to create generator from type: " + generatorType, e);
+        }
     }
 }

@@ -84,7 +84,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Override
     @Test
-    void testBounds() {
+    void bounds() {
         var loHi = sortedLists(integers(), fixedValues(2)).next();
         int lo = loHi.get(0);
         int hi = loHi.get(1);
@@ -101,7 +101,7 @@ class IntegerGeneratorTest extends WholeNumberGeneratorTestCase<Integer> {
 
     @Override
     @Test
-    void testBoundsGausian() {
+    void boundsGausian() {
         var loHi = sortedLists(integers(), fixedValues(2)).next();
         int lo = loHi.get(0);
         int hi = loHi.get(1);

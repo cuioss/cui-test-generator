@@ -51,6 +51,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(5).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(true).anyTimes();
         expect(annotation.seed()).andReturn(123L).anyTimes();
@@ -74,6 +75,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(0).anyTimes(); // Should use default of 1
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
         expect(annotation.seed()).andReturn(0L).anyTimes(); // Should use system time
@@ -97,6 +99,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
         expect(annotation.seed()).andReturn(0L).anyTimes();
@@ -119,6 +122,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
         expect(annotation.seed()).andReturn(42L).anyTimes();
@@ -135,7 +139,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         assertEquals(3, arguments.size());
         for (Arguments args : arguments) {
             assertEquals(1, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
+            assertInstanceOf(String.class, args.get()[0]);
         }
         verify(context);
     }
@@ -151,6 +155,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
         expect(annotation.seed()).andReturn(0L).anyTimes();
@@ -167,7 +172,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         assertEquals(2, arguments.size());
         for (Arguments args : arguments) {
             assertEquals(1, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
+            assertInstanceOf(String.class, args.get()[0]);
         }
         verify(context);
     }
@@ -183,6 +188,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(true).anyTimes();
         expect(annotation.seed()).andReturn(0L).anyTimes();
@@ -199,8 +205,8 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         assertEquals(4, arguments.size()); // 2x2 cartesian product
         for (Arguments args : arguments) {
             assertEquals(2, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
-            assertTrue(args.get()[1] instanceof Integer);
+            assertInstanceOf(String.class, args.get()[0]);
+            assertInstanceOf(Integer.class, args.get()[1]);
         }
         verify(context);
     }
@@ -216,6 +222,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
         expect(annotation.generatorMethods()).andReturn(generatorMethods).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
         expect(annotation.seed()).andReturn(0L).anyTimes();
@@ -232,8 +239,8 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         assertEquals(3, arguments.size()); // 3 pairs (not cartesian product)
         for (Arguments args : arguments) {
             assertEquals(2, args.get().length);
-            assertTrue(args.get()[0] instanceof String);
-            assertTrue(args.get()[1] instanceof Integer);
+            assertInstanceOf(String.class, args.get()[0]);
+            assertInstanceOf(Integer.class, args.get()[1]);
         }
         verify(context);
     }
