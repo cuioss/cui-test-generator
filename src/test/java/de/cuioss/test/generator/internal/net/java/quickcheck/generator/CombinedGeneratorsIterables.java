@@ -15,14 +15,25 @@
  */
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator;
 
+import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
+import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
+import de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class CombinedGeneratorsIterables {
 
     /**
      * See documentation of {@link CombinedGenerators#uniqueValues}.
      */
     public static <T> Iterable<T> someUniqueValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator, int tries) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator, int tries) {
+        return Iterables
                 .toIterable(CombinedGenerators.uniqueValues(generator, tries));
     }
 
@@ -30,9 +41,9 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#uniqueValues}.
      */
     public static <T> Iterable<T> someUniqueValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator,
-            java.util.Comparator<? super T> comparator, int tries) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator,
+            Comparator<? super T> comparator, int tries) {
+        return Iterables
                 .toIterable(CombinedGenerators.uniqueValues(generator, comparator, tries));
     }
 
@@ -40,9 +51,9 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#uniqueValues}.
      */
     public static <T> Iterable<T> someUniqueValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator,
-            java.util.Comparator<? super T> comparator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator,
+            Comparator<? super T> comparator) {
+        return Iterables
                 .toIterable(CombinedGenerators.uniqueValues(generator, comparator));
     }
 
@@ -50,19 +61,19 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#uniqueValues}.
      */
     public static <T> Iterable<T> someUniqueValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator) {
+        return Iterables
                 .toIterable(CombinedGenerators.uniqueValues(generator));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#triples}.
      */
-    public static <A, B, C> Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple<A, B, C>> someTriples(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<A> first,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<B> second,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<C> third) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <A, B, C> Iterable<Triple<A, B, C>> someTriples(
+            Generator<A> first,
+            Generator<B> second,
+            Generator<C> third) {
+        return Iterables
                 .toIterable(CombinedGenerators.triples(first, second, third));
     }
 
@@ -70,7 +81,7 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#intArrays}.
      */
     public static Iterable<int[]> someIntArrays() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.intArrays());
     }
 
@@ -78,8 +89,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#intArrays}.
      */
     public static Iterable<int[]> someIntArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.intArrays(size));
     }
 
@@ -87,9 +98,9 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#intArrays}.
      */
     public static Iterable<int[]> someIntArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Integer> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.intArrays(content, size));
     }
 
@@ -97,7 +108,7 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#ensureValues}.
      */
     public static <T> Iterable<T> someEnsureValues(Iterable<T> ensuredValues) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.ensureValues(ensuredValues));
     }
 
@@ -106,7 +117,7 @@ public class CombinedGeneratorsIterables {
      */
     @SafeVarargs
     public static <T> Iterable<T> someEnsureValues(T... content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.ensureValues(content));
     }
 
@@ -114,8 +125,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#ensureValues}.
      */
     public static <T> Iterable<T> someEnsureValues(Iterable<T> ensuredValues,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> otherValues) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> otherValues) {
+        return Iterables
                 .toIterable(CombinedGenerators.ensureValues(ensuredValues, otherValues));
     }
 
@@ -123,8 +134,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#ensureValues}.
      */
     public static <T> Iterable<T> someEnsureValues(Iterable<T> ensuredValues, int window,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> otherValues) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> otherValues) {
+        return Iterables
                 .toIterable(CombinedGenerators.ensureValues(ensuredValues, window, otherValues));
     }
 
@@ -133,7 +144,7 @@ public class CombinedGeneratorsIterables {
      */
     @SafeVarargs
     public static <T> Iterable<T> someNullsAnd(T... values) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.nullsAnd(values));
     }
 
@@ -141,8 +152,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#nullsAnd}.
      */
     public static <T> Iterable<T> someNullsAnd(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator) {
+        return Iterables
                 .toIterable(CombinedGenerators.nullsAnd(generator));
     }
 
@@ -150,18 +161,18 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#nullsAnd}.
      */
     public static <T> Iterable<T> someNullsAnd(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator, int weight) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator, int weight) {
+        return Iterables
                 .toIterable(CombinedGenerators.nullsAnd(generator, weight));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#pairs}.
      */
-    public static <A, B> Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair<A, B>> somePairs(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<A> first,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<B> second) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <A, B> Iterable<Pair<A, B>> somePairs(
+            Generator<A> first,
+            Generator<B> second) {
+        return Iterables
                 .toIterable(CombinedGenerators.pairs(first, second));
     }
 
@@ -169,8 +180,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#frequency}.
      */
     public static <T> Iterable<T> someFrequency(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator, int weight) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator, int weight) {
+        return Iterables
                 .toIterable(CombinedGenerators.frequency(generator, weight));
     }
 
@@ -178,8 +189,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#oneOf}.
      */
     public static <T> Iterable<T> someOneOf(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator) {
+        return Iterables
                 .toIterable(CombinedGenerators.oneOf(generator));
     }
 
@@ -187,164 +198,164 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#duplicates}.
      */
     @SafeVarargs
-    public static <T> Iterable<java.util.List<T>> someDuplicates(T... input) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someDuplicates(T... input) {
+        return Iterables
                 .toIterable(CombinedGenerators.duplicates(input));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#duplicates}.
      */
-    public static <T> Iterable<java.util.List<T>> someDuplicates(Iterable<T> input) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someDuplicates(Iterable<T> input) {
+        return Iterables
                 .toIterable(CombinedGenerators.duplicates(input));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#maps}.
      */
-    public static <K, V> Iterable<java.util.Map<K, V>> someMaps(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<K> keys,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<V> values) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <K, V> Iterable<Map<K, V>> someMaps(
+            Generator<K> keys,
+            Generator<V> values) {
+        return Iterables
                 .toIterable(CombinedGenerators.maps(keys, values));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#maps}.
      */
-    public static <K, V> Iterable<java.util.Map<K, V>> someMaps(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<K> keys,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<V> values,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <K, V> Iterable<Map<K, V>> someMaps(
+            Generator<K> keys,
+            Generator<V> values,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.maps(keys, values, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#maps}.
      */
-    public static <K, V> Iterable<java.util.Map<K, V>> someMaps(java.util.Map<K, V> supermap) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <K, V> Iterable<Map<K, V>> someMaps(Map<K, V> supermap) {
+        return Iterables
                 .toIterable(CombinedGenerators.maps(supermap));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#maps}.
      */
-    public static <K, V> Iterable<java.util.Map<K, V>> someMaps(java.util.Map<K, V> supermap,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> sizes) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <K, V> Iterable<Map<K, V>> someMaps(Map<K, V> supermap,
+            Generator<Integer> sizes) {
+        return Iterables
                 .toIterable(CombinedGenerators.maps(supermap, sizes));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sortedLists}.
      */
-    public static <T extends Comparable<T>> Iterable<java.util.List<T>> someSortedLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<List<T>> someSortedLists(
+            Generator<T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.sortedLists(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sortedLists}.
      */
-    public static <T extends Comparable<T>> Iterable<java.util.List<T>> someSortedLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content, int low, int high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<List<T>> someSortedLists(
+            Generator<T> content, int low, int high) {
+        return Iterables
                 .toIterable(CombinedGenerators.sortedLists(content, low, high));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sortedLists}.
      */
-    public static <T extends Comparable<T>> Iterable<java.util.List<T>> someSortedLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<List<T>> someSortedLists(
+            Generator<T> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.sortedLists(content, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#nonEmptySets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someNonEmptySets(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someNonEmptySets(
+            Generator<? extends T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.nonEmptySets(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#vectors}.
      */
-    public static <T> Iterable<java.util.List<T>> someVectors(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content, int size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someVectors(
+            Generator<T> content, int size) {
+        return Iterables
                 .toIterable(CombinedGenerators.vectors(content, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> Iterable<java.util.List<T>> someLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someLists(
+            Generator<? extends T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.lists(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> Iterable<java.util.List<T>> someLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someLists(
+            Generator<? extends T> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.lists(content, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> Iterable<java.util.List<T>> someLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content, int low, int high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someLists(
+            Generator<? extends T> content, int low, int high) {
+        return Iterables
                 .toIterable(CombinedGenerators.lists(content, low, high));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#lists}.
      */
-    public static <T> Iterable<java.util.List<T>> someLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content, int low) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someLists(
+            Generator<? extends T> content, int low) {
+        return Iterables
                 .toIterable(CombinedGenerators.lists(content, low));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sortedPairs}.
      */
-    public static <T extends Comparable<T>> Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair<T, T>> someSortedPairs(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<Pair<T, T>> someSortedPairs(
+            Generator<T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.sortedPairs(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sortedTriple}.
      */
-    public static <T extends Comparable<T>> Iterable<de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple<T, T, T>> someSortedTriple(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<Triple<T, T, T>> someSortedTriple(
+            Generator<T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.sortedTriple(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#nonEmptyIterators}.
      */
-    public static <T> Iterable<java.util.Iterator<T>> someNonEmptyIterators(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Iterator<T>> someNonEmptyIterators(
+            Generator<T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.nonEmptyIterators(content));
     }
 
@@ -352,8 +363,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#arrays}.
      */
     public static <T> Iterable<T[]> someArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content, Class<T> type) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<? extends T> content, Class<T> type) {
+        return Iterables
                 .toIterable(CombinedGenerators.arrays(content, type));
     }
 
@@ -361,37 +372,37 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#arrays}.
      */
     public static <T> Iterable<T[]> someArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size, Class<T> type) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<? extends T> content,
+            Generator<Integer> size, Class<T> type) {
+        return Iterables
                 .toIterable(CombinedGenerators.arrays(content, size, type));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#iterators}.
      */
-    public static <T> Iterable<java.util.Iterator<T>> someIterators(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Iterator<T>> someIterators(
+            Generator<? extends T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.iterators(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#iterators}.
      */
-    public static <T> Iterable<java.util.Iterator<T>> someIterators(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Iterator<T>> someIterators(
+            Generator<? extends T> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.iterators(content, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#nonEmptyLists}.
      */
-    public static <T> Iterable<java.util.List<T>> someNonEmptyLists(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someNonEmptyLists(
+            Generator<? extends T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.nonEmptyLists(content));
     }
 
@@ -399,8 +410,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#nonEmptyArrays}.
      */
     public static <T> Iterable<T[]> someNonEmptyArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content, Class<T> type) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<? extends T> content, Class<T> type) {
+        return Iterables
                 .toIterable(CombinedGenerators.nonEmptyArrays(content, type));
     }
 
@@ -408,7 +419,7 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#byteArrays}.
      */
     public static Iterable<byte[]> someByteArrays() {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.byteArrays());
     }
 
@@ -416,8 +427,8 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#byteArrays}.
      */
     public static Iterable<byte[]> someByteArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.byteArrays(size));
     }
 
@@ -425,9 +436,9 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#byteArrays}.
      */
     public static Iterable<byte[]> someByteArrays(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Byte> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<Byte> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.byteArrays(content, size));
     }
 
@@ -436,8 +447,8 @@ public class CombinedGeneratorsIterables {
      */
     @SafeVarargs
     public static <T> Iterable<T> someExcludeValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator, T... excluded) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator, T... excluded) {
+        return Iterables
                 .toIterable(CombinedGenerators.excludeValues(generator, excluded));
     }
 
@@ -446,7 +457,7 @@ public class CombinedGeneratorsIterables {
      */
     @SafeVarargs
     public static <T> Iterable<T> someExcludeValues(Iterable<T> values, T... excluded) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.excludeValues(values, excluded));
     }
 
@@ -454,7 +465,7 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#excludeValues}.
      */
     public static <T> Iterable<T> someExcludeValues(Iterable<T> values, Iterable<T> excluded) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+        return Iterables
                 .toIterable(CombinedGenerators.excludeValues(values, excluded));
     }
 
@@ -462,36 +473,36 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#excludeValues}.
      */
     public static <T> Iterable<T> someExcludeValues(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> generator, Iterable<T> excluded) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+            Generator<T> generator, Iterable<T> excluded) {
+        return Iterables
                 .toIterable(CombinedGenerators.excludeValues(generator, excluded));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someSets(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(
+            Generator<? extends T> content) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(content));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someSets(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(
+            Generator<? extends T> content,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(content, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someSets(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<? extends T> content, int low, int high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(
+            Generator<? extends T> content, int low, int high) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(content, low, high));
     }
 
@@ -499,64 +510,64 @@ public class CombinedGeneratorsIterables {
      * See documentation of {@link CombinedGenerators#sets}.
      */
     @SafeVarargs
-    public static <T> Iterable<java.util.Set<T>> someSets(T... superset) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(T... superset) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(superset));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someSets(Iterable<T> superset) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(Iterable<T> superset) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(superset));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#sets}.
      */
-    public static <T> Iterable<java.util.Set<T>> someSets(Iterable<T> superset,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<Set<T>> someSets(Iterable<T> superset,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.sets(superset, size));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
-    public static <T extends Comparable<T>> Iterable<java.util.List<T>> someStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<List<T>> someStrictlyOrdered(
+            Generator<T> input) {
+        return Iterables
                 .toIterable(CombinedGenerators.strictlyOrdered(input));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
-    public static <T extends Comparable<T>> Iterable<java.util.List<T>> someStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input, int low, int high) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T extends Comparable<T>> Iterable<List<T>> someStrictlyOrdered(
+            Generator<T> input, int low, int high) {
+        return Iterables
                 .toIterable(CombinedGenerators.strictlyOrdered(input, low, high));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
-    public static <T> Iterable<java.util.List<T>> someStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input,
-            java.util.Comparator<T> comparator) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someStrictlyOrdered(
+            Generator<T> input,
+            Comparator<T> comparator) {
+        return Iterables
                 .toIterable(CombinedGenerators.strictlyOrdered(input, comparator));
     }
 
     /**
      * See documentation of {@link CombinedGenerators#strictlyOrdered}.
      */
-    public static <T> Iterable<java.util.List<T>> someStrictlyOrdered(
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<T> input,
-            java.util.Comparator<T> comparator,
-            de.cuioss.test.generator.internal.net.java.quickcheck.Generator<Integer> size) {
-        return de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables
+    public static <T> Iterable<List<T>> someStrictlyOrdered(
+            Generator<T> input,
+            Comparator<T> comparator,
+            Generator<Integer> size) {
+        return Iterables
                 .toIterable(CombinedGenerators.strictlyOrdered(input, comparator, size));
     }
 }

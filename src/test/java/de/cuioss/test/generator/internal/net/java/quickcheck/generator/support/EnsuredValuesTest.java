@@ -118,7 +118,7 @@ class EnsuredValuesTest {
         var rest = new HashSet<>(VALUES);
         for (var i = 0; i < window; i++) {
             var n = generator.next();
-            assertTrue(rest.remove(n) || n.equals(DISJUNCT_STRING));
+            assertTrue(rest.remove(n) || DISJUNCT_STRING.equals(n));
         }
         assertTrue(rest.isEmpty());
         assertEquals(DISJUNCT_STRING, generator.next());

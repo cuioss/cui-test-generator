@@ -29,6 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.platform.commons.JUnitException;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -140,7 +141,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
             return findMethod(clazz, methodName);
         }
 
-        public java.util.List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
+        public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
             return generateArguments(generator);
         }
     }

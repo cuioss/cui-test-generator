@@ -71,7 +71,7 @@ public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
             getAvailableZoneIds().stream().map(ZoneId::of).toList());
 
     @Override
-    public java.time.ZoneOffset next() {
+    public ZoneOffset next() {
         return LocalDateTime.now().atZone(ZONE_IDS_GEN.next()).getOffset();
     }
 
