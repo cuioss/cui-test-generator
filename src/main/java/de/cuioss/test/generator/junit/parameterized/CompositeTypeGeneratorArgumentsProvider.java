@@ -55,7 +55,6 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
     private GeneratorType[] generators;
     private int count;
     private boolean cartesianProduct;
-    private long seed;
 
     @Override
     public void accept(CompositeTypeGeneratorSource annotation) {
@@ -64,12 +63,6 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         generators = annotation.generators();
         count = Math.max(1, annotation.count());
         cartesianProduct = annotation.cartesianProduct();
-        seed = annotation.seed();
-
-        // If seed is 0, set it to current time for better test reproducibility
-        if (seed == 0L) {
-            seed = System.currentTimeMillis();
-        }
     }
 
     @Override
@@ -112,7 +105,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
 
     @Override
     protected long getSeed() {
-        return seed;
+        return -1L;
     }
 
     @Override

@@ -57,7 +57,6 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
     private String factoryMethod;
     private String[] methodParameters;
     private int count;
-    private long seed;
 
     @Override
     public void accept(TypeGeneratorFactorySource annotation) {
@@ -65,7 +64,6 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
         factoryMethod = annotation.factoryMethod();
         methodParameters = annotation.methodParameters();
         count = Math.max(1, annotation.count());
-        seed = annotation.seed();
     }
 
     @Override
@@ -79,7 +77,7 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
 
     @Override
     protected long getSeed() {
-        return seed;
+        return -1L;
     }
 
     @Override
@@ -93,7 +91,6 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
      * @return a TypedGenerator instance
      * @throws JUnitException if the factory method cannot be found or invoked
      */
-    @SuppressWarnings("unchecked")
     private TypedGenerator<?> createGeneratorFromFactory() {
         requireNonNull(factoryClass, "Factory class must not be null");
         requireNonNull(factoryMethod, "Factory method must not be null");
