@@ -95,7 +95,7 @@ class AllTestsReproducible {
 }
 ----
 
-===== Preferred: GeneratorsSource with Enum-Based Configuration
+===== GeneratorsSource with Enum-Based Configuration
 
 The recommended way to use generators in parameterized tests is with `@GeneratorsSource` and the `GeneratorType` enum:
 

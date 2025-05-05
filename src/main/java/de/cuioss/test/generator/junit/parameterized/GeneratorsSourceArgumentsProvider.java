@@ -77,7 +77,13 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
     @Override
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         // Create generator instance using factory
-        var generator = createGeneratorFromFactory();
+        TypedGenerator<?> generator = null;
+        try {
+            generator = createGeneratorFromFactory();
+        } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        }
 
         // Generate values
         return generateArguments(generator).stream();
@@ -99,35 +105,26 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
      * @return a TypedGenerator instance
      * @throws JUnitException if the generator cannot be created
      */
-    private TypedGenerator<?> createGeneratorFromFactory() {
+    private TypedGenerator<?> createGeneratorFromFactory() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         requireNonNull(generatorType, "Generator type must not be null");
 
-        try {
-            // Check if this is a domain-specific generator (factory class is the generator class itself)
-            if (isDomainSpecificGenerator()) {
-                return createDomainSpecificGenerator();
-            }
-
-            // Otherwise, it's a standard generator from the Generators class
-            String methodName = generatorType.getMethodName();
-            requireNonNull(methodName, "Generator method name must not be null");
-
-            // Determine the appropriate parameters based on the generator method
-            if (isStringGenerator(methodName)) {
-                return createStringGenerator();
-            } else if (isNumberGenerator(methodName)) {
-                return createNumberGenerator();
-            } else if (isParameterlessGenerator(methodName)) {
-                return createParameterlessGenerator();
-            } else {
-                throw new UnsupportedOperationException(
-                        "Generator method '" + methodName + "' requires parameters but is not a supported type. " +
-                                "Only string-based and number-based generators with parameters are supported.");
-            }
-        } catch (Exception e) {
-            throw new JUnitException(
-                    "Failed to create TypedGenerator for generator type: " + generatorType, e);
+        // Check if this is a domain-specific generator (factory class is the generator class itself)
+        if (isDomainSpecificGenerator()) {
+            return createDomainSpecificGenerator();
         }
+
+        // Otherwise, it's a standard generator from the Generators class
+        String methodName = generatorType.getMethodName();
+        requireNonNull(methodName, "Generator method name must not be null");
+
+        return switch (generatorType.getParameterType()) {
+            case NEEDS_BOUNDS -> createStringGenerator();
+            case NEEDS_RANGE -> createNumberGenerator();
+            case PARAMETERLESS -> createParameterlessGenerator();
+            default -> throw new UnsupportedOperationException(
+                    "Generator method '" + methodName + "' has an unsupported parameter type: " + generatorType.getParameterType() + ". " +
+                            "Only PARAMETERLESS, NEEDS_BOUNDS, and NEEDS_RANGE parameter types are supported.");
+        };
     }
 
     /**
@@ -168,30 +165,36 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
      * @return a TypedGenerator for numbers
      */
     private TypedGenerator<?> createNumberGenerator() throws InvocationTargetException, IllegalAccessException {
-        // Determine the parameter types based on the generator method
+        // Determine the parameter types based on the generator return type
         Class<?>[] paramTypes;
         Object[] params;
 
-        String methodName = generatorType.getMethodName();
+        Class<?> returnType = generatorType.getReturnType();
 
-        if (methodName.startsWith("int")) {
+        if (Integer.class.equals(returnType)) {
             paramTypes = new Class<?>[]{int.class, int.class};
             params = new Object[]{Integer.parseInt(low), Integer.parseInt(high)};
-        } else if (methodName.startsWith("long")) {
+        } else if (Long.class.equals(returnType)) {
             paramTypes = new Class<?>[]{long.class, long.class};
             params = new Object[]{Long.parseLong(low), Long.parseLong(high)};
-        } else if (methodName.startsWith("double")) {
+        } else if (Double.class.equals(returnType)) {
             paramTypes = new Class<?>[]{double.class, double.class};
             params = new Object[]{Double.parseDouble(low), Double.parseDouble(high)};
-        } else if (methodName.startsWith("float")) {
+        } else if (Float.class.equals(returnType)) {
             paramTypes = new Class<?>[]{float.class, float.class};
             params = new Object[]{Float.parseFloat(low), Float.parseFloat(high)};
+        } else if (Short.class.equals(returnType)) {
+            paramTypes = new Class<?>[]{short.class, short.class};
+            params = new Object[]{Short.parseShort(low), Short.parseShort(high)};
+        } else if (Byte.class.equals(returnType)) {
+            paramTypes = new Class<?>[]{byte.class, byte.class};
+            params = new Object[]{Byte.parseByte(low), Byte.parseByte(high)};
         } else {
             throw new UnsupportedOperationException(
-                    "Number generator '" + methodName + "' is not supported.");
+                    "Number generator for type '" + returnType.getSimpleName() + "' is not supported.");
         }
 
-        Method method = findMethodWithParameters(methodName, paramTypes);
+        Method method = findMethodWithParameters(generatorType.getMethodName(), paramTypes);
         return (TypedGenerator<?>) method.invoke(null, params);
     }
 
@@ -205,47 +208,6 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
         return (TypedGenerator<?>) method.invoke(null);
     }
 
-    /**
-     * Checks if the generator method is for a string-based generator that accepts size parameters.
-     *
-     * @param methodName the generator method name
-     * @return true if it's a string generator with size parameters
-     */
-    private boolean isStringGenerator(String methodName) {
-        return "strings".equals(methodName) ||
-                "letterStrings".equals(methodName);
-    }
-
-    /**
-     * Checks if the generator method is for a number-based generator that accepts range parameters.
-     *
-     * @param methodName the generator method name
-     * @return true if it's a number generator with range parameters
-     */
-    private boolean isNumberGenerator(String methodName) {
-        // These are the specific method names that accept range parameters
-        return "integers".equals(methodName) ||
-                "longs".equals(methodName) ||
-                "doubles".equals(methodName) ||
-                "floats".equals(methodName);
-    }
-
-    /**
-     * Checks if the generator method is for a generator that doesn't require parameters.
-     *
-     * @param methodName the generator method name
-     * @return true if it's a parameterless generator
-     */
-    private boolean isParameterlessGenerator(String methodName) {
-        return "nonEmptyStrings".equals(methodName) ||
-                "nonBlankStrings".equals(methodName) ||
-                "integerObjects".equals(methodName) ||
-                "longObjects".equals(methodName) ||
-                "doubleObjects".equals(methodName) ||
-                "floatObjects".equals(methodName) ||
-                "booleans".equals(methodName) ||
-                "fixedValues".equals(methodName);
-    }
 
     /**
      * Finds a generator method in the Generators class with the specified parameter types.

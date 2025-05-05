@@ -32,17 +32,41 @@ import java.lang.annotation.Target;
  * 
  * <p>
  * This annotation simplifies the use of the {@link Generators} utility class by eliminating
- * the need to specify the factory class. You only need to provide the factory method name
- * and any required parameters specific to the generator type.
+ * the need to specify the factory class. You only need to provide the generator type from the
+ * {@link GeneratorType} enum and any required parameters specific to the generator type.
+ * </p>
+ * 
+ * <h2>Generator Types</h2>
+ * <p>
+ * The {@link GeneratorType} enum provides access to all available generators, categorized as:
+ * <ul>
+ *   <li>String generators (e.g., NON_EMPTY_STRINGS, STRINGS, LETTER_STRINGS)</li>
+ *   <li>Boolean generators (e.g., BOOLEANS, BOOLEAN_OBJECTS)</li>
+ *   <li>Number generators (e.g., INTEGERS, DOUBLES, LONGS)</li>
+ *   <li>Date and time generators (e.g., DATES, LOCAL_DATES, ZONED_DATE_TIMES)</li>
+ *   <li>Other generators (e.g., CLASS_TYPES, LOCALES, URLS)</li>
+ *   <li>Domain-specific generators (e.g., DOMAIN_EMAIL, DOMAIN_PERSON, DOMAIN_UUID)</li>
+ * </ul>
+ * </p>
+ * 
+ * <h2>Parameter Types</h2>
+ * <p>
+ * Generators have different parameter requirements:
+ * <ul>
+ *   <li>PARAMETERLESS: No additional parameters needed</li>
+ *   <li>NEEDS_BOUNDS: Requires minSize and maxSize for string length</li>
+ *   <li>NEEDS_RANGE: Requires low and high for numeric ranges</li>
+ * </ul>
  * </p>
  * 
  * <h2>Example Usage</h2>
  * 
  * <pre>
  * {@code
+ * // Parameterless generator
  * @ParameterizedTest
  * @GeneratorsSource(
- *     generator = "nonEmptyStrings",
+ *     generator = GeneratorType.NON_EMPTY_STRINGS,
  *     count = 5
  * )
  * void testWithGeneratedStrings(String value) {
@@ -50,10 +74,10 @@ import java.lang.annotation.Target;
  *     assertFalse(value.isEmpty());
  * }
  * 
- * // With string parameters
+ * // String generator with bounds
  * @ParameterizedTest
  * @GeneratorsSource(
- *     generator = "strings",
+ *     generator = GeneratorType.STRINGS,
  *     minSize = 3,
  *     maxSize = 10,
  *     count = 10
@@ -63,10 +87,10 @@ import java.lang.annotation.Target;
  *     assertTrue(value.length() >= 3 && value.length() <= 10);
  * }
  * 
- * // With number parameters
+ * // Number generator with range
  * @ParameterizedTest
  * @GeneratorsSource(
- *     generator = "integers",
+ *     generator = GeneratorType.INTEGERS,
  *     low = "1",
  *     high = "100",
  *     count = 10
@@ -75,6 +99,31 @@ import java.lang.annotation.Target;
  *     assertNotNull(value);
  *     assertTrue(value >= 1 && value <= 100);
  * }
+ * 
+ * // Domain-specific generator
+ * @ParameterizedTest
+ * @GeneratorsSource(
+ *     generator = GeneratorType.DOMAIN_EMAIL,
+ *     count = 3
+ * )
+ * void testWithEmailAddresses(String value) {
+ *     assertNotNull(value);
+ *     assertTrue(value.contains("@"));
+ * }
+ * 
+ * // With specific seed for reproducible tests
+ * @ParameterizedTest
+ * @GeneratorsSource(
+ *     generator = GeneratorType.STRINGS,
+ *     minSize = 3,
+ *     maxSize = 10,
+ *     seed = 42L,
+ *     count = 3
+ * )
+ * void testWithSpecificSeed(String value) {
+ *     // This test will always generate the same values
+ *     assertNotNull(value);
+ * }
  * }
  * </pre>
  * 
@@ -82,6 +131,7 @@ import java.lang.annotation.Target;
  * @since 2.0
  * @see TypedGenerator
  * @see Generators
+ * @see GeneratorType
  * @see GeneratorsSourceArgumentsProvider
  */
 @Target({ElementType.METHOD})
@@ -93,6 +143,17 @@ public @interface GeneratorsSource {
     /**
      * The generator type to use from {@link Generators}.
      * 
+     * <p>
+     * Select a generator from the {@link GeneratorType} enum, which includes:
+     * <ul>
+     *   <li>String generators: NON_EMPTY_STRINGS, STRINGS, LETTER_STRINGS, etc.</li>
+     *   <li>Number generators: INTEGERS, DOUBLES, LONGS, etc.</li>
+     *   <li>Date/time generators: LOCAL_DATES, ZONED_DATE_TIMES, etc.</li>
+     *   <li>Domain-specific generators: DOMAIN_EMAIL, DOMAIN_PERSON, etc.</li>
+     *   <li>Other generators: BOOLEANS, URLS, LOCALES, etc.</li>
+     * </ul>
+     * </p>
+     * 
      * @return the generator type
      */
     GeneratorType generator();
@@ -100,7 +161,8 @@ public @interface GeneratorsSource {
 
     /**
      * Minimum size for String-based generators.
-     * Only applicable for String generators that accept size parameters.
+     * Only applicable for String generators with parameter type NEEDS_BOUNDS
+     * (e.g., STRINGS, LETTER_STRINGS).
      * 
      * @return the minimum size for strings
      */
@@ -108,7 +170,8 @@ public @interface GeneratorsSource {
 
     /**
      * Maximum size for String-based generators.
-     * Only applicable for String generators that accept size parameters.
+     * Only applicable for String generators with parameter type NEEDS_BOUNDS
+     * (e.g., STRINGS, LETTER_STRINGS).
      * 
      * @return the maximum size for strings
      */
@@ -116,7 +179,8 @@ public @interface GeneratorsSource {
 
     /**
      * Lower bound for number-based generators.
-     * Only applicable for number generators that accept range parameters.
+     * Only applicable for number generators with parameter type NEEDS_RANGE
+     * (e.g., INTEGERS, DOUBLES, LONGS, FLOATS).
      * The value is parsed according to the generator's number type.
      * 
      * @return the lower bound as a string
@@ -125,7 +189,8 @@ public @interface GeneratorsSource {
 
     /**
      * Upper bound for number-based generators.
-     * Only applicable for number generators that accept range parameters.
+     * Only applicable for number generators with parameter type NEEDS_RANGE
+     * (e.g., INTEGERS, DOUBLES, LONGS, FLOATS).
      * The value is parsed according to the generator's number type.
      * 
      * @return the upper bound as a string
@@ -134,6 +199,7 @@ public @interface GeneratorsSource {
 
     /**
      * Number of instances to generate.
+     * This controls how many test invocations will occur with different generated values.
      * 
      * @return the number of instances to generate, defaults to 1
      */
@@ -147,7 +213,24 @@ public @interface GeneratorsSource {
      * </p>
      * <p>
      * This is useful for tests that need specific generated values regardless of
-     * the global seed configuration.
+     * the global seed configuration. Using the same seed value will always produce
+     * the same sequence of generated values, making tests deterministic.
+     * </p>
+     * <p>
+     * Example:
+     * <pre>
+     * {@code
+     * @ParameterizedTest
+     * @GeneratorsSource(
+     *     generator = GeneratorType.STRINGS,
+     *     seed = 42L,
+     *     count = 3
+     * )
+     * void testWithSpecificSeed(String value) {
+     *     // This test will always generate the same sequence of values
+     * }
+     * }
+     * </pre>
      * </p>
      * 
      * @return the seed to use, or -1 to use the globally configured seed

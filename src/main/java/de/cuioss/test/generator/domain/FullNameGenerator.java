@@ -49,6 +49,13 @@ public class FullNameGenerator implements TypedGenerator<String> {
     private final TypedGenerator<String> familyNames;
 
     /**
+     * Creates a new FullNameGenerator with the default locale (English).
+     */
+    public FullNameGenerator() {
+        this(Locale.ENGLISH);
+    }
+
+    /**
      * Creates a new FullNameGenerator for the specified locale.
      * 
      * @param locale Determines the name set to use. If {@link Locale#GERMAN}, German names will be used;
