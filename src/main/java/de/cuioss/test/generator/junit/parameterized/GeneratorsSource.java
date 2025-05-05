@@ -47,7 +47,7 @@ import java.lang.annotation.Target;
  *   <li>Other generators (e.g., CLASS_TYPES, LOCALES, URLS)</li>
  *   <li>Domain-specific generators (e.g., DOMAIN_EMAIL, DOMAIN_PERSON, DOMAIN_UUID)</li>
  * </ul>
- * </p>
+ * 
  * 
  * <h2>Parameter Types</h2>
  * <p>
@@ -57,7 +57,7 @@ import java.lang.annotation.Target;
  *   <li>NEEDS_BOUNDS: Requires minSize and maxSize for string length</li>
  *   <li>NEEDS_RANGE: Requires low and high for numeric ranges</li>
  * </ul>
- * </p>
+ * 
  * 
  * <h2>Example Usage</h2>
  * 
@@ -152,7 +152,6 @@ public @interface GeneratorsSource {
      *   <li>Domain-specific generators: DOMAIN_EMAIL, DOMAIN_PERSON, etc.</li>
      *   <li>Other generators: BOOLEANS, URLS, LOCALES, etc.</li>
      * </ul>
-     * </p>
      * 
      * @return the generator type
      */
