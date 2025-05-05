@@ -151,6 +151,20 @@ class GeneratorsSourceTest {
         assertNotNull(email);
         assertTrue(email.contains("@"));
     }
+
+    // Using GeneratorSeed for reproducible tests
+    @ParameterizedTest
+    @GeneratorSeed(42L)
+    @GeneratorsSource(
+        generator = GeneratorType.STRINGS,
+        minSize = 3,
+        maxSize = 10,
+        count = 3
+    )
+    void testWithSpecificSeed(String value) {
+        // This test will always generate the same values
+        assertNotNull(value);
+    }
 }
 ----
 
@@ -230,6 +244,19 @@ class FactoryBasedGeneratorTest {
         assertNotNull(value);
         assertTrue(value >= 1 && value <= 100);
     }
+
+    // With specific seed for reproducible tests
+    @ParameterizedTest
+    @GeneratorSeed(42L)
+    @TypeGeneratorFactorySource(
+        factoryClass = MyGeneratorFactory.class,
+        factoryMethod = "createStringGenerator",
+        count = 3
+    )
+    void testWithSpecificSeed(String value) {
+        // This test will always generate the same values
+        assertNotNull(value);
+    }
 }
 
 // Factory class
@@ -306,6 +333,22 @@ class CompositeGeneratorTest {
         count = 2
     )
     void testWithMultipleMethodGenerators(String text, Integer number) {
+        assertNotNull(text);
+        assertNotNull(number);
+    }
+
+    // With specific seed for reproducible tests
+    @ParameterizedTest
+    @GeneratorSeed(42L)
+    @CompositeTypeGeneratorSource(
+        generators = {
+            GeneratorType.NON_EMPTY_STRINGS,
+            GeneratorType.INTEGERS
+        },
+        count = 2
+    )
+    void testWithSpecificSeed(String text, Integer number) {
+        // This test will always generate the same combinations
         assertNotNull(text);
         assertNotNull(number);
     }

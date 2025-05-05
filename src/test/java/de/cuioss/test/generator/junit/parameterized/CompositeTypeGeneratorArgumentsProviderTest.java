@@ -24,6 +24,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.platform.commons.JUnitException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.easymock.EasyMock.*;
@@ -54,7 +55,6 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(5).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(true).anyTimes();
-        expect(annotation.seed()).andReturn(123L).anyTimes();
         replay(annotation);
 
         // when
@@ -62,7 +62,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         // then
         assertEquals(5, provider.getCount());
-        assertEquals(123L, provider.getSeed());
+        assertEquals(-1L, provider.getSeed()); // Default seed is -1L
         verify(annotation);
     }
 
@@ -78,7 +78,6 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(0).anyTimes(); // Should use default of 1
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes(); // Should use system time
         replay(annotation);
 
         // when
@@ -86,7 +85,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
 
         // then
         assertEquals(1, provider.getCount()); // Default is 1
-        assertTrue(provider.getSeed() > 0); // Should be set to system time
+        assertEquals(-1L, provider.getSeed()); // Default seed is -1L
         verify(annotation);
     }
 
@@ -102,10 +101,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
@@ -125,10 +124,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
-        expect(annotation.seed()).andReturn(42L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -158,10 +157,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -191,10 +190,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(true).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -225,10 +224,10 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         expect(annotation.generators()).andReturn(new GeneratorType[0]).anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
         expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when

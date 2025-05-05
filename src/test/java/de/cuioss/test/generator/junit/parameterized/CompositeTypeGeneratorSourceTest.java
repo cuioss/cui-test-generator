@@ -19,6 +19,7 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.impl.NonBlankStringGenerator;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
@@ -92,12 +93,12 @@ class CompositeTypeGeneratorSourceTest {
 
     @ParameterizedTest
     @DisplayName("Should generate values with specific seed")
+    @GeneratorSeed(42L)
     @CompositeTypeGeneratorSource(
             generatorClasses = {
                     NonBlankStringGenerator.class,
                     TestBooleanGenerator.class
             },
-            seed = 42L,
             count = 2
     )
     void shouldGenerateValuesWithSpecificSeed(String text, Boolean flag) {

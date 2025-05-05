@@ -48,7 +48,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("testMethod").anyTimes();
         expect(annotation.count()).andReturn(5).anyTimes();
-        expect(annotation.seed()).andReturn(123L).anyTimes();
         replay(annotation);
 
         // when
@@ -56,7 +55,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         // then
         assertEquals(5, provider.getCount());
-        assertEquals(123L, provider.getSeed());
+        assertEquals(-1L, provider.getSeed()); // Default seed is -1L
         verify(annotation);
     }
 
@@ -65,7 +64,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("testMethod").anyTimes();
         expect(annotation.count()).andReturn(0).anyTimes(); // Should use default of 1
-        expect(annotation.seed()).andReturn(0L).anyTimes(); // Should use system time
         replay(annotation);
 
         // when
@@ -73,7 +71,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         // then
         assertEquals(1, provider.getCount()); // Default is 1
-        assertTrue(provider.getSeed() > 0); // Should be set to system time
+        assertEquals(-1L, provider.getSeed()); // Default seed is -1L
         verify(annotation);
     }
 
@@ -82,7 +80,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("createGenerator").anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
@@ -110,7 +107,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         String methodReference = TestFactoryClass.class.getName() + "#createGenerator";
         expect(annotation.value()).andReturn(methodReference).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
@@ -134,7 +130,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("invalid#format#method").anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
@@ -150,7 +145,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("nonExistentMethod").anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 
@@ -168,7 +162,6 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // given
         expect(annotation.value()).andReturn("com.nonexistent.Class#method").anyTimes();
         expect(annotation.count()).andReturn(1).anyTimes();
-        expect(annotation.seed()).andReturn(0L).anyTimes();
         replay(annotation);
         provider.accept(annotation);
 

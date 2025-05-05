@@ -119,13 +119,4 @@ public @interface TypeGeneratorMethodSource {
      */
     int count() default 1;
 
-    /**
-     * The seed value to use for the TypedGenerator.
-     * <p>
-     * If set to 0, a random seed will be used.
-     * </p>
-     * 
-     * @return the seed value to use
-     */
-    long seed() default 0L;
 }

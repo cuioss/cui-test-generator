@@ -60,7 +60,6 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
     private String low;
     private String high;
     private int count;
-    private long seed;
 
     @Override
     public void accept(GeneratorsSource annotation) {
@@ -71,13 +70,12 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
         low = annotation.low();
         high = annotation.high();
         count = Math.max(1, annotation.count());
-        seed = annotation.seed();
     }
 
     @Override
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         // Create generator instance using factory
-        TypedGenerator<?> generator = null;
+        TypedGenerator<?> generator;
         try {
             generator = createGeneratorFromFactory();
         } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
@@ -91,7 +89,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
 
     @Override
     protected long getSeed() {
-        return seed;
+        return -1L;
     }
 
     @Override
@@ -121,9 +119,6 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
             case NEEDS_BOUNDS -> createStringGenerator();
             case NEEDS_RANGE -> createNumberGenerator();
             case PARAMETERLESS -> createParameterlessGenerator();
-            default -> throw new UnsupportedOperationException(
-                    "Generator method '" + methodName + "' has an unsupported parameter type: " + generatorType.getParameterType() + ". " +
-                            "Only PARAMETERLESS, NEEDS_BOUNDS, and NEEDS_RANGE parameter types are supported.");
         };
     }
 

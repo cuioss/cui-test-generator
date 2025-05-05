@@ -51,15 +51,11 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
 
     private String methodName;
     private int count;
-    private long seed = System.currentTimeMillis();
 
     @Override
     public void accept(TypeGeneratorMethodSource annotation) {
         methodName = annotation.value();
         count = Math.max(1, annotation.count());
-        if (annotation.seed() != 0) {
-            seed = annotation.seed();
-        }
     }
 
     @Override
@@ -80,7 +76,7 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
      * @return the seed value used for this provider
      */
     public long getSeed() {
-        return seed;
+        return -1L;
     }
 
     /**

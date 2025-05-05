@@ -18,6 +18,7 @@ package de.cuioss.test.generator.junit.parameterized;
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
@@ -66,10 +67,10 @@ class TypeGeneratorFactorySourceTest {
 
     @ParameterizedTest
     @DisplayName("Should generate values with specific seed")
+    @GeneratorSeed(42L)
     @TypeGeneratorFactorySource(
             factoryClass = TestGeneratorFactory.class,
             factoryMethod = "createStringGenerator",
-            seed = 42L,
             count = 3
     )
     void shouldGenerateValuesWithSpecificSeed(String value) {

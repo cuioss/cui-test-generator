@@ -17,6 +17,7 @@ package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.domain.Person;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import de.cuioss.tools.logging.CuiLogger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -49,11 +50,11 @@ class GeneratorsSourceTest {
 
     @ParameterizedTest
     @DisplayName("Should generate values with specific seed")
+    @GeneratorSeed(42L)
     @GeneratorsSource(
             generator = GeneratorType.STRINGS,
             minSize = 3,
             maxSize = 10,
-            seed = 42L,
             count = 3
     )
     void shouldGenerateValuesWithSpecificSeed(String value) {

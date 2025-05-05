@@ -158,18 +158,4 @@ public @interface CompositeTypeGeneratorSource {
      */
     boolean cartesianProduct() default true;
 
-    /**
-     * Optional seed for reproducible tests.
-     * <p>
-     * If set to a value other than -1, this seed will be used for all generators
-     * instead of the seed managed by {@link de.cuioss.test.generator.junit.GeneratorControllerExtension}.
-     * </p>
-     * <p>
-     * This is useful for tests that need specific generated values regardless of
-     * the global seed configuration.
-     * </p>
-     * 
-     * @return the seed to use, or -1 to use the globally configured seed
-     */
-    long seed() default -1L;
 }
