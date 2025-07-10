@@ -6,7 +6,7 @@
 
 image:https://github.com/cuioss/cui-test-generator/actions/workflows/maven.yml/badge.svg[Java CI with Maven,link=https://github.com/cuioss/cui-test-generator/actions/workflows/maven.yml]
 image:http://img.shields.io/:license-apache-blue.svg[License,link=http://www.apache.org/licenses/LICENSE-2.0.html]
-image:https://maven-badges.herokuapp.com/maven-central/de.cuioss.test/cui-test-generator/badge.svg[Maven Central,link=https://maven-badges.herokuapp.com/maven-central/de.cuioss.test/cui-test-generator]
+image:https://img.shields.io/maven-central/v/de.cuioss.test/cui-test-generator.svg?label=Maven%20Central["Maven Central", link="https://central.sonatype.com/artifact/de.cuioss.test/cui-test-generator"]
 
 https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator[image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=alert_status[Quality Gate Status]]
 image:https://sonarcloud.io/api/project_badges/measure?project=cuioss_cui-test-generator&metric=ncloc[Lines of Code,link=https://sonarcloud.io/summary/new_code?id=cuioss_cui-test-generator]
