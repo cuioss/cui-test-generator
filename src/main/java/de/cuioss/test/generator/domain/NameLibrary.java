@@ -18,9 +18,8 @@ package de.cuioss.test.generator.domain;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import lombok.experimental.UtilityClass;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides lists of names for creating name {@link Generator}.
@@ -45,14 +44,8 @@ public final class NameLibrary {
      * The intersection of {@link #FIRSTNAMES_FEMALE_GERMAN} and
      * {@link #FIRSTNAMES_MALE_GERMAN}.
      */
-    public static final List<String> FIRSTNAMES_ANY_GERMAN;
-
-    static {
-        List<String> temp = new ArrayList<>();
-        temp.addAll(FIRSTNAMES_FEMALE_GERMAN);
-        temp.addAll(FIRSTNAMES_MALE_GERMAN);
-        FIRSTNAMES_ANY_GERMAN = Collections.unmodifiableList(temp);
-    }
+    public static final List<String> FIRSTNAMES_ANY_GERMAN = 
+            Stream.concat(FIRSTNAMES_FEMALE_GERMAN.stream(), FIRSTNAMES_MALE_GERMAN.stream()).toList();
 
     /** Top 10 names in Wikipedia */
     public static final List<String> LAST_NAMES_GERMAN = List.of("Müller", "Schmidt", "Schneider", "Fischer",
@@ -72,14 +65,8 @@ public final class NameLibrary {
      * The intersection of {@link #FIRSTNAMES_MALE_ENGLISH} and
      * {@link #FIRSTNAMES_FEMALE_ENGLISH}.
      */
-    public static final List<String> FIRSTNAMES_ANY_ENGLISH;
-
-    static {
-        List<String> temp = new ArrayList<>();
-        temp.addAll(FIRSTNAMES_FEMALE_ENGLISH);
-        temp.addAll(FIRSTNAMES_MALE_ENGLISH);
-        FIRSTNAMES_ANY_ENGLISH = Collections.unmodifiableList(temp);
-    }
+    public static final List<String> FIRSTNAMES_ANY_ENGLISH = 
+            Stream.concat(FIRSTNAMES_FEMALE_ENGLISH.stream(), FIRSTNAMES_MALE_ENGLISH.stream()).toList();
 
     /** Top 10 names from U.S. Census Bureau */
     public static final List<String> LAST_NAMES_ENGLISH = List.of("Smith", "Johnson", "Williams", "Brown",

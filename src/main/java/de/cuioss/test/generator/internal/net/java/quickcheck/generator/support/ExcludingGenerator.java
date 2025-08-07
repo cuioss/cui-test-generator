@@ -29,9 +29,7 @@ public class ExcludingGenerator<T> extends VetoableGenerator<T> {
         super(generator, tries);
         Objects.requireNonNull(excluded, "excluded");
         this.excluded = new ArrayList<>();
-        for (T item : excluded) {
-            this.excluded.add(item);
-        }
+        excluded.forEach(this.excluded::add);
     }
 
     @Override
