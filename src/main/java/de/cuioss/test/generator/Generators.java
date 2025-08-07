@@ -272,9 +272,7 @@ public class Generators {
      */
     public static <T> TypedGenerator<T> fixedValues(final Class<T> type, final Iterable<T> values) {
         var list = new ArrayList<T>();
-        for (T value : values) {
-            list.add(value);
-        }
+        values.forEach(list::add);
         return new QuickCheckGeneratorAdapter<>(type, new FixedValuesGenerator<>(list));
     }
 

@@ -41,7 +41,7 @@ public class SubmapGenerator<K, V> implements Generator<Map<K, V>> {
     @Override
     public Map<K, V> next() {
         Set<Entry<K, V>> entries = subsets.next();
-        Map<K, V> submap = HashMap.newHashMap(entries.size());
+        Map<K, V> submap = new HashMap<>(entries.size());
         for (Entry<K, V> e : entries)
             submap.put(e.getKey(), e.getValue());
         return submap;

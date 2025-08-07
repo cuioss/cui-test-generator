@@ -69,7 +69,7 @@ class GeneratorsTest {
         @DisplayName("should handle non-blank strings")
         void shouldHandleNonBlankStrings() {
             var result2 = nonBlankStrings().next();
-            assertFalse(result2 == null || result2.trim().isEmpty());
+            assertFalse(result2 == null || result2.isBlank());
             assertEquals(String.class, nonBlankStrings().getType());
         }
 

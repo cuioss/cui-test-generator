@@ -38,9 +38,7 @@ public class FixedValuesGenerator<T> implements Generator<T> {
 
     public FixedValuesGenerator(Iterable<T> values) {
         var list = new ArrayList<T>();
-        for (T value : values) {
-            list.add(value);
-        }
+        values.forEach(list::add);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("values");
         }

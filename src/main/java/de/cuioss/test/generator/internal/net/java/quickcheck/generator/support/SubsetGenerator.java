@@ -35,9 +35,7 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
         requireNonNull(superset, "superset");
         requireNonNull(size, "size");
         var list = new ArrayList<T>();
-        for (T item : superset) {
-            list.add(item);
-        }
+        superset.forEach(list::add);
         this.superset = list;
         this.sizes = size;
     }
@@ -45,9 +43,7 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
     public SubsetGenerator(Iterable<T> superset) {
         requireNonNull(superset, "superset");
         var list = new ArrayList<T>();
-        for (T item : superset) {
-            list.add(item);
-        }
+        superset.forEach(list::add);
         this.superset = list;
         this.sizes = new IntegerGenerator(0, list.size());
     }
