@@ -75,7 +75,7 @@ public class PrimitiveGenerators {
     }
 
     /**
-     * Creates a new String genearator which generates strings whose length ranges
+     * Creates a new String generator which generates strings whose length ranges
      * from zero to given length.
      */
     public static ExtendibleGenerator<Character, String> strings(int max) {
