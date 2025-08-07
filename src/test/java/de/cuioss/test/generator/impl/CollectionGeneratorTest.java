@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CollectionGeneratorTest {
 
     private final CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.letterStrings());
-    private final ComplexBean complexBean = new ComplexBean();
 
     @Nested
     @DisplayName("handle collection type intersections")

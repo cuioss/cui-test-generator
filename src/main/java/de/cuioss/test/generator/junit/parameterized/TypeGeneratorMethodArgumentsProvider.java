@@ -16,6 +16,7 @@
 package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.TypedGenerator;
+import lombok.Getter;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -50,6 +51,8 @@ import java.util.stream.Stream;
 public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, AnnotationConsumer<TypeGeneratorMethodSource> {
 
     private String methodName;
+
+    @Getter
     private int count;
 
     @Override
@@ -79,10 +82,4 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
         return -1L;
     }
 
-    /**
-     * @return the count of values to generate
-     */
-    public int getCount() {
-        return count;
-    }
 }

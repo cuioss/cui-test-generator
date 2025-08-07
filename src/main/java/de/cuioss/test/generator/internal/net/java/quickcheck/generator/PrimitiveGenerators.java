@@ -19,6 +19,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.ExtendibleGenerator
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.ObjectGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
+import lombok.experimental.UtilityClass;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
  * </p>
  */
 @SuppressWarnings({"WeakerAccess"})
+@UtilityClass
 public class PrimitiveGenerators {
 
     public static final int DEFAULT_STRING_MAX_LENGTH = Generators.DEFAULT_STRING_MAX_LENGTH;

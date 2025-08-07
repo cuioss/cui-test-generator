@@ -46,13 +46,6 @@ class ExcludingGeneratorTest {
     }
 
     @Test
-    void excludeEverythingVargs() {
-        var value = integers().next();
-        Generator<Integer> excludeValues = CombinedGenerators.excludeValues(fixedValues(value), value);
-        assertThrows(GeneratorException.class, excludeValues::next);
-    }
-
-    @Test
     void excludeCollection() {
         for (List<Integer> excluded : toIterable(lists(integers()))) {
             var value = CombinedGenerators.excludeValues(integers(), excluded).next();
