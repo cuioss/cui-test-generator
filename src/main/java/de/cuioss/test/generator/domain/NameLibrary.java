@@ -44,7 +44,7 @@ public final class NameLibrary {
      * The intersection of {@link #FIRSTNAMES_FEMALE_GERMAN} and
      * {@link #FIRSTNAMES_MALE_GERMAN}.
      */
-    public static final List<String> FIRSTNAMES_ANY_GERMAN = 
+    public static final List<String> FIRSTNAMES_ANY_GERMAN =
             Stream.concat(FIRSTNAMES_FEMALE_GERMAN.stream(), FIRSTNAMES_MALE_GERMAN.stream()).toList();
 
     /** Top 10 names in Wikipedia */
@@ -65,7 +65,7 @@ public final class NameLibrary {
      * The intersection of {@link #FIRSTNAMES_MALE_ENGLISH} and
      * {@link #FIRSTNAMES_FEMALE_ENGLISH}.
      */
-    public static final List<String> FIRSTNAMES_ANY_ENGLISH = 
+    public static final List<String> FIRSTNAMES_ANY_ENGLISH =
             Stream.concat(FIRSTNAMES_FEMALE_ENGLISH.stream(), FIRSTNAMES_MALE_ENGLISH.stream()).toList();
 
     /** Top 10 names from U.S. Census Bureau */
