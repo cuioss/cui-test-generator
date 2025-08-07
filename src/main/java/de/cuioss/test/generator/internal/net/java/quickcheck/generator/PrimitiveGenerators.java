@@ -35,8 +35,6 @@ import java.util.concurrent.TimeUnit;
 @UtilityClass
 public class PrimitiveGenerators {
 
-    public static final int DEFAULT_STRING_MAX_LENGTH = Generators.DEFAULT_STRING_MAX_LENGTH;
-
     /**
      * Create a new string generator.<br>
      *
