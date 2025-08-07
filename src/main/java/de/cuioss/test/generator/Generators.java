@@ -52,7 +52,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.TimeZone;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -272,7 +271,9 @@ public class Generators {
      * @return a {@link TypedGenerator} for the given values
      */
     public static <T> TypedGenerator<T> fixedValues(final Class<T> type, final Iterable<T> values) {
-        return new QuickCheckGeneratorAdapter<>(type, new FixedValuesGenerator<>(mutableList(values)));
+        var list = new ArrayList<T>();
+        values.forEach(list::add);
+        return new QuickCheckGeneratorAdapter<>(type, new FixedValuesGenerator<>(list));
     }
 
     /**

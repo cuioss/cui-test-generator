@@ -57,7 +57,7 @@ class NonBlankStringGeneratorTest {
             var result = underTest.next();
 
             // Assert
-            assertFalse(result.trim().isEmpty(), "Generated string should not be blank");
+            assertFalse(result.isBlank(), "Generated string should not be blank");
         }
 
         @RepeatedTest(5)
@@ -68,7 +68,7 @@ class NonBlankStringGeneratorTest {
 
             // Assert
             assertNotNull(result, "Generated string should not be null");
-            assertFalse(result.trim().isEmpty(), "Generated string should not be blank");
+            assertFalse(result.isBlank(), "Generated string should not be blank");
             assertFalse(result.matches("^\\s+$"), "Generated string should not be only whitespace");
         }
 

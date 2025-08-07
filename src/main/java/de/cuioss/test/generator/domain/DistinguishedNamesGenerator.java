@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.string.Joiner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +67,7 @@ public class DistinguishedNamesGenerator implements TypedGenerator<String> {
         for (var i = 0; i < count; i++) {
             elements.add(prefixes.next() + "=" + values.next());
         }
-        return Joiner.on(',').join(elements);
+        return String.join(",", elements);
     }
 
     @Override

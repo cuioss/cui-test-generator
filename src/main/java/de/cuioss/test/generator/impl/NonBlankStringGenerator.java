@@ -60,7 +60,7 @@ public class NonBlankStringGenerator implements TypedGenerator<String> {
         while (tries < 100) {
             tries++;
             var candidate = SOME_NONEMPTY_STRING.next();
-            if (!candidate.trim().isEmpty()) {
+            if (!candidate.isBlank()) {
                 return candidate;
             }
         }

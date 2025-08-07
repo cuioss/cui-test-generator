@@ -16,8 +16,9 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
-import de.cuioss.tools.string.MoreStrings;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static de.cuioss.test.generator.Generators.fixedValues;
 
@@ -45,7 +46,7 @@ import static de.cuioss.test.generator.Generators.fixedValues;
  */
 public class EmailGenerator implements TypedGenerator<String> {
 
-    private static final CuiLogger LOGGER = new CuiLogger(EmailGenerator.class);
+    private static final Logger LOGGER = Logger.getLogger(EmailGenerator.class.getName());
 
     private final TypedGenerator<String> firstNames = NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator();
     private final TypedGenerator<String> familyNames = NameGenerators.FAMILY_NAMES_ENGLISH.generator();
@@ -69,13 +70,15 @@ public class EmailGenerator implements TypedGenerator<String> {
      * Returns "invalid.email@example.com" if either name component is null or empty.
      */
     public static String createEmail(final String firstname, final String lastname) {
-        if (MoreStrings.isBlank(firstname) || MoreStrings.isBlank(lastname)) {
-            LOGGER.warn("Invalid name components for email generation: firstname='%s', lastname='%s'", firstname, lastname);
+        if (firstname == null || firstname.isBlank() || lastname == null || lastname.isBlank()) {
+            LOGGER.log(Level.WARNING, "Invalid name components for email generation: firstname=''{0}'', lastname=''{1}''", new Object[]{firstname, lastname});
             return "invalid.email@example.com";
         }
+        var tld = TLDS.next();
         var email = (firstname + "." + lastname + "@" + DOMAINS.next()).toLowerCase();
-        LOGGER.debug("Generated email: %s", email + '.' + TLDS.next());
-        return email + '.' + TLDS.next();
+        var fullEmail = email + '.' + tld;
+        LOGGER.log(Level.FINE, "Generated email: {0}", fullEmail);
+        return fullEmail;
     }
 
 }

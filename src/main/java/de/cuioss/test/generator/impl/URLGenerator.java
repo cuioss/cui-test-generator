@@ -19,6 +19,7 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -63,7 +64,7 @@ public class URLGenerator implements TypedGenerator<URL> {
     @Override
     public URL next() {
         try {
-            return new URL(generator.next());
+            return URI.create(generator.next()).toURL();
         } catch (final MalformedURLException e) {
             throw new IllegalStateException(e);
         }

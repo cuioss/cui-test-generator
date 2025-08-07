@@ -17,16 +17,15 @@ package de.cuioss.test.generator;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
-import de.cuioss.tools.property.PropertyMemberInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import static de.cuioss.test.generator.Generators.*;
-import static de.cuioss.tools.string.MoreStrings.isEmpty;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Generators utility class provides")
@@ -41,16 +40,16 @@ class GeneratorsTest {
         void shouldHandleEnumsIfCorrectTypeGiven() {
             assertFalse(enumValuesIfAvailable(Integer.class).isPresent());
             assertFalse(enumValuesIfAvailable(null).isPresent());
-            assertTrue(enumValuesIfAvailable(PropertyMemberInfo.class).isPresent());
-            assertNotNull(enumValuesIfAvailable(PropertyMemberInfo.class).get().next());
-            assertEquals(PropertyMemberInfo.class, enumValuesIfAvailable(PropertyMemberInfo.class).get().getType());
+            assertTrue(enumValuesIfAvailable(TimeUnit.class).isPresent());
+            assertNotNull(enumValuesIfAvailable(TimeUnit.class).get().next());
+            assertEquals(TimeUnit.class, enumValuesIfAvailable(TimeUnit.class).get().getType());
         }
 
         @Test
         @DisplayName("should handle enum values")
         void shouldHandleEnumsValues() {
-            assertNotNull(enumValues(PropertyMemberInfo.class).next());
-            assertEquals(PropertyMemberInfo.class, enumValues(PropertyMemberInfo.class).getType());
+            assertNotNull(enumValues(TimeUnit.class).next());
+            assertEquals(TimeUnit.class, enumValues(TimeUnit.class).getType());
         }
     }
 
@@ -61,21 +60,24 @@ class GeneratorsTest {
         @Test
         @DisplayName("should handle non-empty strings")
         void shouldHandleNonEmptyStrings() {
-            assertFalse(isEmpty(nonEmptyStrings().next()));
+            var result1 = nonEmptyStrings().next();
+            assertFalse(result1 == null || result1.isEmpty());
             assertEquals(String.class, nonEmptyStrings().getType());
         }
 
         @Test
         @DisplayName("should handle non-blank strings")
         void shouldHandleNonBlankStrings() {
-            assertFalse(isEmpty(nonBlankStrings().next()));
+            var result2 = nonBlankStrings().next();
+            assertFalse(result2 == null || result2.isBlank());
             assertEquals(String.class, nonBlankStrings().getType());
         }
 
         @Test
         @DisplayName("should handle strings with limits")
         void shouldHandleStringsWithLimits() {
-            assertFalse(isEmpty(strings(1, 2).next()));
+            var result3 = strings(1, 2).next();
+            assertFalse(result3 == null || result3.isEmpty());
             assertEquals(String.class, strings(1, 2).getType());
         }
 
@@ -88,14 +90,16 @@ class GeneratorsTest {
         @Test
         @DisplayName("should handle letter strings")
         void shouldHandleLetterStrings() {
-            assertFalse(isEmpty(letterStrings().next()));
+            var result4 = letterStrings().next();
+            assertFalse(result4 == null || result4.isEmpty());
             assertEquals(String.class, letterStrings().getType());
         }
 
         @Test
         @DisplayName("should handle letter strings with limits")
         void shouldHandleLetterStringsWithLimits() {
-            assertFalse(isEmpty(letterStrings(1, 2).next()));
+            var result5 = letterStrings(1, 2).next();
+            assertFalse(result5 == null || result5.isEmpty());
             assertEquals(String.class, letterStrings(1, 2).getType());
         }
 

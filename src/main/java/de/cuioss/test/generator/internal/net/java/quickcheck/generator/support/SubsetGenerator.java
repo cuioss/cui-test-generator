@@ -17,14 +17,13 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
 import static java.util.Objects.requireNonNull;
 
 public class SubsetGenerator<T> implements Generator<Set<T>> {
@@ -35,20 +34,30 @@ public class SubsetGenerator<T> implements Generator<Set<T>> {
     public SubsetGenerator(Iterable<T> superset, Generator<Integer> size) {
         requireNonNull(superset, "superset");
         requireNonNull(size, "size");
-        this.superset = mutableList(superset);
+        var list = new ArrayList<T>();
+        superset.forEach(list::add);
+        this.superset = list;
         this.sizes = size;
     }
 
     public SubsetGenerator(Iterable<T> superset) {
-        this(superset, new IntegerGenerator(0, mutableList(superset).size()));
+        requireNonNull(superset, "superset");
+        var list = new ArrayList<T>();
+        superset.forEach(list::add);
+        this.superset = list;
+        this.sizes = new IntegerGenerator(0, list.size());
     }
 
     @Override
     public Set<T> next() {
         Collections.shuffle(superset);
         int size = sizes.next();
-        checkArgument(0 <= size);
-        checkArgument(maxSize(superset) >= size);
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
+        }
+        if (maxSize(superset) < size) {
+            throw new IllegalArgumentException("Size must not exceed superset size");
+        }
         return new HashSet<>(superset.subList(0, size));
     }
 

@@ -17,7 +17,6 @@ package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import de.cuioss.tools.string.Joiner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +71,7 @@ public class MailSubjectGenerator implements TypedGenerator<String> {
         for (var i = 0; i < PrimitiveGenerators.integers(0, 7).next(); i++) {
             elements.add(contents.next());
         }
-        return Joiner.on(' ').join(elements);
+        return String.join(" ", elements);
     }
 
 }

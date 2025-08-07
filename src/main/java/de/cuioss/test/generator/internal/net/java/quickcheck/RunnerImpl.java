@@ -18,7 +18,6 @@ package de.cuioss.test.generator.internal.net.java.quickcheck;
 import java.io.PrintWriter;
 import java.util.Objects;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 class RunnerImpl<T> implements Runner<T> {
@@ -109,7 +108,9 @@ class RunnerImpl<T> implements Runner<T> {
     }
 
     private void setRuns(int runs) {
-        checkArgument(QuickCheck.MIN_NUMBER_OF_RUNS <= runs, "runs");
+        if (QuickCheck.MIN_NUMBER_OF_RUNS > runs) {
+            throw new IllegalArgumentException("runs");
+        }
         maxRuns = 10 * runs;
         this.runs = runs;
     }

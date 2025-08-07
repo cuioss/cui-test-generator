@@ -22,8 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
-
 public class DuplicateGenerator<T> implements Generator<List<T>> {
 
     private final List<T> values;
@@ -31,7 +29,10 @@ public class DuplicateGenerator<T> implements Generator<List<T>> {
 
     public DuplicateGenerator(Iterable<T> values) {
         Objects.requireNonNull(values, "values");
-        this.values = mutableList(values);
+        this.values = new ArrayList<>();
+        for (T item : values) {
+            this.values.add(item);
+        }
         this.subsets = new SubsetGenerator<>(values, new IntegerGenerator(1, this.values.size()));
     }
 

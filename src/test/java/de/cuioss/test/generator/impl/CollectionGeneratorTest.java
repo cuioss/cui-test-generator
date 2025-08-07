@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.Generators;
-import de.cuioss.tools.property.PropertyUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CollectionGeneratorTest {
 
     private final CollectionGenerator<String> generator = new CollectionGenerator<>(Generators.letterStrings());
-    private final ComplexBean complexBean = new ComplexBean();
 
     @Nested
     @DisplayName("handle collection type intersections")
@@ -43,8 +41,7 @@ class CollectionGeneratorTest {
         @DisplayName("correctly handle List type")
         void shouldIntersectList() {
             // Arrange
-            final var expectedType = (Class<Iterable<?>>) PropertyUtil
-                    .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_LIST).get();
+            final var expectedType = (Class<Iterable<?>>) (Class<?>) List.class;
 
             // Act
             final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
@@ -58,8 +55,7 @@ class CollectionGeneratorTest {
         @DisplayName("correctly handle Collection type")
         void shouldIntersectCollection() {
             // Arrange
-            final var expectedType = (Class<Iterable<?>>) PropertyUtil
-                    .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_COLLECTION).get();
+            final var expectedType = (Class<Iterable<?>>) (Class<?>) Collection.class;
 
             // Act
             final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
@@ -73,8 +69,7 @@ class CollectionGeneratorTest {
         @DisplayName("correctly handle Set type")
         void shouldIntersectSet() {
             // Arrange
-            final var expectedType = (Class<Iterable<?>>) PropertyUtil
-                    .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_SET).get();
+            final var expectedType = (Class<Iterable<?>>) (Class<?>) Set.class;
 
             // Act
             final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();
@@ -88,8 +83,7 @@ class CollectionGeneratorTest {
         @DisplayName("correctly handle SortedSet type")
         void shouldIntersectSortedSet() {
             // Arrange
-            final var expectedType = (Class<Iterable<?>>) PropertyUtil
-                    .resolvePropertyType(complexBean.getClass(), ComplexBean.ATTRIBUTE_STRING_SORTED_SET).get();
+            final var expectedType = (Class<Iterable<?>>) (Class<?>) SortedSet.class;
 
             // Act
             final Class<? extends Iterable> collectionClass = generator.nextCollection(expectedType).getClass();

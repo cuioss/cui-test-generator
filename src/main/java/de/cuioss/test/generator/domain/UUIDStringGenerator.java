@@ -16,9 +16,10 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
 
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Generates random UUID strings in the standard 8-4-4-4-12 format (e.g. "550e8400-e29b-41d4-a716-446655440000").
@@ -35,13 +36,13 @@ import java.util.UUID;
  */
 public class UUIDStringGenerator implements TypedGenerator<String> {
 
-    private static final CuiLogger LOGGER = new CuiLogger(UUIDStringGenerator.class);
+    private static final Logger LOGGER = Logger.getLogger(UUIDStringGenerator.class.getName());
     private final TypedGenerator<UUID> uuids = new UUIDGenerator();
 
     @Override
     public String next() {
         var result = uuids.next().toString();
-        LOGGER.debug("Generated UUID: %s", result);
+        LOGGER.log(Level.FINE, "Generated UUID: {0}", result);
         return result;
     }
 

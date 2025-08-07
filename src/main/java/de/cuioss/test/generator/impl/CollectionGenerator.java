@@ -17,16 +17,17 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableSet;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -63,7 +64,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class CollectionGenerator<T> implements TypedGenerator<T> {
 
-    private static final CuiLogger LOGGER = new CuiLogger(CollectionGenerator.class);
+    private static final Logger LOGGER = Logger.getLogger(CollectionGenerator.class.getName());
     private static final String JAVA_UTIL_SORTED_SET = "java.util.SortedSet";
 
     private static final String JAVA_UTIL_COLLECTION = "java.util.Collection";
@@ -140,7 +141,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      * @return a {@link Set} with a given number of elements as maximum.
      */
     public Set<T> set(final int count) {
-        final Set<T> result = mutableSet();
+        final Set<T> result = new HashSet<>();
         for (var i = 0; i < count; i++) {
             result.add(next());
         }
@@ -198,7 +199,7 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
             case JAVA_UTIL_COLLECTION -> list();
             case JAVA_UTIL_SORTED_SET -> sortedSet();
             default -> {
-                LOGGER.info("No specific case defined for %s. Returning list-implementation.", expectedType.getName());
+                LOGGER.log(Level.INFO, "No specific case defined for {0}. Returning list-implementation.", expectedType.getName());
                 yield list();
             }
         };

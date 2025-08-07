@@ -18,8 +18,6 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 
-import static de.cuioss.tools.base.Preconditions.checkState;
-
 public class CharacterGenerator implements Generator<Character> {
 
     public static final Pair<Character, Character> BASIC_LATIN = new Pair<>((char) 0x20, (char) 0x7F);
@@ -33,7 +31,9 @@ public class CharacterGenerator implements Generator<Character> {
     }
 
     public CharacterGenerator(char first, char last) {
-        checkState(last >= first, "first <= last");
+        if (last < first) {
+            throw new IllegalStateException("first <= last");
+        }
         this.generator = new IntegerGenerator(first, last);
     }
 

@@ -24,6 +24,7 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Pair;
 import de.cuioss.test.generator.internal.net.java.quickcheck.collection.Triple;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.Distribution;
 import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ByteArrayGenerator;
+import lombok.experimental.UtilityClass;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -34,6 +35,7 @@ import java.util.Set;
 /**
  * {@link CombinedGenerators} can be used to create custom {@link Generator}s.
  */
+@UtilityClass
 public class CombinedGenerators {
 
     public static final int DEFAULT_COLLECTION_MAX_SIZE = Generators.DEFAULT_COLLECTION_MAX_SIZE;
@@ -524,7 +526,7 @@ public class CombinedGenerators {
      * <p>
      * The entry set of the generated maps are subsets of the given map's entry set.
      * </p>
-     * 
+     *
      * @param supermap of the generated maps
      */
     public static <K, V> Generator<Map<K, V>> maps(Map<K, V> supermap) {
