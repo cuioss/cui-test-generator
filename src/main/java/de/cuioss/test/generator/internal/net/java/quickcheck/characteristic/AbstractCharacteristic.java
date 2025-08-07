@@ -16,6 +16,7 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck.characteristic;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Characteristic;
+import lombok.Getter;
 
 /**
  * {@link AbstractCharacteristic} is an implementation of {@link Characteristic}
@@ -29,14 +30,15 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Characteristic;
 @SuppressWarnings("ProhibitedExceptionDeclared")
 public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
 
+    @Getter
     private final Classification classification = new Classification();
     private final String name;
 
-    public AbstractCharacteristic() {
+    protected AbstractCharacteristic() {
         this(null);
     }
 
-    public AbstractCharacteristic(String name) {
+    protected AbstractCharacteristic(String name) {
         this.name = name;
     }
 
@@ -75,13 +77,6 @@ public abstract class AbstractCharacteristic<T> implements Characteristic<T> {
      * ({@link Characteristic#specify(Object)}).
      */
     protected abstract void doSpecify(T any) throws Throwable;
-
-    /**
-     * {@link Classification} data about the test cases executed.
-     */
-    public Classification getClassification() {
-        return classification;
-    }
 
     @Override
     public void setUp() throws Exception {

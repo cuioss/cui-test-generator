@@ -19,9 +19,10 @@ import de.cuioss.test.generator.TypedGenerator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import static de.cuioss.test.generator.Generators.fixedValues;
 import static de.cuioss.test.generator.Generators.strings;
-import static de.cuioss.tools.collect.CollectionLiterals.immutableList;
 
 /**
  * Provides generators for organization names, including well-known fictional companies.
@@ -48,7 +49,7 @@ public enum OrganizationNameGenerator {
      * Includes companies from literature, movies, TV shows, and comics.
      * Examples: Acme Corp., Stark Industries, Wayne Enterprises
      */
-    READABLE(fixedValues(immutableList("CHOAM", "Acme Corp.", "Sirius Cybernetics Corp.", "MomCorp", "Rich Industries",
+    READABLE(fixedValues(List.of("CHOAM", "Acme Corp.", "Sirius Cybernetics Corp.", "MomCorp", "Rich Industries",
             "Soylent Corp.", "Very Big Corp. of America", "Frobozz Magic Co.", "Warbucks Industries", "Tyrell Corp.",
             "Wayne Enterprises", "Virtucon", "Globex", "Umbrella Corp.", "Wonka Industries", "Stark Industries",
             "Clampett Oil", "Oceanic Airlines", "Yoyodyne Propulsion Sys.", "Cyberdyne Systems Corp.",

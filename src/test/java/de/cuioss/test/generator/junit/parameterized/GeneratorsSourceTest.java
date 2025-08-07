@@ -18,7 +18,6 @@ package de.cuioss.test.generator.junit.parameterized;
 import de.cuioss.test.generator.domain.Person;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import de.cuioss.test.generator.junit.GeneratorSeed;
-import de.cuioss.tools.logging.CuiLogger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,7 +45,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableGeneratorController
 class GeneratorsSourceTest {
 
-    private static final CuiLogger LOGGER = new CuiLogger(GeneratorsSourceTest.class);
 
     @ParameterizedTest
     @DisplayName("Should generate values with specific seed")
@@ -58,7 +56,7 @@ class GeneratorsSourceTest {
             count = 3
     )
     void shouldGenerateValuesWithSpecificSeed(String value) {
-        LOGGER.debug("Seed test: {}", value);
+
         assertNotNull(value);
     }
 
@@ -78,7 +76,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateStrings(String value) {
-            LOGGER.debug("String value test: {}", value);
+
             assertNotNull(value);
             assertTrue(value.length() >= 3 && value.length() <= 10);
         }
@@ -92,7 +90,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateLetterStrings(String value) {
-            LOGGER.debug("Letter string test: {}", value);
+
             assertNotNull(value);
             assertTrue(value.length() >= 3 && value.length() <= 10);
             assertTrue(value.chars().allMatch(Character::isLetter));
@@ -105,7 +103,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateNonEmptyStrings(String value) {
-            LOGGER.debug("Non-empty string test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -117,7 +115,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateNonBlankStrings(String value) {
-            LOGGER.debug("Non-blank string test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isBlank());
         }
@@ -137,7 +135,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateBooleanValues(Boolean value) {
-            LOGGER.debug("Boolean value test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -148,7 +146,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateBooleanObjectValues(Boolean value) {
-            LOGGER.debug("Boolean object test: {}", value);
+
             assertNotNull(value);
         }
     }
@@ -167,7 +165,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateCharacterValues(Character value) {
-            LOGGER.debug("Character value test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -178,7 +176,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateCharacterObjectValues(Character value) {
-            LOGGER.debug("Character object test: {}", value);
+
             assertNotNull(value);
         }
     }
@@ -197,7 +195,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateNumberValues(Number value) {
-            LOGGER.debug("Number value test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -217,7 +215,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateIntegerValuesWithParameters(Integer value) {
-                LOGGER.debug("Integer value test: {}", value);
+
                 assertNotNull(value);
                 assertTrue(value >= 1 && value <= 10);
             }
@@ -229,7 +227,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateIntegerObjectValues(Integer value) {
-                LOGGER.debug("Integer object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -250,7 +248,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateLongValuesWithParameters(Long value) {
-                LOGGER.debug("Long value test: {}", value);
+
                 assertNotNull(value);
                 assertTrue(value >= 1L && value <= 1000L);
             }
@@ -262,7 +260,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateLongObjectValues(Long value) {
-                LOGGER.debug("Long object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -283,7 +281,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateDoubleValuesWithParameters(Double value) {
-                LOGGER.debug("Double value test: {}", value);
+
                 assertNotNull(value);
                 assertTrue(value >= 1.0 && value <= 10.0);
             }
@@ -295,7 +293,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateDoubleObjectValues(Double value) {
-                LOGGER.debug("Double object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -316,7 +314,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateFloatValuesWithParameters(Float value) {
-                LOGGER.debug("Float value test: {}", value);
+
                 assertNotNull(value);
                 assertTrue(value >= 1.0f && value <= 10.0f);
             }
@@ -328,7 +326,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateFloatObjectValues(Float value) {
-                LOGGER.debug("Float object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -347,7 +345,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateShortValuesWithParameters(Short value) {
-                LOGGER.debug("Short value test: {}", value);
+
                 assertNotNull(value);
             }
 
@@ -358,7 +356,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateShortObjectValues(Short value) {
-                LOGGER.debug("Short object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -377,7 +375,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateByteValuesWithParameters(Byte value) {
-                LOGGER.debug("Byte value test: {}", value);
+
                 assertNotNull(value);
             }
 
@@ -388,7 +386,7 @@ class GeneratorsSourceTest {
                     count = 3
             )
             void shouldGenerateByteObjectValues(Byte value) {
-                LOGGER.debug("Byte object test: {}", value);
+
                 assertNotNull(value);
             }
         }
@@ -408,7 +406,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateDateValues(Date value) {
-            LOGGER.debug("Date value test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -419,7 +417,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateLocalDateValues(LocalDate value) {
-            LOGGER.debug("LocalDate test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -430,7 +428,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateLocalTimeValues(LocalTime value) {
-            LOGGER.debug("LocalTime test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -441,7 +439,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateLocalDateTimeValues(LocalDateTime value) {
-            LOGGER.debug("LocalDateTime test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -452,7 +450,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateZonedDateTimeValues(ZonedDateTime value) {
-            LOGGER.debug("ZonedDateTime test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -463,7 +461,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateTimeZoneValues(TimeZone value) {
-            LOGGER.debug("TimeZone test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -474,7 +472,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateZoneIdValues(ZoneId value) {
-            LOGGER.debug("ZoneId test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -485,7 +483,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateZoneOffsetValues(ZoneOffset value) {
-            LOGGER.debug("ZoneOffset test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -496,7 +494,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateTemporalValues(Temporal value) {
-            LOGGER.debug("Temporal test: {}", value);
+
             assertNotNull(value);
         }
     }
@@ -515,7 +513,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateClassValues(Class<?> value) {
-            LOGGER.debug("Class test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -526,7 +524,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateLocaleValues(Locale value) {
-            LOGGER.debug("Locale test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -537,7 +535,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateSerializableValues(Serializable value) {
-            LOGGER.debug("Serializable test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -548,7 +546,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateRuntimeExceptionValues(RuntimeException value) {
-            LOGGER.debug("RuntimeException test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -559,7 +557,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateThrowableValues(Throwable value) {
-            LOGGER.debug("Throwable test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -570,7 +568,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateUrlValues(URL value) {
-            LOGGER.debug("URL test: {}", value);
+
             assertNotNull(value);
         }
     }
@@ -589,7 +587,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateBlindText(String value) {
-            LOGGER.debug("Blind text test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -601,7 +599,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateCityNames(String value) {
-            LOGGER.debug("City name test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -613,7 +611,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateDistinguishedNames(String value) {
-            LOGGER.debug("Distinguished name test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -625,7 +623,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateEmailAddresses(String value) {
-            LOGGER.debug("Email test: {}", value);
+
             assertNotNull(value);
             assertTrue(value.contains("@"));
         }
@@ -637,7 +635,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateFullNames(String value) {
-            LOGGER.debug("Full name test: {}", value);
+
             assertNotNull(value);
             assertTrue(value.contains(" "));
         }
@@ -649,7 +647,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateMailSubjects(String value) {
-            LOGGER.debug("Mail subject test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -661,7 +659,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGeneratePersonObjects(Person value) {
-            LOGGER.debug("Person object test: {}", value);
+
             assertNotNull(value);
             assertNotNull(value.getFirstname());
             assertNotNull(value.getLastname());
@@ -674,7 +672,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGeneratePhoneNumbers(String value) {
-            LOGGER.debug("Phone number test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -686,7 +684,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateStreetNames(String value) {
-            LOGGER.debug("Street name test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -698,7 +696,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateStreets(String value) {
-            LOGGER.debug("Street test: {}", value);
+
             assertNotNull(value);
             assertFalse(value.isEmpty());
         }
@@ -710,7 +708,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateUUIDs(String value) {
-            LOGGER.debug("UUID test: {}", value);
+
             assertNotNull(value);
             assertEquals(36, value.length());
             assertEquals(4, value.split("-").length - 1);
@@ -723,7 +721,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateUUIDObjects(UUID value) {
-            LOGGER.debug("UUID object test: {}", value);
+
             assertNotNull(value);
         }
 
@@ -734,7 +732,7 @@ class GeneratorsSourceTest {
                 count = 3
         )
         void shouldGenerateZipCodes(Integer value) {
-            LOGGER.debug("Zip code test: {}", value);
+
             assertNotNull(value);
             assertTrue(value > 0);
         }

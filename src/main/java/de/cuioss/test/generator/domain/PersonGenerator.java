@@ -16,7 +16,9 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.tools.logging.CuiLogger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Generates realistic {@link Person} objects for testing purposes.
@@ -40,7 +42,7 @@ import de.cuioss.tools.logging.CuiLogger;
  */
 public class PersonGenerator implements TypedGenerator<Person> {
 
-    private static final CuiLogger LOGGER = new CuiLogger(PersonGenerator.class);
+    private static final Logger LOGGER = Logger.getLogger(PersonGenerator.class.getName());
     private final TypedGenerator<String> firstNames = NameGenerators.FIRSTNAMES_ANY_ENGLISH.generator();
     private final TypedGenerator<String> familyNames = NameGenerators.FAMILY_NAMES_ENGLISH.generator();
     private final TypedGenerator<String> organizations = OrganizationNameGenerator.READABLE.generator();
@@ -54,7 +56,7 @@ public class PersonGenerator implements TypedGenerator<Person> {
         final var title = titles.next();
 
         if (null == firstname || null == lastname) {
-            LOGGER.warn("Generated null name components: firstname=%s, lastname=%s", firstname, lastname);
+            LOGGER.log(Level.WARNING, "Generated null name components: firstname={0}, lastname={1}", new Object[]{firstname, lastname});
         }
 
         var person = Person.builder()
@@ -65,7 +67,7 @@ public class PersonGenerator implements TypedGenerator<Person> {
                 .title(title)
                 .build();
 
-        LOGGER.debug("Generated person: %s %s", firstname, lastname);
+        LOGGER.log(Level.FINE, "Generated person: {0} {1}", new Object[]{firstname, lastname});
         return person;
     }
 

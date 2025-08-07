@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
-
 public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 
     /**
@@ -51,7 +49,9 @@ public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
     @Override
     public FrequencyGenerator<T> add(Generator<T> generator, int weight) {
         Objects.requireNonNull(generator, "generator");
-        checkArgument(EQUAL_WEIGHT_OF_GENERATORS <= weight, "weight");
+        if (EQUAL_WEIGHT_OF_GENERATORS > weight) {
+            throw new IllegalArgumentException("weight");
+        }
 
         this.frequencies.add(new Frequency<>(generator, weight));
         this.sum += weight;
@@ -61,7 +61,9 @@ public class DefaultFrequencyGenerator<T> implements FrequencyGenerator<T> {
 
     @Override
     public T next() {
-        checkArgument(1 <= this.sum, "number of generators");
+        if (1 > this.sum) {
+            throw new IllegalArgumentException("number of generators");
+        }
 
         int next = choose().nextInt();
         for (Frequency<T> pair : this.frequencies) {

@@ -19,7 +19,6 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
 import java.util.List;
 
-import static de.cuioss.tools.collect.MoreCollections.requireNotEmpty;
 
 public class RoundRobinGenerator<T> implements Generator<T> {
 
@@ -27,7 +26,9 @@ public class RoundRobinGenerator<T> implements Generator<T> {
     private int index;
 
     public RoundRobinGenerator(List<Generator<T>> generators) {
-        requireNotEmpty(generators, "generators");
+        if (generators == null || generators.isEmpty()) {
+            throw new IllegalArgumentException("generators");
+        }
         this.generators = generators;
         index = 0;
     }

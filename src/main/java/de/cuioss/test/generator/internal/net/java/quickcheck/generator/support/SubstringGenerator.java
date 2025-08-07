@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.tools.base.Preconditions;
 
 import java.util.Objects;
 
@@ -27,8 +26,12 @@ public class SubstringGenerator implements Generator<String> {
 
     public SubstringGenerator(String superstring, int minSize, int maxSize) {
         Objects.requireNonNull(superstring, "superstring");
-        Preconditions.checkArgument(minSize >= 0);
-        Preconditions.checkArgument(superstring.length() >= maxSize);
+        if (minSize < 0) {
+            throw new IllegalArgumentException("minSize must be >= 0");
+        }
+        if (superstring.length() < maxSize) {
+            throw new IllegalArgumentException("superstring.length() must be >= maxSize");
+        }
         this.superstring = superstring;
         this.sizes = new IntegerGenerator(minSize, maxSize);
     }

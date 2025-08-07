@@ -49,7 +49,7 @@ public class CloningGenerator<T> implements Generator<T> {
         } catch (IOException e) {
             throw new IllegalArgumentException("prototype " + prototype + " not serializable.", e);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("this should not happen " + e.getMessage(), e);
+            throw new IllegalStateException("this should not happen " + e.getMessage(), e);
         }
     }
 

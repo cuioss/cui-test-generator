@@ -17,10 +17,9 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
-
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
 
 public class ExcludingGenerator<T> extends VetoableGenerator<T> {
 
@@ -29,7 +28,10 @@ public class ExcludingGenerator<T> extends VetoableGenerator<T> {
     public ExcludingGenerator(Generator<T> generator, Iterable<T> excluded, int tries) {
         super(generator, tries);
         Objects.requireNonNull(excluded, "excluded");
-        this.excluded = mutableList(excluded);
+        this.excluded = new ArrayList<>();
+        for (T item : excluded) {
+            this.excluded.add(item);
+        }
     }
 
     @Override

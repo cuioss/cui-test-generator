@@ -20,7 +20,6 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 
 import java.util.Objects;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 
 public class DoubleGenerator implements Generator<Double> {
 
@@ -37,7 +36,9 @@ public class DoubleGenerator implements Generator<Double> {
     }
 
     public DoubleGenerator(double min, double max, Distribution dist) {
-        checkArgument(max >= min, "min");
+        if (max < min) {
+            throw new IllegalArgumentException("min");
+        }
         Objects.requireNonNull(dist, "dist");
 
         this.min = min;

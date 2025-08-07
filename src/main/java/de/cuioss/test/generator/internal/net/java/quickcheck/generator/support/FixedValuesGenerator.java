@@ -17,12 +17,11 @@ package de.cuioss.test.generator.internal.net.java.quickcheck.generator.support;
 
 import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static de.cuioss.tools.collect.CollectionLiterals.mutableList;
-import static de.cuioss.tools.collect.MoreCollections.requireNotEmpty;
 
 public class FixedValuesGenerator<T> implements Generator<T> {
 
@@ -38,9 +37,15 @@ public class FixedValuesGenerator<T> implements Generator<T> {
     }
 
     public FixedValuesGenerator(Iterable<T> values) {
-        requireNotEmpty(values, "values");
+        var list = new ArrayList<T>();
+        for (T value : values) {
+            list.add(value);
+        }
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("values");
+        }
 
-        this.values = mutableList(values);
+        this.values = list;
         this.index = new IntegerGenerator(0, this.values.size() - 1);
     }
 

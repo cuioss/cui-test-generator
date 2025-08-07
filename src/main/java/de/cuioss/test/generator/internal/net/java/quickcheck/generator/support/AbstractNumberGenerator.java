@@ -21,7 +21,6 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribut
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 import static java.lang.Math.floor;
 import static java.math.BigDecimal.valueOf;
 
@@ -33,7 +32,9 @@ abstract class AbstractNumberGenerator<T> implements Generator<T> {
     private final long range;
 
     AbstractNumberGenerator(long min, long max, Distribution dist) {
-        checkArgument(max >= min, "min <= max");
+        if (max < min) {
+            throw new IllegalArgumentException("min <= max");
+        }
         this.min = min;
         this.max = max;
         this.range = max - min;

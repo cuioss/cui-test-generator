@@ -18,7 +18,6 @@ package de.cuioss.test.generator.impl;
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -235,7 +234,9 @@ public enum PrimitiveArrayGenerators {
      */
     public static PrimitiveArrayGenerators resolveForType(final Class<?> primitiveType) {
         requireNonNull(primitiveType);
-        checkArgument(primitiveType.isPrimitive(), "You must provide a primitive type, given: " + primitiveType);
+        if (!primitiveType.isPrimitive()) {
+            throw new IllegalArgumentException("You must provide a primitive type, given: " + primitiveType);
+        }
         for (final PrimitiveArrayGenerators generator : PrimitiveArrayGenerators.values()) {
             if (primitiveType.equals(generator.getType())) {
                 return generator;

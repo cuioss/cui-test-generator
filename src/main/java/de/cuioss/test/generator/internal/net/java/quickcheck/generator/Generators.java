@@ -73,7 +73,6 @@ import java.util.concurrent.TimeUnit;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.BASIC_LATIN;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.CharacterGenerator.LATIN_1_SUPPLEMENT;
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.ListGenerator.MAX_SIZE;
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -118,7 +117,9 @@ public class Generators {
      */
     public static <T> Iterable<T> toIterable(final Generator<T> generator, final int numberOfRuns) {
         Objects.requireNonNull(generator, "generator");
-        checkArgument(0.0 <= numberOfRuns, "number of runs");
+        if (0.0 > numberOfRuns) {
+            throw new IllegalArgumentException("number of runs");
+        }
         return () -> new Iterator<>() {
 
             private int runs;

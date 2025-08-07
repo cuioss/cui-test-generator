@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import static de.cuioss.test.generator.internal.net.java.quickcheck.generator.iterable.Iterables.sizeOf;
-import static de.cuioss.tools.base.Preconditions.checkArgument;
 
 public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
 
@@ -44,7 +43,9 @@ public class EnsuredValuesGenerator<T> implements StatefulGenerator<T> {
 
     public EnsuredValuesGenerator(Iterable<T> ensured, int window, Generator<T> random) {
         this.size = sizeOf(ensured);
-        checkArgument(this.size <= window, "window");
+        if (this.size > window) {
+            throw new IllegalArgumentException("window");
+        }
         this.window = window;
         Objects.requireNonNull(random, "random");
         this.ensured = ensured;

@@ -65,6 +65,7 @@ class GeneratorMethodResolverTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
     void shouldGetGeneratorFromTestClass() {
         // given
         String methodName = "createGenerator";
@@ -83,6 +84,7 @@ class GeneratorMethodResolverTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
     void shouldGetGeneratorFromTestInstance() {
         // given
         String methodName = "createDoubleGenerator";
@@ -112,6 +114,7 @@ class GeneratorMethodResolverTest {
 
     @ParameterizedTest
     @MethodSource("invalidMethodScenarios")
+    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
     void shouldThrowExceptionForInvalidMethodScenarios(String methodName, boolean isNullPointerExpected, String expectedErrorMessage) {
         // given
         ExtensionContext context = createMock(ExtensionContext.class);
