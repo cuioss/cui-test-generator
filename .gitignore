@@ -9,3 +9,6 @@
 .DS_Store
 .asciidoctorconfig.adoc
 /.vscode/
+
+# Claude Code configuration
+.claude/

@@ -1,12 +1,11 @@
 /*
- * Licensed to the author under one or more
- * contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * Copyright © 2025 CUI-OpenSource-Software (info@cuioss.de)
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -111,7 +110,7 @@ class DateGeneratorTest {
 
             @Override
             protected boolean tryValue(List<Long> value) {
-                return value.get(1) - value.get(0) > DAYS.toMillis(QuickCheck.MAX_NUMBER_OF_RUNS);
+                return value.get(1) - value.getFirst() > DAYS.toMillis(QuickCheck.MAX_NUMBER_OF_RUNS);
             }
         };
     }
@@ -119,7 +118,7 @@ class DateGeneratorTest {
     @Test
     void boundedGenerator() {
         for (List<Long> bounds : toIterable(boundGenerator())) {
-            var lo = bounds.get(0);
+            var lo = bounds.getFirst();
             var hi = bounds.get(1);
 
             assertBounds(lo, hi, dates(lo, hi).next());
@@ -130,7 +129,7 @@ class DateGeneratorTest {
     @Test
     void boundedDayPrecisionGenerator() {
         var next = boundGenerator().next();
-        long low = next.get(0);
+        long low = next.getFirst();
         long high = next.get(1);
 
         for (Date date : toIterable(dates(low, high, DAYS))) {
