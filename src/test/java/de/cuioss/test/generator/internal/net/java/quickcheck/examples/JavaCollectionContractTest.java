@@ -43,7 +43,7 @@ class JavaCollectionContractTest {
                 var exceptionThrown = false;
                 try {
                     changedCollection = collection.add(element);
-                } /*~~(TODO: Catch specific not Exception. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/catch (Exception e) {
+                } catch (Exception e) {
                     assertException(e);
                     exceptionThrown = true;
                 }

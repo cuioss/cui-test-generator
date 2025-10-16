@@ -47,7 +47,7 @@ class GeneratorControllerExtensionTest {
         try {
             extension.handleTestExecutionException(null, exception);
             fail("Should have thrown exception");
-        } /*~~(TODO: Catch specific not Throwable. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/catch (Throwable e) {
+        } catch (Throwable e) {
             assertSame(exception, e);
         }
     }
@@ -60,7 +60,7 @@ class GeneratorControllerExtensionTest {
         try {
             extension.handleTestExecutionException(null, exception);
             fail("Should have thrown exception");
-        } /*~~(TODO: Catch specific not Throwable. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/catch (Throwable e) {
+        } catch (Throwable e) {
             assertNotSame(exception, e);
             assertTrue(e.getMessage().contains(String.valueOf(DEFAULT_SEED)));
         }
@@ -74,7 +74,7 @@ class GeneratorControllerExtensionTest {
         try {
             extension.handleTestExecutionException(null, exception);
             fail("Should have thrown exception");
-        } /*~~(TODO: Catch specific not Throwable. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/catch (Throwable e) {
+        } catch (Throwable e) {
             assertNotSame(exception, e);
             assertInstanceOf(AssertionFailedError.class, e);
             assertTrue(e.getMessage().contains(String.valueOf(DEFAULT_SEED)));
