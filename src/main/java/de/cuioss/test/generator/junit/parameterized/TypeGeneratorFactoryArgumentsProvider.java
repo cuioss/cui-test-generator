@@ -87,10 +87,11 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
 
     /**
      * Creates a TypedGenerator instance by invoking the specified factory method.
-     * 
+     *
      * @return a TypedGenerator instance
      * @throws JUnitException if the factory method cannot be found or invoked
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     private TypedGenerator<?> createGeneratorFromFactory() {
         requireNonNull(factoryClass, "Factory class must not be null");
         requireNonNull(factoryMethod, "Factory method must not be null");

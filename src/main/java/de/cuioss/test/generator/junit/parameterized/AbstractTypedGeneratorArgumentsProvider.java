@@ -159,6 +159,7 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
      * @return a new instance of the generator
      * @throws JUnitException if the generator cannot be instantiated
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
     protected TypedGenerator<?> createGeneratorInstance(Class<? extends TypedGenerator<?>> generatorClass) {
         requireNonNull(generatorClass, "Generator class must not be null");

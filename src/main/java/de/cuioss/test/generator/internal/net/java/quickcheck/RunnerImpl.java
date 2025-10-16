@@ -50,6 +50,7 @@ class RunnerImpl<T> implements Runner<T> {
         }
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     private void check(Generator<T> generator) {
         requireNonNull(generator, "generator");
 
@@ -74,6 +75,7 @@ class RunnerImpl<T> implements Runner<T> {
         return maxRuns * 10;
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     private void doTearDown() {
         try {
             characteristic.tearDown();
@@ -82,6 +84,7 @@ class RunnerImpl<T> implements Runner<T> {
         }
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     private void doSetup() {
         try {
             characteristic.setUp();

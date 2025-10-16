@@ -50,6 +50,7 @@ final class GeneratorMethodResolver {
      * @return the TypedGenerator instance
      * @throws JUnitException if the method cannot be found or invoked
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("java:S1452") // owolff: This wildcard is because of the TypedGenerator interface. Ok for testing
     static TypedGenerator<?> getGenerator(String methodName, ExtensionContext context) {
         requireNonNull(methodName, "Method name must not be null");
@@ -90,6 +91,7 @@ final class GeneratorMethodResolver {
      * @return the TypedGenerator instance
      * @throws JUnitException if the method cannot be found or invoked
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("java:S1452") // owolff: This wildcard is because of the TypedGenerator interface. Ok for testing
     static TypedGenerator<?> getGeneratorFromExternalClass(String methodReference) {
         var parts = methodReference.split("#", 2);
