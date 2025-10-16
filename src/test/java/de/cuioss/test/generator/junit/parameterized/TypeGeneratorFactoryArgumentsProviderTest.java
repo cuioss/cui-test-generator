@@ -54,7 +54,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
                 if (e.getTargetException() instanceof Exception) {
                     throw (Exception) e.getTargetException();
                 }
-                throw new RuntimeException(e.getTargetException());
+                /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
             }
         });
 
@@ -75,7 +75,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
                 if (e.getTargetException() instanceof Exception) {
                     throw (Exception) e.getTargetException();
                 }
-                throw new RuntimeException(e.getTargetException());
+                /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
             }
         });
 
@@ -97,7 +97,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
                 if (e.getTargetException() instanceof Exception) {
                     throw (Exception) e.getTargetException();
                 }
-                throw new RuntimeException(e.getTargetException());
+                /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
             }
         });
 
@@ -124,7 +124,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
                 if (e.getTargetException() instanceof Exception) {
                     throw (Exception) e.getTargetException();
                 }
-                throw new RuntimeException(e.getTargetException());
+                /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
             }
         });
 
@@ -151,7 +151,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
             if (e.getTargetException() instanceof Exception) {
                 throw (Exception) e.getTargetException();
             }
-            throw new RuntimeException(e.getTargetException());
+            /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
         }
 
         assertNotNull(generator);
@@ -181,7 +181,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
             if (e.getTargetException() instanceof Exception) {
                 throw (Exception) e.getTargetException();
             }
-            throw new RuntimeException(e.getTargetException());
+            /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException(e.getTargetException());
         }
 
         assertNotNull(generator);
@@ -219,7 +219,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
          * Method that throws an exception.
          */
         public static TypedGenerator<String> throwingGenerator() {
-            throw new RuntimeException("Test exception");
+            /*~~(TODO: Throw specific not RuntimeException. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/throw new RuntimeException("Test exception");
         }
 
         /**

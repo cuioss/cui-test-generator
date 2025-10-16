@@ -58,7 +58,7 @@ class QuickCheckTest {
 
     @Test
     void forAllFailsException() throws Throwable {
-        var exception = new Exception();
+        var exception = /*~~(TODO: Use specific not Exception. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/new Exception();
         var last = expectExceptionThrownAfterFirstGenerator(exception);
         replayMocks();
         try {

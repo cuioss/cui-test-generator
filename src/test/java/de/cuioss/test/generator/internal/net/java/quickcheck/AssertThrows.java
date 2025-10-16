@@ -29,7 +29,7 @@ class AssertThrows {
     public static <T extends Throwable> T assertThrows(Class<T> expectedType, ExceptionThrowingExecutor executor) {
         try {
             executor.execute();
-        } catch (Throwable t) {
+        } /*~~(TODO: Catch specific not Throwable. Suppress: // cui-rewrite:disable InvalidExceptionUsageRecipe)~~>*/catch (Throwable t) {
             if (expectedType.isInstance(t)) {
                 return (T) t;
             }

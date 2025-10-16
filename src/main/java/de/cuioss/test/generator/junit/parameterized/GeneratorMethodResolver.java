@@ -18,10 +18,10 @@ package de.cuioss.test.generator.junit.parameterized;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.JUnitException;
-import org.junit.platform.commons.util.ReflectionUtils;
 import org.junit.platform.commons.util.StringUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -72,7 +72,7 @@ final class GeneratorMethodResolver {
                 .orElseThrow(() -> new JUnitException("Could not find method [" + methodName + IN_CLASS + testClass.getName() + "]"));
 
         try {
-            if (ReflectionUtils.isStatic(method)) {
+            if (Modifier.isStatic(method.getModifiers())) {
                 return (TypedGenerator<?>) method.invoke(null);
             } else if (testInstance != null) {
                 return (TypedGenerator<?>) method.invoke(testInstance);
@@ -107,7 +107,7 @@ final class GeneratorMethodResolver {
             var method = findMethod(clazz, localMethodName)
                     .orElseThrow(() -> new JUnitException("Could not find method [" + localMethodName + IN_CLASS + className + "]"));
 
-            if (!ReflectionUtils.isStatic(method)) {
+            if (!Modifier.isStatic(method.getModifiers())) {
                 throw new JUnitException("Method [" + localMethodName + "] in external class [" + className + "] must be static");
             }
 

@@ -443,6 +443,48 @@ The package `de.cuioss.test.generator.internal.net.java.quickcheck` contains int
 * `de.cuioss.test.generator.TypedGenerator`
 * Classes in `de.cuioss.test.generator.domain` and `de.cuioss.test.generator.impl`
 
+=== Java Platform Module System (JPMS) Compatibility
+
+When using cui-test-generator in modular Java projects (projects with `module-info.java`), you may encounter access issues when test generators are located in the test source tree and referenced by `@TypeGeneratorSource` annotations. This happens because JPMS restricts access between modules and unnamed modules.
+
+==== The Problem
+
+If you have generators in `src/test/java` and encounter errors like:
+```
+IllegalAccessException: module your.module.name does not export your.test.generators to unnamed module
+```
+
+==== The Solution
+
+Configure Maven Surefire to run tests on the classpath instead of the module path by adding this to your `pom.xml`:
+
+[source,xml]
+----
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <useModulePath>false</useModulePath>
+    </configuration>
+</plugin>
+----
+
+This solution:
+* Allows tests to access generators in the test source tree
+* Maintains proper separation between main and test modules
+* Keeps your main code modular while enabling flexible test configurations
+* Works with all cui-test-generator annotations (`@TypeGeneratorSource`, `@CompositeTypeGeneratorSource`, etc.)
+
+==== Alternative Approaches
+
+If you need to maintain full module path compliance for tests, consider:
+
+1. **Separate generator module**: Create a dedicated test generator module
+2. **Test-specific module descriptor**: Use an `open module` in `src/test/java/module-info.java`
+3. **Main source generators**: Move commonly used generators to main source (not recommended for test-only generators)
+
+The classpath approach is recommended as it provides the best balance of modularity and testing flexibility.
+
 === Best Practices
 
 1. Use `Generators` as your primary entry point
@@ -451,3 +493,4 @@ The package `de.cuioss.test.generator.internal.net.java.quickcheck` contains int
 4. Create custom generators by implementing `TypedGenerator`
 5. Use domain-specific generators for specialized test data
 6. Never use classes from the internal package
+7. For modular projects, configure Surefire with `useModulePath=false` to avoid JPMS access restrictions

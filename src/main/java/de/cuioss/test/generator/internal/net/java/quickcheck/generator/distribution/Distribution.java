@@ -61,7 +61,7 @@ public interface Distribution {
         @Override
         public double nextRandomNumber() {
             double next = nextGausian(N_SIGMA * 2);
-            return (next < 0) ? 1 + next : next;
+            return next < 0 ? 1 + next : next;
         }
     };
 

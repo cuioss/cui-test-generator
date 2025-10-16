@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.platform.commons.JUnitException;
-import org.junit.platform.commons.util.ReflectionUtils;
+import org.junit.platform.commons.support.ReflectionSupport;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
         requireNonNull(generatorClass, "Generator class must not be null");
 
         try {
-            return ReflectionUtils.newInstance(generatorClass);
+            return ReflectionSupport.newInstance(generatorClass);
         } catch (Exception e) {
             throw new JUnitException(
                     "Failed to create TypedGenerator instance for " + generatorClass.getName() +
