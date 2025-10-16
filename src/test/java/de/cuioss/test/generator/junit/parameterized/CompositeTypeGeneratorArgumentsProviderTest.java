@@ -105,7 +105,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         replay(context);
 
         // when/then
-        assertThrows(JUnitException.class, () -> provider.provideArguments(context));
+        assertThrows(JUnitException.class, () -> provider.provideArguments(null, context));
         verify(context);
     }
 
@@ -127,7 +127,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         replay(context);
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then
@@ -159,7 +159,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         replay(context);
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then
@@ -191,7 +191,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         replay(context);
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then
@@ -224,7 +224,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         replay(context);
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then

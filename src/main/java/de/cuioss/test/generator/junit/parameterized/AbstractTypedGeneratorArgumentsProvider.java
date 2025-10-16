@@ -21,6 +21,7 @@ import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.support.ParameterDeclarations;
 import org.junit.platform.commons.JUnitException;
 import org.junit.platform.commons.support.ReflectionSupport;
 
@@ -50,12 +51,15 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
     /**
      * Provides arguments for the parameterized test.
      *
+     * @param parameters the parameter declarations (currently unused, reserved for future use)
      * @param context the extension context
      * @return a stream of arguments
      * @throws Exception if an error occurs
      */
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    public Stream<? extends Arguments> provideArguments(
+            ParameterDeclarations parameters,
+            ExtensionContext context) throws Exception {
         // Handle seed management
         var previousSeed = RandomConfiguration.getLastSeed();
         var useSeed = determineSeed(context);
