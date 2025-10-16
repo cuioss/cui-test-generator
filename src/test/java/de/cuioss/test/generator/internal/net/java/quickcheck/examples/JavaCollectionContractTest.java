@@ -34,6 +34,7 @@ class JavaCollectionContractTest {
     void collectionAdd() {
         forAll(pairs(integers(), lists(integers())), new AbstractCharacteristic<>() {
 
+            // cui-rewrite:disable InvalidExceptionUsageRecipe
             @Override
             protected void doSpecify(Pair<Integer, List<Integer>> any) {
                 var element = any.getFirst();
