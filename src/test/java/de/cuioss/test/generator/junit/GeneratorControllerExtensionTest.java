@@ -39,6 +39,7 @@ class GeneratorControllerExtensionTest {
         assertEquals(5L, RandomConfiguration.getLastSeed());
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @Test
     void shouldRethrowTestAbortedException() {
         var exception = new TestAbortedException();
@@ -52,6 +53,7 @@ class GeneratorControllerExtensionTest {
         }
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @Test
     void shouldRethrowAssertionFailedError() {
         var exception = new AssertionFailedError();
@@ -66,6 +68,7 @@ class GeneratorControllerExtensionTest {
         }
     }
 
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @Test
     void shouldRethrowIllegalArgumentException() {
         var exception = new IllegalArgumentException();

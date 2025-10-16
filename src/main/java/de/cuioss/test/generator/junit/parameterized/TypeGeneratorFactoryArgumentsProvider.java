@@ -20,9 +20,9 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 import org.junit.platform.commons.JUnitException;
-import org.junit.platform.commons.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -87,10 +87,11 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
 
     /**
      * Creates a TypedGenerator instance by invoking the specified factory method.
-     * 
+     *
      * @return a TypedGenerator instance
      * @throws JUnitException if the factory method cannot be found or invoked
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     private TypedGenerator<?> createGeneratorFromFactory() {
         requireNonNull(factoryClass, "Factory class must not be null");
         requireNonNull(factoryMethod, "Factory method must not be null");
@@ -118,7 +119,7 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
         // Look for a method with the exact parameter count
         List<Method> candidateMethods = Arrays.stream(factoryClass.getMethods())
                 .filter(m -> m.getName().equals(factoryMethod))
-                .filter(ReflectionUtils::isStatic)
+                .filter(m -> Modifier.isStatic(m.getModifiers()))
                 .filter(m -> m.getParameterCount() == methodParameters.length)
                 .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
                 .toList();

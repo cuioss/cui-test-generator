@@ -89,7 +89,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(context);
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then
@@ -113,7 +113,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(context); // Context shouldn't be needed for external class methods
 
         // when
-        List<Arguments> arguments = provider.provideArguments(context)
+        List<Arguments> arguments = provider.provideArguments(null, context)
                 .collect(Collectors.toList());
 
         // then
@@ -136,7 +136,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(context);
 
         // when/then
-        assertThrows(JUnitException.class, () -> provider.provideArguments(context));
+        assertThrows(JUnitException.class, () -> provider.provideArguments(null, context));
         verify(context);
     }
 
@@ -153,7 +153,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(context);
 
         // when/then
-        assertThrows(JUnitException.class, () -> provider.provideArguments(context));
+        assertThrows(JUnitException.class, () -> provider.provideArguments(null, context));
         verify(context);
     }
 
@@ -168,7 +168,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(context);
 
         // when/then
-        assertThrows(JUnitException.class, () -> provider.provideArguments(context));
+        assertThrows(JUnitException.class, () -> provider.provideArguments(null, context));
         verify(context);
     }
 

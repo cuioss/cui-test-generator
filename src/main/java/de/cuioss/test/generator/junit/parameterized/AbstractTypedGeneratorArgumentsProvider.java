@@ -21,8 +21,9 @@ import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.support.ParameterDeclarations;
 import org.junit.platform.commons.JUnitException;
-import org.junit.platform.commons.util.ReflectionUtils;
+import org.junit.platform.commons.support.ReflectionSupport;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -50,12 +51,15 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
     /**
      * Provides arguments for the parameterized test.
      *
+     * @param parameters the parameter declarations (currently unused, reserved for future use)
      * @param context the extension context
      * @return a stream of arguments
      * @throws Exception if an error occurs
      */
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    public Stream<? extends Arguments> provideArguments(
+            ParameterDeclarations parameters,
+            ExtensionContext context) throws Exception {
         // Handle seed management
         var previousSeed = RandomConfiguration.getLastSeed();
         var useSeed = determineSeed(context);
@@ -159,12 +163,13 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
      * @return a new instance of the generator
      * @throws JUnitException if the generator cannot be instantiated
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
     protected TypedGenerator<?> createGeneratorInstance(Class<? extends TypedGenerator<?>> generatorClass) {
         requireNonNull(generatorClass, "Generator class must not be null");
 
         try {
-            return ReflectionUtils.newInstance(generatorClass);
+            return ReflectionSupport.newInstance(generatorClass);
         } catch (Exception e) {
             throw new JUnitException(
                     "Failed to create TypedGenerator instance for " + generatorClass.getName() +

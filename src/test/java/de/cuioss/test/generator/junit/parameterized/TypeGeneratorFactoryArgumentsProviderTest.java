@@ -37,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Some methods in the test factory class are intentionally not directly invoked
  * in tests but are required to test method resolution logic in TypeGeneratorFactoryArgumentsProvider.
  */
+// cui-rewrite:disable InvalidExceptionUsageRecipe
 @EnableGeneratorController
 class TypeGeneratorFactoryArgumentsProviderTest {
 
@@ -219,7 +220,7 @@ class TypeGeneratorFactoryArgumentsProviderTest {
          * Method that throws an exception.
          */
         public static TypedGenerator<String> throwingGenerator() {
-            throw new RuntimeException("Test exception");
+            throw new IllegalStateException("Test exception");
         }
 
         /**

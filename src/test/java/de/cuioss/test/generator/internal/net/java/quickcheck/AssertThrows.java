@@ -25,6 +25,7 @@ class AssertThrows {
      *
      * @return The thrown exception for further inspection.
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("unchecked")
     public static <T extends Throwable> T assertThrows(Class<T> expectedType, ExceptionThrowingExecutor executor) {
         try {

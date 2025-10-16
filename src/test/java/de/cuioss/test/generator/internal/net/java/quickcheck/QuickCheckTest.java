@@ -58,7 +58,7 @@ class QuickCheckTest {
 
     @Test
     void forAllFailsException() throws Throwable {
-        var exception = new Exception();
+        var exception = new IllegalStateException("test failure");
         var last = expectExceptionThrownAfterFirstGenerator(exception);
         replayMocks();
         try {

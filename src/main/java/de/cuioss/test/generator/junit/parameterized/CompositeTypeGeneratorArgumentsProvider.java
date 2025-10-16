@@ -198,11 +198,12 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
 
     /**
      * Creates a TypedGenerator from a GeneratorType enum value.
-     * 
+     *
      * @param generatorType the generator type
      * @return a TypedGenerator instance
      * @throws JUnitException if the generator cannot be created
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
     private TypedGenerator<?> createGeneratorFromType(GeneratorType generatorType) {
         try {

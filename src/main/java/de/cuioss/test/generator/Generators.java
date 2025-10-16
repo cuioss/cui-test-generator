@@ -666,6 +666,7 @@ public class Generators {
      *
      * @return a {@link TypedGenerator} for all {@link RuntimeException}s
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     public static TypedGenerator<RuntimeException> runtimeExceptions() {
         return fixedValues(RuntimeException.class, new RuntimeException(), new IllegalArgumentException(),
                 new IllegalStateException(), new NullPointerException());
@@ -677,6 +678,7 @@ public class Generators {
      *
      * @return a {@link TypedGenerator} for all {@link Throwable}s
      */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
     public static TypedGenerator<Throwable> throwables() {
         return fixedValues(Throwable.class, new RuntimeException(), new IllegalArgumentException(),
                 new IllegalStateException(), new NullPointerException());
