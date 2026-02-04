@@ -1,6 +1,28 @@
 name: cui-test-generator
-pages-reference: cui-test-generator
-sonar-project-key: cuioss_cui-test-generator
+description: CUI Test Generator - provides generators for testing
+
 release:
   current-version: 2.5.1
   next-version: 2.6-SNAPSHOT
+  create-github-release: true
+
+maven-build:
+  java-versions: '["21","25"]'
+  java-version: '21'
+  enable-snapshot-deploy: true
+  maven-profiles-snapshot: 'release-snapshot,javadoc'
+  maven-profiles-release: 'release,javadoc'
+  npm-cache: false
+
+sonar:
+  project-key: cuioss_cui-test-generator
+  enabled: true
+  skip-on-dependabot: true
+
+pages:
+  reference: cui-test-generator
+  deploy-at-release: true
+
+github-automation:
+  auto-merge-build-versions: true
+  auto-merge-build-timeout: 300
