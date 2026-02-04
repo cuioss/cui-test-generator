@@ -10,10 +10,12 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   release:
+    permissions:
+      contents: write
     if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     uses: cuioss/cuioss-organization/.github/workflows/reusable-maven-release.yml@fade192ad04c25a64cab26a8d931b7d389b6fb79 # v0.2.6
     secrets:
