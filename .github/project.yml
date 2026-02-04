@@ -2,7 +2,7 @@ name: cui-test-generator
 description: CUI Test Generator - provides generators for testing
 
 release:
-  current-version: 2.5.1
+  current-version: 2.5.2
   next-version: 2.6-SNAPSHOT
   create-github-release: true
 
