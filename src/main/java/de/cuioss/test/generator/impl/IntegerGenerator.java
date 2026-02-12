@@ -17,6 +17,7 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
+import lombok.Getter;
 
 import static java.lang.Math.floor;
 
@@ -25,6 +26,7 @@ import static java.lang.Math.floor;
  *
  * @author Oliver Wolff
  */
+@Getter
 public class IntegerGenerator implements TypedGenerator<Integer> {
 
     private final int min;
@@ -45,7 +47,7 @@ public class IntegerGenerator implements TypedGenerator<Integer> {
      */
     public IntegerGenerator(int min, int max) {
         if (max < min) {
-            throw new IllegalArgumentException("min <= max");
+            throw new IllegalArgumentException("max must be >= min");
         }
         this.min = min;
         this.max = max;

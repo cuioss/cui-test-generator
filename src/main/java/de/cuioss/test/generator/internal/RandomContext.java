@@ -15,6 +15,8 @@
  */
 package de.cuioss.test.generator.internal;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Random;
 
 /**
@@ -34,7 +36,8 @@ import java.util.Random;
  * this setting.
  * </p>
  */
-public final class RandomContext {
+@UtilityClass
+public class RandomContext {
 
     /**
      * System property ({@code de.cuioss.test.generator.seed}) to set the {@link Long long}
@@ -44,9 +47,6 @@ public final class RandomContext {
 
     static final Random random = new Random(); // NOSONAR: not about cryptography
     static long lastSeed = 0L;
-
-    private RandomContext() {
-    }
 
     static {
         readSystemProperty();
@@ -92,9 +92,9 @@ public final class RandomContext {
     }
 
     static void readSystemProperty() {
-        String seed = System.getProperty(SEED_SYSTEM_PROPERTY);
-        if (seed == null)
-            return;
-        setSeed(Long.parseLong(seed));
+        var seed = System.getProperty(SEED_SYSTEM_PROPERTY);
+        if (seed != null) {
+            setSeed(Long.parseLong(seed));
+        }
     }
 }

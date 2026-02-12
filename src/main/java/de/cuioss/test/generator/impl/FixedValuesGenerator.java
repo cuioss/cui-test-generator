@@ -17,6 +17,7 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
  */
 public class FixedValuesGenerator<T> implements TypedGenerator<T> {
 
+    @Getter
     private final Class<T> type;
     private final List<T> values;
 
@@ -50,10 +52,5 @@ public class FixedValuesGenerator<T> implements TypedGenerator<T> {
     @Override
     public T next() {
         return values.get(RandomContext.random().nextInt(values.size()));
-    }
-
-    @Override
-    public Class<T> getType() {
-        return type;
     }
 }

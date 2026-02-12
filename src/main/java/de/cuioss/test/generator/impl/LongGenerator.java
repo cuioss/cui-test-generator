@@ -17,6 +17,7 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,6 +30,7 @@ import static java.math.BigDecimal.valueOf;
  *
  * @author Oliver Wolff
  */
+@Getter
 public class LongGenerator implements TypedGenerator<Long> {
 
     private final long min;
@@ -50,7 +52,7 @@ public class LongGenerator implements TypedGenerator<Long> {
      */
     public LongGenerator(long min, long max) {
         if (max < min) {
-            throw new IllegalArgumentException("min <= max");
+            throw new IllegalArgumentException("max must be >= min");
         }
         this.min = min;
         this.max = max;

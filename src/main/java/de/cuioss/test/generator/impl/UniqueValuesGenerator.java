@@ -16,6 +16,7 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,7 @@ import java.util.Set;
  * @param <T> the type of values to generate
  * @author Oliver Wolff
  */
+@RequiredArgsConstructor
 public class UniqueValuesGenerator<T> implements TypedGenerator<T> {
 
     private static final int DEFAULT_MAX_RETRIES = 100;
@@ -41,17 +43,6 @@ public class UniqueValuesGenerator<T> implements TypedGenerator<T> {
      */
     public UniqueValuesGenerator(TypedGenerator<T> source) {
         this(source, DEFAULT_MAX_RETRIES);
-    }
-
-    /**
-     * Creates a unique values generator with a configurable retry limit.
-     *
-     * @param source     the source generator
-     * @param maxRetries maximum attempts to find a unique value before throwing
-     */
-    public UniqueValuesGenerator(TypedGenerator<T> source, int maxRetries) {
-        this.source = source;
-        this.maxRetries = maxRetries;
     }
 
     @Override
