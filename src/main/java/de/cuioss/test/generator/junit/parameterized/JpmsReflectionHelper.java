@@ -116,10 +116,11 @@ final class JpmsReflectionHelper {
      * @param target the target object (null for static methods)
      * @param args   the method arguments
      * @return the method return value
-     * @throws JUnitException if the fallback also fails
+     * @throws JUnitException if the fallback also fails due to access restrictions
+     * @throws InvocationTargetException if the underlying method throws an exception
      */
     @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
-    static Object fallbackInvoke(Method method, Object target, Object... args) {
+    static Object fallbackInvoke(Method method, Object target, Object... args) throws InvocationTargetException {
         try {
             method.setAccessible(true);
             return method.invoke(target, args);
@@ -127,9 +128,6 @@ final class JpmsReflectionHelper {
             throw new JUnitException(
                     buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
                     fallbackEx);
-        } catch (InvocationTargetException e) {
-            throw new JUnitException(
-                    "Method '" + method.getName() + "' threw an exception during JPMS fallback invocation", e);
         }
     }
 

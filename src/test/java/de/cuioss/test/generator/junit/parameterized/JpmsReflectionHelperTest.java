@@ -207,14 +207,11 @@ class JpmsReflectionHelperTest {
     }
 
     @Test
-    @DisplayName("fallbackInvoke should wrap InvocationTargetException when method body throws")
-    void shouldWrapInvocationTargetExceptionInFallbackInvoke() throws Exception {
+    @DisplayName("fallbackInvoke should propagate InvocationTargetException when method body throws")
+    void shouldPropagateInvocationTargetExceptionInFallbackInvoke() throws Exception {
         var method = TestFactory.class.getDeclaredMethod("throwingMethod");
-        var exception = assertThrows(JUnitException.class,
+        assertThrows(InvocationTargetException.class,
                 () -> JpmsReflectionHelper.fallbackInvoke(method, null));
-        assertTrue(exception.getMessage().contains("throwingMethod"),
-                "Should contain method name");
-        assertInstanceOf(InvocationTargetException.class, exception.getCause());
     }
 
     // --- buildJpmsErrorMessage tests ---
