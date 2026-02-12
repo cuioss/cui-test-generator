@@ -44,8 +44,8 @@ import static de.cuioss.test.generator.Generators.integers;
  *
  * // Using convenience methods
  * ZonedDateTime any = ZonedDateTimeGenerator.any();
- * ZonedDateTime future = ZonedDateTimeGenerator.future();
- * ZonedDateTime past = ZonedDateTimeGenerator.past();
+ * ZonedDateTime now = ZonedDateTimeGenerator.now();
+ * ZonedDateTime recent = ZonedDateTimeGenerator.someHoursAgo();
  * </pre>
  *
  * <p>This generator is particularly useful for testing:</p>
