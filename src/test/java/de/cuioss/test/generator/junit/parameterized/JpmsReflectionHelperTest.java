@@ -41,7 +41,7 @@ class JpmsReflectionHelperTest {
     @Test
     @DisplayName("Non-JPMS failure (no no-args constructor) should preserve standard error")
     void shouldPreserveStandardErrorForNonJpmsFailure() {
-        assertThrows(Exception.class,
+        assertThrows(JUnitException.class,
                 () -> JpmsReflectionHelper.newGeneratorInstance(GeneratorWithoutNoArgsConstructor.class));
     }
 
@@ -213,8 +213,8 @@ class JpmsReflectionHelperTest {
     }
 
     /**
-     * Generator with a private no-args constructor — tests that non-JPMS access failures
-     * are handled correctly (ReflectionSupport will fail to instantiate).
+     * Generator with a private no-args constructor, used to test reflective instantiation
+     * of classes with non-public constructors.
      */
     static class PrivateConstructorGenerator implements TypedGenerator<String> {
         private PrivateConstructorGenerator() {
