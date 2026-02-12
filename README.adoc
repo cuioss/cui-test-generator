@@ -447,6 +447,8 @@ The package `de.cuioss.test.generator.internal.net.java.quickcheck` contains int
 
 When using cui-test-generator in modular Java projects (projects with `module-info.java`), you may encounter access issues when test generators are located in the test source tree and referenced by `@TypeGeneratorSource` annotations. This happens because JPMS restricts access between modules and unnamed modules.
 
+NOTE: Since version 2.0, the framework automatically detects JPMS access issues and provides actionable error messages with concrete remediation steps.
+
 ==== The Problem
 
 If you have generators in `src/test/java` and encounter errors like:
@@ -482,6 +484,10 @@ If you need to maintain full module path compliance for tests, consider:
 1. **Separate generator module**: Create a dedicated test generator module
 2. **Test-specific module descriptor**: Use an `open module` in `src/test/java/module-info.java`
 3. **Main source generators**: Move commonly used generators to main source (not recommended for test-only generators)
+4. **`opens` directive**: Add `opens your.test.package;` to your `module-info.java` to allow reflective access
+5. **Targeted `opens` directive**: Add `opens your.test.package to org.junit.platform.commons;` for more restricted access
+6. **`--add-opens` JVM argument** (Gradle-compatible): Add `--add-opens your.module/your.test.package=ALL-UNNAMED` to the JVM arguments in your test configuration
+7. **Use `@TypeGeneratorMethodSource`**: Define a factory method inside your test class that creates and returns the generator, avoiding external class reflection entirely
 
 The classpath approach is recommended as it provides the best balance of modularity and testing flexibility.
 

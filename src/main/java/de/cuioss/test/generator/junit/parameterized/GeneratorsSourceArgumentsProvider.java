@@ -22,7 +22,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 import org.junit.platform.commons.JUnitException;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.stream.Stream;
@@ -78,8 +77,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
         TypedGenerator<?> generator;
         try {
             generator = createGeneratorFromFactory();
-        } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
             throw new IllegalStateException(e);
         }
 
@@ -103,7 +101,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
      * @return a TypedGenerator instance
      * @throws JUnitException if the generator cannot be created
      */
-    private TypedGenerator<?> createGeneratorFromFactory() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private TypedGenerator<?> createGeneratorFromFactory() throws InvocationTargetException, IllegalAccessException {
         requireNonNull(generatorType, "Generator type must not be null");
 
         // Check if this is a domain-specific generator (factory class is the generator class itself)
@@ -138,10 +136,10 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
      *
      * @return a TypedGenerator instance
      */
-    private TypedGenerator<?> createDomainSpecificGenerator() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    @SuppressWarnings("unchecked")
+    private TypedGenerator<?> createDomainSpecificGenerator() {
         Class<?> generatorClass = generatorType.getFactoryClass();
-        Constructor<?> constructor = generatorClass.getDeclaredConstructor();
-        return (TypedGenerator<?>) constructor.newInstance();
+        return JpmsReflectionHelper.newGeneratorInstance((Class<? extends TypedGenerator<?>>) generatorClass);
     }
 
     /**
