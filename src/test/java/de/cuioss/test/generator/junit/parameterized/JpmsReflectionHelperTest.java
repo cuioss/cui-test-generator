@@ -19,12 +19,16 @@ import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.JUnitException;
 
 import java.lang.reflect.InaccessibleObjectException;
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JpmsReflectionHelperTest {
+
+    // --- newGeneratorInstance tests ---
 
     @Test
     @DisplayName("Should instantiate a public generator class")
@@ -33,6 +37,24 @@ class JpmsReflectionHelperTest {
         assertNotNull(generator);
         assertEquals("test", generator.next());
     }
+
+    @Test
+    @DisplayName("Non-JPMS failure (no no-args constructor) should preserve standard error")
+    void shouldPreserveStandardErrorForNonJpmsFailure() {
+        assertThrows(Exception.class,
+                () -> JpmsReflectionHelper.newGeneratorInstance(GeneratorWithoutNoArgsConstructor.class));
+    }
+
+    @Test
+    @DisplayName("newGeneratorInstance should succeed for package-private class with private constructor")
+    void shouldInstantiatePrivateConstructorClass() {
+        // ReflectionSupport.newInstance() handles private constructors within the same package
+        var generator = JpmsReflectionHelper.newGeneratorInstance(PrivateConstructorGenerator.class);
+        assertNotNull(generator);
+        assertEquals("private", generator.next());
+    }
+
+    // --- invokeMethod tests ---
 
     @Test
     @DisplayName("Should invoke a static method returning a generator")
@@ -54,24 +76,45 @@ class JpmsReflectionHelperTest {
     }
 
     @Test
+    @DisplayName("invokeMethod should propagate InvocationTargetException when method throws")
+    void shouldPropagateInvocationTargetException() throws Exception {
+        var method = TestFactory.class.getDeclaredMethod("throwingMethod");
+        assertThrows(InvocationTargetException.class,
+                () -> JpmsReflectionHelper.invokeMethod(method, null));
+    }
+
+    @Test
+    @DisplayName("invokeMethod should rethrow non-JPMS IllegalAccessException")
+    void shouldRethrowNonJpmsIllegalAccessException() throws Exception {
+        // Get a private method — invoke() will throw IllegalAccessException
+        var method = TestFactory.class.getDeclaredMethod("privateMethod");
+        // The IllegalAccessException from invoke() won't contain JPMS keywords,
+        // so it should be rethrown as-is
+        assertThrows(IllegalAccessException.class,
+                () -> JpmsReflectionHelper.invokeMethod(method, null));
+    }
+
+    // --- isJpmsAccessException tests ---
+
+    @Test
     @DisplayName("isJpmsAccessException should return true for InaccessibleObjectException")
     void shouldDetectInaccessibleObjectException() {
-        var exception = new InaccessibleObjectException("Unable to make accessible");
-        assertTrue(JpmsReflectionHelper.isJpmsAccessException(exception));
+        assertTrue(JpmsReflectionHelper.isJpmsAccessException(
+                new InaccessibleObjectException("Unable to make accessible")));
     }
 
     @Test
     @DisplayName("isJpmsAccessException should return true for IllegalAccessException with 'does not export'")
     void shouldDetectDoesNotExportMessage() {
-        var exception = new IllegalAccessException("module foo does not export bar.baz to unnamed module");
-        assertTrue(JpmsReflectionHelper.isJpmsAccessException(exception));
+        assertTrue(JpmsReflectionHelper.isJpmsAccessException(
+                new IllegalAccessException("module foo does not export bar.baz to unnamed module")));
     }
 
     @Test
     @DisplayName("isJpmsAccessException should return true for IllegalAccessException with 'does not open'")
     void shouldDetectDoesNotOpenMessage() {
-        var exception = new IllegalAccessException("module foo does not open bar.baz to unnamed module");
-        assertTrue(JpmsReflectionHelper.isJpmsAccessException(exception));
+        assertTrue(JpmsReflectionHelper.isJpmsAccessException(
+                new IllegalAccessException("module foo does not open bar.baz to unnamed module")));
     }
 
     @Test
@@ -93,20 +136,34 @@ class JpmsReflectionHelperTest {
     @Test
     @DisplayName("isJpmsAccessException should return false for IllegalAccessException without JPMS message")
     void shouldReturnFalseForNonJpmsIllegalAccess() {
-        var exception = new IllegalAccessException("Class X cannot access a member of class Y with modifiers 'private'");
-        assertFalse(JpmsReflectionHelper.isJpmsAccessException(exception));
+        assertFalse(JpmsReflectionHelper.isJpmsAccessException(
+                new IllegalAccessException("Class X cannot access a member of class Y with modifiers 'private'")));
     }
+
+    @Test
+    @DisplayName("isJpmsAccessException should return false for IllegalAccessException with null message")
+    void shouldReturnFalseForNullMessage() {
+        assertFalse(JpmsReflectionHelper.isJpmsAccessException(new IllegalAccessException(null)));
+    }
+
+    @Test
+    @DisplayName("isJpmsAccessException should detect JPMS cause wrapped in JUnitException")
+    void shouldDetectJpmsCauseInJUnitException() {
+        var jpmsEx = new InaccessibleObjectException("module access denied");
+        var junitEx = new JUnitException("wrapped", jpmsEx);
+        assertTrue(JpmsReflectionHelper.isJpmsAccessException(junitEx));
+    }
+
+    // --- buildJpmsErrorMessage tests ---
 
     @Test
     @DisplayName("buildJpmsErrorMessage should contain package, module info, and all remediation options")
     void shouldBuildComprehensiveErrorMessage() {
         var message = JpmsReflectionHelper.buildJpmsErrorMessage(PublicTestGenerator.class, "instantiate");
 
-        // Should contain class and package info
         assertTrue(message.contains(PublicTestGenerator.class.getName()), "Should contain class name");
         assertTrue(message.contains(PublicTestGenerator.class.getPackageName()), "Should contain package name");
-
-        // Should contain all 4 remediation options
+        assertTrue(message.contains("<unnamed module>"), "Should contain unnamed module for classpath class");
         assertTrue(message.contains("useModulePath"), "Should mention useModulePath");
         assertTrue(message.contains("opens " + PublicTestGenerator.class.getPackageName() + ";"),
                 "Should mention opens directive");
@@ -116,11 +173,11 @@ class JpmsReflectionHelperTest {
     }
 
     @Test
-    @DisplayName("Non-JPMS failure (no no-args constructor) should preserve standard error from ReflectionSupport")
-    void shouldPreserveStandardErrorForNonJpmsFailure() {
-        // GeneratorWithoutNoArgsConstructor has no no-arg constructor — this is NOT a JPMS issue
-        assertThrows(Exception.class,
-                () -> JpmsReflectionHelper.newGeneratorInstance(GeneratorWithoutNoArgsConstructor.class));
+    @DisplayName("buildJpmsErrorMessage should include the operation description")
+    void shouldIncludeOperationInErrorMessage() {
+        var message = JpmsReflectionHelper.buildJpmsErrorMessage(PublicTestGenerator.class, "invoke method 'foo'");
+        assertTrue(message.contains("invoke method 'foo'"), "Should contain the operation");
+        assertTrue(message.contains("JPMS"), "Should mention JPMS");
     }
 
     // --- Test helpers ---
@@ -155,6 +212,26 @@ class JpmsReflectionHelperTest {
         }
     }
 
+    /**
+     * Generator with a private no-args constructor — tests that non-JPMS access failures
+     * are handled correctly (ReflectionSupport will fail to instantiate).
+     */
+    static class PrivateConstructorGenerator implements TypedGenerator<String> {
+        private PrivateConstructorGenerator() {
+            // private constructor
+        }
+
+        @Override
+        public String next() {
+            return "private";
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
+    }
+
     @SuppressWarnings("unused")
     public static class TestFactory {
         public static TypedGenerator<String> createGenerator() {
@@ -163,6 +240,14 @@ class JpmsReflectionHelperTest {
 
         public TypedGenerator<Integer> createInstanceGenerator() {
             return Generators.integers(1, 100);
+        }
+
+        public static String throwingMethod() {
+            throw new IllegalArgumentException("test exception from method");
+        }
+
+        private static String privateMethod() {
+            return "private";
         }
     }
 }
