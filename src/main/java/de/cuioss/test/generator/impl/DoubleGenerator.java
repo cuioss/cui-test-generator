@@ -57,7 +57,15 @@ public class DoubleGenerator implements TypedGenerator<Double> {
 
     @Override
     public Double next() {
-        return RandomContext.random().nextDouble() * (max - min) + min;
+        if (min >= max) {
+            return min;
+        }
+        double bound = Math.nextUp(max);
+        if (Double.isInfinite(bound)) {
+            // max is Double.MAX_VALUE; fall back to scaled nextDouble
+            return RandomContext.random().nextDouble() * (max - min) + min;
+        }
+        return RandomContext.random().nextDouble(min, bound);
     }
 
     @Override

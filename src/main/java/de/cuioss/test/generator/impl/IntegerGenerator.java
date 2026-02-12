@@ -19,8 +19,6 @@ import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
 import lombok.Getter;
 
-import static java.lang.Math.floor;
-
 /**
  * Generates random {@link Integer} values within a configurable range.
  *
@@ -55,8 +53,8 @@ public class IntegerGenerator implements TypedGenerator<Integer> {
 
     @Override
     public Integer next() {
-        long range = (long) max - (long) min;
-        return min + (int) floor(RandomContext.random().nextDouble() * (range + 1.0));
+        long range = (long) max - (long) min + 1;
+        return (int) (min + RandomContext.random().nextLong(range));
     }
 
     @Override
