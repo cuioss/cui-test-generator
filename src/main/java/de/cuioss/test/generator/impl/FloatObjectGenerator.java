@@ -16,9 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 /**
  * Generates {@link Float} objects within a configurable range.
@@ -43,18 +40,32 @@ import lombok.NoArgsConstructor;
  * </pre>
  * 
  * @author Oliver Wolff
- * @see PrimitiveGenerators
+ * @see DoubleGenerator
  */
-@AllArgsConstructor
-@NoArgsConstructor
 public class FloatObjectGenerator implements TypedGenerator<Float> {
 
-    private float low = Float.MIN_VALUE;
-    private float high = Float.MAX_VALUE;
+    private final DoubleGenerator delegate;
+
+    /**
+     * Creates a generator for the full float range.
+     */
+    public FloatObjectGenerator() {
+        this(Float.MIN_VALUE, Float.MAX_VALUE);
+    }
+
+    /**
+     * Creates a generator for floats in the range [low, high].
+     *
+     * @param low  lower bound (inclusive)
+     * @param high upper bound (inclusive)
+     */
+    public FloatObjectGenerator(float low, float high) {
+        this.delegate = new DoubleGenerator(low, high);
+    }
 
     @Override
     public Float next() {
-        return PrimitiveGenerators.doubles(low, high).next().floatValue();
+        return delegate.next().floatValue();
     }
 
     @Override

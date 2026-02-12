@@ -15,23 +15,28 @@
  */
 package de.cuioss.test.generator;
 
+import de.cuioss.test.generator.impl.BooleanGenerator;
+import de.cuioss.test.generator.impl.ByteGenerator;
+import de.cuioss.test.generator.impl.CharacterGenerator;
 import de.cuioss.test.generator.impl.CollectionGenerator;
+import de.cuioss.test.generator.impl.DateGenerator;
 import de.cuioss.test.generator.impl.DecoratorGenerator;
+import de.cuioss.test.generator.impl.DoubleGenerator;
+import de.cuioss.test.generator.impl.FixedValuesGenerator;
 import de.cuioss.test.generator.impl.FloatObjectGenerator;
+import de.cuioss.test.generator.impl.IntegerGenerator;
 import de.cuioss.test.generator.impl.LocalDateGenerator;
 import de.cuioss.test.generator.impl.LocalDateTimeGenerator;
 import de.cuioss.test.generator.impl.LocalTimeGenerator;
+import de.cuioss.test.generator.impl.LongGenerator;
 import de.cuioss.test.generator.impl.NonBlankStringGenerator;
 import de.cuioss.test.generator.impl.NumberGenerator;
 import de.cuioss.test.generator.impl.ShortObjectGenerator;
+import de.cuioss.test.generator.impl.StringGenerator;
 import de.cuioss.test.generator.impl.URLGenerator;
+import de.cuioss.test.generator.impl.UniqueValuesGenerator;
 import de.cuioss.test.generator.impl.ZoneOffsetGenerator;
 import de.cuioss.test.generator.impl.ZonedDateTimeGenerator;
-import de.cuioss.test.generator.internal.net.QuickCheckGeneratorAdapter;
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.CombinedGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.support.FixedValuesGenerator;
 import lombok.experimental.UtilityClass;
 
 import java.io.Serializable;
@@ -57,7 +62,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Provides factory methods for creating {@link TypedGenerator}s for various Java types.
  * All generators are thread-safe and suitable for concurrent use in tests.
- * 
+ *
  * <p>The generators are organized into the following categories:</p>
  * <ul>
  *   <li>Primitive Types and their Wrappers (boolean, int, long, etc.)</li>
@@ -66,27 +71,27 @@ import static java.util.Objects.requireNonNull;
  *   <li>Collection Types (List, Set, SortedSet)</li>
  *   <li>Common Java Types (URL, Locale, Class)</li>
  * </ul>
- * 
+ *
  * <p><em>Usage examples from tests:</em></p>
  * <pre>
  * {@code
  * // Basic generators
- * TypedGenerator&lt;String&gt; generator = Generators.strings("X", 2, 2);
+ * TypedGenerator<String> generator = Generators.strings("X", 2, 2);
  * String value = generator.next();
- * 
+ *
  * // Fixed values
- * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
+ * TypedGenerator<String> generator = Generators.fixedValues("A", "B", "C");
  * String value = generator.next();
- * 
+ *
  * // Enum values
- * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
- * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
- * 
+ * Optional<TypedGenerator<TimeUnit>> generator = Generators.enumValuesIfAvailable(TimeUnit.class);
+ * TypedGenerator<TimeUnit> generator = Generators.enumValues(TimeUnit.class);
+ *
  * // Unique values
- * TypedGenerator&lt;Integer&gt; baseGen = Generators.integers(1, 10);
- * TypedGenerator&lt;Integer&gt; uniqueGen = Generators.uniqueValues(baseGen);
- * Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
- * for (int i = 0; i &lt; 10; i++) {
+ * TypedGenerator<Integer> baseGen = Generators.integers(1, 10);
+ * TypedGenerator<Integer> uniqueGen = Generators.uniqueValues(baseGen);
+ * Set<Integer> seen = new HashSet<>();
+ * for (int i = 0; i < 10; i++) {
  *     seen.add(uniqueGen.next());
  * }
  * }
@@ -100,7 +105,7 @@ public class Generators {
 
     /**
      * Factory method for creating a generator for a possible given enum.
-     * 
+     *
      * <p><em>Example from tests:</em></p>
      * <pre>
      * Optional&lt;TypedGenerator&lt;TimeUnit&gt;&gt; generator = Generators.enumValuesIfAvailable(TimeUnit.class);
@@ -119,12 +124,12 @@ public class Generators {
         if (null == type || !type.isEnum()) {
             return Optional.empty();
         }
-        return Optional.of(new QuickCheckGeneratorAdapter(type, PrimitiveGenerators.enumValues((Class<Enum>) type)));
+        return Optional.of(new FixedValuesGenerator(type, Arrays.asList(type.getEnumConstants())));
     }
 
     /**
      * Factory method for creating a generator for a given enum.
-     * 
+     *
      * <p><em>Example from tests:</em></p>
      * <pre>
      * TypedGenerator&lt;TimeUnit&gt; generator = Generators.enumValues(TimeUnit.class);
@@ -140,7 +145,7 @@ public class Generators {
      */
     public static <T extends Enum<T>> TypedGenerator<T> enumValues(final Class<T> type) {
         requireNonNull(type);
-        return new QuickCheckGeneratorAdapter<>(type, PrimitiveGenerators.enumValues(type));
+        return new FixedValuesGenerator<>(type, Arrays.asList(type.getEnumConstants()));
     }
 
     /**
@@ -149,7 +154,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for non-empty Strings
      */
     public static TypedGenerator<String> nonEmptyStrings() {
-        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.nonEmptyStrings());
+        return new StringGenerator(1, 30);
     }
 
     /**
@@ -169,7 +174,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for Strings
      */
     public static TypedGenerator<String> strings(final int minSize, final int maxSize) {
-        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.strings(minSize, maxSize));
+        return new StringGenerator(minSize, maxSize);
     }
 
     /**
@@ -191,7 +196,7 @@ public class Generators {
      * @throws NullPointerException if chars is null
      */
     public static TypedGenerator<String> strings(final String chars, final int minSize, final int maxSize) {
-        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.strings(chars, minSize, maxSize));
+        return new StringGenerator(chars, minSize, maxSize);
     }
 
     /**
@@ -201,7 +206,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for Strings
      */
     public static TypedGenerator<String> strings() {
-        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.strings());
+        return new StringGenerator();
     }
 
     /**
@@ -212,7 +217,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for Strings
      */
     public static TypedGenerator<String> letterStrings(final int minSize, final int maxSize) {
-        return new QuickCheckGeneratorAdapter<>(String.class, PrimitiveGenerators.letterStrings(minSize, maxSize));
+        return StringGenerator.letterStrings(minSize, maxSize);
     }
 
     /**
@@ -273,7 +278,7 @@ public class Generators {
     public static <T> TypedGenerator<T> fixedValues(final Class<T> type, final Iterable<T> values) {
         var list = new ArrayList<T>();
         values.forEach(list::add);
-        return new QuickCheckGeneratorAdapter<>(type, new FixedValuesGenerator<>(list));
+        return new FixedValuesGenerator<>(type, list);
     }
 
     /**
@@ -310,11 +315,8 @@ public class Generators {
      *         (e.g., when source has limited unique values)
      * @throws NullPointerException if source is null
      */
-    @SuppressWarnings("unchecked") // Check not needed, because given TypedGenerator provides
-    // correct type
     public static <T> TypedGenerator<T> uniqueValues(final TypedGenerator<T> source) {
-        return new QuickCheckGeneratorAdapter<>((Class<T>) source.getClass(),
-                CombinedGenerators.uniqueValues(unwrap(source)));
+        return new UniqueValuesGenerator<>(source);
     }
 
     /**
@@ -337,7 +339,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for boolean primitives
      */
     public static TypedGenerator<Boolean> booleans() {
-        return new QuickCheckGeneratorAdapter<>(boolean.class, PrimitiveGenerators.booleans());
+        return new BooleanGenerator();
     }
 
     /**
@@ -346,7 +348,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Boolean}
      */
     public static TypedGenerator<Boolean> booleanObjects() {
-        return new QuickCheckGeneratorAdapter<>(Boolean.class, PrimitiveGenerators.booleans());
+        return new BooleanGenerator();
     }
 
     /**
@@ -355,7 +357,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for byte primitives
      */
     public static TypedGenerator<Byte> bytes() {
-        return new QuickCheckGeneratorAdapter<>(byte.class, PrimitiveGenerators.bytes());
+        return new ByteGenerator();
     }
 
     /**
@@ -364,7 +366,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Byte}
      */
     public static TypedGenerator<Byte> byteObjects() {
-        return new QuickCheckGeneratorAdapter<>(Byte.class, PrimitiveGenerators.bytes());
+        return new ByteGenerator();
     }
 
     /**
@@ -373,7 +375,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for char primitives
      */
     public static TypedGenerator<Character> characters() {
-        return new QuickCheckGeneratorAdapter<>(char.class, PrimitiveGenerators.characters());
+        return new CharacterGenerator();
     }
 
     /**
@@ -382,7 +384,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Character}
      */
     public static TypedGenerator<Character> characterObjects() {
-        return new QuickCheckGeneratorAdapter<>(Character.class, PrimitiveGenerators.characters());
+        return new CharacterGenerator();
     }
 
     /**
@@ -391,7 +393,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for double primitives
      */
     public static TypedGenerator<Double> doubles() {
-        return new QuickCheckGeneratorAdapter<>(double.class, PrimitiveGenerators.doubles());
+        return new DoubleGenerator();
     }
 
     /**
@@ -402,7 +404,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Double}
      */
     public static TypedGenerator<Double> doubles(final double low, final double high) {
-        return new QuickCheckGeneratorAdapter<>(Double.class, PrimitiveGenerators.doubles(low, high));
+        return new DoubleGenerator(low, high);
     }
 
     /**
@@ -411,7 +413,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Double}
      */
     public static TypedGenerator<Double> doubleObjects() {
-        return new QuickCheckGeneratorAdapter<>(Double.class, PrimitiveGenerators.doubles());
+        return new DoubleGenerator();
     }
 
     /**
@@ -449,7 +451,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for integer primitives
      */
     public static TypedGenerator<Integer> integers() {
-        return new QuickCheckGeneratorAdapter<>(int.class, PrimitiveGenerators.integers());
+        return new IntegerGenerator();
     }
 
     /**
@@ -460,7 +462,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Integer}
      */
     public static TypedGenerator<Integer> integers(final int low, final int high) {
-        return new QuickCheckGeneratorAdapter<>(Integer.class, PrimitiveGenerators.integers(low, high));
+        return new IntegerGenerator(low, high);
     }
 
     /**
@@ -469,7 +471,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Integer}
      */
     public static TypedGenerator<Integer> integerObjects() {
-        return new QuickCheckGeneratorAdapter<>(Integer.class, PrimitiveGenerators.integers());
+        return new IntegerGenerator();
     }
 
     /**
@@ -505,7 +507,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for long primitives
      */
     public static TypedGenerator<Long> longs() {
-        return new QuickCheckGeneratorAdapter<>(long.class, PrimitiveGenerators.longs());
+        return new LongGenerator();
     }
 
     /**
@@ -516,7 +518,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for long primitives
      */
     public static TypedGenerator<Long> longs(final long low, final long high) {
-        return new QuickCheckGeneratorAdapter<>(long.class, PrimitiveGenerators.longs(low, high));
+        return new LongGenerator(low, high);
     }
 
     /**
@@ -525,7 +527,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Long}
      */
     public static TypedGenerator<Long> longObjects() {
-        return new QuickCheckGeneratorAdapter<>(Long.class, PrimitiveGenerators.longs());
+        return new LongGenerator();
     }
 
     /**
@@ -534,7 +536,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link Date}
      */
     public static TypedGenerator<Date> dates() {
-        return new QuickCheckGeneratorAdapter<>(Date.class, PrimitiveGenerators.dates());
+        return new DateGenerator();
     }
 
     /**
@@ -657,7 +659,7 @@ public class Generators {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static TypedGenerator<Serializable> serializables() {
-        return new QuickCheckGeneratorAdapter(Serializable.class, PrimitiveGenerators.nonEmptyStrings());
+        return (TypedGenerator) new StringGenerator(1, 30);
     }
 
     /**
@@ -692,19 +694,6 @@ public class Generators {
      */
     public static TypedGenerator<URL> urls() {
         return new URLGenerator();
-    }
-
-    /**
-     * Factory method for creating a QuickCheck {@link Generator} from an existing
-     * {@link TypedGenerator}. Note: This method is for internal use only and will
-     * be removed soon!!!
-     *
-     * @param <T> The type of values
-     * @param generator to be un-wrapped
-     * @return a {@link TypedGenerator} for the given {@link Generator}
-     */
-    static <T> Generator<T> unwrap(final TypedGenerator<T> generator) {
-        return generator::next;
     }
 
     /**

@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
 import java.time.LocalDate;
 
@@ -57,13 +56,15 @@ import java.time.LocalDate;
  *
  * @author Eugen Fischer
  * @see LocalDate
- * @see PrimitiveGenerators#longs(long, long)
+ * @see LongGenerator
  */
 public class LocalDateGenerator implements TypedGenerator<LocalDate> {
 
+    private static final LongGenerator DAY_GENERATOR = new LongGenerator(-23000, 23000);
+
     @Override
     public LocalDate next() {
-        return LocalDate.ofEpochDay(PrimitiveGenerators.longs(-23000, 23000).next());
+        return LocalDate.ofEpochDay(DAY_GENERATOR.next());
     }
 
     @Override
