@@ -61,8 +61,6 @@ final class JpmsReflectionHelper {
                     var constructor = clazz.getDeclaredConstructor();
                     constructor.setAccessible(true);
                     return constructor.newInstance();
-                } catch (InaccessibleObjectException fallbackEx) {
-                    throw new JUnitException(buildJpmsErrorMessage(clazz, "instantiate"), fallbackEx);
                 } catch (Exception fallbackEx) {
                     throw new JUnitException(buildJpmsErrorMessage(clazz, "instantiate"), fallbackEx);
                 }
@@ -94,11 +92,7 @@ final class JpmsReflectionHelper {
                 try {
                     method.setAccessible(true);
                     return method.invoke(target, args);
-                } catch (InaccessibleObjectException fallbackEx) {
-                    throw new JUnitException(
-                            buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
-                            fallbackEx);
-                } catch (IllegalAccessException fallbackEx) {
+                } catch (InaccessibleObjectException | IllegalAccessException fallbackEx) {
                     throw new JUnitException(
                             buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
                             fallbackEx);

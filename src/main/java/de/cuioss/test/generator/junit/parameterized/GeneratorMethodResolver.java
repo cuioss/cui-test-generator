@@ -79,12 +79,10 @@ final class GeneratorMethodResolver {
             } else {
                 throw new JUnitException("Cannot invoke instance method [" + methodName + "] without a test instance");
             }
-        } catch (JUnitException e) {
-            if (JpmsReflectionHelper.isJpmsAccessException(e)) {
-                throw e;
-            }
-            throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
         } catch (Exception e) {
+            if (e instanceof JUnitException jpmsEx && JpmsReflectionHelper.isJpmsAccessException(jpmsEx)) {
+                throw jpmsEx;
+            }
             throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
         }
     }
@@ -119,12 +117,10 @@ final class GeneratorMethodResolver {
             return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null);
         } catch (ClassNotFoundException e) {
             throw new JUnitException("Could not find class [" + className + "]", e);
-        } catch (JUnitException e) {
-            if (JpmsReflectionHelper.isJpmsAccessException(e)) {
-                throw e;
-            }
-            throw new JUnitException("Failed to invoke method [" + localMethodName + IN_CLASS + className + "]", e);
         } catch (Exception e) {
+            if (e instanceof JUnitException jpmsEx && JpmsReflectionHelper.isJpmsAccessException(jpmsEx)) {
+                throw jpmsEx;
+            }
             throw new JUnitException("Failed to invoke method [" + localMethodName + IN_CLASS + className + "]", e);
         }
     }
