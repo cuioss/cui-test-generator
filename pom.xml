@@ -9,7 +9,7 @@
     </parent>
     <groupId>de.cuioss.test</groupId>
     <artifactId>cui-test-generator</artifactId>
-    <version>3.0.0</version>
+    <version>3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>cui test generator</name>
     <description>Provides Generator for arbitrary Java-Types
@@ -21,7 +21,7 @@
         <developerConnection>
             scm:git:https://github.com/cuioss/cui-test-generator/
         </developerConnection>
-        <tag>3.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <url>https://github.com/cuioss/cui-test-generator/issues</url>
