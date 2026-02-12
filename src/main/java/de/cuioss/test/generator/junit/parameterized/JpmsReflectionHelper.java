@@ -51,6 +51,7 @@ final class JpmsReflectionHelper {
      * @throws JUnitException if instantiation fails
      */
     // cui-rewrite:disable InvalidExceptionUsageRecipe
+    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
     static <T> T newGeneratorInstance(Class<T> clazz) {
         try {
             return ReflectionSupport.newInstance(clazz);
@@ -82,6 +83,7 @@ final class JpmsReflectionHelper {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException if access is denied for non-JPMS reasons
      */
+    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
     static Object invokeMethod(Method method, Object target, Object... args)
             throws InvocationTargetException, IllegalAccessException {
         try {
