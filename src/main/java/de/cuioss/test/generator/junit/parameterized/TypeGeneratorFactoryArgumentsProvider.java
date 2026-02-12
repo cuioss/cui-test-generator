@@ -101,7 +101,10 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
             Method method = findFactoryMethod();
 
             // Invoke the factory method with the provided parameters
-            return (TypedGenerator<?>) method.invoke(null, (Object[]) methodParameters);
+            return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null, (Object[]) methodParameters);
+        } catch (JUnitException e) {
+            // JPMS-specific error from the helper — propagate as-is
+            throw e;
         } catch (Exception e) {
             throw new JUnitException(
                     "Failed to create TypedGenerator using factory method '" + factoryMethod +

@@ -73,12 +73,17 @@ final class GeneratorMethodResolver {
 
         try {
             if (Modifier.isStatic(method.getModifiers())) {
-                return (TypedGenerator<?>) method.invoke(null);
+                return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null);
             } else if (testInstance != null) {
-                return (TypedGenerator<?>) method.invoke(testInstance);
+                return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, testInstance);
             } else {
                 throw new JUnitException("Cannot invoke instance method [" + methodName + "] without a test instance");
             }
+        } catch (JUnitException e) {
+            if (JpmsReflectionHelper.isJpmsAccessException(e)) {
+                throw e;
+            }
+            throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
         } catch (Exception e) {
             throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
         }
@@ -111,9 +116,14 @@ final class GeneratorMethodResolver {
                 throw new JUnitException("Method [" + localMethodName + "] in external class [" + className + "] must be static");
             }
 
-            return (TypedGenerator<?>) method.invoke(null);
+            return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null);
         } catch (ClassNotFoundException e) {
             throw new JUnitException("Could not find class [" + className + "]", e);
+        } catch (JUnitException e) {
+            if (JpmsReflectionHelper.isJpmsAccessException(e)) {
+                throw e;
+            }
+            throw new JUnitException("Failed to invoke method [" + localMethodName + IN_CLASS + className + "]", e);
         } catch (Exception e) {
             throw new JUnitException("Failed to invoke method [" + localMethodName + IN_CLASS + className + "]", e);
         }
