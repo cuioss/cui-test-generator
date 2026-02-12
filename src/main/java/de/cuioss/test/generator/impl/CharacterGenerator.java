@@ -20,7 +20,7 @@ import de.cuioss.test.generator.TypedGenerator;
 /**
  * Generates random {@link Character} values within a configurable range.
  * <p>
- * The default range covers Basic Latin (0x20-0x7E) and Latin-1 Supplement (0xA0-0xFF).
+ * The default range covers printable Basic Latin characters (0x20-0x7E).
  * </p>
  *
  * @author Oliver Wolff

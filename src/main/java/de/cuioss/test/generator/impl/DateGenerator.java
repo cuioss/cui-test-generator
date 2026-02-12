@@ -26,11 +26,11 @@ import java.util.Date;
  */
 public class DateGenerator implements TypedGenerator<Date> {
 
-    private final LongGenerator longGenerator = new LongGenerator();
+    private static final LongGenerator LONG_GENERATOR = new LongGenerator();
 
     @Override
     public Date next() {
-        return new Date(longGenerator.next());
+        return new Date(LONG_GENERATOR.next());
     }
 
     @Override

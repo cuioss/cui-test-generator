@@ -24,18 +24,11 @@ import de.cuioss.test.generator.TypedGenerator;
  */
 public class ByteGenerator implements TypedGenerator<Byte> {
 
-    private final IntegerGenerator delegate;
-
-    /**
-     * Creates a generator for the full byte range.
-     */
-    public ByteGenerator() {
-        this.delegate = new IntegerGenerator(Byte.MIN_VALUE, Byte.MAX_VALUE);
-    }
+    private static final IntegerGenerator DELEGATE = new IntegerGenerator(Byte.MIN_VALUE, Byte.MAX_VALUE);
 
     @Override
     public Byte next() {
-        return delegate.next().byteValue();
+        return DELEGATE.next().byteValue();
     }
 
     @Override

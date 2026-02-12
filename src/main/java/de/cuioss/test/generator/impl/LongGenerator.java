@@ -17,6 +17,7 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -35,6 +36,8 @@ public class LongGenerator implements TypedGenerator<Long> {
 
     private final long min;
     private final long max;
+
+    @Getter(AccessLevel.NONE)
     private final long range;
 
     /**
