@@ -255,7 +255,7 @@ class FactoryBasedGeneratorTest {
     )
     void testWithSpecificSeed(String value) {
         // This test will always generate the same values
-        assertNotNull(value);
+        assertEquals("ErrorString", value);
     }
 }
 
@@ -466,6 +466,7 @@ Configure Maven Surefire to run tests on the classpath instead of the module pat
 ----
 
 This solution:
+
 * Allows tests to access generators in the test source tree
 * Maintains proper separation between main and test modules
 * Keeps your main code modular while enabling flexible test configurations
