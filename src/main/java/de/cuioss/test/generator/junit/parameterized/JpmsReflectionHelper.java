@@ -51,23 +51,36 @@ final class JpmsReflectionHelper {
      * @throws JUnitException if instantiation fails
      */
     // cui-rewrite:disable InvalidExceptionUsageRecipe
-    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
     static <T> T newGeneratorInstance(Class<T> clazz) {
         try {
             return ReflectionSupport.newInstance(clazz);
         } catch (Exception e) {
             if (isJpmsAccessException(e)) {
-                // Fallback: try setAccessible
-                try {
-                    var constructor = clazz.getDeclaredConstructor();
-                    constructor.setAccessible(true);
-                    return constructor.newInstance();
-                } catch (Exception fallbackEx) {
-                    throw new JUnitException(buildJpmsErrorMessage(clazz, "instantiate"), fallbackEx);
-                }
+                return fallbackInstantiate(clazz);
             }
             // Not a JPMS issue — rethrow as-is to preserve original message
             throw e;
+        }
+    }
+
+    /**
+     * Fallback instantiation via {@code setAccessible(true)} on the no-args constructor.
+     * Used when the primary attempt fails due to JPMS access restrictions.
+     *
+     * @param clazz the class to instantiate
+     * @param <T>   the type of the instance
+     * @return a new instance
+     * @throws JUnitException if the fallback also fails
+     */
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
+    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
+    static <T> T fallbackInstantiate(Class<T> clazz) {
+        try {
+            var constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            return constructor.newInstance();
+        } catch (Exception fallbackEx) {
+            throw new JUnitException(buildJpmsErrorMessage(clazz, "instantiate"), fallbackEx);
         }
     }
 
@@ -83,24 +96,40 @@ final class JpmsReflectionHelper {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException if access is denied for non-JPMS reasons
      */
-    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
     static Object invokeMethod(Method method, Object target, Object... args)
             throws InvocationTargetException, IllegalAccessException {
         try {
             return method.invoke(target, args);
         } catch (IllegalAccessException e) {
             if (isJpmsAccessException(e)) {
-                // Fallback: try setAccessible
-                try {
-                    method.setAccessible(true);
-                    return method.invoke(target, args);
-                } catch (InaccessibleObjectException | IllegalAccessException fallbackEx) {
-                    throw new JUnitException(
-                            buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
-                            fallbackEx);
-                }
+                return fallbackInvoke(method, target, args);
             }
             throw e;
+        }
+    }
+
+    /**
+     * Fallback method invocation via {@code setAccessible(true)}.
+     * Used when the primary invocation fails due to JPMS access restrictions.
+     *
+     * @param method the method to invoke
+     * @param target the target object (null for static methods)
+     * @param args   the method arguments
+     * @return the method return value
+     * @throws JUnitException if the fallback also fails
+     */
+    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
+    static Object fallbackInvoke(Method method, Object target, Object... args) {
+        try {
+            method.setAccessible(true);
+            return method.invoke(target, args);
+        } catch (InaccessibleObjectException | IllegalAccessException fallbackEx) {
+            throw new JUnitException(
+                    buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
+                    fallbackEx);
+        } catch (InvocationTargetException e) {
+            throw new JUnitException(
+                    "Method '" + method.getName() + "' threw an exception during JPMS fallback invocation", e);
         }
     }
 

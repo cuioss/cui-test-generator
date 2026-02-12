@@ -159,6 +159,64 @@ class JpmsReflectionHelperTest {
         assertTrue(JpmsReflectionHelper.isJpmsAccessException(junitEx));
     }
 
+    // --- fallbackInstantiate tests ---
+
+    @Test
+    @DisplayName("fallbackInstantiate should succeed for class with private constructor")
+    void shouldFallbackInstantiatePrivateConstructor() {
+        var generator = JpmsReflectionHelper.fallbackInstantiate(PrivateConstructorGenerator.class);
+        assertNotNull(generator);
+        assertEquals("private", generator.next());
+    }
+
+    @Test
+    @DisplayName("fallbackInstantiate should succeed for public generator class")
+    void shouldFallbackInstantiatePublicGenerator() {
+        var generator = JpmsReflectionHelper.fallbackInstantiate(PublicTestGenerator.class);
+        assertNotNull(generator);
+        assertEquals("test", generator.next());
+    }
+
+    @Test
+    @DisplayName("fallbackInstantiate should throw JUnitException for class without no-args constructor")
+    void shouldThrowJUnitExceptionWhenFallbackInstantiateFails() {
+        var exception = assertThrows(JUnitException.class,
+                () -> JpmsReflectionHelper.fallbackInstantiate(GeneratorWithoutNoArgsConstructor.class));
+        assertTrue(exception.getMessage().contains("JPMS"), "Should contain JPMS guidance");
+        assertTrue(exception.getMessage().contains(GeneratorWithoutNoArgsConstructor.class.getName()),
+                "Should contain class name");
+    }
+
+    // --- fallbackInvoke tests ---
+
+    @Test
+    @DisplayName("fallbackInvoke should succeed for a private method")
+    void shouldFallbackInvokePrivateMethod() throws Exception {
+        var method = TestFactory.class.getDeclaredMethod("privateMethod");
+        var result = JpmsReflectionHelper.fallbackInvoke(method, null);
+        assertEquals("private", result);
+    }
+
+    @Test
+    @DisplayName("fallbackInvoke should succeed for a public method")
+    void shouldFallbackInvokePublicMethod() throws Exception {
+        var method = TestFactory.class.getDeclaredMethod("createGenerator");
+        var result = JpmsReflectionHelper.fallbackInvoke(method, null);
+        assertNotNull(result);
+        assertInstanceOf(TypedGenerator.class, result);
+    }
+
+    @Test
+    @DisplayName("fallbackInvoke should wrap InvocationTargetException when method body throws")
+    void shouldWrapInvocationTargetExceptionInFallbackInvoke() throws Exception {
+        var method = TestFactory.class.getDeclaredMethod("throwingMethod");
+        var exception = assertThrows(JUnitException.class,
+                () -> JpmsReflectionHelper.fallbackInvoke(method, null));
+        assertTrue(exception.getMessage().contains("throwingMethod"),
+                "Should contain method name");
+        assertInstanceOf(InvocationTargetException.class, exception.getCause());
+    }
+
     // --- buildJpmsErrorMessage tests ---
 
     @Test
@@ -183,6 +241,15 @@ class JpmsReflectionHelperTest {
         var message = JpmsReflectionHelper.buildJpmsErrorMessage(PublicTestGenerator.class, "invoke method 'foo'");
         assertTrue(message.contains("invoke method 'foo'"), "Should contain the operation");
         assertTrue(message.contains("JPMS"), "Should mention JPMS");
+    }
+
+    @Test
+    @DisplayName("buildJpmsErrorMessage should use named module name for JDK classes")
+    void shouldUseNamedModuleName() {
+        var message = JpmsReflectionHelper.buildJpmsErrorMessage(String.class, "instantiate");
+        assertTrue(message.contains("java.base"), "Should contain named module 'java.base'");
+        assertTrue(message.contains("java.lang"), "Should contain package 'java.lang'");
+        assertFalse(message.contains("<unnamed module>"), "Should NOT contain unnamed module");
     }
 
     // --- Test helpers ---
