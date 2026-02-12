@@ -439,14 +439,16 @@ var name = new FullNameGenerator().next();
 
 When using cui-test-generator in modular Java projects (projects with `module-info.java`), you may encounter access issues when test generators are located in the test source tree and referenced by `@TypeGeneratorSource` annotations. This happens because JPMS restricts access between modules and unnamed modules.
 
-NOTE: Since version 2.0, the framework automatically detects JPMS access issues and provides actionable error messages with concrete remediation steps.
+NOTE: Since version 3.0, the framework automatically detects JPMS access issues and provides actionable error messages with concrete remediation steps.
 
 ==== The Problem
 
 If you have generators in `src/test/java` and encounter errors like:
-```
+
+[source]
+----
 IllegalAccessException: module your.module.name does not export your.test.generators to unnamed module
-```
+----
 
 ==== The Solution
 
