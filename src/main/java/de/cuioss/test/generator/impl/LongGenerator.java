@@ -23,7 +23,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static java.lang.Math.floor;
 import static java.math.BigDecimal.valueOf;
 
 /**
@@ -68,7 +67,13 @@ public class LongGenerator implements TypedGenerator<Long> {
     }
 
     private long longImpl() {
-        return min + (long) floor(RandomContext.random().nextDouble() * (range + 1.0));
+        if (range == 0) {
+            return min;
+        }
+        if (range == Long.MAX_VALUE) {
+            return min + (RandomContext.random().nextLong() & Long.MAX_VALUE);
+        }
+        return min + RandomContext.random().nextLong(range + 1);
     }
 
     private long bigDecimalImpl() {

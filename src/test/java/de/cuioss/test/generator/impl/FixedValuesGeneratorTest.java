@@ -40,8 +40,9 @@ class FixedValuesGeneratorTest {
     @Test
     @DisplayName("throw on empty list")
     void shouldThrowOnEmptyList() {
+        var emptyList = new ArrayList<String>();
         assertThrows(IllegalArgumentException.class,
-                () -> new FixedValuesGenerator<>(String.class, new ArrayList<>()));
+                () -> new FixedValuesGenerator<>(String.class, emptyList));
     }
 
     @Test
