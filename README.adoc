@@ -67,7 +67,7 @@ String letters = Generators.letterStrings(5, 10).next(); // 5-10 characters
 Integer bounded = Generators.integers(1, 100).next();     // number between 1-100
 
 // Collection generation
-List<String> strings = new CollectionGenerator<>(Generators.strings()).list(5);
+List<String> strings = Generators.asCollectionGenerator(Generators.strings()).list(5);
 
 // Fixed and enum values
 var urlGen = Generators.fixedValues(String.class,
@@ -88,19 +88,12 @@ The `GeneratorType` enum provides a type-safe way to reference all available gen
 
 ==== Additional Generators
 
-The framework includes generators beyond the `Generators` factory:
+The framework includes generators with static helper methods and domain-specific generators beyond the `Generators` factory:
 
 [source,java]
 ----
-// Date/Time with zones
+// Date/Time with zones using static helper methods
 var dateTime = ZonedDateTimeGenerator.any();
-
-// Numeric ranges
-var floats = new FloatObjectGenerator(0.0f, 100.0f).next();
-
-// URLs and strings
-var url = new URLGenerator().next();
-var nonBlank = new NonBlankStringGenerator().next();
 
 // Domain-specific generators (also available via GeneratorType enum)
 var email = new EmailGenerator().next();
