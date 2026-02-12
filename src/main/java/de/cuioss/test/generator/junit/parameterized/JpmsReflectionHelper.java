@@ -96,38 +96,24 @@ final class JpmsReflectionHelper {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException if access is denied for non-JPMS reasons
      */
+    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
     static Object invokeMethod(Method method, Object target, Object... args)
             throws InvocationTargetException, IllegalAccessException {
         try {
             return method.invoke(target, args);
         } catch (IllegalAccessException e) {
             if (isJpmsAccessException(e)) {
-                return fallbackInvoke(method, target, args);
+                // Fallback: try setAccessible
+                try {
+                    method.setAccessible(true);
+                    return method.invoke(target, args);
+                } catch (InaccessibleObjectException | IllegalAccessException fallbackEx) {
+                    throw new JUnitException(
+                            buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
+                            fallbackEx);
+                }
             }
             throw e;
-        }
-    }
-
-    /**
-     * Fallback method invocation via {@code setAccessible(true)}.
-     * Used when the primary invocation fails due to JPMS access restrictions.
-     *
-     * @param method the method to invoke
-     * @param target the target object (null for static methods)
-     * @param args   the method arguments
-     * @return the method return value
-     * @throws JUnitException if the fallback also fails due to access restrictions
-     * @throws InvocationTargetException if the underlying method throws an exception
-     */
-    @SuppressWarnings("java:S3011") // setAccessible is the intentional JPMS fallback mechanism
-    static Object fallbackInvoke(Method method, Object target, Object... args) throws InvocationTargetException {
-        try {
-            method.setAccessible(true);
-            return method.invoke(target, args);
-        } catch (InaccessibleObjectException | IllegalAccessException fallbackEx) {
-            throw new JUnitException(
-                    buildJpmsErrorMessage(method.getDeclaringClass(), "invoke method '" + method.getName() + "'"),
-                    fallbackEx);
         }
     }
 
