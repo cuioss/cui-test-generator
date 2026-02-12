@@ -16,7 +16,7 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.Generators;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import de.cuioss.test.generator.internal.RandomContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,12 +36,12 @@ class UUIDGeneratorTest {
         var generator = new UUIDGenerator();
 
         // Act & Assert - First run
-        RandomConfiguration.setSeed(seed);
+        RandomContext.setSeed(seed);
         var result1 = generator.next();
         assertNotNull(result1, "Generated UUID should not be null");
 
         // Act & Assert - Second run with same seed
-        RandomConfiguration.setSeed(seed);
+        RandomContext.setSeed(seed);
         var result2 = generator.next();
         assertNotNull(result2, "Generated UUID should not be null");
 

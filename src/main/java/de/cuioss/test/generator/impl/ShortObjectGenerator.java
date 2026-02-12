@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 
 /**
  * Generates {@link Short} objects across the full range of possible short values.
@@ -43,13 +42,13 @@ import de.cuioss.test.generator.internal.net.java.quickcheck.generator.Primitive
  * </ul>
  *
  * @author Oliver Wolff
- * @see PrimitiveGenerators
+ * @see IntegerGenerator
  */
 public class ShortObjectGenerator implements TypedGenerator<Short> {
 
     @Override
     public Short next() {
-        return PrimitiveGenerators.integers(-32768, 32767).next().shortValue();
+        return new IntegerGenerator(-32768, 32767).next().shortValue();
     }
 
     @Override

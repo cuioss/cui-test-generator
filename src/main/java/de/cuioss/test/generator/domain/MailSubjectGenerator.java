@@ -16,7 +16,7 @@
 package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
+import de.cuioss.test.generator.impl.IntegerGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +65,10 @@ public class MailSubjectGenerator implements TypedGenerator<String> {
     @Override
     public String next() {
         final List<String> elements = new ArrayList<>();
-        for (var i = 0; i < PrimitiveGenerators.integers(0, 3).next(); i++) {
+        for (var i = 0; i < new IntegerGenerator(0, 3).next(); i++) {
             elements.add(prefixes.next());
         }
-        for (var i = 0; i < PrimitiveGenerators.integers(0, 7).next(); i++) {
+        for (var i = 0; i < new IntegerGenerator(0, 7).next(); i++) {
             elements.add(contents.next());
         }
         return String.join(" ", elements);

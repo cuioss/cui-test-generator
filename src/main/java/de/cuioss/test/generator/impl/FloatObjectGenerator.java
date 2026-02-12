@@ -16,7 +16,6 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.PrimitiveGenerators;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -43,7 +42,7 @@ import lombok.NoArgsConstructor;
  * </pre>
  * 
  * @author Oliver Wolff
- * @see PrimitiveGenerators
+ * @see DoubleGenerator
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,7 +53,7 @@ public class FloatObjectGenerator implements TypedGenerator<Float> {
 
     @Override
     public Float next() {
-        return PrimitiveGenerators.doubles(low, high).next().floatValue();
+        return new DoubleGenerator(low, high).next().floatValue();
     }
 
     @Override

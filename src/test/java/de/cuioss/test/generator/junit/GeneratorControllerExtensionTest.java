@@ -15,7 +15,7 @@
  */
 package de.cuioss.test.generator.junit;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import de.cuioss.test.generator.internal.RandomContext;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 import org.opentest4j.TestAbortedException;
@@ -31,12 +31,12 @@ class GeneratorControllerExtensionTest {
     @Test
     @GeneratorSeed(11L)
     void shouldReadFromMethod() {
-        assertEquals(11L, RandomConfiguration.getLastSeed());
+        assertEquals(11L, RandomContext.getLastSeed());
     }
 
     @Test
     void shouldReadFromType() {
-        assertEquals(5L, RandomConfiguration.getLastSeed());
+        assertEquals(5L, RandomContext.getLastSeed());
     }
 
     // cui-rewrite:disable InvalidExceptionUsageRecipe
@@ -58,7 +58,7 @@ class GeneratorControllerExtensionTest {
     void shouldRethrowAssertionFailedError() {
         var exception = new AssertionFailedError();
         var extension = new GeneratorControllerExtension();
-        RandomConfiguration.setSeed(DEFAULT_SEED);
+        RandomContext.setSeed(DEFAULT_SEED);
         try {
             extension.handleTestExecutionException(null, exception);
             fail("Should have thrown exception");
@@ -73,7 +73,7 @@ class GeneratorControllerExtensionTest {
     void shouldRethrowIllegalArgumentException() {
         var exception = new IllegalArgumentException();
         var extension = new GeneratorControllerExtension();
-        RandomConfiguration.setSeed(DEFAULT_SEED);
+        RandomContext.setSeed(DEFAULT_SEED);
         try {
             extension.handleTestExecutionException(null, exception);
             fail("Should have thrown exception");
