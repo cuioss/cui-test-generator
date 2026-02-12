@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.commons.JUnitException;
 
 import java.lang.reflect.Method;
@@ -86,7 +86,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     }
 
     @ParameterizedTest(name = "With count={0}, should generate {0} arguments")
-    @CsvSource({"1", "3", "5", "10"})
+    @ValueSource(ints = {1, 3, 5, 10})
     @DisplayName("Should generate correct number of arguments")
     void shouldGenerateCorrectNumberOfArguments(int count) {
         var provider = new TestProvider(TEST_SEED, count);

@@ -41,8 +41,13 @@ class JpmsReflectionHelperTest {
     @Test
     @DisplayName("Non-JPMS failure (no no-args constructor) should preserve standard error")
     void shouldPreserveStandardErrorForNonJpmsFailure() {
-        assertThrows(JUnitException.class,
+        // ReflectionSupport.newInstance() throws JUnitException on Java 21 but
+        // NoSuchMethodException on Java 25 — both are non-JPMS, so verify the
+        // exception is NOT treated as a JPMS issue regardless of type
+        var exception = assertThrows(Exception.class,
                 () -> JpmsReflectionHelper.newGeneratorInstance(GeneratorWithoutNoArgsConstructor.class));
+        assertFalse(JpmsReflectionHelper.isJpmsAccessException(exception),
+                "Non-JPMS failure should not be classified as JPMS access exception");
     }
 
     @Test

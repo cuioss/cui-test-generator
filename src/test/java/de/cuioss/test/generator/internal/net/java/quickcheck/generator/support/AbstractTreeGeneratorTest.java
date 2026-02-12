@@ -79,7 +79,6 @@ class AbstractTreeGeneratorTest {
             }.next();
             fail();
         } catch (GeneratorException e) {
-            assertTrue(true);
         }
     }
 
