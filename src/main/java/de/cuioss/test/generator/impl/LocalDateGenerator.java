@@ -60,9 +60,11 @@ import java.time.LocalDate;
  */
 public class LocalDateGenerator implements TypedGenerator<LocalDate> {
 
+    private static final LongGenerator DAY_GENERATOR = new LongGenerator(-23000, 23000);
+
     @Override
     public LocalDate next() {
-        return LocalDate.ofEpochDay(new LongGenerator(-23000, 23000).next());
+        return LocalDate.ofEpochDay(DAY_GENERATOR.next());
     }
 
     @Override

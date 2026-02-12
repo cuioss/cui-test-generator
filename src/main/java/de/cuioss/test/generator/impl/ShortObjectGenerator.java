@@ -46,9 +46,11 @@ import de.cuioss.test.generator.TypedGenerator;
  */
 public class ShortObjectGenerator implements TypedGenerator<Short> {
 
+    private static final IntegerGenerator DELEGATE = new IntegerGenerator(Short.MIN_VALUE, Short.MAX_VALUE);
+
     @Override
     public Short next() {
-        return new IntegerGenerator(-32768, 32767).next().shortValue();
+        return DELEGATE.next().shortValue();
     }
 
     @Override
