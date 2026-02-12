@@ -61,14 +61,16 @@ public class MailSubjectGenerator implements TypedGenerator<String> {
     private final TypedGenerator<String> contents = fixedValues("Hello", "Patient", "Document", "Record", "Yes", "No",
             "unknown", "Disease", "Hospital", "Doctor", "Healthy", "Not seen", "Referral", "Message", "Injury",
             "See Also", "Payment", "Registration", "Physician");
+    private final IntegerGenerator prefixCountGenerator = new IntegerGenerator(0, 3);
+    private final IntegerGenerator contentCountGenerator = new IntegerGenerator(0, 7);
 
     @Override
     public String next() {
         final List<String> elements = new ArrayList<>();
-        for (var i = 0; i < new IntegerGenerator(0, 3).next(); i++) {
+        for (var i = 0; i < prefixCountGenerator.next(); i++) {
             elements.add(prefixes.next());
         }
-        for (var i = 0; i < new IntegerGenerator(0, 7).next(); i++) {
+        for (var i = 0; i < contentCountGenerator.next(); i++) {
             elements.add(contents.next());
         }
         return String.join(" ", elements);
