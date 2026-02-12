@@ -70,6 +70,8 @@ public class StringGenerator implements TypedGenerator<String> {
         this.charGenerator = null;
     }
 
+    private static final String LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     /**
      * Creates a generator for letter-only strings (a-z, A-Z) with length in [minLen, maxLen].
      *
@@ -78,10 +80,7 @@ public class StringGenerator implements TypedGenerator<String> {
      * @return a new StringGenerator producing letter-only strings
      */
     public static StringGenerator letterStrings(int minLen, int maxLen) {
-        var letters = new StringBuilder();
-        for (char c = 'a'; c <= 'z'; c++) letters.append(c);
-        for (char c = 'A'; c <= 'Z'; c++) letters.append(c);
-        return new StringGenerator(letters.toString(), minLen, maxLen);
+        return new StringGenerator(LETTERS, minLen, maxLen);
     }
 
     @Override

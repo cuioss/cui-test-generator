@@ -21,6 +21,10 @@ import lombok.Getter;
 
 /**
  * Generates random {@link Double} values within a configurable range.
+ * <p>
+ * Note: The default range uses {@link Double#MIN_VALUE} (smallest positive value, ~4.9E-324)
+ * to {@link Double#MAX_VALUE}. For negative doubles, use the two-argument constructor.
+ * </p>
  *
  * @author Oliver Wolff
  */
