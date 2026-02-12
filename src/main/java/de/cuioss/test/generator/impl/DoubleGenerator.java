@@ -17,12 +17,14 @@ package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
+import lombok.Getter;
 
 /**
  * Generates random {@link Double} values within a configurable range.
  *
  * @author Oliver Wolff
  */
+@Getter
 public class DoubleGenerator implements TypedGenerator<Double> {
 
     private final double min;
@@ -43,7 +45,7 @@ public class DoubleGenerator implements TypedGenerator<Double> {
      */
     public DoubleGenerator(double min, double max) {
         if (max < min) {
-            throw new IllegalArgumentException("min <= max");
+            throw new IllegalArgumentException("max must be >= min");
         }
         this.min = min;
         this.max = max;
