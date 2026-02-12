@@ -159,6 +159,51 @@ class JpmsReflectionHelperTest {
         assertTrue(JpmsReflectionHelper.isJpmsAccessException(junitEx));
     }
 
+    // --- fallbackInstantiate tests ---
+
+    @Test
+    @DisplayName("fallbackInstantiate should succeed for class with private constructor")
+    void shouldFallbackInstantiatePrivateConstructor() {
+        var generator = JpmsReflectionHelper.fallbackInstantiate(PrivateConstructorGenerator.class);
+        assertNotNull(generator);
+        assertEquals("private", generator.next());
+    }
+
+    @Test
+    @DisplayName("fallbackInstantiate should succeed for public generator class")
+    void shouldFallbackInstantiatePublicGenerator() {
+        var generator = JpmsReflectionHelper.fallbackInstantiate(PublicTestGenerator.class);
+        assertNotNull(generator);
+        assertEquals("test", generator.next());
+    }
+
+    @Test
+    @DisplayName("fallbackInstantiate should throw JUnitException for class without no-args constructor")
+    void shouldThrowJUnitExceptionWhenFallbackInstantiateFails() {
+        var exception = assertThrows(JUnitException.class,
+                () -> JpmsReflectionHelper.fallbackInstantiate(GeneratorWithoutNoArgsConstructor.class));
+        assertTrue(exception.getMessage().contains("JPMS"), "Should contain JPMS guidance");
+        assertTrue(exception.getMessage().contains(GeneratorWithoutNoArgsConstructor.class.getName()),
+                "Should contain class name");
+    }
+
+    // --- newGeneratorInstance JPMS fallback path ---
+
+    @Test
+    @DisplayName("newGeneratorInstance should delegate to fallbackInstantiate on simulated JPMS exception")
+    void shouldDelegateToFallbackOnJpmsException() {
+        // Reset state for idempotent test execution
+        FirstCallJpmsGenerator.shouldThrow = true;
+
+        // The first constructor call (via ReflectionSupport.newInstance) throws
+        // InaccessibleObjectException, simulating a JPMS access restriction.
+        // isJpmsAccessException() detects this and delegates to fallbackInstantiate(),
+        // which retries with setAccessible(true) — the second constructor call succeeds.
+        var generator = JpmsReflectionHelper.newGeneratorInstance(FirstCallJpmsGenerator.class);
+        assertNotNull(generator);
+        assertEquals("jpms-fallback", generator.next());
+    }
+
     // --- buildJpmsErrorMessage tests ---
 
     @Test
@@ -183,6 +228,15 @@ class JpmsReflectionHelperTest {
         var message = JpmsReflectionHelper.buildJpmsErrorMessage(PublicTestGenerator.class, "invoke method 'foo'");
         assertTrue(message.contains("invoke method 'foo'"), "Should contain the operation");
         assertTrue(message.contains("JPMS"), "Should mention JPMS");
+    }
+
+    @Test
+    @DisplayName("buildJpmsErrorMessage should use named module name for JDK classes")
+    void shouldUseNamedModuleName() {
+        var message = JpmsReflectionHelper.buildJpmsErrorMessage(String.class, "instantiate");
+        assertTrue(message.contains("java.base"), "Should contain named module 'java.base'");
+        assertTrue(message.contains("java.lang"), "Should contain package 'java.lang'");
+        assertFalse(message.contains("<unnamed module>"), "Should NOT contain unnamed module");
     }
 
     // --- Test helpers ---
@@ -229,6 +283,33 @@ class JpmsReflectionHelperTest {
         @Override
         public String next() {
             return "private";
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
+    }
+
+    /**
+     * Generator that simulates a JPMS access restriction on the first constructor call
+     * (as {@link org.junit.platform.commons.support.ReflectionSupport#newInstance} would
+     * encounter), but succeeds on subsequent calls (as {@code fallbackInstantiate} would
+     * retry with {@code setAccessible(true)}).
+     */
+    public static class FirstCallJpmsGenerator implements TypedGenerator<String> {
+        static boolean shouldThrow = true;
+
+        public FirstCallJpmsGenerator() {
+            if (shouldThrow) {
+                shouldThrow = false;
+                throw new InaccessibleObjectException("Simulated JPMS restriction");
+            }
+        }
+
+        @Override
+        public String next() {
+            return "jpms-fallback";
         }
 
         @Override
