@@ -435,14 +435,6 @@ var city = new CityGenerator().next();
 var name = new FullNameGenerator().next();
 ----
 
-=== Important Note
-
-The package `de.cuioss.test.generator.internal.net.java.quickcheck` contains internal implementation details derived from QuickCheck. *Do not use any classes from this package directly*. Instead, always use the public API through:
-
-* `de.cuioss.test.generator.Generators`
-* `de.cuioss.test.generator.TypedGenerator`
-* Classes in `de.cuioss.test.generator.domain` and `de.cuioss.test.generator.impl`
-
 === Java Platform Module System (JPMS) Compatibility
 
 When using cui-test-generator in modular Java projects (projects with `module-info.java`), you may encounter access issues when test generators are located in the test source tree and referenced by `@TypeGeneratorSource` annotations. This happens because JPMS restricts access between modules and unnamed modules.
@@ -498,5 +490,4 @@ The classpath approach is recommended as it provides the best balance of modular
 3. Document seeds used for specific test scenarios
 4. Create custom generators by implementing `TypedGenerator`
 5. Use domain-specific generators for specialized test data
-6. Never use classes from the internal package
-7. For modular projects, configure Surefire with `useModulePath=false` to avoid JPMS access restrictions
+6. For modular projects, configure Surefire with `useModulePath=false` to avoid JPMS access restrictions

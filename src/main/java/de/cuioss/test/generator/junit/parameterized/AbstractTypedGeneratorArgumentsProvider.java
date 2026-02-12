@@ -16,7 +16,7 @@
 package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import de.cuioss.test.generator.internal.RandomContext;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -60,11 +60,11 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
             ParameterDeclarations parameters,
             ExtensionContext context) throws Exception {
         // Handle seed management
-        var previousSeed = RandomConfiguration.getLastSeed();
+        var previousSeed = RandomContext.getLastSeed();
         var useSeed = determineSeed(context);
 
         if (useSeed != previousSeed) {
-            RandomConfiguration.setSeed(useSeed);
+            RandomContext.setSeed(useSeed);
         }
 
         try {
@@ -72,7 +72,7 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
         } finally {
             // Restore previous seed if we changed it
             if (useSeed != previousSeed) {
-                RandomConfiguration.setSeed(previousSeed);
+                RandomContext.setSeed(previousSeed);
             }
         }
     }
@@ -119,7 +119,7 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
      * 1. Seed specified in the annotation (if not -1)
      * 2. Seed from @GeneratorSeed on the test method
      * 3. Seed from @GeneratorSeed on the test class
-     * 4. Current global seed from RandomConfiguration
+     * 4. Current global seed from RandomContext
      *
      * @param context the extension context
      * @return the seed to use
@@ -152,7 +152,7 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
         }
 
         // Fall back to current global seed
-        return RandomConfiguration.getLastSeed();
+        return RandomContext.getLastSeed();
     }
 
     /**

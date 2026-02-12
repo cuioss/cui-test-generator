@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.cuioss.test.generator.junit;
+package de.cuioss.test.generator.impl;
 
+import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+/**
+ * Generates random {@link Boolean} values.
+ *
+ * @author Oliver Wolff
+ */
+public class BooleanGenerator implements TypedGenerator<Boolean> {
 
-@EnableGeneratorController
-@DisplayName("GeneratorController without seed info should")
-class GeneratorControllerExtensionWOSeedInfoTest {
+    @Override
+    public Boolean next() {
+        return RandomContext.random().nextBoolean();
+    }
 
-    @RepeatedTest(5)
-    @DisplayName("generate non-null seeds across test invocations")
-    void shouldGenerateSeeds() {
-        // Act
-        var seed = RandomContext.getLastSeed();
-
-        // Assert
-        assertNotEquals(0, seed, "Generated seed should not be zero");
+    @Override
+    public Class<Boolean> getType() {
+        return Boolean.class;
     }
 }

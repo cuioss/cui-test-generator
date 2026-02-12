@@ -16,7 +16,6 @@
 package de.cuioss.test.generator;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
-import de.cuioss.test.generator.internal.net.java.quickcheck.GeneratorException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -347,7 +346,7 @@ class GeneratorsTest {
             assertNotNull(generator.next());
             assertNotNull(generator.next());
             // Next should fail
-            assertThrows(GeneratorException.class, generator::next);
+            assertThrows(IllegalStateException.class, generator::next);
         }
     }
 

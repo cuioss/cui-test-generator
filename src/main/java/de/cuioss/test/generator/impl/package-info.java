@@ -34,8 +34,14 @@
  *   <li>{@link de.cuioss.test.generator.impl.ZoneOffsetGenerator} - Generates time zone offsets</li>
  * </ul>
  * 
- * <h3>Numeric Generators</h3>
+ * <h3>Primitive and Numeric Generators</h3>
  * <ul>
+ *   <li>{@link de.cuioss.test.generator.impl.IntegerGenerator} - Integer values with configurable ranges</li>
+ *   <li>{@link de.cuioss.test.generator.impl.LongGenerator} - Long values with configurable ranges</li>
+ *   <li>{@link de.cuioss.test.generator.impl.DoubleGenerator} - Double values with configurable ranges</li>
+ *   <li>{@link de.cuioss.test.generator.impl.ByteGenerator} - Byte values across the full byte range</li>
+ *   <li>{@link de.cuioss.test.generator.impl.BooleanGenerator} - Random boolean values</li>
+ *   <li>{@link de.cuioss.test.generator.impl.CharacterGenerator} - Character values with configurable ranges</li>
  *   <li>{@link de.cuioss.test.generator.impl.NumberGenerator} - Generic number generation</li>
  *   <li>{@link de.cuioss.test.generator.impl.FloatObjectGenerator} - Float values with configurable ranges</li>
  *   <li>{@link de.cuioss.test.generator.impl.ShortObjectGenerator} - Short values across the full range</li>
@@ -43,12 +49,20 @@
  * 
  * <h3>String and URL Generators</h3>
  * <ul>
+ *   <li>{@link de.cuioss.test.generator.impl.StringGenerator} - Configurable string generation with charset and length control</li>
  *   <li>{@link de.cuioss.test.generator.impl.NonBlankStringGenerator} - Non-empty string generation</li>
  *   <li>{@link de.cuioss.test.generator.impl.URLGenerator} - Valid URL generation from predefined sets</li>
  * </ul>
- * 
+ *
+ * <h3>Value Selection Generators</h3>
+ * <ul>
+ *   <li>{@link de.cuioss.test.generator.impl.FixedValuesGenerator} - Random selection from a fixed set of values</li>
+ *   <li>{@link de.cuioss.test.generator.impl.UniqueValuesGenerator} - Ensures unique values from a wrapped generator</li>
+ * </ul>
+ *
  * <h3>Utility Generators</h3>
  * <ul>
+ *   <li>{@link de.cuioss.test.generator.impl.DateGenerator} - java.util.Date generation</li>
  *   <li>{@link de.cuioss.test.generator.impl.DecoratorGenerator} - Wraps and enhances other generators</li>
  * </ul>
  * 

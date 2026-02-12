@@ -15,7 +15,7 @@
  */
 package de.cuioss.test.generator.junit;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.generator.distribution.RandomConfiguration;
+import de.cuioss.test.generator.internal.RandomContext;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
@@ -74,7 +74,7 @@ import java.lang.reflect.Method;
  * @author Oliver Wolff
  * @see EnableGeneratorController
  * @see GeneratorSeed
- * @see RandomConfiguration#SEED_SYSTEM_PROPERTY
+ * @see RandomContext#SEED_SYSTEM_PROPERTY
  */
 public class GeneratorControllerExtension implements BeforeEachCallback, TestExecutionExceptionHandler {
 
@@ -83,7 +83,7 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             GeneratorController seed was %sL.\s
             Use a fixed seed by applying @GeneratorSeed(%sL) for the method/class,\s
             or by using the system property '-D\
-            """ + RandomConfiguration.SEED_SYSTEM_PROPERTY + "=%s'\n";
+            """ + RandomContext.SEED_SYSTEM_PROPERTY + "=%s'\n";
 
     @Override
     public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
@@ -92,12 +92,12 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             throw throwable;
         }
         if (throwable instanceof AssertionFailedError) {
-            var failure = new AssertionFailedError(createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+            var failure = new AssertionFailedError(createErrorMessage(throwable, RandomContext.getLastSeed()));
             failure.setStackTrace(throwable.getStackTrace());
             throw failure;
         }
         var failure = new AssertionFailedError(
-                throwable.getClass() + ": " + createErrorMessage(throwable, RandomConfiguration.getLastSeed()));
+                throwable.getClass() + ": " + createErrorMessage(throwable, RandomContext.getLastSeed()));
         failure.setStackTrace(throwable.getStackTrace());
         throw failure;
 
@@ -120,9 +120,9 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
             }
         }
         if (seedSetByAnnotation) {
-            RandomConfiguration.setSeed(initialSeed);
+            RandomContext.setSeed(initialSeed);
         } else {
-            RandomConfiguration.initSeed();
+            RandomContext.initSeed();
         }
     }
 

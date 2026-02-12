@@ -48,16 +48,16 @@ This is a test data generation framework that provides reproducible random test 
    - `@GeneratorSeed`: Annotation for reproducible test data
    - Multiple `@*Source` annotations for parameterized tests
 
-4. **Internal QuickCheck Implementation**: The `de.cuioss.test.generator.internal.net.java.quickcheck` package contains the underlying QuickCheck implementation. This is internal - never use these classes directly.
+4. **Seed Management**: The `de.cuioss.test.generator.internal.RandomContext` class manages the shared `java.util.Random` instance and seed state. All generators use JRE-native random generation.
 
 ### Package Organization
 
 - `de.cuioss.test.generator`: Core interfaces and main factory (`Generators`, `TypedGenerator`)
-- `de.cuioss.test.generator.impl`: Standard generator implementations (collections, dates, numbers, strings)
+- `de.cuioss.test.generator.impl`: Standard generator implementations (primitives, strings, collections, dates, numbers)
 - `de.cuioss.test.generator.domain`: Domain-specific generators (email, person, address components)
 - `de.cuioss.test.generator.junit`: JUnit 5 integration components
 - `de.cuioss.test.generator.junit.parameterized`: Parameterized test support with various `@*Source` annotations
-- `de.cuioss.test.generator.internal.net.java.quickcheck`: Internal QuickCheck implementation (DO NOT USE DIRECTLY)
+- `de.cuioss.test.generator.internal`: Internal infrastructure (`RandomContext` for seed management)
 
 ### Key Design Patterns
 

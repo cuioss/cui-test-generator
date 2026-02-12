@@ -15,14 +15,14 @@
  */
 package de.cuioss.test.generator.domain;
 
-import de.cuioss.test.generator.internal.net.java.quickcheck.Generator;
+import de.cuioss.test.generator.TypedGenerator;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Provides lists of names for creating name {@link Generator}.
+ * Provides lists of names for creating name {@link TypedGenerator}.
  *
  * @author Oliver Wolff
  *
