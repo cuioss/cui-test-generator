@@ -123,7 +123,7 @@ All cuioss repositories have branch protection on `main`. Direct pushes to `main
 6. Wait for merge (check every ~60s): `while gh pr view --json state -q '.state' | grep -q OPEN; do sleep 60; done`
 7. Return to main: `git checkout main && git pull`
 4. Create a PR: `gh pr create --repo cuioss/cui-test-generator --head <branch-name> --base main --title "<title>" --body "<body>"`
-5. Wait for CI + Gemini review (check every ~60s until checks complete): `while ! gh pr checks --repo cuioss/cui-test-generator <pr-number> --watch; do sleep 60; done`
+5. Wait for CI + Gemini review (waits until checks complete): `gh pr checks --watch`
 6. **Handle Gemini review comments** — fetch with `gh api repos/cuioss/cui-test-generator/pulls/<pr-number>/comments` and for each:
    - If clearly valid and fixable: fix it, commit, push, then reply explaining the fix and resolve the comment
    - If disagree or out of scope: reply explaining why, then resolve the comment
