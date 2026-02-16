@@ -339,7 +339,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for boolean primitives
      */
     public static TypedGenerator<Boolean> booleans() {
-        return new BooleanGenerator();
+        return new DecoratorGenerator<>(boolean.class, booleanObjects());
     }
 
     /**
@@ -357,7 +357,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for byte primitives
      */
     public static TypedGenerator<Byte> bytes() {
-        return new ByteGenerator();
+        return new DecoratorGenerator<>(byte.class, byteObjects());
     }
 
     /**
@@ -375,7 +375,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for char primitives
      */
     public static TypedGenerator<Character> characters() {
-        return new CharacterGenerator();
+        return new DecoratorGenerator<>(char.class, characterObjects());
     }
 
     /**
@@ -393,7 +393,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for double primitives
      */
     public static TypedGenerator<Double> doubles() {
-        return new DoubleGenerator();
+        return new DecoratorGenerator<>(double.class, doubleObjects());
     }
 
     /**
@@ -451,7 +451,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for integer primitives
      */
     public static TypedGenerator<Integer> integers() {
-        return new IntegerGenerator();
+        return new DecoratorGenerator<>(int.class, integerObjects());
     }
 
     /**
@@ -507,7 +507,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for long primitives
      */
     public static TypedGenerator<Long> longs() {
-        return new LongGenerator();
+        return new DecoratorGenerator<>(long.class, longObjects());
     }
 
     /**

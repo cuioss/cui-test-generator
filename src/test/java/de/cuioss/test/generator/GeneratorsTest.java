@@ -141,6 +141,32 @@ class GeneratorsTest {
     class PrimitiveGeneration {
 
         @Test
+        @DisplayName("primitive methods should return primitive class types")
+        void primitiveMethodsShouldReturnPrimitiveClassTypes() {
+            assertEquals(boolean.class, booleans().getType());
+            assertEquals(byte.class, bytes().getType());
+            assertEquals(char.class, characters().getType());
+            assertEquals(double.class, doubles().getType());
+            assertEquals(float.class, floats().getType());
+            assertEquals(int.class, integers().getType());
+            assertEquals(long.class, longs().getType());
+            assertEquals(short.class, shorts().getType());
+        }
+
+        @Test
+        @DisplayName("wrapper methods should return wrapper class types")
+        void wrapperMethodsShouldReturnWrapperClassTypes() {
+            assertEquals(Boolean.class, booleanObjects().getType());
+            assertEquals(Byte.class, byteObjects().getType());
+            assertEquals(Character.class, characterObjects().getType());
+            assertEquals(Double.class, doubleObjects().getType());
+            assertEquals(Float.class, floatObjects().getType());
+            assertEquals(Integer.class, integerObjects().getType());
+            assertEquals(Long.class, longObjects().getType());
+            assertEquals(Short.class, shortObjects().getType());
+        }
+
+        @Test
         @DisplayName("should handle class types")
         void shouldHandleClassTypes() {
             assertNotNull(classTypes().next());
