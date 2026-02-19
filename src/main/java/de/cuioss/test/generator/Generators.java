@@ -657,9 +657,19 @@ public class Generators {
      *
      * @return a {@link TypedGenerator} for all {@link Serializable}s
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public static TypedGenerator<Serializable> serializables() {
-        return (TypedGenerator) new StringGenerator(1, 30);
+        var delegate = new StringGenerator(1, 30);
+        return new TypedGenerator<>() {
+            @Override
+            public Serializable next() {
+                return delegate.next();
+            }
+
+            @Override
+            public Class<Serializable> getType() {
+                return Serializable.class;
+            }
+        };
     }
 
     /**

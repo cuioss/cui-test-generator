@@ -20,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.Serializable;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -144,28 +145,28 @@ class GeneratorsTest {
         @DisplayName("primitive methods should return primitive class types")
         void primitiveMethodsShouldReturnPrimitiveClassTypes() {
             assertAll("primitive methods should return primitive class types",
-                () -> assertEquals(boolean.class, booleans().getType()),
-                () -> assertEquals(byte.class, bytes().getType()),
-                () -> assertEquals(char.class, characters().getType()),
-                () -> assertEquals(double.class, doubles().getType()),
-                () -> assertEquals(float.class, floats().getType()),
-                () -> assertEquals(int.class, integers().getType()),
-                () -> assertEquals(long.class, longs().getType()),
-                () -> assertEquals(short.class, shorts().getType()));
+                    () -> assertEquals(boolean.class, booleans().getType()),
+                    () -> assertEquals(byte.class, bytes().getType()),
+                    () -> assertEquals(char.class, characters().getType()),
+                    () -> assertEquals(double.class, doubles().getType()),
+                    () -> assertEquals(float.class, floats().getType()),
+                    () -> assertEquals(int.class, integers().getType()),
+                    () -> assertEquals(long.class, longs().getType()),
+                    () -> assertEquals(short.class, shorts().getType()));
         }
 
         @Test
         @DisplayName("wrapper methods should return wrapper class types")
         void wrapperMethodsShouldReturnWrapperClassTypes() {
             assertAll("wrapper methods should return wrapper class types",
-                () -> assertEquals(Boolean.class, booleanObjects().getType()),
-                () -> assertEquals(Byte.class, byteObjects().getType()),
-                () -> assertEquals(Character.class, characterObjects().getType()),
-                () -> assertEquals(Double.class, doubleObjects().getType()),
-                () -> assertEquals(Float.class, floatObjects().getType()),
-                () -> assertEquals(Integer.class, integerObjects().getType()),
-                () -> assertEquals(Long.class, longObjects().getType()),
-                () -> assertEquals(Short.class, shortObjects().getType()));
+                    () -> assertEquals(Boolean.class, booleanObjects().getType()),
+                    () -> assertEquals(Byte.class, byteObjects().getType()),
+                    () -> assertEquals(Character.class, characterObjects().getType()),
+                    () -> assertEquals(Double.class, doubleObjects().getType()),
+                    () -> assertEquals(Float.class, floatObjects().getType()),
+                    () -> assertEquals(Integer.class, integerObjects().getType()),
+                    () -> assertEquals(Long.class, longObjects().getType()),
+                    () -> assertEquals(Short.class, shortObjects().getType()));
         }
 
         @Test
@@ -325,6 +326,8 @@ class GeneratorsTest {
         @DisplayName("should handle numbers")
         void shouldHandleNumbers() {
             assertNotNull(numbers().next());
+            assertEquals(Number.class, numbers().getType(),
+                    "numbers() must report Number.class, not the delegate's concrete type");
         }
 
         @Test
@@ -339,18 +342,24 @@ class GeneratorsTest {
         @DisplayName("should handle runtime exceptions")
         void shouldHandleRuntimeExceptions() {
             assertNotNull(runtimeExceptions().next());
+            assertEquals(RuntimeException.class, runtimeExceptions().getType(),
+                    "runtimeExceptions() must report RuntimeException.class");
         }
 
         @Test
         @DisplayName("should handle throwables")
         void shouldHandleThrowables() {
-            assertNotNull(throwables());
+            assertNotNull(throwables().next());
+            assertEquals(Throwable.class, throwables().getType(),
+                    "throwables() must report Throwable.class");
         }
 
         @Test
         @DisplayName("should handle serializables")
         void shouldHandleSerializables() {
             assertNotNull(serializables().next());
+            assertEquals(Serializable.class, serializables().getType(),
+                    "serializables() must report Serializable.class, not the delegate's concrete type");
         }
 
         @Test
