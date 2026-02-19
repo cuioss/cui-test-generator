@@ -25,3 +25,12 @@ pages:
 
 github-automation:
   auto-merge-build-versions: true
+
+consumers:
+  - cuioss-parent-pom:version.cui.test.generator
+  - nifi-extensions:version.cui.test.generator
+
+dependency-propagation:
+  group-id: de.cuioss.test
+  artifact-id: cui-test-generator
+  scope: dependency
