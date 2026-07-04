@@ -16,15 +16,11 @@
 package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.TypedGenerator;
-import lombok.Getter;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.AnnotationConsumer;
-import org.junit.jupiter.params.support.ParameterDeclarations;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -44,16 +40,22 @@ import java.util.stream.Stream;
  * <li>A method in the test class</li>
  * <li>A static method in another class</li>
  * </ul>
+ *
+ * <p>
+ * Seed management (including {@link de.cuioss.test.generator.junit.GeneratorSeed})
+ * is inherited from {@link AbstractTypedGeneratorArgumentsProvider}.
+ * </p>
+ *
  * @author Oliver Wolff
  * @see TypeGeneratorMethodSource
  * @see TypedGenerator
  * @since 2.0
  */
-public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, AnnotationConsumer<TypeGeneratorMethodSource> {
+public class TypeGeneratorMethodArgumentsProvider extends AbstractTypedGeneratorArgumentsProvider
+        implements AnnotationConsumer<TypeGeneratorMethodSource> {
 
     private String methodName;
 
-    @Getter
     private int count;
 
     @Override
@@ -63,26 +65,25 @@ public class TypeGeneratorMethodArgumentsProvider implements ArgumentsProvider, 
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(
-            ParameterDeclarations parameters,
-            ExtensionContext context) {
-        // Get the TypedGenerator from the method
+    protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
         var generator = GeneratorMethodResolver.getGenerator(methodName, context);
-
-        // Generate values
-        List<Arguments> arguments = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            arguments.add(Arguments.of(generator.next()));
-        }
-
-        return arguments.stream();
+        return generateArguments(generator).stream();
     }
 
     /**
-     * @return the seed value used for this provider
+     * {@code @TypeGeneratorMethodSource} carries no seed attribute; reproducibility is
+     * driven exclusively by {@code @GeneratorSeed}, handled by the base class.
+     *
+     * @return {@code -1L}, signalling no source-level seed
      */
-    public long getSeed() {
+    @Override
+    protected long getSeed() {
         return -1L;
+    }
+
+    @Override
+    protected int getCount() {
+        return count;
     }
 
 }

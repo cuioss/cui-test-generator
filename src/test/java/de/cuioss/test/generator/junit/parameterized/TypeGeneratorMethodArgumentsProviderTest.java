@@ -17,12 +17,15 @@ package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.RandomContext;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.platform.commons.JUnitException;
 
+import java.lang.reflect.AnnotatedElement;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,7 +79,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
     }
 
     @Test
-    void shouldProvideArgumentsFromTestClassMethod() {
+    void shouldProvideArgumentsFromTestClassMethod() throws Exception {
         // given
         expect(annotation.value()).andReturn("createGenerator").anyTimes();
         expect(annotation.count()).andReturn(3).anyTimes();
@@ -84,6 +87,8 @@ class TypeGeneratorMethodArgumentsProviderTest {
         provider.accept(annotation);
 
         // Mock the context to return our test class
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
@@ -102,7 +107,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
     }
 
     @Test
-    void shouldProvideArgumentsFromExternalClassMethod() {
+    void shouldProvideArgumentsFromExternalClassMethod() throws Exception {
         // given
         String methodReference = TestFactoryClass.class.getName() + "#createGenerator";
         expect(annotation.value()).andReturn(methodReference).anyTimes();
@@ -110,7 +115,10 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(annotation);
         provider.accept(annotation);
 
-        replay(context); // Context shouldn't be needed for external class methods
+        // getElement is consulted for @GeneratorSeed resolution; no seed present here
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
 
         // when
         List<Arguments> arguments = provider.provideArguments(null, context)
@@ -133,6 +141,8 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
@@ -148,6 +158,8 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
@@ -165,11 +177,51 @@ class TypeGeneratorMethodArgumentsProviderTest {
         replay(annotation);
         provider.accept(annotation);
 
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
         assertThrows(JUnitException.class, () -> provider.provideArguments(null, context));
         verify(context);
+    }
+
+    @Test
+    void shouldHonorGeneratorSeedAnnotationOnTestMethod() throws Exception {
+        // given a source resolving to an integer generator, 3 values
+        expect(annotation.value()).andReturn("createIntegerGenerator").anyTimes();
+        expect(annotation.count()).andReturn(3).anyTimes();
+        replay(annotation);
+        provider.accept(annotation);
+
+        // and a test method carrying @GeneratorSeed(4242)
+        AnnotatedElement seededMethod = SeedFixture.class.getDeclaredMethod("seeded");
+        expect(context.getElement()).andReturn(Optional.of(seededMethod)).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
+
+        // when
+        List<Object> produced = provider.provideArguments(null, context)
+                .map(args -> args.get()[0]).collect(Collectors.toList());
+
+        // then the values match those produced from the annotated seed
+        RandomContext.setSeed(4242L);
+        var generator = TestFactoryClass.createIntegerGenerator();
+        List<Object> baseline = List.of(generator.next(), generator.next(), generator.next());
+        assertEquals(baseline, produced, "@GeneratorSeed must drive @TypeGeneratorMethodSource output");
+        verify(context);
+    }
+
+    /**
+     * Fixture supplying a method annotated with {@link GeneratorSeed}.
+     */
+    static class SeedFixture {
+
+        @GeneratorSeed(4242L)
+        static void seeded() {
+            // marker method for @GeneratorSeed resolution
+        }
     }
 
     /**

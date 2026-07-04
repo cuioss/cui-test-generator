@@ -17,6 +17,7 @@ package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.RandomContext;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
@@ -28,11 +29,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.commons.JUnitException;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.stream.Stream;
 
+import static org.easymock.EasyMock.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -79,10 +83,77 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     }
 
     @Test
-    @DisplayName("Should determine seed from annotation")
-    void shouldDetermineSeedFromAnnotation() {
+    @DisplayName("Should prefer an explicit source-level seed over any annotation")
+    void shouldPreferExplicitSourceSeed() {
         var provider = new TestProvider(TEST_SEED, 1);
         assertEquals(TEST_SEED, provider.determineSeed(null));
+        assertEquals(OptionalLong.of(TEST_SEED), provider.resolveExplicitSeed(null));
+    }
+
+    @Test
+    @DisplayName("Should resolve seed from @GeneratorSeed on the test method")
+    void shouldResolveSeedFromMethodAnnotation() throws Exception {
+        var provider = new TestProvider(-1L, 1);
+        var method = TestClass.class.getMethod("methodWithSeed");
+        ExtensionContext context = createMock(ExtensionContext.class);
+        expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
+
+        assertEquals(OptionalLong.of(123L), provider.resolveExplicitSeed(context));
+        verify(context);
+    }
+
+    @Test
+    @DisplayName("Should resolve seed from class-level @GeneratorSeed when method has none")
+    void shouldResolveSeedFromClassAnnotation() throws Exception {
+        var provider = new TestProvider(-1L, 1);
+        var method = ClassWithSeed.class.getMethod("methodWithoutSeed");
+        ExtensionContext context = createMock(ExtensionContext.class);
+        expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
+
+        assertEquals(OptionalLong.of(456L), provider.resolveExplicitSeed(context));
+        verify(context);
+    }
+
+    @Test
+    @DisplayName("Should report no explicit seed and fall back to the global seed when unannotated")
+    void shouldFallBackToGlobalSeedWhenNoAnnotation() throws Exception {
+        var provider = new TestProvider(-1L, 1);
+        var method = TestClass.class.getMethod("wrongReturnType");
+        ExtensionContext context = createMock(ExtensionContext.class);
+        expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
+
+        assertEquals(OptionalLong.empty(), provider.resolveExplicitSeed(context));
+        RandomContext.setSeed(987654321L);
+        assertEquals(987654321L, provider.determineSeed(context));
+        verify(context);
+    }
+
+    @Test
+    @DisplayName("Should re-apply an explicit seed even when it equals the current global seed")
+    void shouldReapplyExplicitSeedEqualToLastSeed() throws Exception {
+        long seed = 987654321L;
+        var generator = Generators.integers(Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        // Baseline: three values from the very start of the seed's stream
+        RandomContext.setSeed(seed);
+        var baseline = List.of(generator.next(), generator.next(), generator.next());
+
+        // Advance the shared RNG mid-stream while lastSeed still equals the explicit seed
+        RandomContext.setSeed(seed);
+        RandomContext.random().nextInt();
+        assertEquals(seed, RandomContext.getLastSeed());
+
+        var provider = new GeneratingProvider(seed, 3, generator);
+        var produced = provider.provideArguments(null, null).map(a -> a.get()[0]).toList();
+
+        assertEquals(baseline, produced,
+                "Explicit seed must be re-applied so arguments do not depend on prior consumption");
     }
 
     @ParameterizedTest(name = "With count={0}, should generate {0} arguments")
@@ -143,6 +214,37 @@ class AbstractTypedGeneratorArgumentsProviderTest {
 
         public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
             return generateArguments(generator);
+        }
+    }
+
+    /**
+     * Provider that actually generates arguments from a supplied generator, used to
+     * observe seed application end-to-end.
+     */
+    private static class GeneratingProvider extends AbstractTypedGeneratorArgumentsProvider {
+        private final long seed;
+        private final int count;
+        private final TypedGenerator<?> generator;
+
+        GeneratingProvider(long seed, int count, TypedGenerator<?> generator) {
+            this.seed = seed;
+            this.count = count;
+            this.generator = generator;
+        }
+
+        @Override
+        protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
+            return generateArguments(generator).stream();
+        }
+
+        @Override
+        protected long getSeed() {
+            return seed;
+        }
+
+        @Override
+        protected int getCount() {
+            return count;
         }
     }
 

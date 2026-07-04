@@ -16,6 +16,7 @@
 package de.cuioss.test.generator.junit;
 
 import de.cuioss.test.generator.internal.RandomContext;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 import org.opentest4j.TestAbortedException;
@@ -81,6 +82,57 @@ class GeneratorControllerExtensionTest {
             assertNotSame(exception, e);
             assertInstanceOf(AssertionFailedError.class, e);
             assertTrue(e.getMessage().contains(String.valueOf(DEFAULT_SEED)));
+        }
+    }
+
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
+    @Test
+    void shouldPreserveCauseExpectedAndActual() {
+        var original = new AssertionFailedError("boom", "the-expected", "the-actual");
+        var extension = new GeneratorControllerExtension();
+        RandomContext.setSeed(DEFAULT_SEED);
+        try {
+            extension.handleTestExecutionException(null, original);
+            fail("Should have thrown exception");
+        } catch (Throwable e) {
+            var afe = assertInstanceOf(AssertionFailedError.class, e);
+            assertSame(original, afe.getCause(), "Original assertion must be preserved as cause");
+            assertTrue(afe.isExpectedDefined());
+            assertTrue(afe.isActualDefined());
+            assertEquals("the-expected", afe.getExpected().getValue());
+            assertEquals("the-actual", afe.getActual().getValue());
+            assertTrue(afe.getMessage().contains(String.valueOf(DEFAULT_SEED)));
+        }
+    }
+
+    // cui-rewrite:disable InvalidExceptionUsageRecipe
+    @Test
+    void shouldPreserveCauseForNonAssertionErrorWithoutClassPrefix() {
+        var original = new IllegalStateException("bad state");
+        var extension = new GeneratorControllerExtension();
+        RandomContext.setSeed(DEFAULT_SEED);
+        try {
+            extension.handleTestExecutionException(null, original);
+            fail("Should have thrown exception");
+        } catch (Throwable e) {
+            assertInstanceOf(AssertionFailedError.class, e);
+            assertSame(original, e.getCause(), "Original throwable must be preserved as cause");
+            assertTrue(e.getMessage().startsWith("java.lang.IllegalStateException:"),
+                    "Message must use the qualified class name without a spurious 'class ' prefix");
+            assertFalse(e.getMessage().startsWith("class "));
+        }
+    }
+
+    /**
+     * Verifies that a {@code @Nested} test without its own seed inherits the
+     * enclosing class-level {@code @GeneratorSeed} (S-7).
+     */
+    @Nested
+    class NestedWithoutOwnSeed {
+
+        @Test
+        void shouldInheritEnclosingClassSeed() {
+            assertEquals(5L, RandomContext.getLastSeed());
         }
     }
 }
