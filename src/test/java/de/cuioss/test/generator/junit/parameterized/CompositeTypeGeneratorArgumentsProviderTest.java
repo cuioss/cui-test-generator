@@ -102,6 +102,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
@@ -124,6 +125,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -156,6 +158,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -188,6 +191,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -221,6 +225,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when

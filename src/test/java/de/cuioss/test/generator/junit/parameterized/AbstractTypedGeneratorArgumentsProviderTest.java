@@ -97,6 +97,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
         var method = TestClass.class.getMethod("methodWithSeed");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         assertEquals(OptionalLong.of(123L), provider.resolveExplicitSeed(context));
@@ -110,6 +111,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
         var method = ClassWithSeed.class.getMethod("methodWithoutSeed");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         assertEquals(OptionalLong.of(456L), provider.resolveExplicitSeed(context));
@@ -123,6 +125,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
         var method = TestClass.class.getMethod("wrongReturnType");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         assertEquals(OptionalLong.empty(), provider.resolveExplicitSeed(context));

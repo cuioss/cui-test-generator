@@ -23,6 +23,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.ParameterDeclarations;
 import org.junit.platform.commons.JUnitException;
+import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -120,31 +121,37 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
      * <ol>
      *   <li>Seed specified in the source annotation (if not {@code -1})</li>
      *   <li>Seed from {@code @GeneratorSeed} on the test method</li>
-     *   <li>Seed from {@code @GeneratorSeed} on the test class</li>
+     *   <li>Seed from {@code @GeneratorSeed} on the (possibly enclosing or inherited) test class</li>
      * </ol>
-     * When none of these is present, no explicit seed is requested and the shared RNG is
-     * left untouched (an empty result), so generation continues from the seed established
-     * by the enclosing {@code @EnableGeneratorController} for the current test.
+     * The class hierarchy is walked outward from the current context — matching
+     * {@code GeneratorControllerExtension} — so {@code @Nested} tests and annotations
+     * inherited on a concrete subclass are honored. When none of these is present, no
+     * explicit seed is requested and the shared RNG is left untouched (an empty result),
+     * so generation continues from the seed established by the enclosing
+     * {@code @EnableGeneratorController} for the current test.
      *
      * @param context the extension context
      * @return the explicitly requested seed, or empty if none was requested
      */
-    @SuppressWarnings("java:S3655") // False positive, isPresent() is checked
     protected OptionalLong resolveExplicitSeed(ExtensionContext context) {
         long seed = getSeed();
         if (seed != -1L) {
             return OptionalLong.of(seed);
         }
 
-        if (context != null && context.getElement().isPresent()
-                && context.getElement().get() instanceof Method method) {
-            var methodAnnotation = method.getAnnotation(GeneratorSeed.class);
-            if (methodAnnotation != null) {
-                return OptionalLong.of(methodAnnotation.value());
-            }
-            var classAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
-            if (classAnnotation != null) {
-                return OptionalLong.of(classAnnotation.value());
+        for (Optional<ExtensionContext> current = Optional.ofNullable(context);
+             current.isPresent();
+             current = current.get().getParent()) {
+            var element = current.get().getElement();
+            if (element.isPresent()) {
+                var found = AnnotationSupport.findAnnotation(element.get(), GeneratorSeed.class);
+                if (found.isEmpty() && element.get() instanceof Method method) {
+                    // The declaring class is not part of a method's own annotation search
+                    found = AnnotationSupport.findAnnotation(method.getDeclaringClass(), GeneratorSeed.class);
+                }
+                if (found.isPresent()) {
+                    return OptionalLong.of(found.get().value());
+                }
             }
         }
 

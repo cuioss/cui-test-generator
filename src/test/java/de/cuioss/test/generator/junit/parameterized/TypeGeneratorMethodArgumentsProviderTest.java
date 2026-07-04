@@ -88,6 +88,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         // Mock the context to return our test class
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
@@ -116,6 +117,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         // getElement is consulted for @GeneratorSeed resolution; no seed present here
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when
@@ -140,6 +142,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
@@ -156,6 +159,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
@@ -174,6 +178,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         provider.accept(annotation);
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
         // when/then
