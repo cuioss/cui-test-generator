@@ -13,35 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.cuioss.test.generator.impl;
+package de.cuioss.test.generator;
 
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @EnableGeneratorController
-@DisplayName("BooleanGenerator should")
-class BooleanGeneratorTest {
+@DisplayName("TypedGenerator default getType() should")
+class TypedGeneratorDefaultTypeTest {
 
     @Test
-    @DisplayName("generate both true and false")
-    void shouldGenerateBothValues() {
-        var generator = new BooleanGenerator();
-        boolean seenTrue = false, seenFalse = false;
-        for (int i = 0; i < 100; i++) {
-            if (generator.next()) seenTrue = true;
-            else seenFalse = true;
-        }
-        assertTrue(seenTrue, "Should generate true");
-        assertTrue(seenFalse, "Should generate false");
+    @DisplayName("infer the type from the value returned by next()")
+    void shouldInferTypeFromNext() {
+        TypedGenerator<String> generator = () -> "x";
+        assertEquals(String.class, generator.getType(),
+                "Default getType() must infer the concrete class from next()");
     }
 
     @Test
-    @DisplayName("return Boolean.class as type")
-    void shouldReturnCorrectType() {
-        assertEquals(Boolean.class, new BooleanGenerator().getType());
+    @DisplayName("throw NullPointerException when next() returns null")
+    void shouldThrowWhenNextReturnsNull() {
+        TypedGenerator<String> generator = () -> null;
+        assertThrows(NullPointerException.class, generator::getType,
+                "Default getType() dereferences next() and must fail on a null value");
     }
 }

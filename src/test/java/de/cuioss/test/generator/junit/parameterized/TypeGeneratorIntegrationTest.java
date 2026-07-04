@@ -17,13 +17,13 @@ package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
-import de.cuioss.test.generator.impl.LocalDateGenerator;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,6 +35,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableGeneratorController
 @DisplayName("TypeGenerator JUnit Extensions Integration Test")
 class TypeGeneratorIntegrationTest {
+
+    // Captured once so the generator and the assertion share the exact same reference date; this
+    // avoids a midnight rollover making the two diverge by a day.
+    private static final LocalDate REFERENCE_DATE = LocalDate.now();
+    private static final LocalDate MIN_DATE = REFERENCE_DATE.minusYears(1);
+    private static final LocalDate MAX_DATE = REFERENCE_DATE.plusYears(1);
 
     // Simple example using a class-based generator
     @ParameterizedTest
@@ -62,7 +68,9 @@ class TypeGeneratorIntegrationTest {
     @DisplayName("Should generate reproducible enum values")
     void shouldGenerateReproducibleEnumValues(TimeUnit unit) {
         assertNotNull(unit);
-        // With seed 123L, the first value will always be the same
+        // The produced value must be a genuine constant of the target enum.
+        assertTrue(List.of(TimeUnit.values()).contains(unit),
+                "Generated value must be a valid TimeUnit constant: " + unit);
     }
 
     // Example using method source with a method in the same class
@@ -71,9 +79,8 @@ class TypeGeneratorIntegrationTest {
     @DisplayName("Should generate dates using method source")
     void shouldGenerateDatesUsingMethodSource(LocalDate date) {
         assertNotNull(date);
-        LocalDate now = LocalDate.now();
-        assertTrue(date.isAfter(now.minusYears(1)));
-        assertTrue(date.isBefore(now.plusYears(1)));
+        assertFalse(date.isBefore(MIN_DATE), "Date before the lower bound: " + date);
+        assertFalse(date.isAfter(MAX_DATE), "Date after the upper bound: " + date);
     }
 
     // Example using method source with count parameter
@@ -96,16 +103,19 @@ class TypeGeneratorIntegrationTest {
     // Generator factory methods
     
     static TypedGenerator<LocalDate> createDateGenerator() {
-        return new LocalDateGenerator() {
+        // Draw epoch days directly within [MIN_DATE, MAX_DATE] so no rejection loop is needed and
+        // the range is guaranteed to be satisfied on the first attempt.
+        long minDay = MIN_DATE.toEpochDay();
+        long maxDay = MAX_DATE.toEpochDay();
+        return new TypedGenerator<>() {
             @Override
             public LocalDate next() {
-                LocalDate now = LocalDate.now();
-                LocalDate date = super.next();
-                // Ensure date is within the last year and next year
-                while (date.isBefore(now.minusYears(1)) || date.isAfter(now.plusYears(1))) {
-                    date = super.next();
-                }
-                return date;
+                return LocalDate.ofEpochDay(Generators.longs(minDay, maxDay).next());
+            }
+
+            @Override
+            public Class<LocalDate> getType() {
+                return LocalDate.class;
             }
         };
     }

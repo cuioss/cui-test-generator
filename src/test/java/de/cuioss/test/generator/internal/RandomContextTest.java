@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.internal;
 
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @DisplayName("RandomContext should")
 class RandomContextTest {
 

@@ -16,6 +16,7 @@
 package de.cuioss.test.generator;
 
 import de.cuioss.test.generator.impl.CollectionGenerator;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import static de.cuioss.test.generator.Generators.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @DisplayName("Generators utility class provides")
 class GeneratorsTest {
 
@@ -78,6 +80,8 @@ class GeneratorsTest {
         void shouldHandleStringsWithLimits() {
             var result3 = strings(1, 2).next();
             assertFalse(result3 == null || result3.isEmpty());
+            assertTrue(result3.length() >= 1 && result3.length() <= 2,
+                    "String length must respect the requested bounds: " + result3);
             assertEquals(String.class, strings(1, 2).getType());
         }
 
@@ -100,6 +104,10 @@ class GeneratorsTest {
         void shouldHandleLetterStringsWithLimits() {
             var result5 = letterStrings(1, 2).next();
             assertFalse(result5 == null || result5.isEmpty());
+            assertTrue(result5.length() >= 1 && result5.length() <= 2,
+                    "Letter string length must respect the requested bounds: " + result5);
+            assertTrue(result5.chars().allMatch(Character::isLetter),
+                    "Letter string must contain only letters: " + result5);
             assertEquals(String.class, letterStrings(1, 2).getType());
         }
 
@@ -221,7 +229,8 @@ class GeneratorsTest {
         @DisplayName("should handle float primitives")
         void shouldHandleFloatPrimitives() {
             assertNotNull(floats().next());
-            assertNotNull(floats(1, 5).next());
+            float bounded = floats(1, 5).next();
+            assertTrue(bounded >= 1f && bounded <= 5f, "Float out of requested range: " + bounded);
         }
 
         @Test
@@ -240,7 +249,8 @@ class GeneratorsTest {
         @DisplayName("should handle doubles")
         void shouldHandleDoubles() {
             assertNotNull(doubleObjects().next());
-            assertNotNull(doubles(1, 4).next());
+            double bounded = doubles(1, 4).next();
+            assertTrue(bounded >= 1d && bounded <= 4d, "Double out of requested range: " + bounded);
         }
 
         @Test
@@ -259,7 +269,8 @@ class GeneratorsTest {
         @DisplayName("should handle long primitives")
         void shouldHandleLongPrimitives() {
             assertNotNull(longs().next());
-            assertNotNull(longs(1, 11).next());
+            long bounded = longs(1, 11).next();
+            assertTrue(bounded >= 1L && bounded <= 11L, "Long out of requested range: " + bounded);
         }
 
         @Test
@@ -334,7 +345,8 @@ class GeneratorsTest {
         @DisplayName("should handle integers")
         void shouldHandleIntegers() {
             assertNotNull(integerObjects().next());
-            assertNotNull(integers(1, 31).next());
+            int bounded = integers(1, 31).next();
+            assertTrue(bounded >= 1 && bounded <= 31, "Integer out of requested range: " + bounded);
             assertNotNull(integers().next());
         }
 

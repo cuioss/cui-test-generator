@@ -19,19 +19,28 @@ import de.cuioss.test.generator.internal.RandomContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnableGeneratorController
 @DisplayName("GeneratorController without seed info should")
 class GeneratorControllerExtensionWOSeedInfoTest {
 
-    @RepeatedTest(5)
-    @DisplayName("generate non-null seeds across test invocations")
-    void shouldGenerateSeeds() {
-        // Act
-        var seed = RandomContext.getLastSeed();
+    private static final int REPETITIONS = 5;
 
-        // Assert
-        assertNotEquals(0, seed, "Generated seed should not be zero");
+    private static final Set<Long> OBSERVED_SEEDS = new HashSet<>();
+
+    @RepeatedTest(REPETITIONS)
+    @DisplayName("draw a distinct random seed for each repetition")
+    void shouldDrawDistinctRandomSeeds() {
+        // Without @GeneratorSeed the extension must draw a fresh random seed per invocation.
+        long seed = RandomContext.getLastSeed();
+
+        // Recording the seed must reveal a value not seen in any previous repetition: if the
+        // extension reused the same seed, add() would return false on a later repetition.
+        assertTrue(OBSERVED_SEEDS.add(seed),
+                "Each repetition must draw a distinct random seed, but saw a repeat: " + seed);
     }
 }

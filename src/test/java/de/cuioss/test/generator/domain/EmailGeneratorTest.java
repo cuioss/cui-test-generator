@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.domain;
 
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @DisplayName("EmailGenerator")
 class EmailGeneratorTest {
 

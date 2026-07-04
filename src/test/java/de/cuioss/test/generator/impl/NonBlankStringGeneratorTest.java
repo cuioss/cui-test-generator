@@ -16,13 +16,17 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.RandomContext;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
+@GeneratorSeed(42L)
 @DisplayName("NonBlankStringGenerator should")
 class NonBlankStringGeneratorTest {
 
@@ -31,57 +35,27 @@ class NonBlankStringGeneratorTest {
     @Test
     @DisplayName("return String.class as type")
     void getTypeReturnsString() {
-        // Act & Assert
         assertEquals(String.class, underTest.getType(),
                 "Generator should return String.class as type");
     }
 
-    @Nested
-    @DisplayName("when generating strings")
-    class StringGenerationTests {
+    @RepeatedTest(5)
+    @DisplayName("generate non-blank strings with at least one character")
+    void shouldGenerateNonBlankStrings() {
+        var result = underTest.next();
 
-        @Test
-        @DisplayName("generate non-null strings")
-        void shouldGenerateNonNullStrings() {
-            // Act
-            var result = underTest.next();
+        assertFalse(result.isBlank(), "Generated string should not be blank");
+        assertTrue(result.length() >= 1, "Generated string should contain at least one character");
+        assertFalse(result.trim().isEmpty(), "Generated string should contain non-whitespace characters");
+    }
 
-            // Assert
-            assertNotNull(result, "Generated string should not be null");
-        }
-
-        @Test
-        @DisplayName("generate non-blank strings")
-        void shouldGenerateNonBlankStrings() {
-            // Act
-            var result = underTest.next();
-
-            // Assert
-            assertFalse(result.isBlank(), "Generated string should not be blank");
-        }
-
-        @RepeatedTest(5)
-        @DisplayName("consistently generate valid strings")
-        void shouldConsistentlyGenerateValidStrings() {
-            // Act
-            var result = underTest.next();
-
-            // Assert
-            assertNotNull(result, "Generated string should not be null");
-            assertFalse(result.isBlank(), "Generated string should not be blank");
-            assertFalse(result.matches("^\\s+$"), "Generated string should not be only whitespace");
-        }
-
-        @Test
-        @DisplayName("preserve non-blank content")
-        void shouldPreserveContent() {
-            // Act
-            var result = underTest.next();
-            var trimmed = result.trim();
-
-            // Assert
-            assertFalse(trimmed.isEmpty(),
-                    "Generated string should contain non-whitespace characters");
-        }
+    @Test
+    @DisplayName("be reproducible with the same seed")
+    void shouldBeReproducible() {
+        RandomContext.setSeed(42L);
+        var first = underTest.next();
+        RandomContext.setSeed(42L);
+        var second = underTest.next();
+        assertEquals(first, second, "Same seed must yield the same value");
     }
 }

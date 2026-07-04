@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.domain;
 
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,9 +23,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @DisplayName("Domain Generator provides")
 class DomainGeneratorTest {
 
@@ -59,7 +60,10 @@ class DomainGeneratorTest {
         @Test
         @DisplayName("should provide full names")
         void shouldProvideFullNames() {
-            assertNotNull(new FullNameGenerator(Locale.ENGLISH).next());
+            var fullName = new FullNameGenerator(Locale.ENGLISH).next();
+            assertNotNull(fullName);
+            assertTrue(fullName.contains(" "),
+                    "A full name must contain a space separating first and family name: " + fullName);
         }
 
         @Test
@@ -86,7 +90,11 @@ class DomainGeneratorTest {
         @DisplayName("should provide phone numbers")
         void shouldProvidePhoneNumber() {
             assertEquals(String.class, new PhoneNumberGenerator().getType());
-            assertNotNull(new PhoneNumberGenerator().next());
+            var phoneNumber = new PhoneNumberGenerator().next();
+            assertNotNull(phoneNumber);
+            // Produced as "0" + area(100-999) + "/" + number(1000-9999), e.g. "0123/4567".
+            assertTrue(phoneNumber.matches("^0\\d{3}/\\d{4}$"),
+                    "Unexpected phone number format: " + phoneNumber);
         }
     }
 
@@ -105,7 +113,14 @@ class DomainGeneratorTest {
         @DisplayName("should provide distinguished names")
         void shouldProvideDns() {
             assertEquals(String.class, new DistinguishedNamesGenerator().getType());
-            assertNotNull(new DistinguishedNamesGenerator().next());
+            var dn = new DistinguishedNamesGenerator().next();
+            assertNotNull(dn);
+            assertTrue(dn.contains("="),
+                    "A distinguished name must contain at least one '=': " + dn);
+            for (var component : dn.split(",")) {
+                assertTrue(component.matches("[^=,]+=[^=,]+"),
+                        "Each component must be a 'prefix=value' pair: " + component + " in " + dn);
+            }
         }
     }
 
@@ -138,7 +153,11 @@ class DomainGeneratorTest {
         @DisplayName("should provide zip codes")
         void shouldProvideZipcodes() {
             assertEquals(Integer.class, new ZipCodeGenerator().getType());
-            assertNotNull(new ZipCodeGenerator().next());
+            var generator = new ZipCodeGenerator();
+            for (int i = 0; i < 200; i++) {
+                int zip = generator.next();
+                assertTrue(zip >= 1067 && zip <= 99999, "Zip code out of range: " + zip);
+            }
         }
     }
 

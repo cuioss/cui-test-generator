@@ -58,6 +58,8 @@ class GeneratorsSourceTest {
     void shouldGenerateValuesWithSpecificSeed(String value) {
 
         assertNotNull(value);
+        assertTrue(value.length() >= 3 && value.length() <= 10,
+                "Seeded value must still respect the configured [minSize, maxSize] bounds: " + value);
     }
 
     /**

@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.impl;
 
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ import static de.cuioss.test.generator.impl.ZonedDateTimeGenerator.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@EnableGeneratorController
 @DisplayName("ZonedDateTimeGenerator should")
 class ZonedDateTimeGeneratorTest {
 

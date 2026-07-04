@@ -15,7 +15,6 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
-import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -36,7 +35,7 @@ class GeneratorMethodResolverTest {
     @Test
     void shouldGetGeneratorFromExternalClass() {
         // given
-        String methodReference = TestFactoryClass.class.getName() + "#createGenerator";
+        String methodReference = SharedTestFactory.class.getName() + "#createGenerator";
 
         // when
         TypedGenerator<?> generator = GeneratorMethodResolver.getGeneratorFromExternalClass(methodReference);
@@ -50,8 +49,8 @@ class GeneratorMethodResolverTest {
         return Stream.of(
                 arguments("invalid#format#method", "Could not find class [invalid]"),
                 arguments("com.nonexistent.Class#method", "Could not find class [com.nonexistent.Class]"),
-                arguments(TestFactoryClass.class.getName() + "#nonExistentMethod", "Could not find method [nonExistentMethod] in class [" + TestFactoryClass.class.getName() + "]"),
-                arguments(TestFactoryClass.class.getName() + "#createDoubleGenerator", "Method [createDoubleGenerator] in external class [" + TestFactoryClass.class.getName() + "] must be static")
+                arguments(SharedTestFactory.class.getName() + "#nonExistentMethod", "Could not find method [nonExistentMethod] in class [" + SharedTestFactory.class.getName() + "]"),
+                arguments(SharedTestFactory.class.getName() + "#createDoubleGenerator", "Method [createDoubleGenerator] in external class [" + SharedTestFactory.class.getName() + "] must be static")
         );
     }
 
@@ -65,12 +64,12 @@ class GeneratorMethodResolverTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
+    @SuppressWarnings("unchecked") // Safe: SharedTestFactory.class is statically known; EasyMock limitation requires raw Class
     void shouldGetGeneratorFromTestClass() {
         // given
         String methodName = "createGenerator";
         ExtensionContext context = createMock(ExtensionContext.class);
-        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -84,14 +83,14 @@ class GeneratorMethodResolverTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
+    @SuppressWarnings("unchecked") // Safe: SharedTestFactory.class is statically known; EasyMock limitation requires raw Class
     void shouldGetGeneratorFromTestInstance() {
         // given
         String methodName = "createDoubleGenerator";
         ExtensionContext context = createMock(ExtensionContext.class);
-        TestFactoryClass testInstance = new TestFactoryClass();
+        SharedTestFactory testInstance = new SharedTestFactory();
 
-        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.of(testInstance)).anyTimes();
         replay(context);
 
@@ -114,13 +113,13 @@ class GeneratorMethodResolverTest {
 
     @ParameterizedTest
     @MethodSource("invalidMethodScenarios")
-    @SuppressWarnings("unchecked") // Safe: TestFactoryClass.class is statically known; EasyMock limitation requires raw Class
+    @SuppressWarnings("unchecked") // Safe: SharedTestFactory.class is statically known; EasyMock limitation requires raw Class
     void shouldThrowExceptionForInvalidMethodScenarios(String methodName, boolean isNullPointerExpected, String expectedErrorMessage) {
         // given
         ExtensionContext context = createMock(ExtensionContext.class);
 
         if (methodName != null && !methodName.isEmpty()) {
-            expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+            expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
             expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         }
         replay(context);
@@ -150,7 +149,7 @@ class GeneratorMethodResolverTest {
     @MethodSource("methodFindingScenarios")
     void shouldFindOrNotFindMethod(String methodName, boolean shouldBeFound) {
         // given
-        Class<?> clazz = TestFactoryClass.class;
+        Class<?> clazz = SharedTestFactory.class;
 
         // when
         var method = GeneratorMethodResolver.findMethod(clazz, methodName);
@@ -164,54 +163,4 @@ class GeneratorMethodResolverTest {
         }
     }
 
-    /**
-     * Test factory class with methods that return TypedGenerator instances.
-     * Some methods are intentionally unused directly but are required for testing
-     * method resolution logic.
-     */
-    @SuppressWarnings("unused")
-    static class TestFactoryClass {
-
-        /**
-         * Creates a string generator for testing.
-         * @return a TypedGenerator that generates strings
-         */
-        public static TypedGenerator<String> createGenerator() {
-            return Generators.strings(5, 10);
-        }
-
-        /**
-         * Creates an integer generator for testing.
-         * @return a TypedGenerator that generates integers
-         */
-        public static TypedGenerator<Integer> createIntegerGenerator() {
-            return Generators.integers(1, 100);
-        }
-
-        /**
-         * Non-static method that should not be callable without an instance.
-         * @return a TypedGenerator that generates doubles
-         */
-        public TypedGenerator<Double> createDoubleGenerator() {
-            return Generators.doubles(0.0, 1.0);
-        }
-
-        /**
-         * Method with wrong return type for testing method resolution.
-         * @return a string, not a TypedGenerator
-         */
-        public static String methodWithWrongReturnType() {
-            return "not a generator";
-        }
-
-        /**
-         * Method with parameters for testing method resolution.
-         * @param min minimum value
-         * @param max maximum value
-         * @return a TypedGenerator that generates integers
-         */
-        public static TypedGenerator<Integer> methodWithParameters(int min, int max) {
-            return Generators.integers(min, max);
-        }
-    }
 }
