@@ -69,4 +69,9 @@ public class BlindTextGenerator implements TypedGenerator<String> {
         return contents.next();
     }
 
+    @Override
+    public Class<String> getType() {
+        return String.class;
+    }
+
 }
