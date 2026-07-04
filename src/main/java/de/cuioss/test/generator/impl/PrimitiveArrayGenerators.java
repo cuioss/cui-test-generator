@@ -65,7 +65,7 @@ public enum PrimitiveArrayGenerators {
 
     @Override
     public Object next() {
-        final int size = sizeGenerator.next();
+        final int size = SIZE_GENERATOR.next();
         final var generator = Generators.booleans();
         final var array = new boolean[size];
         for (var index = 0; index < size; index++) {
@@ -84,7 +84,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final var generator = Generators.bytes();
             final var array = new byte[size];
             for (var index = 0; index < size; index++) {
@@ -103,7 +103,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final var generator = Generators.characters();
             final var array = new char[size];
             for (var index = 0; index < size; index++) {
@@ -122,7 +122,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final TypedGenerator<Short> generator = new ShortObjectGenerator();
             final var array = new short[size];
             for (var index = 0; index < size; index++) {
@@ -141,7 +141,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final var generator = Generators.integers();
             final var array = new int[size];
             for (var index = 0; index < size; index++) {
@@ -160,7 +160,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final var generator = Generators.longs();
             final var array = new long[size];
             for (var index = 0; index < size; index++) {
@@ -179,7 +179,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final TypedGenerator<Float> generator = new FloatObjectGenerator();
             final var array = new float[size];
             for (var index = 0; index < size; index++) {
@@ -198,7 +198,7 @@ public enum PrimitiveArrayGenerators {
 
         @Override
         public Object next() {
-            final int size = sizeGenerator.next();
+            final int size = SIZE_GENERATOR.next();
             final var generator = Generators.doubles();
             final var array = new double[size];
             for (var index = 0; index < size; index++) {
@@ -213,7 +213,7 @@ public enum PrimitiveArrayGenerators {
         }
     };
 
-    private static final TypedGenerator<Integer> sizeGenerator = Generators.integers(1, 128);
+    private static final TypedGenerator<Integer> SIZE_GENERATOR = Generators.integers(1, 128);
 
     /**
      * @return an primitive array of the configured type, with the sizes 1-128

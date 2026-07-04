@@ -67,6 +67,13 @@ class StringGeneratorTest {
     }
 
     @Test
+    @DisplayName("reject a negative minimum length")
+    void shouldRejectNegativeMinLength() {
+        assertThrows(IllegalArgumentException.class, () -> new StringGenerator(-1, 5));
+        assertThrows(IllegalArgumentException.class, () -> new StringGenerator("ABC", -1, 5));
+    }
+
+    @Test
     @DisplayName("return String.class as type")
     void shouldReturnCorrectType() {
         assertEquals(String.class, new StringGenerator().getType());

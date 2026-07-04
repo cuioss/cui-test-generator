@@ -20,11 +20,6 @@ import de.cuioss.test.generator.internal.RandomContext;
 import lombok.AccessLevel;
 import lombok.Getter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import static java.math.BigDecimal.valueOf;
-
 /**
  * Generates random {@link Long} values within a configurable range.
  *
@@ -63,7 +58,7 @@ public class LongGenerator implements TypedGenerator<Long> {
 
     @Override
     public Long next() {
-        return range < 0 ? bigDecimalImpl() : longImpl();
+        return range < 0 ? wideRangeImpl() : longImpl();
     }
 
     private long longImpl() {
@@ -76,10 +71,20 @@ public class LongGenerator implements TypedGenerator<Long> {
         return min + RandomContext.random().nextLong(range + 1);
     }
 
-    private long bigDecimalImpl() {
-        BigDecimal localRange = valueOf(max).add(valueOf(1L)).subtract(valueOf(min));
-        return valueOf(min).add(valueOf(RandomContext.random().nextDouble()).multiply(localRange))
-                .setScale(0, RoundingMode.FLOOR).longValue();
+    /**
+     * Handles spans whose size {@code (max - min + 1)} exceeds the {@code long} range (i.e. the
+     * computed {@link #range} overflowed to a negative value). A full 64-bit draw is sampled and
+     * rejected until it falls within {@code [min, max]}. Because such a span always covers at least
+     * half of the {@code long} domain, the acceptance probability is {@code >= 0.5} and the expected
+     * number of draws is below two. Unlike a single {@code nextDouble()} scaling, this uses the full
+     * 64 bits of entropy and can reach {@link Long#MAX_VALUE}.
+     */
+    private long wideRangeImpl() {
+        long candidate;
+        do {
+            candidate = RandomContext.random().nextLong();
+        } while (candidate < min || candidate > max);
+        return candidate;
     }
 
     @Override

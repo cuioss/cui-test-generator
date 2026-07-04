@@ -103,6 +103,14 @@ import static java.util.Objects.requireNonNull;
 @UtilityClass
 public class Generators {
 
+    /** Cached list of all available {@link TimeZone}s; rebuilding it per call is expensive. */
+    private static final List<TimeZone> TIME_ZONES =
+            Arrays.stream(TimeZone.getAvailableIDs()).map(TimeZone::getTimeZone).toList();
+
+    /** Cached list of all available {@link ZoneId}s; rebuilding it per call is expensive. */
+    private static final List<ZoneId> ZONE_IDS =
+            ZoneId.getAvailableZoneIds().stream().map(ZoneId::of).toList();
+
     /**
      * Factory method for creating a generator for a possible given enum.
      *
@@ -145,6 +153,9 @@ public class Generators {
      */
     public static <T extends Enum<T>> TypedGenerator<T> enumValues(final Class<T> type) {
         requireNonNull(type);
+        if (!type.isEnum()) {
+            throw new IllegalArgumentException("type must represent an enum, given: " + type.getName());
+        }
         return new FixedValuesGenerator<>(type, Arrays.asList(type.getEnumConstants()));
     }
 
@@ -222,13 +233,13 @@ public class Generators {
 
     /**
      * Factory method for creating a {@link TypedGenerator} for sensible / simple
-     * non empty letter Strings. The mininmal size is 3, the maximal size between 3
-     * and 256 characters
+     * non empty letter Strings. Each generated value draws its own length in the
+     * inclusive range 3 to 256 characters.
      *
      * @return a {@link TypedGenerator} for Strings
      */
     public static TypedGenerator<String> letterStrings() {
-        return letterStrings(3, integers(3, 256).next());
+        return letterStrings(3, 256);
     }
 
     /**
@@ -289,7 +300,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for the given values
      */
     public static <T> TypedGenerator<T> fixedValues(final Iterable<T> values) {
-        return fixedValues(determineSupertypeFromIterable(values), values);
+        return fixedValues(determineTypeFromFirstElement(values), values);
     }
 
     /* Combined generators */
@@ -583,11 +594,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link TimeZone}
      */
     public static TypedGenerator<TimeZone> timeZones() {
-        final List<TimeZone> timezones = new ArrayList<>();
-        for (final String id : TimeZone.getAvailableIDs()) {
-            timezones.add(TimeZone.getTimeZone(id));
-        }
-        return fixedValues(TimeZone.class, timezones);
+        return fixedValues(TimeZone.class, TIME_ZONES);
     }
 
     /**
@@ -596,7 +603,7 @@ public class Generators {
      * @return a {@link TypedGenerator} for {@link ZoneId}
      */
     public static TypedGenerator<ZoneId> zoneIds() {
-        return fixedValues(ZoneId.class, ZoneId.getAvailableZoneIds().stream().map(ZoneId::of).toList());
+        return fixedValues(ZoneId.class, ZONE_IDS);
     }
 
     /**
@@ -707,19 +714,25 @@ public class Generators {
     }
 
     /**
-     * Helper method that determines the actual type of a given {@link Iterable} by
-     * peeking into it. <em>For testing only, should never be used in productive
-     * code</em>
+     * Determines the element type by peeking at the first element of the given
+     * {@link Iterable} and returning its concrete runtime class. Note that for
+     * heterogeneous input this is the type of the first element only, not a common
+     * supertype of all elements.
      *
-     * @param iterable must not be null nor empty, the iterator must be reentrant.
-     * @return The Class of the given {@link Iterable}.
+     * @param iterable must not be null nor empty, and its first element must not be null;
+     *                 the iterator must be reentrant.
+     * @return the concrete runtime {@link Class} of the first element.
+     * @throws IllegalArgumentException if the iterable is empty
+     * @throws NullPointerException     if the iterable or its first element is null
      */
     @SuppressWarnings("unchecked")
-    private static <T> Class<T> determineSupertypeFromIterable(final Iterable<T> iterable) {
+    private static <T> Class<T> determineTypeFromFirstElement(final Iterable<T> iterable) {
         requireNonNull(iterable, "iterable must not be null");
         final var iterator = iterable.iterator();
         if (iterator.hasNext()) {
-            return (Class<T>) iterator.next().getClass();
+            final T first = iterator.next();
+            requireNonNull(first, "The first element must not be null to determine the type");
+            return (Class<T>) first.getClass();
         }
         throw new IllegalArgumentException("Must contain at least a single element");
     }

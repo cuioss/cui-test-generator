@@ -16,10 +16,11 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
-import lombok.RequiredArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps a source generator and ensures all generated values are unique.
@@ -27,22 +28,37 @@ import java.util.Set;
  * @param <T> the type of values to generate
  * @author Oliver Wolff
  */
-@RequiredArgsConstructor
 public class UniqueValuesGenerator<T> implements TypedGenerator<T> {
 
     private static final int DEFAULT_MAX_RETRIES = 100;
 
     private final TypedGenerator<T> source;
     private final int maxRetries;
-    private final Set<T> seen = new HashSet<>();
+    private final Set<T> seen = ConcurrentHashMap.newKeySet();
 
     /**
      * Creates a unique values generator wrapping the given source.
      *
-     * @param source the source generator
+     * @param source the source generator, must not be {@code null}
      */
     public UniqueValuesGenerator(TypedGenerator<T> source) {
         this(source, DEFAULT_MAX_RETRIES);
+    }
+
+    /**
+     * Creates a unique values generator wrapping the given source.
+     *
+     * @param source     the source generator, must not be {@code null}
+     * @param maxRetries the maximum number of attempts to draw a fresh value, must be positive
+     * @throws NullPointerException     if {@code source} is {@code null}
+     * @throws IllegalArgumentException if {@code maxRetries} is not positive
+     */
+    public UniqueValuesGenerator(TypedGenerator<T> source, int maxRetries) {
+        this.source = requireNonNull(source, "source must not be null");
+        if (maxRetries <= 0) {
+            throw new IllegalArgumentException("maxRetries must be greater than 0, given: " + maxRetries);
+        }
+        this.maxRetries = maxRetries;
     }
 
     @Override
