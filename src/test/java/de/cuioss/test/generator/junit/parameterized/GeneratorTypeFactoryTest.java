@@ -20,9 +20,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.platform.commons.JUnitException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EnableGeneratorController
 @DisplayName("GeneratorTypeFactory should")
@@ -60,5 +60,13 @@ class GeneratorTypeFactoryTest {
     void shouldHonorExplicitRange() {
         var generator = GeneratorTypeFactory.createGenerator(GeneratorType.INTEGERS, 0, 0, "7", "7");
         assertEquals(7, generator.next());
+    }
+
+    @Test
+    @DisplayName("wrap malformed range bounds in a descriptive JUnitException")
+    void shouldRejectMalformedRange() {
+        var exception = assertThrows(JUnitException.class,
+                () -> GeneratorTypeFactory.createGenerator(GeneratorType.INTEGERS, 0, 0, "not-a-number", "10"));
+        assertTrue(exception.getMessage().contains("Invalid range"), exception.getMessage());
     }
 }

@@ -107,17 +107,22 @@ final class GeneratorTypeFactory {
 
     private static TypedGenerator<?> createRangeGenerator(GeneratorType type, String methodName, String low, String high) {
         var returnType = type.getReturnType();
-        if (Integer.class.equals(returnType)) {
-            return invoke(findMethod(methodName, int.class, int.class), Integer.parseInt(low), Integer.parseInt(high));
-        }
-        if (Long.class.equals(returnType)) {
-            return invoke(findMethod(methodName, long.class, long.class), Long.parseLong(low), Long.parseLong(high));
-        }
-        if (Double.class.equals(returnType)) {
-            return invoke(findMethod(methodName, double.class, double.class), Double.parseDouble(low), Double.parseDouble(high));
-        }
-        if (Float.class.equals(returnType)) {
-            return invoke(findMethod(methodName, float.class, float.class), Float.parseFloat(low), Float.parseFloat(high));
+        try {
+            if (Integer.class.equals(returnType)) {
+                return invoke(findMethod(methodName, int.class, int.class), Integer.parseInt(low), Integer.parseInt(high));
+            }
+            if (Long.class.equals(returnType)) {
+                return invoke(findMethod(methodName, long.class, long.class), Long.parseLong(low), Long.parseLong(high));
+            }
+            if (Double.class.equals(returnType)) {
+                return invoke(findMethod(methodName, double.class, double.class), Double.parseDouble(low), Double.parseDouble(high));
+            }
+            if (Float.class.equals(returnType)) {
+                return invoke(findMethod(methodName, float.class, float.class), Float.parseFloat(low), Float.parseFloat(high));
+            }
+        } catch (NumberFormatException e) {
+            throw new JUnitException("Invalid range for generator '" + methodName + "' (return type "
+                    + returnType.getSimpleName() + "): low='" + low + "', high='" + high + "'", e);
         }
         throw new JUnitException("Range generator for return type '" + returnType.getSimpleName() + "' is not supported");
     }
