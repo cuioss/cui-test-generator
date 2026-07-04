@@ -17,7 +17,9 @@ package de.cuioss.test.generator.internal;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.Optional;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Manages the shared {@link Random} instance and seed state for all generators.
@@ -45,11 +47,30 @@ public class RandomContext {
      */
     public static final String SEED_SYSTEM_PROPERTY = "de.cuioss.test.generator.seed";
 
+    private static final Logger LOGGER = Logger.getLogger(RandomContext.class.getName());
+
     static final Random random = new Random(); // NOSONAR: not about cryptography
-    static long lastSeed = 0L;
+
+    /**
+     * The last seed applied to {@link #random}. Volatile so that concurrent readers
+     * always observe the value actually applied to the shared RNG.
+     */
+    static volatile long lastSeed;
+
+    /**
+     * The seed configured via {@link #SEED_SYSTEM_PROPERTY}, or {@code null} if the
+     * property is absent or malformed. Evaluated once at class initialization.
+     */
+    private static final Long CONFIGURED_SEED = readSystemProperty();
 
     static {
-        readSystemProperty();
+        if (CONFIGURED_SEED != null) {
+            setSeed(CONFIGURED_SEED);
+        } else {
+            // Capture a concrete seed up-front so getLastSeed() always reflects the
+            // actual state of the shared RNG (never the misleading default 0L).
+            setSeed(random.nextLong());
+        }
     }
 
     /**
@@ -91,10 +112,32 @@ public class RandomContext {
         return random;
     }
 
-    static void readSystemProperty() {
+    /**
+     * Returns the seed configured via {@link #SEED_SYSTEM_PROPERTY}, if any.
+     * <p>
+     * When present, this seed is meant to be applied directly as the per-test seed so
+     * that a failing test can be reproduced by re-running the whole suite with the
+     * property set.
+     * </p>
+     *
+     * @return the configured seed, or an empty {@link Optional} if the property is
+     *         absent or could not be parsed
+     */
+    public static Optional<Long> getConfiguredSeed() {
+        return Optional.ofNullable(CONFIGURED_SEED);
+    }
+
+    static Long readSystemProperty() {
         var seed = System.getProperty(SEED_SYSTEM_PROPERTY);
-        if (seed != null) {
-            setSeed(Long.parseLong(seed));
+        if (seed == null) {
+            return null;
+        }
+        try {
+            return Long.parseLong(seed.trim());
+        } catch (NumberFormatException e) {
+            LOGGER.warning(() -> "Ignoring malformed value '" + seed + "' for system property '"
+                    + SEED_SYSTEM_PROPERTY + "'; falling back to a random seed.");
+            return null;
         }
     }
 }

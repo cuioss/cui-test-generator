@@ -19,10 +19,12 @@ import de.cuioss.test.generator.internal.RandomContext;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
+import org.junit.platform.commons.support.AnnotationSupport;
 import org.opentest4j.AssertionFailedError;
 import org.opentest4j.TestAbortedException;
+import org.opentest4j.ValueWrapper;
 
-import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * JUnit 5 extension that manages test data generation by controlling generator seeds
@@ -91,39 +93,74 @@ public class GeneratorControllerExtension implements BeforeEachCallback, TestExe
         if (throwable instanceof TestAbortedException) {
             throw throwable;
         }
-        if (throwable instanceof AssertionFailedError) {
-            var failure = new AssertionFailedError(createErrorMessage(throwable, RandomContext.getLastSeed()));
-            failure.setStackTrace(throwable.getStackTrace());
+        var seed = RandomContext.getLastSeed();
+        if (throwable instanceof AssertionFailedError afe) {
+            var message = createErrorMessage(afe, seed);
+            AssertionFailedError failure;
+            if (afe.isExpectedDefined() || afe.isActualDefined()) {
+                failure = new AssertionFailedError(message, unwrap(afe.getExpected()), unwrap(afe.getActual()), afe);
+            } else {
+                failure = new AssertionFailedError(message, afe);
+            }
+            copyTrace(afe, failure);
             throw failure;
         }
         var failure = new AssertionFailedError(
-                throwable.getClass() + ": " + createErrorMessage(throwable, RandomContext.getLastSeed()));
-        failure.setStackTrace(throwable.getStackTrace());
+                throwable.getClass().getName() + ": " + createErrorMessage(throwable, seed), throwable);
+        copyTrace(throwable, failure);
         throw failure;
+    }
 
+    private static Object unwrap(ValueWrapper wrapper) {
+        return wrapper == null ? null : wrapper.getValue();
+    }
+
+    private static void copyTrace(Throwable source, Throwable target) {
+        target.setStackTrace(source.getStackTrace());
+        for (var suppressed : source.getSuppressed()) {
+            target.addSuppressed(suppressed);
+        }
     }
 
     @Override
-    @SuppressWarnings("java:S3655") // owolff: false positive: isPresent is checked
     public void beforeEach(ExtensionContext context) {
-        var seedSetByAnnotation = false;
-        long initialSeed = -1;
-        if (context.getElement().isPresent()) {
-            var annotatedElement = context.getElement().get();
-            var seedAnnotation = annotatedElement.getAnnotation(GeneratorSeed.class);
-            if (null == seedAnnotation && annotatedElement instanceof Method method) {
-                seedAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
-            }
-            if (null != seedAnnotation) {
-                initialSeed = seedAnnotation.value();
-                seedSetByAnnotation = true;
-            }
-        }
-        if (seedSetByAnnotation) {
-            RandomContext.setSeed(initialSeed);
+        var seedAnnotation = findSeedAnnotation(context);
+        if (seedAnnotation.isPresent()) {
+            RandomContext.setSeed(seedAnnotation.get().value());
         } else {
-            RandomContext.initSeed();
+            // Honor the replay system property as the per-test seed so that re-running
+            // with -D<property>=<seed> reproduces a single failing test; otherwise draw
+            // a fresh random seed.
+            var configuredSeed = RandomContext.getConfiguredSeed();
+            if (configuredSeed.isPresent()) {
+                RandomContext.setSeed(configuredSeed.get());
+            } else {
+                RandomContext.initSeed();
+            }
         }
+    }
+
+    /**
+     * Resolves the applicable {@link GeneratorSeed} by walking outward from the current
+     * context: the test method first, then each enclosing class (covering {@code @Nested}
+     * tests), honoring annotations inherited on the concrete test class.
+     *
+     * @param context the extension context
+     * @return the closest {@link GeneratorSeed}, or empty if none is present
+     */
+    private static Optional<GeneratorSeed> findSeedAnnotation(ExtensionContext context) {
+        for (Optional<ExtensionContext> current = Optional.ofNullable(context);
+             current.isPresent();
+             current = current.get().getParent()) {
+            var element = current.get().getElement();
+            if (element.isPresent()) {
+                var found = AnnotationSupport.findAnnotation(element.get(), GeneratorSeed.class);
+                if (found.isPresent()) {
+                    return found;
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     private String createErrorMessage(Throwable e, Long seed) {

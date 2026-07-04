@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
@@ -59,20 +60,20 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
     public Stream<? extends Arguments> provideArguments(
             ParameterDeclarations parameters,
             ExtensionContext context) throws Exception {
-        // Handle seed management
-        var previousSeed = RandomContext.getLastSeed();
-        var useSeed = determineSeed(context);
-
-        if (useSeed != previousSeed) {
-            RandomContext.setSeed(useSeed);
-        }
+        // Apply an explicitly requested seed (annotation attribute or @GeneratorSeed)
+        // unconditionally, so that reproducibility never depends on what earlier tests
+        // happened to consume from the shared RNG.
+        var explicitSeed = resolveExplicitSeed(context);
+        explicitSeed.ifPresent(RandomContext::setSeed);
 
         try {
             return provideArgumentsForGenerators(context);
         } finally {
-            // Restore previous seed if we changed it
-            if (useSeed != previousSeed) {
-                RandomContext.setSeed(previousSeed);
+            if (explicitSeed.isPresent()) {
+                // The position of java.util.Random cannot be restored; re-seeding with the
+                // previous seed would replay its stream. Advance to a fresh random seed so
+                // later consumers do not observe a rewound RNG.
+                RandomContext.initSeed();
             }
         }
     }
@@ -115,44 +116,50 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
     }
 
     /**
-     * Determines the seed to use for the generator based on the following priority:
-     * 1. Seed specified in the annotation (if not -1)
-     * 2. Seed from @GeneratorSeed on the test method
-     * 3. Seed from @GeneratorSeed on the test class
-     * 4. Current global seed from RandomContext
+     * Resolves an explicitly requested seed, based on the following priority:
+     * <ol>
+     *   <li>Seed specified in the source annotation (if not {@code -1})</li>
+     *   <li>Seed from {@code @GeneratorSeed} on the test method</li>
+     *   <li>Seed from {@code @GeneratorSeed} on the test class</li>
+     * </ol>
+     * When none of these is present, no explicit seed is requested and the shared RNG is
+     * left untouched (an empty result), so generation continues from the seed established
+     * by the enclosing {@code @EnableGeneratorController} for the current test.
+     *
+     * @param context the extension context
+     * @return the explicitly requested seed, or empty if none was requested
+     */
+    @SuppressWarnings("java:S3655") // False positive, isPresent() is checked
+    protected OptionalLong resolveExplicitSeed(ExtensionContext context) {
+        long seed = getSeed();
+        if (seed != -1L) {
+            return OptionalLong.of(seed);
+        }
+
+        if (context != null && context.getElement().isPresent()
+                && context.getElement().get() instanceof Method method) {
+            var methodAnnotation = method.getAnnotation(GeneratorSeed.class);
+            if (methodAnnotation != null) {
+                return OptionalLong.of(methodAnnotation.value());
+            }
+            var classAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
+            if (classAnnotation != null) {
+                return OptionalLong.of(classAnnotation.value());
+            }
+        }
+
+        return OptionalLong.empty();
+    }
+
+    /**
+     * Determines the seed to use for the generator, falling back to the current global
+     * seed from {@link RandomContext} when no explicit seed was requested.
      *
      * @param context the extension context
      * @return the seed to use
      */
-    @SuppressWarnings("java:S3655") // False positive, isPresent() is checked
     protected long determineSeed(ExtensionContext context) {
-        // If seed is explicitly set in the annotation, use it
-        long seed = getSeed();
-        if (seed != -1L) {
-            return seed;
-        }
-
-        // Check for @GeneratorSeed on method or class
-        if (context.getElement().isPresent()) {
-            var element = context.getElement().get();
-
-            // Check method first
-            if (element instanceof Method method) {
-                var seedAnnotation = method.getAnnotation(GeneratorSeed.class);
-                if (seedAnnotation != null) {
-                    return seedAnnotation.value();
-                }
-
-                // Then check class
-                var classAnnotation = method.getDeclaringClass().getAnnotation(GeneratorSeed.class);
-                if (classAnnotation != null) {
-                    return classAnnotation.value();
-                }
-            }
-        }
-
-        // Fall back to current global seed
-        return RandomContext.getLastSeed();
+        return resolveExplicitSeed(context).orElseGet(RandomContext::getLastSeed);
     }
 
     /**

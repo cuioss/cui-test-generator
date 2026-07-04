@@ -17,6 +17,7 @@ package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.internal.RandomContext;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -71,26 +74,30 @@ class GenerateArgumentsTest {
     }
 
     @Test
-    @DisplayName("Should generate arguments with consistent seed")
+    @DisplayName("Should reproduce identical arguments when the seed is reset")
     void shouldGenerateArgumentsWithConsistentSeed() {
-        // Use a fixed generator that always returns the same value
-        var provider = new TestProvider(TEST_SEED, 3);
-        var generator = new FixedStringGenerator("test-value");
+        var provider = new TestProvider(TEST_SEED, 5);
+        // A real, full-range generator: identical output only proves reproducibility if
+        // the seed is actually applied — a fixed generator would pass even when broken.
+        var generator = Generators.integers(Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-        var arguments1 = provider.generateArgumentsPublic(generator);
-        var arguments2 = provider.generateArgumentsPublic(generator);
+        RandomContext.setSeed(TEST_SEED);
+        var first = extractValues(provider.generateArgumentsPublic(generator));
 
-        assertNotNull(arguments1);
-        assertNotNull(arguments2);
-        assertEquals(3, arguments1.size());
-        assertEquals(3, arguments2.size());
+        RandomContext.setSeed(TEST_SEED);
+        var second = extractValues(provider.generateArgumentsPublic(generator));
 
-        // Compare each argument
-        for (int i = 0; i < arguments1.size(); i++) {
-            assertEquals(arguments1.get(i).get()[0], arguments2.get(i).get()[0],
-                    "Arguments should be the same with fixed generator");
-            assertEquals("test-value", arguments1.get(i).get()[0]);
+        assertEquals(first, second, "Re-seeding must reproduce the exact argument sequence");
+        assertTrue(new HashSet<>(first).size() > 1,
+                "A full-range generator must not collapse to a single value");
+    }
+
+    private static List<Object> extractValues(List<Arguments> arguments) {
+        List<Object> values = new ArrayList<>();
+        for (var argument : arguments) {
+            values.add(argument.get()[0]);
         }
+        return values;
     }
 
     @ParameterizedTest(name = "With seed difference={0}, should generate different arguments")
@@ -152,27 +159,6 @@ class GenerateArgumentsTest {
         // Public wrapper for protected method to enable testing
         public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
             return generateArguments(generator);
-        }
-    }
-
-    /**
-     * A generator that always returns the same fixed string.
-     */
-    private static class FixedStringGenerator implements TypedGenerator<String> {
-        private final String value;
-
-        FixedStringGenerator(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String next() {
-            return value;
-        }
-
-        @Override
-        public Class<String> getType() {
-            return String.class;
         }
     }
 }

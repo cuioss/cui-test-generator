@@ -59,4 +59,57 @@ class RandomContextTest {
         Random random = RandomContext.random();
         assertNotNull(random);
     }
+
+    @Test
+    @DisplayName("parse a valid, whitespace-padded seed system property")
+    void shouldParseValidSeedProperty() {
+        withProperty(" 4711 ", () ->
+                assertEquals(4711L, RandomContext.readSystemProperty()));
+    }
+
+    @Test
+    @DisplayName("fall back to no seed on a malformed seed system property")
+    void shouldFallBackOnMalformedSeedProperty() {
+        withProperty("not-a-number", () ->
+                assertNull(RandomContext.readSystemProperty(),
+                        "A malformed property must not raise, but fall back to a random seed"));
+    }
+
+    @Test
+    @DisplayName("report no seed when the system property is absent")
+    void shouldReportNoSeedWhenPropertyAbsent() {
+        var property = RandomContext.SEED_SYSTEM_PROPERTY;
+        var previous = System.getProperty(property);
+        System.clearProperty(property);
+        try {
+            assertNull(RandomContext.readSystemProperty());
+        } finally {
+            restore(property, previous);
+        }
+    }
+
+    @Test
+    @DisplayName("expose the configured seed as an Optional")
+    void shouldExposeConfiguredSeed() {
+        assertNotNull(RandomContext.getConfiguredSeed());
+    }
+
+    private static void withProperty(String value, Runnable assertion) {
+        var property = RandomContext.SEED_SYSTEM_PROPERTY;
+        var previous = System.getProperty(property);
+        System.setProperty(property, value);
+        try {
+            assertion.run();
+        } finally {
+            restore(property, previous);
+        }
+    }
+
+    private static void restore(String property, String previous) {
+        if (previous == null) {
+            System.clearProperty(property);
+        } else {
+            System.setProperty(property, previous);
+        }
+    }
 }
