@@ -57,12 +57,13 @@ public class FullNameGenerator implements TypedGenerator<String> {
 
     /**
      * Creates a new FullNameGenerator for the specified locale.
-     * 
-     * @param locale Determines the name set to use. If {@link Locale#GERMAN}, German names will be used;
-     *              for all other locales, English names will be used.
+     *
+     * @param locale Determines the name set to use. Any German-language locale (e.g.
+     *              {@link Locale#GERMAN}, {@link Locale#GERMANY}, de_AT, de_CH) selects German
+     *              names; all other (and {@code null}) locales use English names.
      */
     public FullNameGenerator(final Locale locale) {
-        if (Locale.GERMAN.equals(locale)) {
+        if (locale != null && "de".equals(locale.getLanguage())) {
             firstNames = NameGenerators.FIRSTNAMES_ANY_GERMAN.generator();
             familyNames = NameGenerators.FAMILY_NAMES_GERMAN.generator();
         } else {
@@ -74,6 +75,11 @@ public class FullNameGenerator implements TypedGenerator<String> {
     @Override
     public String next() {
         return firstNames.next() + ' ' + familyNames.next();
+    }
+
+    @Override
+    public Class<String> getType() {
+        return String.class;
     }
 
 }

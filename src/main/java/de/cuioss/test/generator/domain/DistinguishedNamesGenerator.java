@@ -57,7 +57,7 @@ import static de.cuioss.test.generator.Generators.integers;
 public class DistinguishedNamesGenerator implements TypedGenerator<String> {
 
     private final TypedGenerator<String> prefixes = fixedValues("ou", "o", "dc");
-    private final TypedGenerator<String> values = fixedValues("proxies", "ID", "dc", "accounts", "groups", "roles",
+    private final TypedGenerator<String> values = fixedValues("proxies", "ID", "accounts", "groups", "roles",
             "services");
 
     @Override

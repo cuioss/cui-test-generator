@@ -55,10 +55,6 @@ public class PersonGenerator implements TypedGenerator<Person> {
         final var organization = organizations.next();
         final var title = titles.next();
 
-        if (null == firstname || null == lastname) {
-            LOGGER.log(Level.WARNING, "Generated null name components: firstname={0}, lastname={1}", new Object[]{firstname, lastname});
-        }
-
         var person = Person.builder()
                 .email(EmailGenerator.createEmail(firstname, lastname))
                 .firstname(firstname)
@@ -69,6 +65,11 @@ public class PersonGenerator implements TypedGenerator<Person> {
 
         LOGGER.log(Level.FINE, "Generated person: {0} {1}", new Object[]{firstname, lastname});
         return person;
+    }
+
+    @Override
+    public Class<Person> getType() {
+        return Person.class;
     }
 
 }

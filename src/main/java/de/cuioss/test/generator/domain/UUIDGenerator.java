@@ -22,7 +22,8 @@ import java.util.UUID;
 import static de.cuioss.test.generator.Generators.longs;
 
 /**
- * Creates instances of UUIDs
+ * Creates random RFC 4122 version-4 (variant 2) {@link UUID} instances, so that
+ * {@link UUID#version()} returns {@code 4} and {@link UUID#variant()} returns {@code 2}.
  */
 public class UUIDGenerator implements TypedGenerator<UUID> {
 
@@ -31,7 +32,18 @@ public class UUIDGenerator implements TypedGenerator<UUID> {
 
     @Override
     public UUID next() {
-        return new UUID(mostSignificantBits.next(), leastSignificantBits.next());
+        long most = mostSignificantBits.next();
+        long least = leastSignificantBits.next();
+        most &= 0xFFFF_FFFF_FFFF_0FFFL;
+        most |= 0x0000_0000_0000_4000L; // version 4
+        least &= 0x3FFF_FFFF_FFFF_FFFFL;
+        least |= 0x8000_0000_0000_0000L; // IETF variant (variant 2)
+        return new UUID(most, least);
+    }
+
+    @Override
+    public Class<UUID> getType() {
+        return UUID.class;
     }
 
 }

@@ -17,6 +17,7 @@ package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.TypedGenerator;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,14 +61,22 @@ public class EmailGenerator implements TypedGenerator<String> {
         return createEmail(firstNames.next(), familyNames.next());
     }
 
+    @Override
+    public Class<String> getType() {
+        return String.class;
+    }
+
     /**
-     * Creates an email address from given first and last names.
-     * All components are converted to lowercase.
+     * Creates an email address from the given first and last names, lowercased using
+     * {@link Locale#ROOT} so the result is locale-independent.
      *
-     * @param firstname The person's first name, must not be null or empty
-     * @param lastname  The person's last name, must not be null or empty
-     * @return An email address in the format firstname.lastname@domain.tld.
-     * Returns "invalid.email@example.com" if either name component is null or empty.
+     * @param firstname the person's first name; a {@code null} or blank value triggers a
+     *                  fallback address
+     * @param lastname  the person's last name; a {@code null} or blank value triggers a
+     *                  fallback address
+     * @return an email address in the format firstname.lastname@domain.tld, or
+     *         {@code "invalid.email@example.com"} if either name component is {@code null}
+     *         or blank
      */
     public static String createEmail(final String firstname, final String lastname) {
         if (firstname == null || firstname.isBlank() || lastname == null || lastname.isBlank()) {
@@ -75,7 +84,7 @@ public class EmailGenerator implements TypedGenerator<String> {
             return "invalid.email@example.com";
         }
         var tld = TLDS.next();
-        var email = (firstname + "." + lastname + "@" + DOMAINS.next()).toLowerCase();
+        var email = (firstname + "." + lastname + "@" + DOMAINS.next()).toLowerCase(Locale.ROOT);
         var fullEmail = email + '.' + tld;
         LOGGER.log(Level.FINE, "Generated email: {0}", fullEmail);
         return fullEmail;

@@ -67,13 +67,20 @@ public class MailSubjectGenerator implements TypedGenerator<String> {
     @Override
     public String next() {
         final List<String> elements = new ArrayList<>();
-        for (var i = 0; i < prefixCountGenerator.next(); i++) {
+        final int prefixCount = prefixCountGenerator.next();
+        for (var i = 0; i < prefixCount; i++) {
             elements.add(prefixes.next());
         }
-        for (var i = 0; i < contentCountGenerator.next(); i++) {
+        final int contentCount = contentCountGenerator.next();
+        for (var i = 0; i < contentCount; i++) {
             elements.add(contents.next());
         }
         return String.join(" ", elements);
+    }
+
+    @Override
+    public Class<String> getType() {
+        return String.class;
     }
 
 }

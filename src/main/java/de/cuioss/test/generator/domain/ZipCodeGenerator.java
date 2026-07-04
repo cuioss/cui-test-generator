@@ -21,33 +21,30 @@ import static de.cuioss.test.generator.Generators.integers;
 
 /**
  * Generates German postal codes (Postleitzahlen) for test data generation.
- * 
+ *
  * <p>Characteristics:</p>
  * <ul>
- *   <li>Generates 5-digit postal codes</li>
- *   <li>Range: 10000 - 99999</li>
- *   <li>Format matches official German postal code format</li>
+ *   <li>Range: 1067 - 99999, covering the valid German codes from 01067 (Dresden) upward</li>
+ *   <li>Returned as {@link Integer}; codes below 10000 represent leading-zero codes such as
+ *       01067 and must be formatted with {@code %05d} for display</li>
  * </ul>
- * 
+ *
  * <p><em>Example usage:</em></p>
  * <pre>
  * var generator = new ZipCodeGenerator();
- * Integer zipCode = generator.next(); // e.g. 12345
- * String formattedZip = String.format("%05d", zipCode); // Ensures 5 digits with leading zeros
+ * Integer zipCode = generator.next(); // e.g. 1067 or 12345
+ * String formattedZip = String.format("%05d", zipCode); // e.g. "01067", "12345"
  * </pre>
- * 
- * <p>Note: This generator returns {@link Integer} values. For display purposes,
- * you may want to format the number to ensure it always shows 5 digits.</p>
  *
  * @author Oliver Wolff
  */
 public class ZipCodeGenerator implements TypedGenerator<Integer> {
 
-    private final TypedGenerator<Integer> zibCodes = integers(10000, 99999);
+    private final TypedGenerator<Integer> zipCodes = integers(1067, 99999);
 
     @Override
     public Integer next() {
-        return zibCodes.next();
+        return zipCodes.next();
     }
 
     @Override
