@@ -59,6 +59,7 @@ import java.time.LocalTime;
  * @author Eugen Fischer
  * @see LocalTime
  * @see Generators#integers(int, int)
+ * @since 1.0
  */
 public class LocalTimeGenerator implements TypedGenerator<LocalTime> {
 

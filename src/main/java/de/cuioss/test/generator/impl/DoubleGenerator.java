@@ -28,6 +28,7 @@ import lombok.Getter;
  * </p>
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 @Getter
 public class DoubleGenerator implements TypedGenerator<Double> {

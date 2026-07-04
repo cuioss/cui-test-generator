@@ -57,6 +57,7 @@ import java.time.LocalDate;
  * @author Eugen Fischer
  * @see LocalDate
  * @see LongGenerator
+ * @since 1.0
  */
 public class LocalDateGenerator implements TypedGenerator<LocalDate> {
 

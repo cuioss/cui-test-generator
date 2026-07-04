@@ -51,15 +51,16 @@ public interface TypedGenerator<T> {
 
     /**
      * Provides type information about what kind of objects this generator creates.
-     * The default implementation uses the first non-null result from {@link #next()}
-     * to determine the type.
+     * The default implementation calls {@link #next()} once and reads the class of the
+     * returned value.
      *
-     * <p><strong>Note:</strong> If your generator may return null values or the generated
-     * type differs from the actual instance type, you should override this method.</p>
+     * <p><strong>Side effect:</strong> because it invokes {@link #next()}, the default
+     * implementation consumes one value from the shared random stream. Implementations that
+     * must keep the stream deterministic (and any that may return {@code null}) should
+     * override this method to return the type directly.</p>
      *
      * @return The class information indicating which type this generator is responsible for.
-     * @throws IllegalStateException if the generator cannot determine the type, for example
-     *                               if {@link #next()} consistently returns null
+     * @throws NullPointerException if {@link #next()} returns {@code null}
      */
     @SuppressWarnings("unchecked") // the implicit providing of the type is the actual idea
     default Class<T> getType() {

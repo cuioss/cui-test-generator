@@ -30,36 +30,40 @@
  * </p>
  * 
  * <h3>Common Parameters</h3>
- * 
+ *
  * <p>
- * All annotations in this package support the following common parameters:
+ * The annotations in this package share the following parameters:
  * </p>
- * 
+ *
  * <ul>
  *   <li><strong>count</strong> - Specifies the number of test instances to generate.
  *       This controls how many test invocations will occur with different generated values.
  *       Defaults to 1 in most annotations.</li>
- *   <li><strong>seed</strong> - An optional seed value for reproducible tests.
- *       When specified (not -1), this seed will be used for the generator instead of the
- *       seed managed by {@link de.cuioss.test.generator.junit.GeneratorControllerExtension}.
- *       This is useful for tests that need specific generated values regardless of
- *       the global seed configuration.</li>
+ *   <li><strong>seed</strong> - An optional seed value for reproducible tests, supported by
+ *       {@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorSource} and
+ *       {@link de.cuioss.test.generator.junit.parameterized.GeneratorsSource}.
+ *       When specified (not -1), this seed is used for the generator instead of the seed
+ *       managed by {@link de.cuioss.test.generator.junit.GeneratorControllerExtension}.
+ *       The other annotations rely on {@code @GeneratorSeed} for reproducibility.</li>
  * </ul>
- * 
+ *
  * <h3>Available Annotations</h3>
- * 
+ *
  * <p>
  * The package provides the following annotations for different use cases:
  * </p>
- * 
+ *
  * <ul>
- *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorSource} - 
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized.GeneratorsSource} -
+ *       Uses a {@link de.cuioss.test.generator.junit.parameterized.GeneratorType} from the
+ *       {@link de.cuioss.test.generator.Generators} factory (recommended).</li>
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorSource} -
  *       Uses a TypedGenerator implementation directly via its class.</li>
- *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorMethodSource} - 
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorMethodSource} -
  *       Uses a method that returns a configured TypedGenerator instance.</li>
- *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorFactorySource} - 
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized.TypeGeneratorFactorySource} -
  *       Uses a factory class with a static method to create a TypedGenerator instance.</li>
- *   <li>{@link de.cuioss.test.generator.junit.parameterized.CompositeTypeGeneratorSource} - 
+ *   <li>{@link de.cuioss.test.generator.junit.parameterized.CompositeTypeGeneratorSource} -
  *       Combines multiple TypedGenerator implementations to generate combinations of values.</li>
  * </ul>
  * 

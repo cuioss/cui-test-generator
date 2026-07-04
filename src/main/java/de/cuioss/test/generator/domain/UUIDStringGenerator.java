@@ -23,7 +23,8 @@ import java.util.logging.Logger;
 
 /**
  * Generates random UUID strings in the standard 8-4-4-4-12 format (e.g. "550e8400-e29b-41d4-a716-446655440000").
- * The generator is thread-safe and produces reproducible results when using the same seed.
+ * The generator is thread-safe for generation; reproducibility for a fixed seed is guaranteed
+ * only under single-threaded execution (all generators share one random source).
  * 
  * <p><em>Example usage from tests:</em></p>
  * <pre>

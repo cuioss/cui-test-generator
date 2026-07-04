@@ -60,8 +60,8 @@
  * <ul>
  *   <li>Realistic data for visual/integration testing</li>
  *   <li>Technical variants for unit testing</li>
- *   <li>Thread-safe operation</li>
- *   <li>Deterministic output when seeded</li>
+ *   <li>Thread-safe generation</li>
+ *   <li>Deterministic output when seeded, under single-threaded execution</li>
  * </ul>
  * 
  * <p><em>Example usage:</em></p>

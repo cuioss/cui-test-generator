@@ -37,9 +37,9 @@
  * class MyGeneratorTest {
  *     @Test
  *     void shouldGenerateTestData() {
- *         var generator = new CollectionGenerator&lt;?&gt;(Generators.strings());
+ *         var generator = new CollectionGenerator<>(Generators.strings());
  *         var result = generator.list(5);
- *         assertThat(result).hasSize(5);
+ *         assertEquals(5, result.size());
  *     }
  * }
  * }

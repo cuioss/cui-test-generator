@@ -109,7 +109,7 @@ Each approach uses an `ArgumentsProvider` implementation that:
 - Project uses Maven Wrapper (mvnw) - no local Maven installation needed
 - Java 21+ required (configured via parent POM)
 - Dependencies managed through cui-java-parent POM
-- Main dependencies: JUnit 5, Lombok, cui-java-tools
+- Main dependencies: JUnit 5, Lombok (EasyMock is test-only)
 
 ## Git Workflow
 
@@ -118,10 +118,6 @@ All cuioss repositories have branch protection on `main`. Direct pushes to `main
 1. Create a feature branch: `git checkout -b <branch-name>`
 2. Commit changes: `git add <files> && git commit -m "<message>"`
 3. Push the branch: `git push -u origin <branch-name>`
-4. Create a PR: `gh pr create --head <branch-name> --base main --title "<title>" --body "<body>"`
-5. Enable auto-merge: `gh pr merge --auto --squash --delete-branch`
-6. Wait for merge (check every ~60s): `while gh pr view --json state -q '.state' | grep -q OPEN; do sleep 60; done`
-7. Return to main: `git checkout main && git pull`
 4. Create a PR: `gh pr create --repo cuioss/cui-test-generator --head <branch-name> --base main --title "<title>" --body "<body>"`
 5. Wait for CI + Gemini review (waits until checks complete): `gh pr checks --watch`
 6. **Handle Gemini review comments** — fetch with `gh api repos/cuioss/cui-test-generator/pulls/<pr-number>/comments` and for each:

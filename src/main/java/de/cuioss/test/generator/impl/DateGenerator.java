@@ -23,6 +23,7 @@ import java.util.Date;
  * Generates random {@link Date} instances.
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class DateGenerator implements TypedGenerator<Date> {
 

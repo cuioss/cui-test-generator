@@ -41,6 +41,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * 
  * @author Oliver Wolff
  * @see DoubleGenerator
+ * @since 1.0
  */
 public class FloatObjectGenerator implements TypedGenerator<Float> {
 

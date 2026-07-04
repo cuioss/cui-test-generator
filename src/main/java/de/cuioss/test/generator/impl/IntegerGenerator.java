@@ -23,6 +23,7 @@ import lombok.Getter;
  * Generates random {@link Integer} values within a configurable range.
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 @Getter
 public class IntegerGenerator implements TypedGenerator<Integer> {

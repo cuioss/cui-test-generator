@@ -54,6 +54,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
     private String low;
     private String high;
     private int count;
+    private long seed;
 
     @Override
     public void accept(GeneratorsSource annotation) {
@@ -64,6 +65,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
         low = annotation.low();
         high = annotation.high();
         count = Math.max(1, annotation.count());
+        seed = annotation.seed();
     }
 
     @Override
@@ -74,7 +76,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
 
     @Override
     protected long getSeed() {
-        return -1L;
+        return seed;
     }
 
     @Override

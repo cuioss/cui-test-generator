@@ -45,7 +45,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     void shouldGenerateData() {
  *         var generator = new CollectionGenerator&lt;&gt;(Generators.strings());
  *         var result = generator.list(5);
- *         assertThat(result).hasSize(5);
+ *         assertEquals(5, result.size());
  *     }
  * }
  * }

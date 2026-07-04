@@ -21,6 +21,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * Generates random {@link Byte} values within the full byte range.
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class ByteGenerator implements TypedGenerator<Byte> {
 

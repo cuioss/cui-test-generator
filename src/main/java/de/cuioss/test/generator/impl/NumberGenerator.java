@@ -57,6 +57,7 @@ import static de.cuioss.test.generator.Generators.integers;
  * @author Oliver Wolff
  * @see Number
  * @see de.cuioss.test.generator.Generators#integers()
+ * @since 1.0
  */
 public class NumberGenerator implements TypedGenerator<Number> {
 

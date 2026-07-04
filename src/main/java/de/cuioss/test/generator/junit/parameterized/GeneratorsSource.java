@@ -128,7 +128,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * @author Oliver Wolff
- * @since 2.0
+ * @since 2.3
  * @see TypedGenerator
  * @see Generators
  * @see GeneratorType
@@ -199,9 +199,23 @@ public @interface GeneratorsSource {
     /**
      * Number of instances to generate.
      * This controls how many test invocations will occur with different generated values.
-     * 
+     *
      * @return the number of instances to generate, defaults to 1
      */
     int count() default 1;
+
+    /**
+     * Optional seed for reproducible tests.
+     * <p>
+     * When set to a value other than {@code -1}, this seed is applied for generation instead
+     * of the seed managed by
+     * {@link de.cuioss.test.generator.junit.GeneratorControllerExtension} (or a
+     * {@code @GeneratorSeed} annotation). This is useful for tests that need specific
+     * generated values regardless of the global seed configuration.
+     * </p>
+     *
+     * @return the seed to use, or {@code -1} (the default) to use the managed seed
+     */
+    long seed() default -1L;
 
 }

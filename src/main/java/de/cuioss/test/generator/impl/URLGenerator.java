@@ -27,7 +27,7 @@ import java.net.URL;
  * 
  * <p>URL characteristics:</p>
  * <ul>
- *   <li>All URLs are valid and accessible</li>
+ *   <li>All URLs are syntactically valid</li>
  *   <li>Mix of HTTP and HTTPS protocols</li>
  *   <li>Includes popular tech, development, and reference sites</li>
  * </ul>
@@ -51,6 +51,7 @@ import java.net.URL;
  *
  * @author Oliver Wolff
  * @see URL
+ * @since 1.0
  */
 public class URLGenerator implements TypedGenerator<URL> {
 

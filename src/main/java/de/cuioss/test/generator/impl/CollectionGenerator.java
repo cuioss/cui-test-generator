@@ -55,12 +55,13 @@ import static java.util.Objects.requireNonNull;
  * // Generate collections
  * List<Integer> list = collectionGen.list(5);      // List of 5 integers
  * Set<Integer> set = collectionGen.set(3);         // Set of 3 integers
- * Collection<Integer> coll = collectionGen.next(); // Random size collection
+ * Integer value = collectionGen.next();            // A single element (see list()/set() for collections)
  * }
  * </pre>
  *
  * @param <T> The type of elements to be generated
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class CollectionGenerator<T> implements TypedGenerator<T> {
 
@@ -91,9 +92,9 @@ public class CollectionGenerator<T> implements TypedGenerator<T> {
      *
      * @param wrapped    generator, must not be null
      * @param lowerBound defines the lower bound of the integer generator that
-     *                   determines the of {@link Collection} size
+     *                   determines the {@link Collection} size
      * @param upperBound defines the upper bound of the integer generator that
-     *                   determines the of {@link Collection} size
+     *                   determines the {@link Collection} size
      */
     public CollectionGenerator(final TypedGenerator<T> wrapped, final int lowerBound, final int upperBound) {
         this(wrapped, Generators.integers(lowerBound, upperBound));

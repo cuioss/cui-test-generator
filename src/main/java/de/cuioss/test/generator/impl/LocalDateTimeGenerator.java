@@ -43,6 +43,7 @@ import java.time.LocalDateTime;
  * @author Eugen Fischer
  * @see LocalDateGenerator
  * @see LocalTimeGenerator
+ * @since 1.0
  */
 public class LocalDateTimeGenerator implements TypedGenerator<LocalDateTime> {
 
