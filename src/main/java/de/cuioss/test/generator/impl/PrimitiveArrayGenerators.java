@@ -63,22 +63,22 @@ public enum PrimitiveArrayGenerators {
     /** Provides booleans */
     BOOLEAN {
 
-        @Override
-        public Object next() {
-            final int size = sizeGenerator.next();
-            final var generator = Generators.booleans();
-            final var array = new boolean[size];
-            for (var index = 0; index < size; index++) {
-                array[index] = generator.next();
-            }
-            return array;
+    @Override
+    public Object next() {
+        final int size = sizeGenerator.next();
+        final var generator = Generators.booleans();
+        final var array = new boolean[size];
+        for (var index = 0; index < size; index++) {
+            array[index] = generator.next();
         }
+        return array;
+    }
 
-        @Override
-        public Class<?> getType() {
-            return boolean.class;
-        }
-    },
+    @Override
+    public Class<?> getType() {
+        return boolean.class;
+    }
+},
     /** Provides bytes */
     BYTE {
 

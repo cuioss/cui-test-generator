@@ -50,10 +50,10 @@ public enum OrganizationNameGenerator {
      * Examples: Acme Corp., Stark Industries, Wayne Enterprises
      */
     READABLE(fixedValues(List.of("CHOAM", "Acme Corp.", "Sirius Cybernetics Corp.", "MomCorp", "Rich Industries",
-            "Soylent Corp.", "Very Big Corp. of America", "Frobozz Magic Co.", "Warbucks Industries", "Tyrell Corp.",
-            "Wayne Enterprises", "Virtucon", "Globex", "Umbrella Corp.", "Wonka Industries", "Stark Industries",
-            "Clampett Oil", "Oceanic Airlines", "Yoyodyne Propulsion Sys.", "Cyberdyne Systems Corp.",
-            "d'Anconia Copper", "Gringotts", "Oscorp", "Nakatomi Trading Corp.", "Spacely Space Sprockets"))),
+        "Soylent Corp.", "Very Big Corp. of America", "Frobozz Magic Co.", "Warbucks Industries", "Tyrell Corp.",
+        "Wayne Enterprises", "Virtucon", "Globex", "Umbrella Corp.", "Wonka Industries", "Stark Industries",
+        "Clampett Oil", "Oceanic Airlines", "Yoyodyne Propulsion Sys.", "Cyberdyne Systems Corp.",
+        "d'Anconia Copper", "Gringotts", "Oscorp", "Nakatomi Trading Corp.", "Spacely Space Sprockets"))),
 
     /** 
      * Technical string generator for unit testing.
