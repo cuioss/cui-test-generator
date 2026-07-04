@@ -49,8 +49,14 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 /**
- * Enum representing all available generator types from the {@link de.cuioss.test.generator.Generators} class.
- * Used with {@link GeneratorsSource} to specify which generator method to use.
+ * Enum of the generator types that can be referenced from {@link GeneratorsSource} and
+ * {@link CompositeTypeGeneratorSource}.
+ * <p>
+ * This covers the subset of {@link de.cuioss.test.generator.Generators} factory methods and
+ * domain generators that are expressible through the factory-method / factory-class mechanism.
+ * Generators that need caller-supplied values (such as {@code fixedValues}) or that are
+ * enum-based (such as {@code OrganizationNameGenerator}, {@code TitleGenerator} and
+ * {@code NameGenerators}) are intentionally not represented here.
  *
  * @author Oliver Wolff
  * @since 2.3
@@ -178,9 +184,6 @@ public enum GeneratorType {
 
     /** Generates random URL objects with various protocols, hosts, and paths. */
     URLS("urls", Generators.class, URL.class, GeneratorParameterType.PARAMETERLESS),
-
-    /** Generates values from a fixed set of predefined values. */
-    FIXED_VALUES("fixedValues", Generators.class, Object.class, GeneratorParameterType.PARAMETERLESS),
 
     // Domain-specific generators
     /** Generates random placeholder text (lorem ipsum style) for testing text-heavy components. */

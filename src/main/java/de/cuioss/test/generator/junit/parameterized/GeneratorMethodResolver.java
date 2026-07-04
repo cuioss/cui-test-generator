@@ -71,18 +71,17 @@ final class GeneratorMethodResolver {
         var method = findMethod(testClass, methodName)
                 .orElseThrow(() -> new JUnitException("Could not find method [" + methodName + IN_CLASS + testClass.getName() + "]"));
 
+        if (!Modifier.isStatic(method.getModifiers()) && testInstance == null) {
+            throw new JUnitException("Cannot invoke instance method [" + methodName + "] without a test instance");
+        }
+
         try {
-            if (Modifier.isStatic(method.getModifiers())) {
-                return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null);
-            } else if (testInstance != null) {
-                return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, testInstance);
-            } else {
-                throw new JUnitException("Cannot invoke instance method [" + methodName + "] without a test instance");
-            }
+            var target = Modifier.isStatic(method.getModifiers()) ? null : testInstance;
+            return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, target);
+        } catch (JUnitException e) {
+            // Precise diagnostics (JPMS access, etc.) must not be buried by a generic wrapper
+            throw e;
         } catch (Exception e) {
-            if (e instanceof JUnitException jpmsEx && JpmsReflectionHelper.isJpmsAccessException(jpmsEx)) {
-                throw jpmsEx;
-            }
             throw new JUnitException("Failed to invoke method [" + methodName + "]", e);
         }
     }
@@ -117,10 +116,10 @@ final class GeneratorMethodResolver {
             return (TypedGenerator<?>) JpmsReflectionHelper.invokeMethod(method, null);
         } catch (ClassNotFoundException e) {
             throw new JUnitException("Could not find class [" + className + "]", e);
+        } catch (JUnitException e) {
+            // Precise diagnostics (not-found, must-be-static, JPMS access) must surface unwrapped
+            throw e;
         } catch (Exception e) {
-            if (e instanceof JUnitException jpmsEx && JpmsReflectionHelper.isJpmsAccessException(jpmsEx)) {
-                throw jpmsEx;
-            }
             throw new JUnitException("Failed to invoke method [" + localMethodName + IN_CLASS + className + "]", e);
         }
     }

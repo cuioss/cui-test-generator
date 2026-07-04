@@ -25,12 +25,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.commons.JUnitException;
 
 import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -60,26 +58,6 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     void shouldThrowExceptionForInvalidGenerator() {
         var provider = new TestProvider(TEST_SEED, 1);
         assertThrows(JUnitException.class, () -> provider.createGeneratorInstancePublic(InvalidGenerator.class));
-    }
-
-    static Stream<Arguments> methodTestCases() {
-        return Stream.of(
-                // methodName, expectedFound
-                Arguments.of("createGenerator", true),
-                Arguments.of("nonExistentMethod", false),
-                Arguments.of("wrongReturnType", false)
-        );
-    }
-
-    @ParameterizedTest(name = "Finding method {0} should return {1}")
-    @MethodSource("methodTestCases")
-    @DisplayName("Should correctly find or not find methods")
-    void shouldFindMethodCorrectly(String methodName, boolean expectedFound) {
-        var provider = new TestProvider(TEST_SEED, 1);
-        var methodOpt = provider.findMethodPublic(TestClass.class, methodName);
-
-        assertNotNull(methodOpt);
-        assertEquals(expectedFound, methodOpt.isPresent());
     }
 
     @Test
@@ -206,10 +184,6 @@ class AbstractTypedGeneratorArgumentsProviderTest {
 
         public TypedGenerator<?> createGeneratorInstancePublic(Class<? extends TypedGenerator<?>> generatorClass) {
             return createGeneratorInstance(generatorClass);
-        }
-
-        public Optional<Method> findMethodPublic(Class<?> clazz, String methodName) {
-            return findMethod(clazz, methodName);
         }
 
         public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
