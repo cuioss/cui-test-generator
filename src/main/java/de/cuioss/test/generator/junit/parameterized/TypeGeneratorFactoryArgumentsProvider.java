@@ -119,34 +119,24 @@ public class TypeGeneratorFactoryArgumentsProvider extends AbstractTypedGenerato
      * @throws JUnitException if the method cannot be found
      */
     private Method findFactoryMethod() {
-        // Look for a method with the exact parameter count
+        // The provided parameters are always Strings, so only all-String-parameter overloads are
+        // viable candidates. Filtering up front removes the nondeterministic getFirst() fallback.
         List<Method> candidateMethods = Arrays.stream(factoryClass.getMethods())
                 .filter(m -> m.getName().equals(factoryMethod))
                 .filter(m -> Modifier.isStatic(m.getModifiers()))
                 .filter(m -> m.getParameterCount() == methodParameters.length)
                 .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
+                .filter(m -> Arrays.stream(m.getParameterTypes()).allMatch(p -> p == String.class))
                 .toList();
 
         if (candidateMethods.isEmpty()) {
             throw new JUnitException(
                     "Could not find static factory method '" + factoryMethod +
                             "' in class '" + factoryClass.getName() +
-                            "' with " + methodParameters.length + " parameters that returns TypedGenerator");
+                            "' with " + methodParameters.length + " String parameter(s) that returns TypedGenerator");
         }
 
-        if (candidateMethods.size() > 1) {
-            // If multiple methods match, try to find one that accepts String parameters
-            var stringParamMethods = candidateMethods.stream()
-                    .filter(m -> Arrays.stream(m.getParameterTypes())
-                            .allMatch(p -> p == String.class))
-                    .toList();
-
-            if (stringParamMethods.size() == 1) {
-                return stringParamMethods.getFirst();
-            }
-        }
-
-        // If we have exactly one candidate or couldn't narrow down further, use the first one
+        // Two same-arity, all-String overloads are impossible in Java, so this is unambiguous.
         return candidateMethods.getFirst();
     }
 }

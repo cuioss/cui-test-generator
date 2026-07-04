@@ -168,26 +168,20 @@ class TypeGeneratorFactoryArgumentsProviderTest {
     }
 
     @Test
-    @DisplayName("Should handle multiple matching methods without string parameters")
-    void shouldHandleMultipleMatchingMethodsWithoutStringParameters() throws Exception {
+    @DisplayName("Should reject overloads whose parameters are not all Strings")
+    void shouldRejectMethodsWithoutStringParameters() throws Exception {
         var provider = new TestProvider();
         setPrivateField(provider, "factoryClass", TestFactoryClass.class);
         setPrivateField(provider, "factoryMethod", "ambiguousMethod");
         setPrivateField(provider, "methodParameters", new String[]{"test"});
 
-        TypedGenerator<?> generator;
-        try {
-            generator = invokeCreateGeneratorFromFactory(provider);
-        } catch (InvocationTargetException e) {
-            if (e.getTargetException() instanceof Exception) {
-                throw (Exception) e.getTargetException();
-            }
-            throw new RuntimeException(e.getTargetException());
-        }
-
-        assertNotNull(generator);
-        // Verify that a valid generator is returned
-        assertInstanceOf(TypedGenerator.class, generator);
+        // ambiguousMethod only has Object/Comparable overloads; the provided parameters are always
+        // Strings, so no viable candidate exists and a clear diagnostic must be raised rather than
+        // a nondeterministic getFirst() pick.
+        var exception = assertThrows(InvocationTargetException.class,
+                () -> invokeCreateGeneratorFromFactory(provider));
+        var cause = assertInstanceOf(JUnitException.class, exception.getTargetException());
+        assertTrue(cause.getMessage().contains("String parameter(s)"), cause.getMessage());
     }
 
     /**

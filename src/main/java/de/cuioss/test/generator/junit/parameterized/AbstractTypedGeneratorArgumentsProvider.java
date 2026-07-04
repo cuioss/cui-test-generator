@@ -27,7 +27,6 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -43,11 +42,6 @@ import static java.util.Objects.requireNonNull;
  * @since 2.0
  */
 public abstract class AbstractTypedGeneratorArgumentsProvider implements ArgumentsProvider {
-
-    /**
-     * Common error message part for method not found exceptions.
-     */
-    protected static final String IN_CLASS = "] in class [";
 
     /**
      * Provides arguments for the parameterized test.
@@ -191,20 +185,5 @@ public abstract class AbstractTypedGeneratorArgumentsProvider implements Argumen
                     "Failed to create TypedGenerator instance for " + generatorClass.getName() +
                             ". Make sure it has a public no-args constructor.", e);
         }
-    }
-
-    /**
-     * Finds a method in the given class that returns a TypedGenerator and takes no parameters.
-     *
-     * @param clazz      the class to search in
-     * @param methodName the method name to find
-     * @return an Optional containing the method, or empty if not found
-     */
-    protected Optional<Method> findMethod(Class<?> clazz, String methodName) {
-        return Arrays.stream(clazz.getDeclaredMethods())
-                .filter(m -> m.getName().equals(methodName))
-                .filter(m -> m.getParameterCount() == 0)
-                .filter(m -> TypedGenerator.class.isAssignableFrom(m.getReturnType()))
-                .findFirst();
     }
 }

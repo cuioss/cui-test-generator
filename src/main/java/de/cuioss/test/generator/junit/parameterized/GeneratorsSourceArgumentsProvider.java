@@ -20,13 +20,8 @@ import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.support.AnnotationConsumer;
-import org.junit.platform.commons.JUnitException;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.stream.Stream;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Implementation of {@link org.junit.jupiter.params.provider.ArgumentsProvider} that provides arguments from a
@@ -73,15 +68,7 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
 
     @Override
     protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
-        // Create generator instance using factory
-        TypedGenerator<?> generator;
-        try {
-            generator = createGeneratorFromFactory();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            throw new IllegalStateException(e);
-        }
-
-        // Generate values
+        var generator = GeneratorTypeFactory.createGenerator(generatorType, minSize, maxSize, low, high);
         return generateArguments(generator).stream();
     }
 
@@ -93,130 +80,5 @@ public class GeneratorsSourceArgumentsProvider extends AbstractTypedGeneratorArg
     @Override
     protected int getCount() {
         return count;
-    }
-
-    /**
-     * Creates a TypedGenerator instance based on the generator type.
-     *
-     * @return a TypedGenerator instance
-     * @throws JUnitException if the generator cannot be created
-     */
-    private TypedGenerator<?> createGeneratorFromFactory() throws InvocationTargetException, IllegalAccessException {
-        requireNonNull(generatorType, "Generator type must not be null");
-
-        // Check if this is a domain-specific generator (factory class is the generator class itself)
-        if (isDomainSpecificGenerator()) {
-            return createDomainSpecificGenerator();
-        }
-
-        // Otherwise, it's a standard generator from the Generators class
-        String methodName = generatorType.getMethodName();
-        requireNonNull(methodName, "Generator method name must not be null");
-
-        return switch (generatorType.getParameterType()) {
-            case NEEDS_BOUNDS -> createStringGenerator();
-            case NEEDS_RANGE -> createNumberGenerator();
-            case PARAMETERLESS -> createParameterlessGenerator();
-        };
-    }
-
-    /**
-     * Checks if the generator type is a domain-specific generator.
-     *
-     * @return true if it's a domain-specific generator
-     */
-    private boolean isDomainSpecificGenerator() {
-        return generatorType.getMethodName() == null &&
-                generatorType.getFactoryClass() != null &&
-                TypedGenerator.class.isAssignableFrom(generatorType.getFactoryClass());
-    }
-
-    /**
-     * Creates a domain-specific generator by instantiating the generator class.
-     *
-     * @return a TypedGenerator instance
-     */
-    @SuppressWarnings("unchecked")
-    private TypedGenerator<?> createDomainSpecificGenerator() {
-        Class<?> generatorClass = generatorType.getFactoryClass();
-        return JpmsReflectionHelper.newGeneratorInstance((Class<? extends TypedGenerator<?>>) generatorClass);
-    }
-
-    /**
-     * Creates a string-based generator using the minSize and maxSize parameters.
-     *
-     * @return a TypedGenerator for strings
-     */
-    private TypedGenerator<?> createStringGenerator() throws InvocationTargetException, IllegalAccessException {
-        Method method = findMethodWithParameters(generatorType.getMethodName(), int.class, int.class);
-        return (TypedGenerator<?>) method.invoke(null, minSize, maxSize);
-    }
-
-    /**
-     * Creates a number-based generator using the low and high parameters.
-     *
-     * @return a TypedGenerator for numbers
-     */
-    private TypedGenerator<?> createNumberGenerator() throws InvocationTargetException, IllegalAccessException {
-        // Determine the parameter types based on the generator return type
-        Class<?>[] paramTypes;
-        Object[] params;
-
-        Class<?> returnType = generatorType.getReturnType();
-
-        if (Integer.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{int.class, int.class};
-            params = new Object[]{Integer.parseInt(low), Integer.parseInt(high)};
-        } else if (Long.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{long.class, long.class};
-            params = new Object[]{Long.parseLong(low), Long.parseLong(high)};
-        } else if (Double.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{double.class, double.class};
-            params = new Object[]{Double.parseDouble(low), Double.parseDouble(high)};
-        } else if (Float.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{float.class, float.class};
-            params = new Object[]{Float.parseFloat(low), Float.parseFloat(high)};
-        } else if (Short.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{short.class, short.class};
-            params = new Object[]{Short.parseShort(low), Short.parseShort(high)};
-        } else if (Byte.class.equals(returnType)) {
-            paramTypes = new Class<?>[]{byte.class, byte.class};
-            params = new Object[]{Byte.parseByte(low), Byte.parseByte(high)};
-        } else {
-            throw new UnsupportedOperationException(
-                    "Number generator for type '" + returnType.getSimpleName() + "' is not supported.");
-        }
-
-        Method method = findMethodWithParameters(generatorType.getMethodName(), paramTypes);
-        return (TypedGenerator<?>) method.invoke(null, params);
-    }
-
-    /**
-     * Creates a generator that doesn't require parameters.
-     *
-     * @return a TypedGenerator
-     */
-    private TypedGenerator<?> createParameterlessGenerator() throws InvocationTargetException, IllegalAccessException {
-        Method method = findMethodWithParameters(generatorType.getMethodName());
-        return (TypedGenerator<?>) method.invoke(null);
-    }
-
-
-    /**
-     * Finds a generator method in the Generators class with the specified parameter types.
-     *
-     * @param methodName     the name of the method to find
-     * @param parameterTypes the parameter types the method should accept
-     * @return the generator method
-     * @throws JUnitException if the method cannot be found
-     */
-    private Method findMethodWithParameters(String methodName, Class<?>... parameterTypes) {
-        try {
-            return Generators.class.getMethod(methodName, parameterTypes);
-        } catch (NoSuchMethodException e) {
-            throw new JUnitException(
-                    "Could not find static generator method '" + methodName +
-                            "' in Generators class with the specified parameter types", e);
-        }
     }
 }

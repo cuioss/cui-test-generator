@@ -50,8 +50,8 @@ class GeneratorMethodResolverTest {
         return Stream.of(
                 arguments("invalid#format#method", "Could not find class [invalid]"),
                 arguments("com.nonexistent.Class#method", "Could not find class [com.nonexistent.Class]"),
-                arguments(TestFactoryClass.class.getName() + "#nonExistentMethod", "Failed to invoke method [nonExistentMethod] in class [" + TestFactoryClass.class.getName() + "]"),
-                arguments(TestFactoryClass.class.getName() + "#createDoubleGenerator", "Failed to invoke method [createDoubleGenerator] in class [" + TestFactoryClass.class.getName() + "]")
+                arguments(TestFactoryClass.class.getName() + "#nonExistentMethod", "Could not find method [nonExistentMethod] in class [" + TestFactoryClass.class.getName() + "]"),
+                arguments(TestFactoryClass.class.getName() + "#createDoubleGenerator", "Method [createDoubleGenerator] in external class [" + TestFactoryClass.class.getName() + "] must be static")
         );
     }
 
@@ -106,7 +106,7 @@ class GeneratorMethodResolverTest {
 
     static Stream<Arguments> invalidMethodScenarios() {
         return Stream.of(
-                arguments("createDoubleGenerator", false, "Failed to invoke method [createDoubleGenerator]"),
+                arguments("createDoubleGenerator", false, "Cannot invoke instance method [createDoubleGenerator] without a test instance"),
                 arguments(null, true, null), // Should throw NullPointerException
                 arguments("", false, "Method name must not be blank")
         );

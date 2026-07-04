@@ -242,6 +242,36 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         verify(context);
     }
 
+    @Test
+    void shouldProvideArgumentsFromDomainGeneratorType() throws Exception {
+        // Regression for J-1: DOMAIN_* types (methodName == null) previously NPE'd here.
+        @SuppressWarnings("unchecked") Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[0];
+
+        expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
+        expect(annotation.generatorMethods()).andReturn(new String[0]).anyTimes();
+        expect(annotation.generators()).andReturn(new GeneratorType[]{GeneratorType.DOMAIN_CITY}).anyTimes();
+        expect(annotation.count()).andReturn(3).anyTimes();
+        expect(annotation.cartesianProduct()).andReturn(false).anyTimes();
+        replay(annotation);
+        provider.accept(annotation);
+
+        expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
+        expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
+        replay(context);
+
+        // when
+        List<Arguments> arguments = provider.provideArguments(null, context)
+                .collect(Collectors.toList());
+
+        // then
+        assertEquals(3, arguments.size());
+        for (Arguments args : arguments) {
+            assertEquals(1, args.get().length);
+            assertInstanceOf(String.class, args.get()[0]);
+        }
+        verify(context);
+    }
+
     /**
      * Test generator class that implements TypedGenerator.
      */

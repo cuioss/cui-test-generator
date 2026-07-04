@@ -15,7 +15,6 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
-import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
@@ -86,7 +85,7 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
 
         // Add generators from GeneratorType enum values
         for (GeneratorType generatorType : generators) {
-            generatorInstances.add(createGeneratorFromType(generatorType));
+            generatorInstances.add(GeneratorTypeFactory.createGenerator(generatorType));
         }
 
         // Generate values from each generator
@@ -174,14 +173,8 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
      * @throws JUnitException if the lists have different sizes
      */
     private Stream<Arguments> createOneToOnePairs(List<List<Object>> generatedValues) {
-        // Check that all lists have the same size
+        // Every generator produces exactly 'count' values, so all lists share this size.
         int size = generatedValues.getFirst().size();
-        for (List<Object> values : generatedValues) {
-            if (values.size() != size) {
-                throw new JUnitException(
-                        "When cartesianProduct is false, all generators must produce the same number of values");
-            }
-        }
 
         // Create one-to-one pairs
         List<Arguments> arguments = new ArrayList<>();
@@ -194,25 +187,5 @@ public class CompositeTypeGeneratorArgumentsProvider extends AbstractTypedGenera
         }
 
         return arguments.stream();
-    }
-
-    /**
-     * Creates a TypedGenerator from a GeneratorType enum value.
-     *
-     * @param generatorType the generator type
-     * @return a TypedGenerator instance
-     * @throws JUnitException if the generator cannot be created
-     */
-    // cui-rewrite:disable InvalidExceptionUsageRecipe
-    @SuppressWarnings("java:S1452") // This wildcard is because of the TypedGenerator interface. Ok for testing
-    private TypedGenerator<?> createGeneratorFromType(GeneratorType generatorType) {
-        try {
-            // Use reflection to invoke the method on Generators class
-            var methodName = generatorType.getMethodName();
-            var method = Generators.class.getMethod(methodName);
-            return (TypedGenerator<?>) method.invoke(null);
-        } catch (Exception e) {
-            throw new JUnitException("Failed to create generator from type: " + generatorType, e);
-        }
     }
 }
