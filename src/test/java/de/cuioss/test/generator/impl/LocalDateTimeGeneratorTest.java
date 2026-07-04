@@ -21,43 +21,39 @@ import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @EnableGeneratorController
 @GeneratorSeed(42L)
-@DisplayName("ByteGenerator should")
-class ByteGeneratorTest {
+@DisplayName("LocalDateTimeGenerator should")
+class LocalDateTimeGeneratorTest {
 
     @Test
-    @DisplayName("cover both negative and non-negative bytes across a sample")
-    void shouldCoverBothSigns() {
-        var generator = new ByteGenerator();
-        boolean sawNegative = false;
-        boolean sawNonNegative = false;
-        for (int i = 0; i < 200; i++) {
-            byte value = generator.next();
-            sawNegative |= value < 0;
-            sawNonNegative |= value >= 0;
+    @DisplayName("return LocalDateTime.class as type")
+    void shouldReturnCorrectType() {
+        assertEquals(LocalDateTime.class, new LocalDateTimeGenerator().getType());
+    }
+
+    @Test
+    @DisplayName("generate non-null LocalDateTime instances")
+    void shouldGenerateNonNull() {
+        var generator = new LocalDateTimeGenerator();
+        for (int i = 0; i < 100; i++) {
+            assertNotNull(generator.next());
         }
-        assertTrue(sawNegative, "Byte generator must produce negative values");
-        assertTrue(sawNonNegative, "Byte generator must produce non-negative values");
     }
 
     @Test
     @DisplayName("be reproducible with the same seed")
     void shouldBeReproducible() {
-        var generator = new ByteGenerator();
+        var generator = new LocalDateTimeGenerator();
         RandomContext.setSeed(42L);
-        byte first = generator.next();
+        LocalDateTime first = generator.next();
         RandomContext.setSeed(42L);
-        byte second = generator.next();
-        assertEquals(first, second, "Same seed must yield the same value");
-    }
-
-    @Test
-    @DisplayName("return Byte.class as type")
-    void shouldReturnCorrectType() {
-        assertEquals(Byte.class, new ByteGenerator().getType());
+        LocalDateTime second = generator.next();
+        assertEquals(first, second, "Same seed must yield the same date-time");
     }
 }

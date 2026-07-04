@@ -48,7 +48,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @Test
     @DisplayName("Should create generator instance correctly")
     void shouldCreateGeneratorInstance() {
-        var provider = new TestProvider(TEST_SEED, 1);
+        var provider = new TestArgumentsProvider(TEST_SEED, 1);
         var generator = provider.createGeneratorInstancePublic(TestGenerator.class);
         assertNotNull(generator);
     }
@@ -56,14 +56,14 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @Test
     @DisplayName("Should throw exception when creating invalid generator")
     void shouldThrowExceptionForInvalidGenerator() {
-        var provider = new TestProvider(TEST_SEED, 1);
+        var provider = new TestArgumentsProvider(TEST_SEED, 1);
         assertThrows(JUnitException.class, () -> provider.createGeneratorInstancePublic(InvalidGenerator.class));
     }
 
     @Test
     @DisplayName("Should prefer an explicit source-level seed over any annotation")
     void shouldPreferExplicitSourceSeed() {
-        var provider = new TestProvider(TEST_SEED, 1);
+        var provider = new TestArgumentsProvider(TEST_SEED, 1);
         assertEquals(TEST_SEED, provider.determineSeed(null));
         assertEquals(OptionalLong.of(TEST_SEED), provider.resolveExplicitSeed(null));
     }
@@ -71,7 +71,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @Test
     @DisplayName("Should resolve seed from @GeneratorSeed on the test method")
     void shouldResolveSeedFromMethodAnnotation() throws Exception {
-        var provider = new TestProvider(-1L, 1);
+        var provider = new TestArgumentsProvider(-1L, 1);
         var method = TestClass.class.getMethod("methodWithSeed");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
@@ -85,7 +85,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @Test
     @DisplayName("Should resolve seed from class-level @GeneratorSeed when method has none")
     void shouldResolveSeedFromClassAnnotation() throws Exception {
-        var provider = new TestProvider(-1L, 1);
+        var provider = new TestArgumentsProvider(-1L, 1);
         var method = ClassWithSeed.class.getMethod("methodWithoutSeed");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
@@ -99,7 +99,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @Test
     @DisplayName("Should report no explicit seed and fall back to the global seed when unannotated")
     void shouldFallBackToGlobalSeedWhenNoAnnotation() throws Exception {
-        var provider = new TestProvider(-1L, 1);
+        var provider = new TestArgumentsProvider(-1L, 1);
         var method = TestClass.class.getMethod("wrongReturnType");
         ExtensionContext context = createMock(ExtensionContext.class);
         expect(context.getElement()).andReturn(Optional.of((AnnotatedElement) method)).anyTimes();
@@ -138,7 +138,7 @@ class AbstractTypedGeneratorArgumentsProviderTest {
     @ValueSource(ints = {1, 3, 5, 10})
     @DisplayName("Should generate correct number of arguments")
     void shouldGenerateCorrectNumberOfArguments(int count) {
-        var provider = new TestProvider(TEST_SEED, count);
+        var provider = new TestArgumentsProvider(TEST_SEED, count);
         var generator = Generators.strings(5, 10);
         var arguments = provider.generateArgumentsPublic(generator);
 
@@ -150,44 +150,6 @@ class AbstractTypedGeneratorArgumentsProviderTest {
             Object[] args = argument.get();
             assertEquals(1, args.length);
             assertNotNull(args[0]);
-        }
-    }
-
-    /**
-     * Test implementation of AbstractTypedGeneratorArgumentsProvider.
-     */
-    private static class TestProvider extends AbstractTypedGeneratorArgumentsProvider {
-        private final long seed;
-        private final int count;
-
-        TestProvider(long seed, int count) {
-            this.seed = seed;
-            this.count = count;
-        }
-
-        @Override
-        protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
-            return Stream.empty();
-        }
-
-        @Override
-        protected long getSeed() {
-            return seed;
-        }
-
-        @Override
-        protected int getCount() {
-            return count;
-        }
-
-        // Public wrappers for protected methods to enable testing
-
-        public TypedGenerator<?> createGeneratorInstancePublic(Class<? extends TypedGenerator<?>> generatorClass) {
-            return createGeneratorInstance(generatorClass);
-        }
-
-        public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
-            return generateArguments(generator);
         }
     }
 

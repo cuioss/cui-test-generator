@@ -15,7 +15,6 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
-import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.TypedGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -146,7 +145,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         // given
         @SuppressWarnings("unchecked") Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[0];
         String[] generatorMethods = new String[]{
-                TestFactoryClass.class.getName() + "#createGenerator"
+                SharedTestFactory.class.getName() + "#createGenerator"
         };
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
@@ -179,7 +178,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         // given
         @SuppressWarnings("unchecked") Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
         String[] generatorMethods = new String[]{
-                TestFactoryClass.class.getName() + "#createIntegerGenerator"
+                SharedTestFactory.class.getName() + "#createIntegerGenerator"
         };
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
@@ -213,7 +212,7 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         // given
         @SuppressWarnings("unchecked") Class<? extends TypedGenerator<?>>[] generatorClasses = new Class[]{StringGenerator.class};
         String[] generatorMethods = new String[]{
-                TestFactoryClass.class.getName() + "#createIntegerGenerator"
+                SharedTestFactory.class.getName() + "#createIntegerGenerator"
         };
 
         expect(annotation.generatorClasses()).andReturn(generatorClasses).anyTimes();
@@ -284,31 +283,6 @@ class CompositeTypeGeneratorArgumentsProviderTest {
         @Override
         public Class<String> getType() {
             return String.class;
-        }
-    }
-
-    /**
-     * Test factory class with methods that return TypedGenerator instances.
-     * Some methods are intentionally unused directly but are required for testing
-     * method resolution logic.
-     */
-    @SuppressWarnings("unused")
-    static class TestFactoryClass {
-
-        /**
-         * Creates a string generator for testing.
-         * @return a TypedGenerator that generates strings
-         */
-        public static TypedGenerator<String> createGenerator() {
-            return Generators.strings(5, 10);
-        }
-
-        /**
-         * Creates an integer generator for testing.
-         * @return a TypedGenerator that generates integers
-         */
-        public static TypedGenerator<Integer> createIntegerGenerator() {
-            return Generators.integers(1, 100);
         }
     }
 }

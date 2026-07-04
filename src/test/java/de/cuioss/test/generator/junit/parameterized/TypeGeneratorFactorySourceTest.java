@@ -75,6 +75,9 @@ class TypeGeneratorFactorySourceTest {
     )
     void shouldGenerateValuesWithSpecificSeed(String value) {
         assertNotNull(value);
+        // createStringGenerator() produces strings(3, 10); the seed must not break those bounds.
+        assertTrue(value.length() >= 3 && value.length() <= 10,
+                "Seeded value must respect the factory generator's bounds: " + value);
     }
 
     /**

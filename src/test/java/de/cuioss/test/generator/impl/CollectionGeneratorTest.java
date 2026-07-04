@@ -16,6 +16,7 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.Generators;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @SuppressWarnings({"unchecked", "rawtypes"})
 @DisplayName("CollectionGenerator should")
 class CollectionGeneratorTest {

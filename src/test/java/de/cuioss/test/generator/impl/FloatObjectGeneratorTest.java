@@ -26,38 +26,44 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnableGeneratorController
 @GeneratorSeed(42L)
-@DisplayName("ByteGenerator should")
-class ByteGeneratorTest {
+@DisplayName("FloatObjectGenerator should")
+class FloatObjectGeneratorTest {
 
     @Test
-    @DisplayName("cover both negative and non-negative bytes across a sample")
-    void shouldCoverBothSigns() {
-        var generator = new ByteGenerator();
-        boolean sawNegative = false;
-        boolean sawNonNegative = false;
+    @DisplayName("return Float.class as type")
+    void shouldReturnCorrectType() {
+        assertEquals(Float.class, new FloatObjectGenerator().getType());
+    }
+
+    @Test
+    @DisplayName("respect the bounded range")
+    void shouldRespectBoundedRange() {
+        var generator = new FloatObjectGenerator(0f, 100f);
         for (int i = 0; i < 200; i++) {
-            byte value = generator.next();
-            sawNegative |= value < 0;
-            sawNonNegative |= value >= 0;
+            float value = generator.next();
+            assertTrue(value >= 0f && value <= 100f, "Value out of range: " + value);
         }
-        assertTrue(sawNegative, "Byte generator must produce negative values");
-        assertTrue(sawNonNegative, "Byte generator must produce non-negative values");
+    }
+
+    @Test
+    @DisplayName("produce negative values with the default full range")
+    void shouldProduceNegativesByDefault() {
+        var generator = new FloatObjectGenerator();
+        boolean sawNegative = false;
+        for (int i = 0; i < 1_000 && !sawNegative; i++) {
+            sawNegative = generator.next() < 0f;
+        }
+        assertTrue(sawNegative, "Default float generator must be able to produce negative values");
     }
 
     @Test
     @DisplayName("be reproducible with the same seed")
     void shouldBeReproducible() {
-        var generator = new ByteGenerator();
+        var generator = new FloatObjectGenerator(0f, 100f);
         RandomContext.setSeed(42L);
-        byte first = generator.next();
+        float first = generator.next();
         RandomContext.setSeed(42L);
-        byte second = generator.next();
+        float second = generator.next();
         assertEquals(first, second, "Same seed must yield the same value");
-    }
-
-    @Test
-    @DisplayName("return Byte.class as type")
-    void shouldReturnCorrectType() {
-        assertEquals(Byte.class, new ByteGenerator().getType());
     }
 }

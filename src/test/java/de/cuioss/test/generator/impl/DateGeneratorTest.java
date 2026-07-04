@@ -15,6 +15,7 @@
  */
 package de.cuioss.test.generator.impl;
 
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@EnableGeneratorController
 @DisplayName("DateGenerator should")
 class DateGeneratorTest {
 

@@ -16,13 +16,11 @@
 package de.cuioss.test.generator.junit.parameterized;
 
 import de.cuioss.test.generator.Generators;
-import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
 import de.cuioss.test.generator.junit.EnableGeneratorController;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -30,12 +28,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Additional tests for the generateArguments method in {@link AbstractTypedGeneratorArgumentsProvider}.
+ *
+ * <p>The count-based cardinality of {@code generateArguments} is covered in
+ * {@link AbstractTypedGeneratorArgumentsProviderTest}; this class focuses on the edge cases not
+ * exercised there: zero count, seed reproducibility and seed sensitivity.</p>
  */
 @EnableGeneratorController
 @GeneratorSeed(4419141497282950341L)
@@ -43,29 +44,10 @@ class GenerateArgumentsTest {
 
     private static final long TEST_SEED = 42L;
 
-    @ParameterizedTest(name = "With count={0}, should generate {0} arguments")
-    @ValueSource(ints = {1, 5, 10})
-    @DisplayName("Should generate correct number of arguments")
-    void shouldGenerateCorrectNumberOfArguments(int count) {
-        var provider = new TestProvider(TEST_SEED, count);
-        var generator = Generators.strings(5, 10);
-        var arguments = provider.generateArgumentsPublic(generator);
-
-        assertNotNull(arguments);
-        assertEquals(count, arguments.size());
-
-        for (var argument : arguments) {
-            assertNotNull(argument);
-            Object[] args = argument.get();
-            assertEquals(1, args.length);
-            assertNotNull(args[0]);
-        }
-    }
-
     @Test
     @DisplayName("Should handle zero count")
     void shouldHandleZeroCount() {
-        var provider = new TestProvider(TEST_SEED, 0);
+        var provider = new TestArgumentsProvider(TEST_SEED, 0);
         var generator = Generators.strings(5, 10);
         var arguments = provider.generateArgumentsPublic(generator);
 
@@ -76,7 +58,7 @@ class GenerateArgumentsTest {
     @Test
     @DisplayName("Should reproduce identical arguments when the seed is reset")
     void shouldGenerateArgumentsWithConsistentSeed() {
-        var provider = new TestProvider(TEST_SEED, 5);
+        var provider = new TestArgumentsProvider(TEST_SEED, 5);
         // A real, full-range generator: identical output only proves reproducibility if
         // the seed is actually applied — a fixed generator would pass even when broken.
         var generator = Generators.integers(Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -104,8 +86,8 @@ class GenerateArgumentsTest {
     @ValueSource(longs = {1, 100, 1000})
     @DisplayName("Should generate different arguments with different seeds")
     void shouldGenerateDifferentArgumentsWithDifferentSeeds(long seedDifference) {
-        var provider1 = new TestProvider(TEST_SEED, 3);
-        var provider2 = new TestProvider(TEST_SEED + seedDifference, 3);
+        var provider1 = new TestArgumentsProvider(TEST_SEED, 3);
+        var provider2 = new TestArgumentsProvider(TEST_SEED + seedDifference, 3);
         var generator = Generators.strings(5, 10);
 
         var arguments1 = provider1.generateArgumentsPublic(generator);
@@ -127,38 +109,5 @@ class GenerateArgumentsTest {
 
         assertTrue(atLeastOneDifferent,
                 "At least one argument should be different with different seeds");
-    }
-
-    /**
-     * Test implementation of AbstractTypedGeneratorArgumentsProvider.
-     */
-    private static class TestProvider extends AbstractTypedGeneratorArgumentsProvider {
-        private final long seed;
-        private final int count;
-
-        TestProvider(long seed, int count) {
-            this.seed = seed;
-            this.count = count;
-        }
-
-        @Override
-        protected Stream<? extends Arguments> provideArgumentsForGenerators(ExtensionContext context) {
-            return Stream.empty();
-        }
-
-        @Override
-        protected long getSeed() {
-            return seed;
-        }
-
-        @Override
-        protected int getCount() {
-            return count;
-        }
-
-        // Public wrapper for protected method to enable testing
-        public List<Arguments> generateArgumentsPublic(TypedGenerator<?> generator) {
-            return generateArguments(generator);
-        }
     }
 }

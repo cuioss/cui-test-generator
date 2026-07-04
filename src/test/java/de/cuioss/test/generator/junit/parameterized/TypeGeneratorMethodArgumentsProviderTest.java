@@ -15,8 +15,6 @@
  */
 package de.cuioss.test.generator.junit.parameterized;
 
-import de.cuioss.test.generator.Generators;
-import de.cuioss.test.generator.TypedGenerator;
 import de.cuioss.test.generator.internal.RandomContext;
 import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +87,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // Mock the context to return our test class
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
-        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -109,7 +107,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
     @Test
     void shouldProvideArgumentsFromExternalClassMethod() throws Exception {
         // given
-        String methodReference = TestFactoryClass.class.getName() + "#createGenerator";
+        String methodReference = SharedTestFactory.class.getName() + "#createGenerator";
         expect(annotation.value()).andReturn(methodReference).anyTimes();
         expect(annotation.count()).andReturn(2).anyTimes();
         replay(annotation);
@@ -160,7 +158,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         expect(context.getElement()).andReturn(Optional.empty()).anyTimes();
         expect(context.getParent()).andReturn(Optional.empty()).anyTimes();
-        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -197,7 +195,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
         // and a test method carrying @GeneratorSeed(4242)
         AnnotatedElement seededMethod = SeedFixture.class.getDeclaredMethod("seeded");
         expect(context.getElement()).andReturn(Optional.of(seededMethod)).anyTimes();
-        expect(context.getRequiredTestClass()).andReturn((Class) TestFactoryClass.class).anyTimes();
+        expect(context.getRequiredTestClass()).andReturn((Class) SharedTestFactory.class).anyTimes();
         expect(context.getTestInstance()).andReturn(Optional.empty()).anyTimes();
         replay(context);
 
@@ -207,7 +205,7 @@ class TypeGeneratorMethodArgumentsProviderTest {
 
         // then the values match those produced from the annotated seed
         RandomContext.setSeed(4242L);
-        var generator = TestFactoryClass.createIntegerGenerator();
+        var generator = SharedTestFactory.createIntegerGenerator();
         List<Object> baseline = List.of(generator.next(), generator.next(), generator.next());
         assertEquals(baseline, produced, "@GeneratorSeed must drive @TypeGeneratorMethodSource output");
         verify(context);
@@ -224,40 +222,4 @@ class TypeGeneratorMethodArgumentsProviderTest {
         }
     }
 
-    /**
-     * Test factory class with methods that return TypedGenerator instances.
-     * Some methods are intentionally unused directly but are required for testing
-     * method resolution logic.
-     */
-    @SuppressWarnings("unused")
-    static class TestFactoryClass {
-
-        /**
-         * Creates a string generator for testing.
-         * @return a TypedGenerator that generates strings
-         */
-        public static TypedGenerator<String> createGenerator() {
-            return Generators.strings(5, 10);
-        }
-
-        /**
-         * Creates an integer generator for testing.
-         * This method is intentionally not directly called in tests but is needed
-         * to verify method resolution logic.
-         * @return a TypedGenerator that generates integers
-         */
-        public static TypedGenerator<Integer> createIntegerGenerator() {
-            return Generators.integers(1, 100);
-        }
-
-        /**
-         * Non-static method that should not be callable without an instance.
-         * This method is intentionally not directly called in tests but is needed
-         * to verify method resolution logic.
-         * @return a TypedGenerator that generates doubles
-         */
-        public TypedGenerator<Double> createDoubleGenerator() {
-            return Generators.doubles(0.0, 1.0);
-        }
-    }
 }

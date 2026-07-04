@@ -26,38 +26,38 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnableGeneratorController
 @GeneratorSeed(42L)
-@DisplayName("ByteGenerator should")
-class ByteGeneratorTest {
+@DisplayName("ShortObjectGenerator should")
+class ShortObjectGeneratorTest {
 
     @Test
-    @DisplayName("cover both negative and non-negative bytes across a sample")
+    @DisplayName("return Short.class as type")
+    void shouldReturnCorrectType() {
+        assertEquals(Short.class, new ShortObjectGenerator().getType());
+    }
+
+    @Test
+    @DisplayName("cover both negative and non-negative values across a sample")
     void shouldCoverBothSigns() {
-        var generator = new ByteGenerator();
+        var generator = new ShortObjectGenerator();
         boolean sawNegative = false;
         boolean sawNonNegative = false;
         for (int i = 0; i < 200; i++) {
-            byte value = generator.next();
+            short value = generator.next();
             sawNegative |= value < 0;
             sawNonNegative |= value >= 0;
         }
-        assertTrue(sawNegative, "Byte generator must produce negative values");
-        assertTrue(sawNonNegative, "Byte generator must produce non-negative values");
+        assertTrue(sawNegative, "Short generator must produce negative values");
+        assertTrue(sawNonNegative, "Short generator must produce non-negative values");
     }
 
     @Test
     @DisplayName("be reproducible with the same seed")
     void shouldBeReproducible() {
-        var generator = new ByteGenerator();
+        var generator = new ShortObjectGenerator();
         RandomContext.setSeed(42L);
-        byte first = generator.next();
+        short first = generator.next();
         RandomContext.setSeed(42L);
-        byte second = generator.next();
+        short second = generator.next();
         assertEquals(first, second, "Same seed must yield the same value");
-    }
-
-    @Test
-    @DisplayName("return Byte.class as type")
-    void shouldReturnCorrectType() {
-        assertEquals(Byte.class, new ByteGenerator().getType());
     }
 }

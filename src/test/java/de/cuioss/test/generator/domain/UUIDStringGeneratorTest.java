@@ -17,6 +17,7 @@ package de.cuioss.test.generator.domain;
 
 import de.cuioss.test.generator.Generators;
 import de.cuioss.test.generator.internal.RandomContext;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
 @DisplayName("UUIDStringGenerator should")
 class UUIDStringGeneratorTest {
 

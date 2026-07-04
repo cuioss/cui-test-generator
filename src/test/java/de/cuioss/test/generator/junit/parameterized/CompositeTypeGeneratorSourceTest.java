@@ -103,6 +103,8 @@ class CompositeTypeGeneratorSourceTest {
     )
     void shouldGenerateValuesWithSpecificSeed(String text, Boolean flag) {
         assertNotNull(text);
+        assertFalse(text.isBlank(),
+                "Seeded NonBlankStringGenerator value must still be non-blank: " + text);
         assertNotNull(flag);
     }
 
