@@ -23,7 +23,7 @@ import de.cuioss.test.generator.TypedGenerator;
  * <p>Features:</p>
  * <ul>
  *   <li>Configurable range through constructor parameters</li>
- *   <li>Default range: {@link Float#MIN_VALUE} to {@link Float#MAX_VALUE}</li>
+ *   <li>Default range: {@code -Float.MAX_VALUE} to {@link Float#MAX_VALUE} (includes negatives and zero)</li>
  *   <li>Thread-safe implementation</li>
  *   <li>Uses double precision for internal generation to ensure even distribution</li>
  * </ul>
@@ -47,10 +47,10 @@ public class FloatObjectGenerator implements TypedGenerator<Float> {
     private final DoubleGenerator delegate;
 
     /**
-     * Creates a generator for the full float range.
+     * Creates a generator for the full finite float range.
      */
     public FloatObjectGenerator() {
-        this(Float.MIN_VALUE, Float.MAX_VALUE);
+        this(-Float.MAX_VALUE, Float.MAX_VALUE);
     }
 
     /**

@@ -16,14 +16,25 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.TypedGenerator;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
+@GeneratorSeed(42L)
 @DisplayName("UniqueValuesGenerator should")
 class UniqueValuesGeneratorTest {
 
@@ -54,5 +65,54 @@ class UniqueValuesGeneratorTest {
         var source = new IntegerGenerator();
         var generator = new UniqueValuesGenerator<>(source);
         assertEquals(Integer.class, generator.getType());
+    }
+
+    @Test
+    @DisplayName("validate constructor arguments")
+    void shouldValidateConstructorArguments() {
+        var source = new IntegerGenerator();
+        assertThrows(NullPointerException.class, () -> new UniqueValuesGenerator<>(null));
+        assertThrows(NullPointerException.class, () -> new UniqueValuesGenerator<>(null, 5));
+        assertThrows(IllegalArgumentException.class, () -> new UniqueValuesGenerator<>(source, 0));
+        assertThrows(IllegalArgumentException.class, () -> new UniqueValuesGenerator<>(source, -1));
+    }
+
+    @Test
+    @DisplayName("remain thread-safe under concurrent access")
+    void shouldRemainThreadSafeUnderConcurrency() throws Exception {
+        var source = new IntegerGenerator(0, 1_000_000);
+        var generator = new UniqueValuesGenerator<>(source, 1_000);
+
+        int threads = 8;
+        int perThread = 200;
+        Set<Integer> collected = ConcurrentHashMap.newKeySet();
+        var duplicates = new AtomicInteger();
+        var errors = new AtomicInteger();
+        ExecutorService pool = Executors.newFixedThreadPool(threads);
+        var latch = new CountDownLatch(threads);
+
+        for (int t = 0; t < threads; t++) {
+            pool.submit(() -> {
+                try {
+                    for (int i = 0; i < perThread; i++) {
+                        Integer value = generator.next();
+                        if (!collected.add(value)) {
+                            duplicates.incrementAndGet();
+                        }
+                    }
+                } catch (RuntimeException e) {
+                    errors.incrementAndGet();
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS), "Concurrent generation timed out");
+        pool.shutdownNow();
+
+        assertEquals(0, errors.get(), "Concurrent generation must not raise exceptions");
+        assertEquals(0, duplicates.get(), "Concurrent generation must not yield duplicates");
+        assertEquals(threads * perThread, collected.size());
     }
 }

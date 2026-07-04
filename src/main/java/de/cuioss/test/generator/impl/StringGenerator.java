@@ -49,6 +49,9 @@ public class StringGenerator implements TypedGenerator<String> {
      * @param maxLen maximum string length (inclusive)
      */
     public StringGenerator(int minLen, int maxLen) {
+        if (minLen < 0) {
+            throw new IllegalArgumentException("minLen must not be negative, given: " + minLen);
+        }
         this.lengthGenerator = new IntegerGenerator(minLen, maxLen);
         this.allowedChars = null;
         this.charGenerator = new CharacterGenerator();
@@ -64,6 +67,9 @@ public class StringGenerator implements TypedGenerator<String> {
     public StringGenerator(String allowedChars, int minLen, int maxLen) {
         if (allowedChars == null || allowedChars.isEmpty()) {
             throw new IllegalArgumentException("allowedChars must not be null or empty");
+        }
+        if (minLen < 0) {
+            throw new IllegalArgumentException("minLen must not be negative, given: " + minLen);
         }
         this.lengthGenerator = new IntegerGenerator(minLen, maxLen);
         this.allowedChars = allowedChars;

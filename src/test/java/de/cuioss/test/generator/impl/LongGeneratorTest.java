@@ -16,11 +16,15 @@
 package de.cuioss.test.generator.impl;
 
 import de.cuioss.test.generator.internal.RandomContext;
+import de.cuioss.test.generator.junit.EnableGeneratorController;
+import de.cuioss.test.generator.junit.GeneratorSeed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@EnableGeneratorController
+@GeneratorSeed(42L)
 @DisplayName("LongGenerator should")
 class LongGeneratorTest {
 
@@ -31,6 +35,46 @@ class LongGeneratorTest {
         for (int i = 0; i < 100; i++) {
             assertNotNull(generator.next());
         }
+    }
+
+    @Test
+    @DisplayName("cover both signs and high-magnitude values across the full long range")
+    void shouldCoverFullLongRange() {
+        var generator = new LongGenerator();
+        boolean sawNegative = false;
+        boolean sawPositive = false;
+        boolean sawHighMagnitude = false;
+        for (int i = 0; i < 10_000; i++) {
+            long value = generator.next();
+            sawNegative |= value < 0;
+            sawPositive |= value > 0;
+            // A single nextDouble() scaling could only reach ~every 2048th value; a full-entropy
+            // draw regularly lands in the top of the range.
+            sawHighMagnitude |= Math.abs(value) > (Long.MAX_VALUE / 2);
+        }
+        assertTrue(sawNegative, "Full-range long generator must produce negative values");
+        assertTrue(sawPositive, "Full-range long generator must produce positive values");
+        assertTrue(sawHighMagnitude, "Full-range long generator must reach high-magnitude values");
+    }
+
+    @Test
+    @DisplayName("distribute uniformly and reach both ends of a wide (> Long.MAX_VALUE) span")
+    void shouldReachEndsOfWideSpan() {
+        // min..max spans more than Long.MAX_VALUE, exercising the wide-range rejection path.
+        long min = Long.MIN_VALUE / 2;
+        long max = Long.MAX_VALUE;
+        var generator = new LongGenerator(min, max);
+        long observedMin = Long.MAX_VALUE;
+        long observedMax = Long.MIN_VALUE;
+        for (int i = 0; i < 20_000; i++) {
+            long value = generator.next();
+            assertTrue(value >= min && value <= max, "Out of range: " + value);
+            observedMin = Math.min(observedMin, value);
+            observedMax = Math.max(observedMax, value);
+        }
+        // Should get within the top and bottom deciles of the span.
+        assertTrue(observedMax > max - (max / 8), "Never approached the upper bound: " + observedMax);
+        assertTrue(observedMin < min / 2, "Never approached the lower bound: " + observedMin);
     }
 
     @Test

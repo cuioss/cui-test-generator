@@ -22,8 +22,9 @@ import lombok.Getter;
 /**
  * Generates random {@link Double} values within a configurable range.
  * <p>
- * Note: The default range uses {@link Double#MIN_VALUE} (smallest positive value, ~4.9E-324)
- * to {@link Double#MAX_VALUE}. For negative doubles, use the two-argument constructor.
+ * The default range spans the full finite double range,
+ * {@code -Double.MAX_VALUE} to {@link Double#MAX_VALUE}, so negative values and zero are
+ * produced. Use the two-argument constructor for a narrower range.
  * </p>
  *
  * @author Oliver Wolff
@@ -35,19 +36,23 @@ public class DoubleGenerator implements TypedGenerator<Double> {
     private final double max;
 
     /**
-     * Creates a generator for the full double range.
+     * Creates a generator for the full finite double range.
      */
     public DoubleGenerator() {
-        this(Double.MIN_VALUE, Double.MAX_VALUE);
+        this(-Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     /**
      * Creates a generator for doubles in the range [min, max].
      *
-     * @param min lower bound (inclusive)
-     * @param max upper bound (inclusive)
+     * @param min lower bound (inclusive), must be finite
+     * @param max upper bound (inclusive), must be finite
+     * @throws IllegalArgumentException if a bound is not finite or {@code max < min}
      */
     public DoubleGenerator(double min, double max) {
+        if (!Double.isFinite(min) || !Double.isFinite(max)) {
+            throw new IllegalArgumentException("min and max must be finite, given: [" + min + ", " + max + "]");
+        }
         if (max < min) {
             throw new IllegalArgumentException("max must be >= min");
         }
@@ -61,11 +66,15 @@ public class DoubleGenerator implements TypedGenerator<Double> {
             return min;
         }
         double bound = Math.nextUp(max);
-        if (Double.isInfinite(bound)) {
-            // max is Double.MAX_VALUE; fall back to scaled nextDouble
-            return RandomContext.random().nextDouble() * (max - min) + min;
+        if (!Double.isInfinite(bound)) {
+            return RandomContext.random().nextDouble(min, bound);
         }
-        return RandomContext.random().nextDouble(min, bound);
+        // max == Double.MAX_VALUE, so nextDouble(min, bound) would reject the infinite bound.
+        // Apply the JDK's overflow-safe halving (see Random.nextDouble(origin, bound)) so the
+        // full [min, max] span never yields Infinity or NaN, mapping the top back to max.
+        double r = RandomContext.random().nextDouble();
+        r = 2.0 * (r * (0.5 * max - 0.5 * min) + 0.5 * min);
+        return r >= max ? max : r;
     }
 
     @Override

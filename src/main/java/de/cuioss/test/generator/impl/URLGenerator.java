@@ -54,7 +54,7 @@ import java.net.URL;
  */
 public class URLGenerator implements TypedGenerator<URL> {
 
-    private static final TypedGenerator<String> generator = Generators.fixedValues(String.class, "https://www.heise.de",
+    private static final TypedGenerator<String> URL_STRINGS = Generators.fixedValues(String.class, "https://www.heise.de",
             "https://stackoverflow.com", "https://github.com/cuioss", "https://www.gitlab.com", "https://sonarcloud.io",
             "https://www.eclipse.org", "https://www.sesamestreet.org/", "https://de.wikipedia.org",
             "https://www.xing.com", "https://www.mozilla.org", "https://avm.de/", "https://www.primefaces.org/",
@@ -64,7 +64,7 @@ public class URLGenerator implements TypedGenerator<URL> {
     @Override
     public URL next() {
         try {
-            return URI.create(generator.next()).toURL();
+            return URI.create(URL_STRINGS.next()).toURL();
         } catch (final MalformedURLException e) {
             throw new IllegalStateException(e);
         }
