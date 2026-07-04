@@ -43,6 +43,7 @@ import de.cuioss.test.generator.TypedGenerator;
  *
  * @author Oliver Wolff
  * @see IntegerGenerator
+ * @since 1.0
  */
 public class ShortObjectGenerator implements TypedGenerator<Short> {
 

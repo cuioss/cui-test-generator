@@ -27,6 +27,7 @@ import java.util.List;
  *
  * @param <T> the type of values to generate
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class FixedValuesGenerator<T> implements TypedGenerator<T> {
 

@@ -22,6 +22,7 @@ import de.cuioss.test.generator.internal.RandomContext;
  * Generates random {@link Boolean} values.
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class BooleanGenerator implements TypedGenerator<Boolean> {
 

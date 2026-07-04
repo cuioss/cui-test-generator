@@ -61,7 +61,12 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Provides factory methods for creating {@link TypedGenerator}s for various Java types.
- * All generators are thread-safe and suitable for concurrent use in tests.
+ * <p>
+ * Generators are thread-safe for value generation. Reproducibility via a fixed seed is
+ * guaranteed only for single-threaded execution: because all generators share one
+ * {@link java.util.Random} instance, concurrent use interleaves draws and makes the value
+ * stream non-deterministic.
+ * </p>
  *
  * <p>The generators are organized into the following categories:</p>
  * <ul>
@@ -122,10 +127,10 @@ public class Generators {
      * </pre>
      *
      * @param <T> The enum type
-     * @param type to be checked, must represent an enum
+     * @param type to be checked; a {@code null} or non-enum type yields
+     *             {@link Optional#empty()}
      * @return an {@link Optional} containing the corresponding {@link TypedGenerator} if
      *         the given type is an enum, {@link Optional#empty()} otherwise
-     * @throws NullPointerException if type is null
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> Optional<TypedGenerator<T>> enumValuesIfAvailable(final Class<T> type) {
@@ -211,8 +216,8 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for any Strings, may be
-     * null or empty.
+     * Factory method for creating a {@link TypedGenerator} for arbitrary Strings, which may
+     * be empty but are never {@code null}.
      *
      * @return a {@link TypedGenerator} for Strings
      */
@@ -246,16 +251,16 @@ public class Generators {
      * Factory method for creating a {@link TypedGenerator} for a number of fixed
      * values.
      *
-     * <p><em>Example from tests:</em></p>
+     * <p>Values are selected <em>randomly</em> from the supplied set, not in order.</p>
+     *
+     * <p><em>Example:</em></p>
      * <pre>
      * TypedGenerator&lt;String&gt; generator = Generators.fixedValues("A", "B", "C");
-     * assertEquals("A", generator.next());
-     * assertEquals("B", generator.next());
-     * assertEquals("C", generator.next());
-     * assertEquals("A", generator.next()); // Cycles back to start
+     * assertTrue(Set.of("A", "B", "C").contains(generator.next()));
      * </pre>
      *
      * @param <T> The type of values
+     * @param type of the value
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
      * @throws IllegalArgumentException if values is empty
@@ -268,10 +273,13 @@ public class Generators {
 
     /**
      * Factory method for creating a {@link TypedGenerator} for a number of fixed
-     * values.
+     * values. The value type is inferred from the runtime class of the first element.
      *
+     * @param <T> The type of values
      * @param values to be generated from.
      * @return a {@link TypedGenerator} for the given values
+     * @throws IllegalArgumentException if values is empty
+     * @throws NullPointerException if values is null or its first element is null
      */
     @SafeVarargs
     public static <T> TypedGenerator<T> fixedValues(final T... values) {
@@ -522,11 +530,12 @@ public class Generators {
     }
 
     /**
-     * Factory method for creating a {@link TypedGenerator} for Long primitives.
+     * Factory method for creating a {@link TypedGenerator} for {@link Long} values in the
+     * given range.
      *
      * @param low  lower bound of range
      * @param high upper bound of range
-     * @return a {@link TypedGenerator} for long primitives
+     * @return a {@link TypedGenerator} for {@link Long}
      */
     public static TypedGenerator<Long> longs(final long low, final long high) {
         return new LongGenerator(low, high);

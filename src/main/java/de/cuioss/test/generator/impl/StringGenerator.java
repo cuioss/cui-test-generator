@@ -21,11 +21,12 @@ import de.cuioss.test.generator.internal.RandomContext;
 /**
  * Generates random {@link String} values with configurable length and character set.
  * <p>
- * The default configuration generates strings of 0-30 characters from the Basic Latin
- * and Latin-1 Supplement unicode blocks.
+ * The default configuration generates strings of 0-30 characters from the printable Basic
+ * Latin range (0x20-0x7E).
  * </p>
  *
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class StringGenerator implements TypedGenerator<String> {
 

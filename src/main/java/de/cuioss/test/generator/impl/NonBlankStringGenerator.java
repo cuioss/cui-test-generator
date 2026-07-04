@@ -44,6 +44,7 @@ import static de.cuioss.test.generator.Generators.nonEmptyStrings;
  *
  * @author Oliver Wolff
  * @see de.cuioss.test.generator.Generators#nonEmptyStrings()
+ * @since 1.0
  */
 public class NonBlankStringGenerator implements TypedGenerator<String> {
 

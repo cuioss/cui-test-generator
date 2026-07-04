@@ -64,6 +64,7 @@ import static java.time.ZoneId.getAvailableZoneIds;
  * @see ZoneOffset
  * @see ZoneId
  * @see LocalDateTime
+ * @since 1.0
  */
 public class ZoneOffsetGenerator implements TypedGenerator<ZoneOffset> {
 

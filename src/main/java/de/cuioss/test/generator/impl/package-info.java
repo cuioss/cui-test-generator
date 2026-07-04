@@ -50,7 +50,7 @@
  * <h3>String and URL Generators</h3>
  * <ul>
  *   <li>{@link de.cuioss.test.generator.impl.StringGenerator} - Configurable string generation with charset and length control</li>
- *   <li>{@link de.cuioss.test.generator.impl.NonBlankStringGenerator} - Non-empty string generation</li>
+ *   <li>{@link de.cuioss.test.generator.impl.NonBlankStringGenerator} - Non-blank string generation</li>
  *   <li>{@link de.cuioss.test.generator.impl.URLGenerator} - Valid URL generation from predefined sets</li>
  * </ul>
  *
@@ -73,25 +73,18 @@
  * var stringGen = new NonBlankStringGenerator();
  * String value = stringGen.next();
  * 
- * // Collection generation
- * TypedGenerator&lt;Integer&gt; intGen = Generators.integers(1, 100);
- * var collectionGen = new CollectionGenerator&lt;&gt;(intGen);
- * List&lt;Integer&gt; list = collectionGen.list(5);
- * 
  * // Date/Time generation with zones
  * var dateTimeGen = new ZonedDateTimeGenerator();
- * ZonedDateTime future = dateTimeGen.future();
- * 
+ * ZonedDateTime dateTime = dateTimeGen.next();
+ *
  * // Numeric generation with ranges
  * var floatGen = new FloatObjectGenerator(0.0f, 100.0f);
  * Float number = floatGen.next();
- * 
- * // Create a generator for integers
+ *
+ * // Wrap a generator in a collection generator
  * TypedGenerator&lt;Integer&gt; intGen = Generators.integers(1, 100);
- * 
- * // Wrap it in a collection generator
  * var collectionGen = new CollectionGenerator&lt;&gt;(intGen);
- * 
+ *
  * // Generate lists and sets
  * List&lt;Integer&gt; list = collectionGen.list(5);  // List of 5 integers
  * Set&lt;Integer&gt; set = collectionGen.set(3);     // Set of 3 integers

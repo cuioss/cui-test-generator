@@ -27,6 +27,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T> the type of values to generate
  * @author Oliver Wolff
+ * @since 1.0
  */
 public class UniqueValuesGenerator<T> implements TypedGenerator<T> {
 

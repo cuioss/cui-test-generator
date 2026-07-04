@@ -59,6 +59,7 @@ import static de.cuioss.test.generator.Generators.integers;
  * @see ZonedDateTime
  * @see Generators#dates()
  * @see Generators#zoneIds()
+ * @since 1.0
  */
 public class ZonedDateTimeGenerator implements TypedGenerator<ZonedDateTime> {
 
@@ -89,56 +90,56 @@ public class ZonedDateTimeGenerator implements TypedGenerator<ZonedDateTime> {
     }
 
     /**
-     * @return value of ZonedDateTime one hour ago
+     * @return value of ZonedDateTime between 1 and 10 minutes ago
      */
     public static ZonedDateTime someMinutesAgo() {
         return now().minusMinutes(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime one hour ago
+     * @return value of ZonedDateTime between 1 and 10 hours ago
      */
     public static ZonedDateTime someHoursAgo() {
         return now().minusHours(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime one day ago
+     * @return value of ZonedDateTime between 1 and 10 days ago
      */
     public static ZonedDateTime someDaysAgo() {
         return now().minusDays(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime one week ago
+     * @return value of ZonedDateTime between 1 and 10 weeks ago
      */
     public static ZonedDateTime someWeeksAgo() {
         return now().minusWeeks(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime one month ago
+     * @return value of ZonedDateTime between 1 and 10 months ago
      */
     public static ZonedDateTime someMonthsAgo() {
         return now().minusMonths(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime one year ago
+     * @return value of ZonedDateTime between 1 and 10 years ago
      */
     public static ZonedDateTime someYearsAgo() {
         return now().minusYears(SOME_INT.next());
     }
 
     /**
-     * @return value of ZonedDateTime with date somewhere 10 years ago
+     * @return value of ZonedDateTime exactly 10 years ago
      */
     public static ZonedDateTime lastTenYearsAgo() {
         return now().minusYears(10);
     }
 
     /**
-     * @return value of ZonedDateTime with date somewhere lastMonth
+     * @return value of ZonedDateTime exactly one month ago
      */
     public static ZonedDateTime lastMonthAgo() {
         return now().minusMonths(1);

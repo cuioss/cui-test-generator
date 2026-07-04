@@ -57,6 +57,7 @@ import lombok.ToString;
  * @author Oliver Wolff
  * @param <T> The type of elements to be generated
  * @see TypedGenerator
+ * @since 1.0
  */
 @RequiredArgsConstructor
 @ToString(of = "type")

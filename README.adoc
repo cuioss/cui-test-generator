@@ -27,8 +27,12 @@ The CUI Test Generator framework provides robust and reproducible test data gene
 <dependency>
     <groupId>de.cuioss.test</groupId>
     <artifactId>cui-test-generator</artifactId>
+    <version>x.y.z</version> <!-- omit when the version is managed by cui-java-bom -->
 </dependency>
 ----
+
+NOTE: If your build imports `de.cuioss:cui-java-bom`, the `<version>` is managed for you and
+can be omitted; otherwise replace `x.y.z` with the desired release version.
 
 === Core Components
 

@@ -57,6 +57,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Oliver Wolff
  * @see Generators
+ * @since 1.0
  */
 public enum PrimitiveArrayGenerators {
 
@@ -216,7 +217,7 @@ public enum PrimitiveArrayGenerators {
     private static final TypedGenerator<Integer> SIZE_GENERATOR = Generators.integers(1, 128);
 
     /**
-     * @return an primitive array of the configured type, with the sizes 1-128
+     * @return a primitive array of the configured type, with a size between 1 and 128
      */
     public abstract Object next();
 
@@ -228,9 +229,11 @@ public enum PrimitiveArrayGenerators {
     /**
      * Returns a {@link PrimitiveArrayGenerators} for the given primitive type.
      *
-     * @param primitiveType must not be null and a primitive type.
-     * @return the found {@link PrimitiveArrayGenerators} or throws an
-     *         {@link IllegalStateException} if none could be found
+     * @param primitiveType must not be null and must be a primitive type
+     * @return the matching {@link PrimitiveArrayGenerators}
+     * @throws NullPointerException     if {@code primitiveType} is null
+     * @throws IllegalArgumentException if {@code primitiveType} is not a primitive type
+     * @throws IllegalStateException    if no generator is registered for the type
      */
     public static PrimitiveArrayGenerators resolveForType(final Class<?> primitiveType) {
         requireNonNull(primitiveType);
