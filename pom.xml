@@ -11,6 +11,10 @@
     <artifactId>cui-test-generator</artifactId>
     <version>3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <!-- Must be declared: <inceptionYear> is inherited, and the license plugin binds
+         the copyright ${year} to it. Without this, this project would report
+         cui-parent-pom's 2022 and restamp every header on each -Ppre-commit run. -->
+    <inceptionYear>2023</inceptionYear>
     <name>cui test generator</name>
     <description>Provides Generator for arbitrary Java-Types
     </description>
@@ -56,4 +60,20 @@
             <artifactId>easymock</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
