@@ -50,19 +50,26 @@ before the wider org picks the change up.
 
 ### Step 1 — Determine the version number
 
-Read the `release` block in `.github/project.yml`:
-- `release.current-version` (currently `3.0.2`) — the **last released** version.
-- `release.next-version` (currently `3.1-SNAPSHOT`) — what `pom.xml` carries between releases.
+`.github/project.yml` is the single source of truth for both versions — read it, never
+assume:
 
-**The choice is genuinely open here** and the skill must not guess:
-`current-version` is `3.0.2` but the pom floats on `3.1-SNAPSHOT`, so `current-version` does
-**not** sit on the `next-version` line.
+```bash
+grep -E 'current-version|next-version' .github/project.yml
+```
 
-- **`3.1`** — strip `-SNAPSHOT`, starting the new minor line; `next-version` then
+- `release.current-version` — the **last released** version.
+- `release.next-version` — what `pom.xml` carries between releases.
+
+Derive the two candidates from those values:
+
+- **`next-version` minus `-SNAPSHOT`** — starts the new minor line; `next-version` then
   moves to the following minor.
-- **`3.0.3`** — continue the patch line; `next-version` stays `3.1-SNAPSHOT`.
+- **`current-version` with its patch incremented** — continues the patch line;
+  `next-version` stays unchanged.
 
-Both are defensible. **Ask the user** (AskUserQuestion) rather than picking one.
+Both are defensible. **Ask the user** (AskUserQuestion) rather than picking one; weigh the
+commits since the last tag (`git log --oneline <current-version>..main`) and mention any
+`feat:` work when presenting the options.
 
 ### Step 2 — Check for open PRs
 
@@ -87,14 +94,14 @@ The Maven CI workflow only triggers on `main, "feature/*", "fix/*", "chore/*", "
 check and blocks the merge:
 
 ```bash
-git checkout -b chore/release_3.1
+git checkout -b chore/release_<version>
 ```
 
 ### Step 5 — Update `.github/project.yml`
 
 - `current-version:` → the version determined in Step 1
 - `next-version:` → for a new minor line, the following minor + `-SNAPSHOT`; for a patch
-  release, **leave unchanged** (`3.1-SNAPSHOT`)
+  release, **leave unchanged**
 
 Leave everything else untouched. The README badges are dynamic endpoints — there is **no**
 per-release badge to hand-edit.
@@ -200,14 +207,52 @@ gh release edit <version> --repo cuioss/cui-test-generator --notes-file .plan/te
    adapted to this project's domain; omit empty sections.
 3. **Dependency Updates** — `### Java` for libraries, `### Infra` for build plugins,
    `cuioss-organization` workflow bumps and parent-POM updates.
-4. **Collapse version chains** — `A → B → C` becomes a single entry spanning `A → C`.
-5. **Drop OpenRewrite bumps** — `rewrite-maven-plugin`, `rewrite-migrate-java`,
+4. **Collapse by library identity — one line per library, spanning the full range.**
+   The unit of collapsing is the *library*, not the PR title. Merge into a single line
+   whenever the PRs concern the same library, in all three shapes that occur:
+   - **Version chains** — several bumps of one artifact (`A → B → C`) collapse to one line
+     spanning `A → C`, carrying the latest PR's author.
+   - **The same library in several places** — one library bumped in more than one module or
+     directory is **one** line naming them all, not one line each. Those titles differ only
+     by that suffix, so do not wait for identical titles before merging.
+   - **One upstream release landing as several coordinates** — when a single upstream bump
+     arrives as separate PRs against different coordinates (e.g. a version property *and*
+     a BOM or parent), that is **one** bump: one line naming the coordinates in parentheses.
+
+   Carry every merged PR's URL onto the surviving line, comma-separated.
+5. **Recover versions the title omits.** Dependabot truncates a title to
+   `bump <lib> in /<dir>`, with no versions, when several dependencies must move together.
+   Never publish a dependency line without a version range: read the PR body, which states
+   ``Updates `<lib>` from X to Y``, and use those versions when computing the range:
+
+   ```bash
+   gh pr view <n> --repo cuioss/cui-test-generator --json body --jq .body | head -6
+   ```
+6. **Drop OpenRewrite bumps** — `rewrite-maven-plugin`, `rewrite-migrate-java`,
    `rewrite-testing-frameworks` and friends.
-6. **Drop internal tooling churn** — `marshal.json`/plan-marshall config, dev-skill changes,
+7. **Drop internal tooling churn** — `marshal.json`/plan-marshall config, dev-skill changes,
    and the mechanical version-bump PR itself.
-7. Keep each surviving PR line verbatim (`* <title> by @author in <url>`); merge duplicates
-   onto one line with both URLs.
-8. Keep the trailing `**Full Changelog**: ...compare/<prev>...<version>` line.
+8. **Preserve each kept PR line** in its original
+   `* <title> by @author in <url>` shape. Rules 4 and 5 **override** verbatimness where
+   they conflict: rewrite the title's version range to span the collapsed chain, and name
+   the several modules or coordinates on the surviving line.
+9. Keep the trailing `**Full Changelog**: ...compare/<prev>...<version>` line.
+
+#### Verify before publishing (mandatory)
+
+These rules are easy to under-apply: a duplicate survives whenever two PRs touch the same
+library under differing titles. After building the notes file and **before**
+`gh release edit`, assert that every library appears exactly once:
+
+```bash
+grep -oE '(bump|update) [^ ]+ (from|in)' .plan/temp/release-<version>.md \
+  | sort | uniq -c | sort -rn | head
+```
+
+Every count must be `1`. Any count `>1` is an unmerged duplicate — collapse it per rule
+4 and re-run. Also confirm that no dependency line is missing a version range
+(rule 5).
+
 
 ### Step 13 — Done
 
