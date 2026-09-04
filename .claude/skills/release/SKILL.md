@@ -125,8 +125,6 @@ gh pr create --repo cuioss/cui-test-generator --base main \
   --body "Bump current-version to <version>. Triggers the automated Release workflow on merge."
 ```
 
-Commit trailer: `Co-Authored-By: Claude <noreply@anthropic.com>` — no model name, no
-"Generated with Claude Code" footer.
 
 ### Step 7 — Wait for PR checks
 
