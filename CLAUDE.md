@@ -8,8 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Set JAVA_HOME for SDKMAN users
 export JAVA_HOME=$HOME/.sdkman/candidates/java/current
 
-# Default build command - auto-fixes license headers and formatting;
-# review what it changed and commit it
+# Default build command - auto-fixes: license headers plus every configured
+# OpenRewrite recipe (modernization, not just formatting).
+# Review what it changed and commit it
 ./mvnw -Ppre-commit clean install
 
 # Compile
